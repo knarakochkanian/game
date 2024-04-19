@@ -1,0 +1,46 @@
+@import url('https://fonts.cdnfonts.com/css/tt-lakes-neue-trial');
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  color: #FFFFFF;
+}
+
+:root{
+  background-color: black;
+  font-family: 'TT Lakes Neue', sans-serif;
+}
+
+.container{
+  display: flex;
+  max-width: 2752px;
+  width: 100%;
+  max-height: 1704px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2658px;
+  background: var(--Attack-BG-Gradient, radial-gradient(36.85% 48.48% at 50% 50%, #384D4A 0%, rgba(56, 77, 74, 0.00) 100%));
+}
+.container::after{
+  content:  "";
+  position: absolute;
+  width: 2752px;
+  top: 24px;
+  left: 24px;
+  background-image: url("/public/home/ContainerTop.svg");
+}
+h4{
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 45.6px */
+  letter-spacing: 0.38px;
+  text-transform: uppercase;
+}
