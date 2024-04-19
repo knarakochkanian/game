@@ -21,7 +21,7 @@ export default function PasswordError() {
         <section className={styles.passwordErrorWrapper}>
             <LocalTime/>
             <div className={styles.passwordError}>
-                <Image className={styles.loadingIcon} src={"/Loading/shield-lock.svg"} alt="loader icon" width={80} height={80}/>
+                <Image className={styles.loadingIcon} src={"/public/loading/shield-lock.svg"} alt="loader icon" width={80} height={80}/>
                 <h2>
                     Устройство недоступно
                 </h2>
