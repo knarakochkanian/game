@@ -32,4 +32,37 @@
   $protect-dark-blue-select: #010526;
   $protect-dark-blue-select-60: rgba(1, 5, 38, 0.6);
   $protect-map-default: #585966;
+// mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin flex-start {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+//Container
+@mixin containerOnly{
+  display: flex;
+  max-width: 2752px;
+  padding: 24px;
+  width: 100%;
+  max-height: 1704px;
+  height: 100%;
+  justify-content: center;
 
+}
+@mixin container{
+  @include containerOnly;
+  background: var(--Attack-BG-Gradient, radial-gradient(36.85% 48.48% at 50% 50%, #384D4A 0%, rgba(56, 77, 74, 0.00) 100%));
+  &::after{
+    content:  "";
+    position: absolute;
+    width: 2752px;
+    top: 24px;
+    left: 24px;
+    background-image: url("/public/home/ContainerTop.svg");
+  }
+}

@@ -1,8 +1,8 @@
 "use client"
-// LocalTime.tsx
+// Index.tsx
 import React, { useState, useEffect } from 'react';
-
-const LocalTime: React.FC = () => {
+import styles from "./LocalTime.module.scss"
+const Index: React.FC = () => {
     const [dateTime, setDateTime] = useState<string>('');
 
     useEffect(() => {
@@ -30,8 +30,8 @@ const LocalTime: React.FC = () => {
         };
     }, []);
 
-    return <span>{dateTime}</span>;
+    return <span className={styles.DateTime}>{dateTime}</span>;
 };
 
-export default LocalTime;
+export default Index;
 

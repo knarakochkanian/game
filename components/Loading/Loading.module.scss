@@ -1,4 +1,27 @@
-@import "src/app/variables.module";
+@import "app/variables.module";
 .loading{
-  &Icon{}
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 1700px;
+  width: 2700px;
+  &Wrapper{
+    @include flex-start;
+    position: relative;
+    padding: 24px;
+  }
+}
+.Loader{
+  position: absolute;
+  top: 194px;
+  transform-style: preserve-3d;
+  animation: rotate linear 4s infinite;
+  transition: 2s;
+  @keyframes rotate {
+    100% {
+      scale: 1.3;
+      transform: rotate(360deg);
+    }
+  }
 }

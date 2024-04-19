@@ -1,6 +1,5 @@
 'use client'
 import styles from "./page.module.css";
-
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 import Password from "../components/Password";

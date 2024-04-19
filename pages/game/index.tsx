@@ -1,9 +1,9 @@
-import Image from "next/image";
-import styles from './game.module.scss'
+
+import "../../app/globals.css"
 export default function Game() {
     return (
-        <div className="container">
+        <h1 className="container">
            Hello Game
-        </div>
+        </h1>
     )
 }
