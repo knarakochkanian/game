@@ -1,19 +1,65 @@
-@import "app/variables.module";
-.timer{
-  display: flex;
-  align-items: flex-start;
-  gap: 161px;
-  .time{
-    font-size: 280px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 120%; /* 336px */
-    letter-spacing: -2.8px;
-    text-transform: uppercase;
-  }
-}
-.countdownContainer{
+@import '/app/variables.module.scss';
+
+.countdownContainer {
   padding-top: 650px;
   padding-left: 110px;
   position: relative;
+  h5 {
+    padding-left: 25px;
+  }
+  .timerAndAttackCtn {
+    display: flex;
+    gap: 392px;
+    .timer {
+      display: flex;
+      align-items: flex-start;
+      gap: 161px;
+      .time {
+        position: relative;
+        font-size: 280px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 120%; /* 336px */
+        letter-spacing: -2.8px;
+        text-transform: uppercase;
+        z-index: 9999;
+        min-width: 415px;
+        .hours,
+        .minutes,
+        .seconds {
+          color: $white-40;
+          font-variant-numeric: slashed-zero;
+          text-transform: uppercase;
+          @include TypoBodySmall;
+          position: absolute;
+          bottom: 0;
+          right: 45px;
+        }
+      }
+    }
+    .attack {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 70px 0;
+      h2.attackTitle {
+        color: $white;
+        font-variant-numeric: slashed-zero;
+        @include set-font-size-weight(56px, 600);
+        line-height: 120%; /* 67.2px */
+      }
+    }
+  }
+}
+
+.top {
+  position: fixed;
+  top: 27px;
+  left: 20px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 26px;
+  left: 20px;
 }

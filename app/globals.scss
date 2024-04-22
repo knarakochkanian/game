@@ -1,4 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/tt-lakes-neue-trial');
+@import '/app/variables.module.scss';
 
 * {
   box-sizing: border-box;
@@ -10,12 +11,12 @@ html,
 body {
   overflow-x: hidden;
   color: #FFFFFF;
-  background-color: black;
+  background-color: $main-dark;
 }
 
 :root{
-  background-color: black;
-  font-family: 'TT Lakes Neue', sans-serif;
+  background-color: $main-dark;
+  font-family: 'TT Lakes Neue Trial', sans-serif;
 }
 main{
   display: flex;

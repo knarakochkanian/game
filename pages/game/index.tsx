@@ -1,5 +1,5 @@
 
-import "../../app/globals.css"
+import "../../app/globals.scss"
 export default function Game() {
     return (
         <h1 className="container">

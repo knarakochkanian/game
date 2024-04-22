@@ -1,0 +1,20 @@
+@import '/app/variables.module.scss';
+
+.slashesTop,
+.slashesBottom {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 237px;
+  .img {
+    display: block;
+  }
+}
+.slashesTop {
+  top: 195px;
+}
+
+.slashesBottom {
+  bottom: 197px;
+}

@@ -1,0 +1,13 @@
+@import '/app/variables.module.scss';
+
+.loader {
+  position: fixed;
+  width: 100%;
+  top: 340px;
+  left: 950px;
+  .greenLight {
+    position: absolute;
+    top: -300px;
+    right: 1112px;
+  }
+}

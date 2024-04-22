@@ -1,8 +1,11 @@
 import Image from "next/image";
-import styles from './onboarding.module.scss'
-import "../../app/globals.css"
 import React, {useState} from "react";
+
 import Modal from "../../components/Modal";
+
+import styles from './onboarding.module.scss'
+import "../../app/globals.scss"
+
 
 export default function Onboarding() {
     const [modalOpen, setModalOpen] = useState(false);

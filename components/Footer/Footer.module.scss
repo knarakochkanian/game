@@ -1,0 +1,30 @@
+@import '/app/variables.module.scss';
+
+.footer {
+  .topOfBotton {
+    position: absolute;
+    bottom: 104px;
+    left: 764px;
+    z-index: 99999;
+  }
+  .buttonContainer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    @include flex-center;
+    .cancelButton {
+      padding-top: 64px;
+      padding-bottom: 72.5px;
+      h3 {
+        color: $white;
+        text-align: center;
+        font-variant-numeric: slashed-zero;
+        @include set-font-size-weight(50px, 400);
+        line-height: 60px;
+      }
+      span {
+        color: $red;
+      }
+    }
+  }
+}

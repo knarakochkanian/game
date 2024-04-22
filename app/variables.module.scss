@@ -34,6 +34,10 @@
   $protect-dark-blue-select-60: rgba(1, 5, 38, 0.6);
   $protect-map-default: #585966;
 // mixins
+@mixin set-font-size-weight($fontSize, $fontWeight) {
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+}
 @mixin flex-center {
   display: flex;
   align-items: center;

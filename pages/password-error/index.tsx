@@ -1,9 +1,11 @@
 import Image from "next/image";
-import styles from './password-error.module.scss'
-import "../../app/globals.css"
-import LocalTime from "../../components/LocalTime";
 import {useRouter} from "next/navigation";
 import {useEffect} from "react";
+
+import LocalTime from "../../components/LocalTime";
+
+import styles from './password-error.module.scss'
+import "../../app/globals.scss"
 
 export default function PasswordError() {
     const router = useRouter();
