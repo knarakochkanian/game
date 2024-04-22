@@ -5,6 +5,7 @@ import { attack, bottom, top } from '../../public/count-down';
 import Slashes from '../../common/Slashes';
 import Loader from '../../common/Loader';
 import SideLines from '../../common/SideLines';
+import Grid from '../../common/Grid';
 
 import styles from './count-down.module.scss';
 import '../../app/globals.scss';
@@ -76,6 +77,7 @@ export default function CountDown() {
         height={81}
         priority
       />
+      <Grid />
       <SideLines />
       <Loader />
       <Slashes />

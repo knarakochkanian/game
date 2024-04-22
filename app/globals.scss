@@ -10,20 +10,21 @@
 html,
 body {
   overflow-x: hidden;
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: $main-dark;
+  overflow: hidden;
 }
 
-:root{
+:root {
   background-color: $main-dark;
   font-family: 'TT Lakes Neue Trial', sans-serif;
 }
-main{
+main {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container{
+.container {
   display: flex;
   max-width: 2752px;
   padding: 24px;
@@ -31,10 +32,14 @@ main{
   max-height: 1704px;
   height: 100%;
   justify-content: center;
-  background:  radial-gradient(36.85% 48.48% at 50% 50%, #384D4A 0%, rgba(56, 77, 74, 0.00) 100%);
+  background: radial-gradient(
+    36.85% 48.48% at 50% 50%,
+    #384d4a 0%,
+    rgba(56, 77, 74, 0) 100%
+  );
 }
-.container::after{
-  content:  "";
+.container::after {
+  content: '';
   position: absolute;
   width: 2752px;
   top: 24px;
@@ -42,19 +47,19 @@ main{
   /*background-image: url("/public/home/ContainerTop.svg");*/
 }
 
-h1{
+h1 {
   font-size: 78px;
   font-style: normal;
   font-weight: 400;
   line-height: 120%; /* 93.6px */
 }
-h2{
+h2 {
   font-size: 56px;
   font-style: normal;
   font-weight: 600;
   line-height: 120%; /* 67.2px */
 }
-h4{
+h4 {
   font-size: 38px;
   font-style: normal;
   font-weight: 400;
@@ -62,7 +67,7 @@ h4{
   letter-spacing: 0.38px;
   text-transform: uppercase;
 }
-h5{
+h5 {
   font-size: 34px;
   font-style: normal;
   font-weight: 600;
@@ -93,7 +98,7 @@ button {
   gap: 8px;
   padding-top: 64px;
 }
-.ModalButtons>button{
+.ModalButtons > button {
   display: flex;
   width: 220px;
   padding: 16px 24px;
@@ -108,10 +113,10 @@ button {
   line-height: 120%; /* 33.6px */
   letter-spacing: 0.28px;
 }
-.ModalButton1{
-  border: 2px solid #FFF;
+.ModalButton1 {
+  border: 2px solid #fff;
 }
-.ModalButton2{
+.ModalButton2 {
   border-right: 2px solid #787878;
   border-left: 2px solid #787878;
 }

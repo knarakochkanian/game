@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { greenLight, loader } from '../../public/count-down';
+import { greenLight, loader, target } from '../../public/count-down';
 
 import styles from './Loader.module.scss';
 
@@ -16,6 +16,14 @@ const Loader = () => {
           priority
         />
       </div>
+      <Image
+        className={styles.target}
+        src={target}
+        alt="target"
+        width={470}
+        height={450}
+        priority
+      />
     </div>
   );
 };

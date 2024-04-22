@@ -3,11 +3,16 @@
 .loader {
   position: fixed;
   width: 100%;
-  top: 340px;
-  left: 950px;
+  top: 371px;
+  left: 917px;
   .greenLight {
     position: absolute;
     top: -300px;
     right: 1112px;
+  }
+  .target {
+    position: absolute;
+    top: 299px;
+    left: 274px;
   }
 }

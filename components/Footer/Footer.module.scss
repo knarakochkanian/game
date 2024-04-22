@@ -1,6 +1,11 @@
 @import '/app/variables.module.scss';
 
 .footer {
+  .opacityOfButton {
+    position: absolute;
+    bottom: 0px;
+    left: 650px;
+  }
   .topOfBotton {
     position: absolute;
     bottom: 104px;

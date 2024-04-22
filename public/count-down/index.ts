@@ -8,8 +8,14 @@ import sideLines from './sideLines.svg';
 import top from './top.svg';
 import bottom from './bottom.svg';
 import topOfBotton from './topOfBotton.svg';
+import opacityOfButton from './opacitiyOfButton.svg';
+import grid from './grid.svg';
+import target from './target.svg';
 
 export {
+  target,
+  grid,
+  opacityOfButton,
   cancelContainer,
   attack,
   slashesFromBottom,
