@@ -6,27 +6,27 @@ import {useRouter} from "next/navigation";
 import {useEffect} from "react";
 
 export default function PasswordError() {
-    const router = useRouter(); // используем хук для управления роутингом
+    const router = useRouter();
 
     useEffect(() => {
 
         const timer = setTimeout(() => {
             router.push('/');
-        }, 60000);
+        }, 8000);
 
         return () => clearTimeout(timer);
-    }, [router]); // пустой массив зависимостей означает, что эффект выполнится один раз после монтирования компонента
+    }, [router]);
 
     return (
         <section className={styles.passwordErrorWrapper}>
             <LocalTime/>
             <div className={styles.passwordError}>
-                <Image className={styles.loadingIcon} src={"/public/loading/shield-lock.svg"} alt="loader icon" width={80} height={80}/>
+                <Image className={styles.loadingIcon} src={"loading/shield-lock.svg"} alt="loader icon" width={80} height={80}/>
                 <h2>
                     Устройство недоступно
                 </h2>
                 <span>
-                Повторите попытку через 1 минуту
+                Повторите попытку через 10 секунд
             </span>
             </div>
         </section>

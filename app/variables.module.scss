@@ -7,6 +7,7 @@
   $light-gray: #999a9a;
   $mid-gray: #787878;
   $mid-dark-gray: #525252;
+  $mid-gray-background: #D9D9D9;
   $main-dark-50: rgba(1, 2, 2, 0.5);
   $main-dark: #010202;
   $card: #080808;
@@ -38,6 +39,16 @@
   align-items: center;
   justify-content: center;
 }
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@mixin flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
 @mixin flex-start {
   display: flex;
   align-items: stretch;
@@ -63,6 +74,21 @@
     width: 2752px;
     top: 24px;
     left: 24px;
-    background-image: url("/public/home/ContainerTop.svg");
+    //background-image: url("/public/home/ContainerTop.svg");
   }
+}
+//Typography
+@mixin TypoBodyBig{
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 40.8px */
+  letter-spacing: 0.34px;
+}
+@mixin TypoBodySmall{
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 33.6px */
+  letter-spacing: 0.28px;
 }

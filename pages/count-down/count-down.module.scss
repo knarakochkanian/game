@@ -1,0 +1,19 @@
+@import "app/variables.module";
+.timer{
+  display: flex;
+  align-items: flex-start;
+  gap: 161px;
+  .time{
+    font-size: 280px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%; /* 336px */
+    letter-spacing: -2.8px;
+    text-transform: uppercase;
+  }
+}
+.countdownContainer{
+  padding-top: 650px;
+  padding-left: 110px;
+  position: relative;
+}

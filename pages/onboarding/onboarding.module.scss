@@ -1,0 +1,44 @@
+@import "app/variables.module";
+.onboarding{
+
+
+  &Wrapper{
+    @include containerOnly;
+    justify-content: flex-start;
+    padding: 51px 35px;
+    >div:nth-child(2){
+      width: 60%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+  }
+  &Buttons{
+    display: inline-flex;
+    gap: 24px;
+    >button{
+      width: 243px;
+      height: 99px;
+      @include TypoBodyBig;
+      color: $mid-gray-background;
+      border: 3px solid $mid-gray-background;
+    }
+  }
+  &Attack{
+    width: 536px;
+    @include flex-around;
+    >div>img:nth-child(1){
+      background-color: $attack-green;
+    }
+    >div>img:nth-child(2){
+      border: 3px solid $mid-dark-gray;
+    }
+    >button{
+     @include TypoBodyBig;
+      color:  $white;
+      text-align: right;
+      font-variant-numeric: slashed-zero;
+      text-transform: uppercase;
+    }
+  }
+}

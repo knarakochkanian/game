@@ -1,27 +1,112 @@
 @import "app/variables.module";
 .loading{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 1700px;
-  width: 2700px;
   &Wrapper{
-    @include flex-start;
-    position: relative;
+    display: flex;
     padding: 24px;
+    height: 1700px;
+    width: 2700px;
+    >div:nth-child(1){
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   }
 }
 .Loader{
-  position: absolute;
+  position: relative;
   top: 194px;
-  transform-style: preserve-3d;
-  animation: rotate linear 4s infinite;
-  transition: 2s;
-  @keyframes rotate {
-    100% {
-      scale: 1.3;
-      transform: rotate(360deg);
+  left: 1100px;
+  @include flex-center;
+  align-items: unset;
+  > img{
+    position: absolute;
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
     }
+  }
+  > img:nth-child(1) {
+    animation: rotate1 linear 4s infinite;
+  }
+
+  >img:nth-child(2) {
+    top: 100px;
+    animation: rotate2 linear 5s infinite;
+  }
+
+  >img:nth-child(3) {
+    top: 185px;
+    animation: rotate3 linear 6s infinite;
+  }
+  >img:nth-child(4) {
+    top: 230px;
+    animation: rotate4 linear 6s infinite;
+  }
+  >img:nth-child(5) {
+    top: 275px;
+    animation: rotate5 linear 6s infinite;
+  }
+  >img:nth-child(6) {
+    top: 320px;
+    animation: rotate6 linear 6s infinite;
+  }
+  >img:nth-child(7) {
+    top: 435px;
+    animation: rotate7 linear 6s infinite;
+  }
+  >img:nth-child(8) {
+    top: 500px;
+    animation: rotate8 linear 6s infinite;
+  }
+  >img:nth-child(9) {
+    top: 550px;
+    animation: rotate9 linear 6s infinite;
+  }
+  @keyframes rotate1 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotate2 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  @keyframes rotate3 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes rotate4 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  @keyframes rotate5 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotate6 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes rotate7 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotate8 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  @keyframes rotate9 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }
