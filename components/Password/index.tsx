@@ -1,8 +1,9 @@
 'use client'
-import {  useState } from "react";
+import {useEffect, useState} from "react";
 import { useRouter } from 'next/navigation'
 import styles from "./Password.module.scss";
 import Localtime from "../LocalTime";
+import Image from "next/image";
 
 export default function Password() {
     const router = useRouter();
@@ -18,9 +19,14 @@ export default function Password() {
 
     const handleGoToGame = () => {
         if (password === "111285" )  {
-            router.push('/game')
+            router.push('/onboarding')
         } else return router.push('/password-error')
     }
+    useEffect(() => {
+        if (password.length === 6) {
+            handleGoToGame();
+        }
+    }, [ password]);
 
     return (
         <section className={styles.passwordWrraper}>
@@ -36,7 +42,7 @@ export default function Password() {
                         ))}
                         {Array.from({ length: 6 - password.length }).map((_, index) => (
                             <span key={index}><svg xmlns="http://www.w3.org/2000/svg" width="84" height="48" viewBox="0 0 84 48" fill="none">
-  <path d="M0 23.8333V28.6775L84 29V23.8333V19H0V23.8333Z" fill="#5ED1C5" fill-opacity="0.4"/>
+  <path d="M0 23.8333V28.6775L84 29V23.8333V19H0V23.8333Z" fill="#5ED1C5"/>
 </svg></span>
                         ))}
                     </div>
@@ -47,9 +53,9 @@ export default function Password() {
                             {i + 1}
                         </button>
                     ))}
-                    <button onClick={handleClear}>Clear</button>
+                    <div></div>
                     <button onClick={() => handleNumberClick('0')}>0</button>
-                    <button onClick={handleGoToGame}>Enter</button>
+                    <button onClick={handleClear}><Image src={"/home/Delete.svg"} alt={"delete"} width={138} height={127} className={styles.passwordDelete}/></button>
                 </div>
             </div>
             <p>

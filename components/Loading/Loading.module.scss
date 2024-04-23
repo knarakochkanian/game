@@ -1,112 +1,45 @@
 @import "app/variables.module";
-.loading{
-  &Wrapper{
+
+.loadingWrapper {
+  display: flex;
+  padding: 24px;
+  height: 1700px;
+  width: 2700px;
+  --rotate-duration: 6s;
+
+  >div:nth-child(1) {
     display: flex;
-    padding: 24px;
-    height: 1700px;
-    width: 2700px;
-    >div:nth-child(1){
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
-.Loader{
+
+.Loader {
   position: relative;
   top: 194px;
   left: 1100px;
   @include flex-center;
   align-items: unset;
-  > img{
+
+  @keyframes rotate-cw {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotate-ccw {
+    to { transform: rotate(-360deg); }
+  }
+
+  > img {
     position: absolute;
-    @keyframes rotate {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  }
-  > img:nth-child(1) {
-    animation: rotate1 linear 4s infinite;
   }
 
-  >img:nth-child(2) {
-    top: 100px;
-    animation: rotate2 linear 5s infinite;
-  }
-
-  >img:nth-child(3) {
-    top: 185px;
-    animation: rotate3 linear 6s infinite;
-  }
-  >img:nth-child(4) {
-    top: 230px;
-    animation: rotate4 linear 6s infinite;
-  }
-  >img:nth-child(5) {
-    top: 275px;
-    animation: rotate5 linear 6s infinite;
-  }
-  >img:nth-child(6) {
-    top: 320px;
-    animation: rotate6 linear 6s infinite;
-  }
-  >img:nth-child(7) {
-    top: 435px;
-    animation: rotate7 linear 6s infinite;
-  }
-  >img:nth-child(8) {
-    top: 500px;
-    animation: rotate8 linear 6s infinite;
-  }
-  >img:nth-child(9) {
-    top: 550px;
-    animation: rotate9 linear 6s infinite;
-  }
-  @keyframes rotate1 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes rotate2 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
-  }
-
-  @keyframes rotate3 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  @keyframes rotate4 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
-  }
-
-  @keyframes rotate5 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes rotate6 {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(-360deg);
-    }
-  }
-  @keyframes rotate7 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes rotate8 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
-  }
-
-  @keyframes rotate9 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+  > img:nth-child(1) { animation: rotate-cw linear 4s infinite; }
+  > img:nth-child(2) { top: 100px; animation: rotate-ccw linear 5s infinite; }
+  > img:nth-child(3) { top: 185px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(4) { top: 230px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(5) { top: 275px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(6) { top: 320px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(7) { top: 435px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(8) { top: 500px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(9) { top: 550px; animation: rotate-cw linear 6s infinite; }
 }

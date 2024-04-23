@@ -24,6 +24,12 @@
       border: 3px solid $mid-gray-background;
     }
   }
+  &Input{
+    border: 2px solid var(--grayscale-white-40, rgba(255, 255, 255, 0.40));
+    background: var(--Grayscale-Card, #080808);
+    display: flex;
+    margin-bottom: 16px;
+  }
   &Attack{
     width: 536px;
     @include flex-around;
