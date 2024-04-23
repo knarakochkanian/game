@@ -1,0 +1,5 @@
+@import '/app/variables.module.scss';
+
+.test {
+  @include flex-column(50px);
+}

@@ -1,0 +1,13 @@
+@import '/app/variables.module.scss';
+
+.modalData {
+  display: flex;
+  justify-content: space-between;
+  .key,
+  .value {
+    @include TypoBodyBig_2;
+  }
+  .key {
+    color: $mid-gray;
+  }
+}

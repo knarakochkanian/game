@@ -1,0 +1,13 @@
+@import '/app/variables.module.scss';
+
+.singleWave {
+  .container {
+    @include flex-column(24px);
+    .num {
+      @include TypoH5;
+    }
+    .dataContainer {
+      @include flex-column(16px);
+    }
+  }
+}

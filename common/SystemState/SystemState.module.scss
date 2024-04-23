@@ -1,0 +1,11 @@
+@import '/app/variables.module.scss';
+
+.systemState {
+  @include flex-column(40px);
+  .systemStateTitle {
+    @include TypoH5;
+  }
+  p {
+    @include TypoBodyBig_2;
+  }
+}
