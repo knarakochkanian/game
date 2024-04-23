@@ -1,46 +1,52 @@
 import Image from "next/image";
-import React, {useState} from "react";
-
+import React, { useState } from "react";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import Modal from "../../components/Modals/Modal";
-
-import styles from './onboarding.module.scss'
-import "../../app/globals.scss"
-import ModalWithSelect from "../../components/Modals/ModalWithSelect";
-import Accordion, { AccordionSlots } from '@mui/material/Accordion';
+import Modal from "../../common/Modals/Modal";
+import ModalWithSelect from "../../common/Modals/ModalWithSelect";
+import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Fade from '@mui/material/Fade';
-
+import {regions} from "../../data/attackRegionsData"
+import styles from './onboarding.module.scss';
+import "../../app/globals.scss";
+import BaseButton from "../../common/BaseButtton";
 export default function Onboarding() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
-     const [selectOpen, setSelectOpen] = useState(false);
+    const [modalOpen3, setModalOpen3] = useState(false);
+    const [selectOpen, setSelectOpen] = useState(false);
+    const [expanded, setExpanded] = useState<string | false>(false);
+
     const openModal = () => {
         setModalOpen(true);
-        setModalOpen2(false)
+        setModalOpen2(false);
     }
+
     const closeModal = () => setModalOpen(false);
     const closeModal2 = () => setModalOpen2(false);
-    const handleNext =() => {
-        setModalOpen2(true)
-        setModalOpen(false)
-        setSelectOpen(false)
-     }
-    const handleNext2 =() => {
-        setSelectOpen(true)
-        setModalOpen2(false)
+    const closeModal3 = () => setModalOpen3(false);
+
+    const handleNext = () => {
+        setModalOpen2(true);
+        setModalOpen(false);
+        setSelectOpen(false);
     }
+
+    const handleNext2 = () => {
+        setSelectOpen(true);
+        setModalOpen2(false);
+        setModalOpen3(true);
+    }
+
     const handleSelectOpen = () => {
         setSelectOpen(true);
     };
-    const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpansion = () => {
-        setExpanded((prevExpanded) => !prevExpanded);
+    const handleExpansion = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false);
     };
 
     return (
@@ -53,10 +59,9 @@ export default function Onboarding() {
                         <button className="ModalButton2" onClick={closeModal2}>пропустить</button>
                     </div>
                 </Modal>
-                <button onClick={handleSelectOpen}    style={{
-                    color: selectOpen ? '#5ED1C5' : '#FFF',
-                    border: selectOpen ? '3px solid #5ED1C5' : '3px solid $mid-gray-background',
-                }}>Регион</button>
+
+                <BaseButton active={selectOpen} onClick={handleSelectOpen}>Регион</BaseButton>
+
                 <ModalWithSelect isOpen={selectOpen} onClose={closeModal}>
                     <div className={styles.onboardingInput}>
                         <InputBase
@@ -69,46 +74,44 @@ export default function Onboarding() {
                         </IconButton>
                     </div>
 
-                    <div style={{backgroundColor: "#black !important"}}>
-                        <Accordion
-                            expanded={expanded}
-                            onChange={handleExpansion}
-                            slots={{ transition: Fade as AccordionSlots['transition'] }}
-                            slotProps={{ transition: { timeout: 400 } }}
-                            sx={{
-                                '& .MuiAccordion-region': { height: expanded ? 'auto' : 0 },
-                                '& .MuiAccordionDetails-root': { display: expanded ? 'block' : 'none' },
-                                backgroundColor: "rgba(0, 0, 0, 0.87) !important",
-                                color: "#fff"
-                            }}
-                        >
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1-content"
-                                id="panel1-header"
+                    <div>
+                        {regions.map((region, index) => (
+                            <Accordion
+                            key={index}
+                                expanded={expanded === region.id}
+                                onChange={handleExpansion(region.id)}
+                                sx={{
+                                    backgroundColor: "rgba(0, 0, 0, 0.87) !important",
+                                    color: "#fff",
+                                    marginBottom: "10px"
+                                }}
                             >
-                                <h5>Наиболее вероятный выбор</h5>
-                            </AccordionSummary>
-                            <AccordionDetails sx={{display: "flex !important", gap: "10px"}}>
-                                <h5>
-                                  G7
-                                </h5>
-                                <h5>
-                                    НАТО
-                                </h5>
-                                <h5>
-                                    США
-                                </h5>
-                                <h5>
-                                    Евросоюс
-                                </h5>
-                                <h5>
-                                   Весь мир
-                                </h5>
-                            </AccordionDetails>
-                        </Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls={`${region.id}-content`}
+                                    id={`${region.id}-header`}
+                                >
+                                    <h5>{region.title}</h5>
+                                </AccordionSummary>
+                                <AccordionDetails sx={{ display: "flex", gap: "10px" }}>
+                                    {region.options.map((option) => (
+                                        <div key={option.id}>
+                                            <h5>{option.name}</h5>
+                                        </div>
+                                    ))}
+                                </AccordionDetails>
+                            </Accordion>
+                        ))}
+
                     </div>
                 </ModalWithSelect>
+                <Modal isOpen={modalOpen3} onClose={closeModal3} counter={3} sx={{left: "27%", position: "fixed"}}>
+                    <p> Возможен выбор группы стран с помощью быстрых фильтров, списка или поиска.</p><p> Нажмите на “США”, чтобы добавить страну в задачу.</p>
+                    <div className="ModalButtons">
+                        <button className="ModalButton1">далее</button>
+                        <button className="ModalButton2" onClick={closeModal3}>пропустить</button>
+                    </div>
+                </Modal>
                 <button>Отрасль</button>
                 <button>Ущерб</button>
             </div>

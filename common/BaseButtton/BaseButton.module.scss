@@ -1,0 +1,30 @@
+@import '/app/variables.module.scss';
+.buttonBase {
+  position: relative;
+  color: #FFF;
+  border: 3px solid $mid-gray-background;
+  padding: 10px 20px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.buttonActive {
+  color: #5ED1C5;
+  border-color: #5ED1C5;
+}
+.spanActive{
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  background: $attack-green;
+  border-color: #5ED1C5;
+}
+.spanBase{
+  background: $mid-gray-background;
+  border-color: $mid-gray-background;
+}

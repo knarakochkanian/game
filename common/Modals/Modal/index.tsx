@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import styles from "./modal.module.scss"
+import {SxProps, Theme} from "@mui/system";
+import Box from '@mui/material/Box';
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     counter: number;
     children: React.ReactNode;
+    sx?: SxProps<Theme>;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, counter , children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, sx, onClose, counter , children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, counter , children }) =>
     };
 
     const modalContent = isOpen ? (
-        <div onClick={handleOutsideClick}>
+        <Box onClick={handleOutsideClick} sx={sx}>
             <div className={styles.modal}>
                 <div className={styles.modalCounter}>
                     <Image src={"onboarding/Hint_icon.svg"} alt={"icon"} width={128} height={96}/>
@@ -31,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, counter , children }) =>
                 </div>
                 <div className={styles.modalMain}>{children}</div>
             </div>
-        </div>
+        </Box>
     ) : null;
 
     if (!isBrowser) {
