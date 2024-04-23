@@ -11,8 +11,14 @@ import topOfBotton from './topOfBotton.svg';
 import opacityOfButton from './opacitiyOfButton.svg';
 import grid from './grid.svg';
 import target from './target.svg';
+import smallCircle from './smallCircle.svg';
+import mediumCircle from './mediumCircle.svg';
+import bigCircle from './bigCircle.svg';
 
 export {
+  bigCircle,
+  mediumCircle,
+  smallCircle,
   target,
   grid,
   opacityOfButton,

@@ -5,6 +5,44 @@
   width: 100%;
   top: 371px;
   left: 917px;
+
+  @keyframes rotate-cw {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate-ccw {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  > img:nth-child(1) {
+    animation: rotate-cw linear 4s infinite;
+  }
+  > img:nth-child(2) {
+    top: 100px;
+    animation: rotate-ccw linear 5s infinite;
+  }
+  > img:nth-child(3) {
+    top: 185px;
+    animation: rotate-cw linear 6s infinite;
+  }
+  .mediumCircle,
+  .smallCircle {
+    position: absolute;
+  }
+  .smallCircle {
+    top: 260px;
+    left: 245px;
+  }
+  .mediumCircle {
+    top: 117px;
+    left: 110px;
+  }
+  .bigCircle {
+  }
   .greenLight {
     position: absolute;
     top: -300px;

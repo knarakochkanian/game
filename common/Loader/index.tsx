@@ -1,12 +1,41 @@
 import Image from 'next/image';
-import { greenLight, loader, target } from '../../public/count-down';
+import {
+  bigCircle,
+  greenLight,
+  mediumCircle,
+  smallCircle,
+  target,
+} from '../../public/count-down';
 
 import styles from './Loader.module.scss';
 
 const Loader = () => {
   return (
     <div className={styles.loader}>
-      <Image src={loader} alt="loader" width={1015} height={1015} priority />
+      <Image
+        className={styles.smallCircle}
+        src={smallCircle}
+        alt="smallCircle"
+        width={515}
+        height={515}
+        priority
+      />
+      <Image
+        className={styles.mediumCircle}
+        src={mediumCircle}
+        alt="mediumCircle"
+        width={791}
+        height={791}
+        priority
+      />
+      <Image
+        className={styles.bigCircle}
+        src={bigCircle}
+        alt="bigCircle"
+        width={1015}
+        height={1015}
+        priority
+      />
       <div className={styles.greenLight}>
         <Image
           src={greenLight}

@@ -1,11 +1,13 @@
 @import '/app/variables.module.scss';
 
 .countdownContainer {
-  padding-top: 650px;
+  padding-top: 686px;
   padding-left: 110px;
   position: relative;
   h5 {
     padding-left: 25px;
+    position: relative;
+    z-index: 9999;
   }
   .timerAndAttackCtn {
     display: flex;
@@ -13,7 +15,7 @@
     .timer {
       display: flex;
       align-items: flex-start;
-      gap: 161px;
+      gap: 141px;
       .time {
         position: relative;
         font-size: 280px;
@@ -42,6 +44,7 @@
       flex-direction: column;
       justify-content: space-between;
       padding: 70px 0;
+      z-index: 9999;
       h2.attackTitle {
         color: $white;
         font-variant-numeric: slashed-zero;
@@ -63,4 +66,5 @@
   position: fixed;
   bottom: 26px;
   left: 20px;
+  z-index: 9999;
 }
