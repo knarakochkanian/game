@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
-import "./globals.scss";
-import {Suspense} from "react";
-import Loading from "../components/Loading";
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import Loading from '../components/Loading';
+import TopBottomLines from '../common/TopBottomLines';
 
+import './globals.scss';
 
 export const metadata: Metadata = {
-  title: "Game",
-  description: "Game about attacks and protected",
+  title: 'Game',
+  description: 'Game about attacks and protected',
 };
 
 export default function RootLayout({
@@ -16,9 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <Suspense fallback={<Loading/>}>
-      <body>{children}</body>
-    </Suspense>
+      <Suspense fallback={<Loading />}>
+        <body>
+          <TopBottomLines />
+          {children}
+        </body>
+      </Suspense>
     </html>
   );
 }

@@ -5,7 +5,7 @@ import SystemState from '../../common/SystemState';
 import Waves from '../../common/Waves';
 import { simCards, waves } from '../../data';
 
-import styles from './ui_kit.module.scss';
+import styles from './ui-kit.module.scss';
 
 export default function Test() {
   return (

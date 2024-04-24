@@ -1,0 +1,14 @@
+
+.top {
+  position: fixed;
+  top: 27px;
+  left: 20px;
+  z-index: 9;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 26px;
+  left: 20px;
+  z-index: 9999;
+}
