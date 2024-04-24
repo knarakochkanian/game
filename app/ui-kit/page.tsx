@@ -1,4 +1,3 @@
-import '../../app/globals.scss';
 import ModalContainer from '../../common/ModalContainer';
 import SimCards from '../../common/SimCards';
 import SystemState from '../../common/SystemState';

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
+import LocalTime from "../components/LocalTime";
 
 import './globals.scss';
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <Suspense fallback={<Loading />}>
         <body>
           <TopBottomLines />
+          <LocalTime />
           {children}
         </body>
       </Suspense>

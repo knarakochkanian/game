@@ -1,4 +1,5 @@
-.DateTime{
+.DateTime {
+  min-width: 350px;
   position: absolute;
   font-size: 34px;
   font-style: normal;
@@ -6,5 +7,7 @@
   line-height: 120%; /* 40.8px */
   letter-spacing: 0.34px;
   text-transform: uppercase;
-  right: 0;
+  right: 75px;
+  top: 56px;
+  z-index: 9999;
 }

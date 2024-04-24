@@ -10,7 +10,6 @@ import SideLines from '../../common/SideLines';
 import Grid from '../../common/Grid';
 
 import styles from './count-down.module.scss';
-import '../../app/globals.scss';
 
 export default function CountDown() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
