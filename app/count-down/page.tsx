@@ -1,7 +1,9 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Footer from '../../components/Footer';
-import { attack, bottom, top } from '../../public/count-down';
+import { attack } from '../../public/count-down';
 import Slashes from '../../common/Slashes';
 import Loader from '../../common/Loader';
 import SideLines from '../../common/SideLines';
@@ -60,23 +62,7 @@ export default function CountDown() {
           </div>
         </div>
       </div>
-
-      <Image
-        className={styles.top}
-        src={top}
-        alt="top"
-        width={2754}
-        height={81}
-        priority
-      />
-      <Image
-        className={styles.bottom}
-        src={bottom}
-        alt="bottom"
-        width={2754}
-        height={81}
-        priority
-      />
+      
       <Grid />
       <SideLines />
       <Loader />
