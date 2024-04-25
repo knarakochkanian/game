@@ -58,9 +58,6 @@ export default function Password() {
                     <button onClick={handleClear}><Image src={"/home/Delete.svg"} alt={"delete"} width={138} height={127} className={styles.passwordDelete}/></button>
                 </div>
             </div>
-            <p>
-                <Localtime/>
-            </p>
         </section>
     );
 }

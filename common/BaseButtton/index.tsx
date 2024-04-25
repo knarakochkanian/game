@@ -3,21 +3,31 @@ import styles from './BaseButton.module.scss';
 import clsx from 'clsx';
 
 interface BaseButtonProps {
-    children: ReactNode;
-    active: boolean;
-    onClick: () => void;
+    children?: ReactNode;
+    active?: boolean;
+    onClick?: () => void;
+    disabled?: boolean;
 }
 
-function BaseButton({ children, active, onClick }: BaseButtonProps) {
+function BaseButton({ children, active, disabled, onClick }: BaseButtonProps) {
+    const buttonClass = clsx({
+        [styles.buttonActive]: active,
+        [styles.buttonBase]: !active,
+        [styles.buttonDisabled]: disabled
+    });
+
     return (
-        <button className={clsx(styles.buttonBase, { [styles.buttonActive]: active })} onClick={onClick}>
-            <span className={ active ? styles.spanActive :  styles.spanBase} style={{ left: "-5px", top: "-5px" }}></span>
-            <span className={ active ? styles.spanActive :  styles.spanBase} style={{ right: "-5px", top: "-5px" }}></span>
-            <span className={ active ? styles.spanActive :  styles.spanBase} style={{ left: "-5px", bottom: "-5px" }}></span>
-            <span className={ active ? styles.spanActive :  styles.spanBase} style={{ right: "-5px", bottom: "-5px" }}></span>
+        <button
+            className={buttonClass}
+            onClick={onClick}
+            disabled={disabled}
+        >
+            <span className={clsx(styles.spanBase, { [styles.spanActive]: active })} style={{ left: "-5px", top: "-5px" }}></span>
+            <span className={clsx(styles.spanBase, { [styles.spanActive]: active })} style={{ right: "-5px", top: "-5px" }}></span>
+            <span className={clsx(styles.spanBase, { [styles.spanActive]: active })} style={{ left: "-5px", bottom: "-5px" }}></span>
+            <span className={clsx(styles.spanBase, { [styles.spanActive]: active })} style={{ right: "-5px", bottom: "-5px" }}></span>
             {children}
         </button>
     );
 }
-
 export default BaseButton;

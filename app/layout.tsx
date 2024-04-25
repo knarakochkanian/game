@@ -5,6 +5,7 @@ import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from "../components/LocalTime";
 
 import './globals.scss';
+import Onboarding from "./onboarding/page";
 
 export const metadata: Metadata = {
   title: 'Game',

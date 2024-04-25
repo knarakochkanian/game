@@ -62,7 +62,7 @@ $protect-map-default: #585966;
 @mixin flex-start {
   display: flex;
   align-items: stretch;
-  justify-content: center;
+  justify-content: start;
 }
 //Container
 @mixin containerOnly {

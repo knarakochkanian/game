@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, {useState, useRef, ChangeEvent, MutableRefObject} from "react";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,15 +13,21 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {regions} from "../../data/attackRegionsData"
 import styles from './onboarding.module.scss';
-import "../../app/globals.scss";
+import "../globals.scss";
 import BaseButton from "../../common/BaseButtton";
+// import Keyboard from "react-simple-keyboard";
+// import "react-simple-keyboard/build/css/index.css";
+// interface KeyboardComponent {
+//     setInput: (input: string) => void;
+// }
 export default function Onboarding() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
     const [modalOpen3, setModalOpen3] = useState(false);
     const [selectOpen, setSelectOpen] = useState(false);
-    const [expanded, setExpanded] = useState<string | false>(false);
+    const [expanded, setExpanded] = useState(regions[0].id);
 
+   // const [input, setInput] = useState("")
     const openModal = () => {
         setModalOpen(true);
         setModalOpen2(false);
@@ -47,10 +53,15 @@ export default function Onboarding() {
         setSelectOpen(true);
     };
 
-    const handleExpansion = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    // @ts-ignore
+    const handleExpansion = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    // const handleOnChange = (input) => {
+    //     setInput(input);
+    // };
+    // @ts-ignore
     return (
         <section className={styles.onboardingWrapper}>
             <div className={styles.onboardingButtons}>
@@ -58,7 +69,7 @@ export default function Onboarding() {
                     <p>Выберите регион при помощи карты или списка.</p>
                     <div className="ModalButtons">
                         <button className="ModalButton1" onClick={handleNext2}>далее</button>
-                        <button className="ModalButton2" onClick={closeModal2}>пропустить</button>
+                        <button className="SecondarySmall" onClick={closeModal2}><span>пропустить</span></button>
                     </div>
                 </Modal>
 
@@ -69,7 +80,8 @@ export default function Onboarding() {
                         <InputBase
                             sx={{ ml: 1, flex: 1, color: "#D9D9D9", fontSize: "34px" }}
                             placeholder="Поиск"
-                            inputProps={{ 'aria-label': 'search google maps' }}
+                            // value={input}
+                            // onChange={(e) => setInput(e.target.value)}
                         />
                         <IconButton type="button" sx={{ p: '10px', color: "#D9D9D9" }} aria-label="search">
                             <SearchIcon sx={{ color: "#D9D9D9", width: "48px", height: "48px" }} />
@@ -79,7 +91,7 @@ export default function Onboarding() {
                     <div>
                         {regions.map((region, index) => (
                             <Accordion
-                            key={index}
+                                key={index}
                                 expanded={expanded === region.id}
                                 onChange={handleExpansion(region.id)}
                                 sx={{
@@ -95,27 +107,28 @@ export default function Onboarding() {
                                 >
                                     <h5>{region.title}</h5>
                                 </AccordionSummary>
-                                <AccordionDetails sx={{ display: "flex", gap: "10px" }}>
+                                <AccordionDetails style={{ flexWrap: "wrap" , display: "flex", gap: "10px" }}>
                                     {region.options.map((option) => (
-                                        <div key={option.id}>
-                                            <h5>{option.name}</h5>
+                                        <div key={option.id} style={{ flexWrap: "wrap", gap: "10px" }}>
+                                            <button className={`SecondarySmallDisable ${option.name == 'США' ? 'SecondarySmallShine' : ''}`}>
+                                                <span><span>{option.name}</span></span>
+                                            </button>
                                         </div>
                                     ))}
                                 </AccordionDetails>
                             </Accordion>
                         ))}
-
                     </div>
                 </ModalWithSelect>
-                <Modal isOpen={modalOpen3} onClose={closeModal3} counter={3} sx={{left: "27%", position: "fixed"}}>
+                <Modal isOpen={modalOpen3} onClose={closeModal3} counter={3} sx={{left: "30%", position: "fixed"}}>
                     <p> Возможен выбор группы стран с помощью быстрых фильтров, списка или поиска.</p><p> Нажмите на “США”, чтобы добавить страну в задачу.</p>
                     <div className="ModalButtons">
                         <button className="ModalButton1">далее</button>
-                        <button className="ModalButton2" onClick={closeModal3}>пропустить</button>
+                        <button className="SecondarySmall" onClick={closeModal3}><span>пропустить</span></button>
                     </div>
                 </Modal>
-                <button>Отрасль</button>
-                <button>Ущерб</button>
+                <BaseButton disabled={true}>Отрасль</BaseButton>
+                <BaseButton disabled={true}>Ущерб</BaseButton>
             </div>
             <div className={styles.onboarding}>
                 <Modal isOpen={modalOpen} onClose={closeModal} counter={1}>
@@ -126,7 +139,7 @@ export default function Onboarding() {
                     </ul>
                     <div className="ModalButtons">
                         <button className="ModalButton1" onClick={handleNext}>далее</button>
-                        <button className="ModalButton2" onClick={closeModal}>пропустить</button>
+                        <button className="SecondarySmall" onClick={closeModal}><span>пропустить</span></button>
                     </div>
                 </Modal>
                 <div className={styles.onboardingAttack}>
@@ -138,6 +151,26 @@ export default function Onboarding() {
                     <button>защита</button>
                 </div>
             </div>
+            <Image
+                src="/home/Globus1.png"
+                width={1071}
+                height={1070}
+                alt="Globus"
+                style={{ filter: modalOpen || modalOpen3 ? 'blur(22px)' : 'none' }}
+                className={styles.onboardingGlobus}
+            />
+            {/*<Keyboard*/}
+            {/*    onChange={handleOnChange}*/}
+            {/*    layout={{*/}
+            {/*        default: ["q w e r t y u i o p", "a s d f g h j k l {bksp}", "z x c v b n m , . {space}"],*/}
+            {/*    }}*/}
+            {/*    display={{*/}
+            {/*        "{bksp}": "⌫",*/}
+            {/*        "{space}": "space",*/}
+            {/*        "{ent}": "return"*/}
+            {/*    }}*/}
+            {/*    theme={"hg-theme-default myTheme1"}*/}
+            {/*/>*/}
         </section>
     )
-}
+};

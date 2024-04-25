@@ -98,7 +98,6 @@ button {
 }
 .ModalButtons > button {
   display: flex;
-  width: 220px;
   padding: 16px 24px;
   flex-direction: column;
   justify-content: center;
@@ -114,7 +113,103 @@ button {
 .ModalButton1 {
   border: 2px solid #fff;
 }
-.ModalButton2 {
+.SecondarySmall {
   border-right: 2px solid #787878;
   border-left: 2px solid #787878;
+  position: relative;
+  cursor: pointer;
+  padding: 16px  24px;
+  @include TypoBodyBig;
+  &::after{
+    content: '';
+    width: 16px;
+    position: absolute;
+    height: 2px;
+    background:  #787878;
+    bottom: 0;
+    left: 0;
+  }
+  &::before{
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background:  #787878;
+    bottom: 0;
+    right: 0;
+  }
+  >span{
+    &::before {
+      content: '';
+      width: 16px;
+      position: absolute;
+      height: 2px;
+      background: #787878;
+      top: 0;
+      left: 0;
+    }
+  }
+  >span{
+    &::after{
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      background:  #787878;
+      top: 0;
+      right: 0;
+    }
+  }
 }
+.SecondarySmallDisable{
+  @extend .SecondarySmall;
+  opacity: 0.4;
+}
+.SecondarySmallShine {
+    border-right: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    position: relative;
+    cursor: pointer;
+    padding: 16px 24px;
+    overflow: hidden;
+    color: #fff;
+    opacity: 1;
+    @include TypoBodyBig;
+    &>span>span::after {
+      content: '';
+      position: absolute;
+      top: -50%; /* Position the shine above the button */
+      left: -50%;
+      width: 100%; /* Width must be enough to cover the entire button */
+      height: 200%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 100%);
+      animation: shine 3s infinite;
+    }
+    &::before, > span::before, > span::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      bottom: 0;
+    }
+    &::before {
+      right: 0;
+    }
+    > span::before {
+      top: 0;
+      left: 0;
+    }
+    > span::after {
+      top: 0;
+      right: 0;
+    }
+}
+
+  @keyframes shine {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(200%);
+    }
+  }

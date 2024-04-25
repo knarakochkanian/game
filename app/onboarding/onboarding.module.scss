@@ -1,28 +1,16 @@
-@import "app/variables.module";
+@import "/app/variables.module";
 .onboarding{
-
+  position: fixed;
+  z-index: 10;
+  left: 1130px;
 
   &Wrapper{
-    @include containerOnly;
-    justify-content: flex-start;
+    @include flex-start;
     padding: 51px 35px;
-    >div:nth-child(2){
-      width: 60%;
-      display: flex;
-      justify-content: flex-end;
-    }
-
   }
   &Buttons{
     display: inline-flex;
     gap: 24px;
-    >button{
-      width: 243px;
-      height: 99px;
-      @include TypoBodyBig;
-      color: $mid-gray-background;
-      border: 3px solid $mid-gray-background;
-    }
   }
   &Input{
     border: 2px solid var(--grayscale-white-40, rgba(255, 255, 255, 0.40));
@@ -31,20 +19,49 @@
     margin-bottom: 16px;
   }
   &Attack{
-    width: 536px;
-    @include flex-around;
+    width: 540px;
+    @include flex-between;
+    >button{
+      @include TypoBodyBig;
+      text-transform: uppercase;
+
+    }
     >div>img:nth-child(1){
       background-color: $attack-green;
     }
     >div>img:nth-child(2){
       border: 3px solid $mid-dark-gray;
     }
-    >button{
-     @include TypoBodyBig;
-      color:  $white;
-      text-align: right;
-      font-variant-numeric: slashed-zero;
-      text-transform: uppercase;
-    }
   }
+
+  .simple-keyboard {
+    max-width: 850px;
+  }
+  .simple-keyboard.myTheme1 {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .simple-keyboard.myTheme1 .hg-button {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
+
+  .simple-keyboard.myTheme1 .hg-button:active {
+    background: #1c4995;
+    color: white;
+  }
+
+  #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+    background: #1c4995;
+  }
+&Globus{
+  margin-top: 310px;
+}
 }

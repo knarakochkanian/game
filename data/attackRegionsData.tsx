@@ -14,21 +14,37 @@ export const regions:Region[] = [
         "title": "наиболее вероятный выбор",
         "options": [
             { "id": "G7", "name": "G7" },
-            { "id": "NATO", "name": "NATO" },
-            { "id": "USA", "name": "USA" },
-            { "id": "EU", "name": "EU" },
-            { "id": "World", "name": "World" }
+            { "id": "НАТО", "name": "НАТО" },
+            { "id": "США", "name": "США" },
+            { "id": "ЕВРОСОЮЗ", "name": "ЕВРОСОЮЗ" },
+            { "id": "ВЕСЬ МИР", "name": "ВЕСЬ МИР" }
         ]
     },
     {
         id: "2",
         "title": "недружественные страны",
-        "options": [
-            { "id": "G7", "name": "G7" },
-            { "id": "NATO", "name": "NATO" },
-            { "id": "USA", "name": "USA" },
-            { "id": "EU", "name": "EU" },
-            { "id": "World", "name": "World" }
-        ]
+        "options": []
+    },    {
+        id: "3",
+        "title": "военные блоки",
+        "options": []
+    },    {
+        id: "4",
+        "title": "политичнские блоки",
+        "options": []
+    },    {
+        id: "5",
+        "title": "континеты",
+        "options": []
+    },
+    {
+        id: "6",
+        "title": "регионы",
+        "options": []
+    },
+    {
+        id: "7",
+        "title": "страны",
+        "options": []
     }
 ];
