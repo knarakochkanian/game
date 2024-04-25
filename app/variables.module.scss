@@ -122,3 +122,10 @@ $protect-map-default: #585966;
   line-height: 120%; /* 40.8px */
   letter-spacing: 1.02px;
 }
+
+@mixin TypoH2 {
+  color: $white;
+  font-variant-numeric: slashed-zero;
+  @include set-font-size-weight(56px, 600);
+  line-height: 120%; /* 67.2px */
+}

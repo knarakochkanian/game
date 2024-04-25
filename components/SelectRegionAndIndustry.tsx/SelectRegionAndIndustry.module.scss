@@ -1,0 +1,12 @@
+@import '/app/variables.module.scss';
+
+.selectRegionAndIndustry {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  .damage {
+    max-height: 100px;
+    border: 2px solid $mid-dark-gray;
+  }
+}

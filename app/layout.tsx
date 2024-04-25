@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
-import LocalTime from "../components/LocalTime";
+import LocalTime from '../components/LocalTime';
 
 import './globals.scss';
 import Onboarding from "./onboarding/page";

@@ -1,0 +1,20 @@
+@import '/app/variables.module.scss';
+
+.titleAndInfo {
+  display: flex;
+  gap: 24px;
+  padding: 18px 56px 18px 30px;
+  align-items: center;
+  .title {
+    color: $mid-dark-gray;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(50px, 400);
+    line-height: 120%; /* 60px */
+  }
+  .info {
+    color: $white;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(40px, 400);
+    line-height: 120%; /* 60px */
+  }
+}

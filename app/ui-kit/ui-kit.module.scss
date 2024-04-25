@@ -3,3 +3,8 @@
 .test {
   @include flex-column(50px);
 }
+
+.attackCtn {
+  margin-top: 100px;
+  height: 100vh;
+}

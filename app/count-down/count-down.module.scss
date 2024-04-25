@@ -46,10 +46,7 @@
       padding: 70px 0;
       z-index: 9999;
       h2.attackTitle {
-        color: $white;
-        font-variant-numeric: slashed-zero;
-        @include set-font-size-weight(56px, 600);
-        line-height: 120%; /* 67.2px */
+        @include TypoH2;
       }
     }
   }
