@@ -51,8 +51,8 @@ const LaunchConsequences = ({
           />
         </div>
       </div>
-      <div style={{marginTop: "200px"}}>
-        <Modal isOpen={true} counter={10}>
+      <div>
+        <Modal name='damageInfo' isOpen={true} counter={10}>
           <p> В данном окне отображается информация об уроне, который будет нанесен выбранным вами регионам, а также о последствиях атаки.</p>
           <div className="ModalButtons">
             <button className="ModalButton1" >далее</button>

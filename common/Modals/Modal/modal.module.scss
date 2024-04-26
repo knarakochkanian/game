@@ -1,5 +1,5 @@
 @import '/app/variables.module.scss';
-.modal{
+.modal {
   display: inline-flex;
   padding: 48px 56px;
   flex-direction: column;
@@ -9,21 +9,25 @@
   width: 100%;
   top: 8%;
   background-color: $pre-black;
-  &Counter{
-  @include flex-between;
+  &Counter {
+    @include flex-between;
     width: 100%;
     padding-bottom: 24px;
-    &_number{
+    &_number {
       @include TypoBodySmall;
       color: $mid-gray;
       align-items: flex-start;
       text-transform: uppercase;
     }
   }
-  &Main{
+  &Main {
     @include TypoBodyBig;
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
+}
+
+.modal.damageInfo {
+  top: 35%;
 }
