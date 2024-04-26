@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import React, {useState, useRef, ChangeEvent, MutableRefObject} from "react";
+import React, {useState} from "react";
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,6 +15,7 @@ import {regions} from "../../data/attackRegionsData"
 import styles from './onboarding.module.scss';
 import "../globals.scss";
 import BaseButton from "../../common/BaseButtton";
+import Sidenav from "../../common/Sidenav";
 // import Keyboard from "react-simple-keyboard";
 // import "react-simple-keyboard/build/css/index.css";
 // interface KeyboardComponent {
@@ -25,9 +26,10 @@ export default function Onboarding() {
     const [modalOpen2, setModalOpen2] = useState(false);
     const [modalOpen3, setModalOpen3] = useState(false);
     const [selectOpen, setSelectOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [expanded, setExpanded] = useState(regions[0].id);
 
-   // const [input, setInput] = useState("")
+    // const [input, setInput] = useState("")
     const openModal = () => {
         setModalOpen(true);
         setModalOpen2(false);
@@ -48,7 +50,9 @@ export default function Onboarding() {
         setModalOpen2(false);
         setModalOpen3(true);
     }
-
+    const handleNext3 = () => {
+        setDrawerOpen(!drawerOpen)
+    }
     const handleSelectOpen = () => {
         setSelectOpen(true);
     };
@@ -61,6 +65,7 @@ export default function Onboarding() {
     // const handleOnChange = (input) => {
     //     setInput(input);
     // };
+    // @ts-ignore
     // @ts-ignore
     return (
         <section className={styles.onboardingWrapper}>
@@ -110,7 +115,7 @@ export default function Onboarding() {
                                 <AccordionDetails style={{ flexWrap: "wrap" , display: "flex", gap: "10px" }}>
                                     {region.options.map((option) => (
                                         <div key={option.id} style={{ flexWrap: "wrap", gap: "10px" }}>
-                                            <button className={`SecondarySmallDisable ${option.name == 'США' ? 'SecondarySmallShine' : ''}`}>
+                                            <button className={`SecondarySmallDisable ${option.name == 'США' ? 'SecondarySmallShine' : ''}`} onClick={handleNext3}>
                                                 <span><span>{option.name}</span></span>
                                             </button>
                                         </div>
@@ -127,6 +132,7 @@ export default function Onboarding() {
                         <button className="SecondarySmall" onClick={closeModal3}><span>пропустить</span></button>
                     </div>
                 </Modal>
+
                 <BaseButton disabled={true}>Отрасль</BaseButton>
                 <BaseButton disabled={true}>Ущерб</BaseButton>
             </div>
@@ -156,9 +162,11 @@ export default function Onboarding() {
                 width={1071}
                 height={1070}
                 alt="Globus"
-                style={{ filter: modalOpen || modalOpen3 ? 'blur(22px)' : 'none' }}
+                 style={{ filter: modalOpen || modalOpen3 ? 'blur(22px)' : 'none' }}
                 className={styles.onboardingGlobus}
             />
+            <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+            {/*<button onClick={() => setDrawerOpen(!drawerOpen)}>Toggle Sidenav</button>*/}
             {/*<Keyboard*/}
             {/*    onChange={handleOnChange}*/}
             {/*    layout={{*/}
@@ -174,3 +182,4 @@ export default function Onboarding() {
         </section>
     )
 };
+

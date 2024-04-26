@@ -182,7 +182,7 @@ button {
       left: -50%;
       width: 100%; /* Width must be enough to cover the entire button */
       height: 200%;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 75%);
       animation: shine 3s infinite;
     }
     &::before, > span::before, > span::after {
