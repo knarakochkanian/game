@@ -22,6 +22,7 @@ interface IDropDownProps {
   disabled?: boolean;
   initiallySelectedOption?: IDropDownOption;
   makeTheChange?: (option: IDropDownOption) => void;
+  from?: string;
 }
 
 const DropDown = ({
@@ -32,10 +33,17 @@ const DropDown = ({
   makeTheChange,
   disabled,
   optionsTitle,
+  from,
 }: IDropDownProps) => {
+  let defaultOpen = false;
+  if (from && from === 'onboarding') {
+    defaultOpen = true;
+  }
+
   const className = `${name}Dropdown`;
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(defaultOpen);  
   const [selectedOption, setSelectedOption] = useState(initiallySelectedOption);
+  
   const handleOptionChange = (option: IDropDownOption) => {
     makeTheChange && makeTheChange(option);
     setSelectedOption(option);
@@ -82,7 +90,7 @@ const DropDown = ({
       <div className={styles.dropdownHeader}>
         <TitleAndInfo info={String(selectedOptionIndex + 1)} title={title} />
       </div>
-
+      
       {dropdownOpen && (
         <div className={styles.dialogCtn}>
           <dialog className={styles.dropdownOptions}>

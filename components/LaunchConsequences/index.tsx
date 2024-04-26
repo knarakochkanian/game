@@ -13,10 +13,11 @@ import {
   wholeDamage,
 } from '../../constants';
 import { ILaunchConsequences } from '../../data/launchConsequences';
-
-import styles from './LaunchConsequences.module.scss';
 import { formatNumber } from '../../helpers';
 import Modal from "../../common/Modals/Modal";
+
+import styles from './LaunchConsequences.module.scss';
+
 
 const LaunchConsequences = ({
   launchConsequences,
