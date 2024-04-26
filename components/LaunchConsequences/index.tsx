@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { noiseMap } from '../../public/summary';
 import ModalData from '../../common/ModalData';
+import "../../app/globals.scss";
+
 import {
   LAUNCH_CONSEQUENCES,
   citiesUnderAttack,
@@ -14,6 +16,7 @@ import { ILaunchConsequences } from '../../data/launchConsequences';
 
 import styles from './LaunchConsequences.module.scss';
 import { formatNumber } from '../../helpers';
+import Modal from "../../common/Modals/Modal";
 
 const LaunchConsequences = ({
   launchConsequences,
@@ -48,7 +51,17 @@ const LaunchConsequences = ({
           />
         </div>
       </div>
-      <Image src={noiseMap} alt="noiseMap" width={1048} height={542} priority />
+      <div style={{marginTop: "200px"}}>
+        <Modal isOpen={true} counter={10}>
+          <p> В данном окне отображается информация об уроне, который будет нанесен выбранным вами регионам, а также о последствиях атаки.</p>
+          <div className="ModalButtons">
+            <button className="ModalButton1" >далее</button>
+            <button className="SecondarySmall"><span>пропустить</span></button>
+          </div>
+        </Modal>
+        <Image src={noiseMap} alt="noiseMap" width={1048} height={542} priority />
+      </div>
+
     </div>
   );
 };

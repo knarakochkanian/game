@@ -4,23 +4,22 @@ import styles from "./modal.module.scss"
 import {SxProps, Theme} from "@mui/system";
 import Box from '@mui/material/Box';
 interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    counter: number;
-    children: React.ReactNode;
+    isOpen?: boolean;
+    onClose?: () => void;
+    counter?: number;
+    children?: React.ReactNode;
     sx?: SxProps<Theme>;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, sx, onClose, counter , children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
-
     useEffect(() => {
         setIsBrowser(true);
     }, []);
 
     // Close modal on outside click
     const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (e.target === e.currentTarget) {
+        if (e.target === e.currentTarget && onClose) {
             onClose();
         }
     };

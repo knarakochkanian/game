@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './Sidenav.module.scss';
 import Image from "next/image";
+import TitleAndInfo from "../TitleAndInfo";
+import Dropdown from "../../common/DropDown";
+import regionOptions from "../../data/regionOptions";
+import DropDown from "../../common/DropDown";
 
 // Define the interface for the component's props
 interface SidenavProps {
@@ -18,6 +22,8 @@ function Sidenav({ isOpen, onClose }: SidenavProps) {
                     <h2>Атака #000-001</h2>
                     <Image src="home/basket.svg" alt="basket" width={48} height={48}/>
                 </div>
+                <DropDown title="Регион" name="region" options={regionOptions} />
+                <TitleAndInfo title={"Отложенный запуск"} info={""}/>
             </div>
         </>
     );

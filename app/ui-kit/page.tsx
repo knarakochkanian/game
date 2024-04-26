@@ -1,3 +1,4 @@
+'use client'
 import Grid from '../../common/Grid';
 import ModalContainer from '../../common/ModalContainer';
 import SimCards from '../../common/SimCards';

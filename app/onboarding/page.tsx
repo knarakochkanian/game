@@ -65,8 +65,6 @@ export default function Onboarding() {
     // const handleOnChange = (input) => {
     //     setInput(input);
     // };
-    // @ts-ignore
-    // @ts-ignore
     return (
         <section className={styles.onboardingWrapper}>
             <div className={styles.onboardingButtons}>
