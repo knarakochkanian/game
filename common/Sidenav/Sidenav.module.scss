@@ -14,6 +14,12 @@
    @include flex-between;
     padding-left: 24px;
   }
+  &Wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 672px;
+    gap: 56px;
+  }
 }
 
 .sidenav a {
