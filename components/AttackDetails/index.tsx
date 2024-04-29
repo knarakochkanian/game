@@ -5,12 +5,11 @@ import launchConsequences from '../../data/launchConsequences';
 
 import styles from './AttackDetails.module.scss';
 
-
-const AttackDetails = () => {
+const AttackDetails = ({ from = '' }: { from?: string }) => {
   return (
-    <div className={styles.AttackDetails}>
+    <div className={`${styles.attackDetails} ${styles[from]}`}>
       <Header />
-      <SelectRegionAndIndustry />
+      <SelectRegionAndIndustry from={from} />
       <LaunchConsequences launchConsequences={launchConsequences} />
     </div>
   );

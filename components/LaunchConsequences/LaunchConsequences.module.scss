@@ -9,17 +9,6 @@
     padding: 32px;
     border: 2px solid $attack-green;
     background: $attack-dark-green-select-60;
-    p {
-      margin-top: 32px;
-      overflow: hidden;
-      color: $white-60;
-      font-variant-numeric: slashed-zero;
-      text-overflow: ellipsis;
-      //   white-space: nowrap;
-      @include set-font-size-weight(36px, 400);
-      line-height: 120%; /* 43.2px */
-      letter-spacing: 0.36px;
-    }
     .dataContainer {
       @include flex-column(16px);
       margin-top: 64px;
@@ -29,6 +18,31 @@
       font-variant-numeric: slashed-zero;
       @include set-font-size-weight(50px, 400);
       line-height: 120%; /* 60px */
+    }
+  }
+}
+
+.launchConsequences.paragraphIsOpen {
+  .info {
+    height: 548px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 30px;
+    }
+    &::-webkit-scrollbar-track {
+      margin-block: 115px;
+      border-radius: 10px;
+      background-color: $unvisible;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $white;
+      opacity: 0.2;
+      border-radius: 10px;
+      border: 14px solid $unvisible;
+      background-clip: padding-box;
+      -webkit-border-radius: 20px;
     }
   }
 }

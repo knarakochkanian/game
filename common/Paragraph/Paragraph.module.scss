@@ -1,0 +1,18 @@
+@import '/app/variables.module.scss';
+
+.paragraph {
+  position: relative;
+  padding-right: 25px;
+  margin-top: 32px;
+  color: $white-60;
+  font-variant-numeric: slashed-zero;
+  text-overflow: ellipsis;
+  @include set-font-size-weight(36px, 400);
+  line-height: 120%; /* 43.2px */
+  letter-spacing: 0.36px;
+  text-align: start;
+}
+
+.paragraph.isOpen {
+  padding-right: unset;
+}

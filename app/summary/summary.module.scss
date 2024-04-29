@@ -1,0 +1,17 @@
+@import '/app/variables.module.scss';
+.main {
+  display: block;
+  .attackCtn {
+    width: 2072px;
+    height: 851px;
+    position: relative;
+    top: 346px;
+    left: 364px;
+    .attackImg {
+      position: absolute;
+      left: -120px;
+      top: 5px;
+      z-index: 9;
+    }
+  }
+}

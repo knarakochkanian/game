@@ -16,7 +16,13 @@
       display: flex;
       align-items: flex-start;
       gap: 141px;
+      div {
+        width: 397px;
+        height: 336px;
+        @include flex-center;
+      }
       .time {
+        text-align: center;
         position: relative;
         font-size: 280px;
         font-style: normal;

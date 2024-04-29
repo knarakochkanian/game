@@ -1,0 +1,42 @@
+@import '/app/variables.module.scss';
+
+.buttonContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  @include flex-center;
+  button {
+    padding-top: 64px;
+    padding-bottom: 72.5px;
+    h3 {
+      color: $white;
+      text-align: center;
+      font-variant-numeric: slashed-zero;
+      @include set-font-size-weight(50px, 400);
+      line-height: 60px;
+    }
+    span {
+      color: $red;
+    }
+  }
+}
+
+.buttonContainer.fromSummary {
+  bottom: 81px;
+  flex-direction: column;
+  gap: 18px;
+  button {
+    padding: 0;
+    span {
+      color: $attack-green;
+    }
+  }
+  p {
+    max-width: 960px;
+    color: $mid-dark-gray;
+    text-align: center;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(40px, 400);
+    line-height: 120%; /* 48px */
+  }
+}

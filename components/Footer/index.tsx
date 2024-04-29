@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { opacityOfButton, topOfBotton } from '../../public/count-down';
+import FooterButton from '../../common/FooterButton';
+import { CANCEL, cancelAttackTitle } from '../../constants';
 
 import styles from './Footer.module.scss';
 
@@ -24,14 +26,11 @@ const Footer = ({ cancelCountdown }: { cancelCountdown: () => void }) => {
         priority
       />
 
-      <div className={styles.buttonContainer}>
-        <button className={styles.cancelButton} onClick={cancelCountdown}>
-          <h3>
-            Для отмены атаки нажмите кнопку
-            <span> “ОТМЕНА</span>
-          </h3>
-        </button>
-      </div>
+      <FooterButton
+        onClick={cancelCountdown}
+        order={CANCEL}
+        title={cancelAttackTitle}        
+      />
     </footer>
   );
 };

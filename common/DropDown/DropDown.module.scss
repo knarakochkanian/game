@@ -1,7 +1,7 @@
 @import '/app/variables.module.scss';
 
 .dropdownCtn {
-  position: relative;  
+  position: relative;
 }
 
 .disabled.dropdownCtn {
@@ -17,6 +17,7 @@
     left: -3px;
     background-color: $card;
     width: 687px;
+    z-index: 9;
     dialog.dropdownOptions {
       width: 100%;
       background-color: $card;

@@ -1,13 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import useCloseModal from '../../hooks/useCloseModal';
 import TitleAndInfo from '../TitleAndInfo';
-import { arrowDown, arrowUp } from '../../public/summary';
+import DropdownArrow from '../Arrow';
 
 import styles from './DropDown.module.scss';
-import DropdownArrow from '../DropdownArrow';
 
 interface IDropDownOption {
   value: string;

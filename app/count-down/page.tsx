@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -49,10 +49,12 @@ export default function CountDown() {
               {String(time.minutes).padStart(2, '0')}
               <span className={styles.minutes}>минуты</span>
             </span>
-            <span className={styles.time}>
-              {String(time.seconds).padStart(2, '0')}
-              <span className={styles.seconds}>секунды</span>
-            </span>
+            <div>
+              <span className={styles.time}>
+                {String(time.seconds).padStart(2, '0')}
+                <span className={styles.seconds}>секунды</span>
+              </span>
+            </div>
           </div>
 
           <div className={styles.attack}>
@@ -61,7 +63,7 @@ export default function CountDown() {
           </div>
         </div>
       </div>
-      
+
       <Grid />
       <SideLines />
       <Loader />

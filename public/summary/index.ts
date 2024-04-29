@@ -5,8 +5,22 @@ import trash from './trash.svg';
 import noiseMap from './noiseMap.svg';
 import arrowDown from './arrowDown.svg';
 import arrowUp from './arrowUp.svg';
+import sidelinesForButtons from './sidelinesForButtons.svg';
+import summaryFooterGradient from './summaryFooterGradient.svg';
+import summaryFooterForm from './summaryFooterForm.svg';
+import backArrow from './backArrow.svg';
+import forwardArrow from './forwardArrow.svg';
+import backBtnShape from './backBtnShape.svg';
+import forwardBtnShape from './forwardBtnShape.svg';
 
 export {
+  backArrow,
+  backBtnShape,
+  forwardArrow,
+  forwardBtnShape,
+  summaryFooterForm,
+  summaryFooterGradient,
+  sidelinesForButtons,
   leftSquareBracket,
   rightSquareBracket,
   lines,

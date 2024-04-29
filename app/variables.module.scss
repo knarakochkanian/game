@@ -33,6 +33,7 @@ $protect-dark-blue-focus: #161824;
 $protect-dark-blue-select: #010526;
 $protect-dark-blue-select-60: rgba(1, 5, 38, 0.6);
 $protect-map-default: #585966;
+$unvisible: rgba(0, 0, 0, 0);
 
 // mixins
 @mixin set-font-size-weight($fontSize, $fontWeight) {

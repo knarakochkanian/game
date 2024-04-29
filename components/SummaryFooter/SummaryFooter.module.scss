@@ -1,15 +1,15 @@
 @import '/app/variables.module.scss';
 
-.footer {
+.summaryFooter {  
   .opacityOfButton {
     position: fixed;
-    bottom: 0;
-    left: 650px;
+    bottom: 30px;
+    left: 765px;
   }
   .topOfBotton {
     position: fixed;
-    bottom: 103px;
+    bottom: 129.5px;
     left: 764px;
     z-index: 99999;
-  }  
+  }
 }

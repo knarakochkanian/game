@@ -23,6 +23,7 @@ function Sidenav({ isOpen, onClose }: SidenavProps) {
             <h2>Атака #000-001</h2>
             <Image src="home/basket.svg" alt="basket" width={48} height={48} />
           </div>
+          
           {isOpen && (
             <DropDown
               title="Регион"
