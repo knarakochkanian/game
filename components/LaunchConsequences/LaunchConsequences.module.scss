@@ -1,6 +1,7 @@
 @import '/app/variables.module.scss';
 
 .launchConsequences {
+  position: relative;
   display: flex;
   gap: 44px;
   margin-top: 64px;
@@ -45,4 +46,8 @@
       -webkit-border-radius: 20px;
     }
   }
+}
+
+.launchConsequences.history {
+  margin-top: 0;
 }

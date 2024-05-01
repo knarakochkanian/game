@@ -1,0 +1,29 @@
+@import '/app/variables.module.scss';
+
+.attackSelectedInfo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  span {
+    padding: 8px;
+    padding-left: 32px;
+    background-color: $pre-black;
+    color: $mid-dark-gray;
+    font-variant-numeric: slashed-zero;
+    text-overflow: ellipsis;
+    @include set-font-size-weight(36px, 400);
+    line-height: 120%; /* 43.2px */
+    letter-spacing: 0.36px;
+  }
+  .arrowDown {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  .slashesFromBottom {
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+  }
+}

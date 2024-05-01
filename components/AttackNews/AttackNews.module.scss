@@ -1,0 +1,34 @@
+@import '/app/variables.module.scss';
+
+.attackNewsCtn {
+  padding-left: 32px;
+  padding-bottom: 32px;
+  .news {
+    margin-top: 72px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .titleAndBtnCtn {
+    display: flex;
+    gap: 162px;
+    align-items: center;
+    h5,
+    button {
+      color: $white;
+      font-variant-numeric: slashed-zero;
+      line-height: 120%; /* 40.8px */
+      text-transform: uppercase;
+    }
+    h5 {
+      @include set-font-size-weight(34px, 600);
+      letter-spacing: 1.02px;
+    }
+    button {
+      padding: 16px 24px;
+      border: 2px solid $white;
+      @include set-font-size-weight(28px, 400);
+      letter-spacing: 0.28px;
+    }
+  }
+}

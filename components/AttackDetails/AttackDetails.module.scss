@@ -1,49 +1,5 @@
 @import '/app/variables.module.scss';
 
 .attackDetails {
-  width: 2072px;
-  z-index: 99;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  .header {
-    padding: 20px 44px 20px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $attack-dark-green-focus;
-    .leftPart {
-      display: flex;
-      gap: 40px;
-      padding-left: 16px;
-      align-items: center;
-      h2.attackTitle {
-        @include TypoH2;
-      }
-      .delayedStart {
-        color: $attack-green;
-        font-variant-numeric: slashed-zero;
-        text-transform: uppercase;
-        @include TypoBodySmall;
-        @include flex-center;
-      }
-    }
-    .rightPart {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      .completingDate {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        span {
-          color: $attack-green;
-          font-variant-numeric: slashed-zero;
-          text-transform: uppercase;
-          @include TypoBodySmall;
-        }
-      }
-    }
-  }
+  @include attacksCtnStyles;
 }

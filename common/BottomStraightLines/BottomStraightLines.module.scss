@@ -1,0 +1,14 @@
+.lineLeft,
+.lineRight {
+  position: fixed;
+  bottom: -12px;
+  z-index: 9999;
+}
+
+.lineLeft {
+  left: 20px;
+}
+
+.lineRight {
+  right: 20px;
+}

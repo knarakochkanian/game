@@ -1,0 +1,12 @@
+@import '/app/variables.module.scss';
+
+.attackCard {
+  position: relative;
+  background-color: $black-80;
+  .attackImg {
+    position: absolute;
+    z-index: 999;
+    top: 4px;
+    left: -120px;
+  }
+}

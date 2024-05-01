@@ -6,6 +6,7 @@ import SystemState from '../../common/SystemState';
 import Waves from '../../common/Waves';
 import AttackDetails from '../../components/AttackDetails';
 import { ONBOARDING } from '../../constants';
+import { attackExample } from '../../data/attacks';
 import { simCards, waves } from '../../data/connectionData';
 
 import styles from './ui-kit.module.scss';
@@ -14,7 +15,7 @@ export default function Test() {
   return (
     <>
       <div className={styles.attackCtn}>
-        <AttackDetails from={ONBOARDING} />
+        <AttackDetails from={ONBOARDING} attack={attackExample} />
       </div>
 
       <Grid />

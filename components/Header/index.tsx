@@ -6,13 +6,13 @@ import {
   trash,
 } from '../../public/summary';
 
-import styles from './AttackDetails.module.scss';
+import styles from './Header.module.scss';
 
-const Header = () => {
+const Header = ({ attack }: { attack: IAttack }) => {
   return (
     <header className={styles.header}>
       <div className={styles.leftPart}>
-        <h2 className={styles.attackTitle}>Атака #000-001</h2>
+        <h2 className={styles.attackTitle}>Атака #{attack.name}</h2>
         <span className={styles.delayedStart}>
           <Image
             src={leftSquareBracket}
@@ -21,7 +21,8 @@ const Header = () => {
             height={42}
             priority
           />
-          отложенный запуск
+          {attack.isCompleted ? `выполнена` : `отложенный запуск`}
+
           <Image
             src={rightSquareBracket}
             alt="rightSquareBracket"
@@ -34,15 +35,21 @@ const Header = () => {
 
       <div className={styles.rightPart}>
         <div className={styles.completingDate}>
-          <Image src={lines} alt="lines" width={120} height={24} priority />
-          <span>будет выполнена</span>
-          <span>03.02.2024</span>
-          <span>в 20:13</span>
+          {!attack.isCompleted && (
+            <>
+              <Image src={lines} alt="lines" width={120} height={24} priority />
+              <span>будет выполнена</span>
+            </>
+          )}
+          <span>{attack.date.split(' ')[0]}</span>
+          <span>в {attack.date.split(' ')[1]}</span>
         </div>
 
-        <button>
-          <Image src={trash} alt="trash" width={48} height={48} priority />
-        </button>
+        {!attack.isCompleted && (
+          <button>
+            <Image src={trash} alt="trash" width={48} height={48} priority />
+          </button>
+        )}
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-const regionOptions: IStepOption[] = [
+const regionOptions: IOption[] = [
   {
     label: 'Антигуа и Барбуда',
     value: 'Antigua and Barbuda',

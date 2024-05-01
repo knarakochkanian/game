@@ -1,16 +1,28 @@
-import Header from './Header';
 import SelectRegionAndIndustry from '../SelectRegionAndIndustry.tsx';
 import LaunchConsequences from '../LaunchConsequences';
-import launchConsequences from '../../data/launchConsequences';
+import industryOptions from '../../data/industryOptions';
+import regionOptionsUSA from '../../data/USAdropdown';
+import Header from '../Header';
 
 import styles from './AttackDetails.module.scss';
 
-const AttackDetails = ({ from = '' }: { from?: string }) => {
+const AttackDetails = ({
+  from = '',
+  attack,
+}: {
+  from?: string;
+  attack: IAttack;
+}) => {
   return (
     <div className={`${styles.attackDetails} ${styles[from]}`}>
-      <Header />
-      <SelectRegionAndIndustry from={from} />
-      <LaunchConsequences launchConsequences={launchConsequences} />
+      <Header attack={attack} />
+      <SelectRegionAndIndustry
+        attack={attack}
+        from={from}
+        industryOptions={industryOptions}
+        regionOptions={regionOptionsUSA}
+      />
+      <LaunchConsequences launchConsequences={attack.launchConsequences} />
     </div>
   );
 };

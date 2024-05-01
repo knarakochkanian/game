@@ -1,3 +1,5 @@
+import attacks from '../data/attacks';
+
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
   let spaced = reversed.replace(/(\d{3})(?=\d)/g, '$1 ');
@@ -11,4 +13,8 @@ export const truncateString = (inputString: string, maxLength: number) => {
   } else {
     return inputString.slice(0, maxLength - 3) + '...';
   }
+};
+
+export const getAttack = (attackId: string): IAttack | undefined => {
+  return attacks.find((attack) => attack.id === attackId);
 };

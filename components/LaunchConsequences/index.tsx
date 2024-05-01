@@ -22,8 +22,10 @@ import styles from './LaunchConsequences.module.scss';
 
 const LaunchConsequences = ({
   launchConsequences,
+  from = '',
 }: {
   launchConsequences: ILaunchConsequences;
+  from?: string;
 }) => {
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
 
@@ -31,7 +33,7 @@ const LaunchConsequences = ({
     <div
       className={`${styles.launchConsequences} ${
         paragraphIsOpen ? styles.paragraphIsOpen : ''
-      }`}
+      } ${from} ${styles[from]}`}
     >
       <div className={styles.info}>
         <h3 className={styles.title}>Последствия запуска</h3>

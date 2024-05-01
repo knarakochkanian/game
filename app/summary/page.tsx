@@ -7,6 +7,7 @@ import { attack } from '../../public/count-down';
 import SideLines from '../../common/SideLines';
 import SummaryFooter from '../../components/SummaryFooter';
 import BackAndForwardBtns from '../../common/BackAndForwardBtns';
+import { attackExample } from '../../data/attacks';
 
 import styles from './summary.module.scss';
 
@@ -32,7 +33,7 @@ const Summary = () => {
           height={80}
           priority
         />
-        <AttackDetails />
+        <AttackDetails attack={attackExample}/>
       </div>
 
       <BackAndForwardBtns onBack={onBack} onForward={onForward} />

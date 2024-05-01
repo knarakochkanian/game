@@ -1,4 +1,4 @@
-const industryOptions: IStepOption[] = [
+const industryOptions: IOption[] = [
   {
     label: 'Вооруженные силы',
     value: 'armed forces',

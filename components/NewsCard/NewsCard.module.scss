@@ -1,0 +1,20 @@
+@import '/app/variables.module.scss';
+
+.newsCard {
+  @include flex-column(24px);
+  h2,
+  p {
+    line-height: 120%; /* 38.4px */
+    text-overflow: ellipsis;
+  }
+  h2 {
+    color: $white;
+    @include set-font-size-weight(32px, 500);
+  }
+  p {
+    margin-top: 16px;
+    color: $mid-gray;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(28px, 400);
+  }
+}

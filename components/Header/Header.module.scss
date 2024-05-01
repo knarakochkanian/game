@@ -1,0 +1,42 @@
+@import '/app/variables.module.scss';
+
+.header {
+  padding: 20px 44px 20px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $attack-dark-green-focus;
+  .leftPart {
+    display: flex;
+    gap: 40px;
+    padding-left: 16px;
+    align-items: center;
+    h2.attackTitle {
+      @include TypoH2;
+      line-height: 86%;
+    }
+    .delayedStart {
+      color: $attack-green;
+      font-variant-numeric: slashed-zero;
+      text-transform: uppercase;
+      @include TypoBodySmall;
+      @include flex-center;
+    }
+  }
+  .rightPart {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    .completingDate {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      span {
+        color: $attack-green;
+        font-variant-numeric: slashed-zero;
+        text-transform: uppercase;
+        @include TypoBodySmall;
+      }
+    }
+  }
+}

@@ -7,6 +7,14 @@ export const IP = 'IP';
 
 //pages
 export const ONBOARDING = 'onboarding';
+export const HISTORY = 'history';
+
+export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY];
+
+//damage levels
+export const CRITICAL = 'Критический';
+export const MINIMAL = 'Минимальный';
+export const WARNING = 'Предупреждение';
 
 //oreders
 export const CANCEL = 'ОТМЕНА';
