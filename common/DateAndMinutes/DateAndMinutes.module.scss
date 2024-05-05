@@ -1,0 +1,18 @@
+@import '/app/variables.module.scss';
+
+.date {
+  display: flex;
+  gap: 88px;
+  span {
+    color: $mid-gray;
+    @include newsCardTextStyles;
+  }
+  span:nth-child(2) {
+    position: relative;
+    img {
+      position: absolute;
+      left: -48px;
+      top: -4px;
+    }
+  }
+}

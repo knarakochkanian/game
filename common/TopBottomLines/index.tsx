@@ -4,14 +4,15 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { bottom, top } from '../../public/count-down';
 import BottomStraightLines from '../BottomStraightLines';
-import useGetPage from '../../hooks/useGetPage';
-import { HISTORY } from '../../constants';
+import { bottomLinesAreStraightPages } from '../../constants';
 
 import styles from './TopBottomLines.module.scss';
 
 const TopBottomLines = () => {
   const pathname = usePathname();
-  const isInHistory = pathname?.split('/').includes(HISTORY);
+  const areBottomLinesStraight = bottomLinesAreStraightPages.some((page) =>
+    pathname?.split('/').includes(page)
+  );
 
   return (
     <>
@@ -23,7 +24,7 @@ const TopBottomLines = () => {
         height={81}
         priority
       />
-      {isInHistory ? (
+      {areBottomLinesStraight ? (
         <BottomStraightLines />
       ) : (
         <Image

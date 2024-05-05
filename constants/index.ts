@@ -8,8 +8,11 @@ export const IP = 'IP';
 //pages
 export const ONBOARDING = 'onboarding';
 export const HISTORY = 'history';
+export const NEWS = 'news';
 
 export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY];
+export const bottomLinesAreStraightPages = [NEWS, HISTORY];
+export const pagesWithoutGrid = [NEWS];
 
 //damage levels
 export const CRITICAL = 'Критический';
@@ -35,3 +38,5 @@ export const stateSystemOn =
   'Система подключена к защищенной сети. Возможно создание и пуск задачи.';
 export const stateSystemOff =
   'Пуск задачи невозможен. Текущая задача будет сохранена и доступна к запуску, когда система подключится к защищенной сети.';
+
+

@@ -4,11 +4,21 @@ import { closeXButton } from '../../public/ui_kit';
 
 import styles from './ModalContainer.module.scss';
 
-const ModalContainer = ({ children }: { children: ReactNode }) => {
+interface IModalContainerProps {
+  children: ReactNode;
+  name?: string;
+  setModalClose: () => void;
+}
+
+const ModalContainer = ({
+  children,
+  name,
+  setModalClose,
+}: IModalContainerProps) => {
   return (
-    <dialog className={styles.modalContainer}>
+    <dialog className={`${styles.modalContainer} ${name ? styles[name] : ''}`}>
       <div>
-        <div role='button'>
+        <div role="button" onClick={setModalClose}>
           <Image
             className={styles.closeXButton}
             src={closeXButton}

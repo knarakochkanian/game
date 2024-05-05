@@ -1,0 +1,11 @@
+@import '/app/variables.module.scss';
+
+.singleNewsModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(20px);
+  z-index: 99999;
+}

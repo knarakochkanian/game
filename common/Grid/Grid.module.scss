@@ -5,9 +5,12 @@
   top: 0;
   max-width: 2800px;
   overflow: hidden;
-  .topGrid,
-  .bottomGrid,
-  .row {
-    position: relative;
-  }
+}
+
+.grid.gridDisplayNone {
+  display: none;
+}
+
+.noiseImg {
+  position: absolute;
 }

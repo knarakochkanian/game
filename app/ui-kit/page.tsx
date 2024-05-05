@@ -20,19 +20,19 @@ export default function Test() {
 
       <Grid />
       <div className={styles.test}>
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SimCards simCards={simCards} />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <Waves waves={waves} />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SystemState isOn />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SystemState isOn={false} />
         </ModalContainer>
       </div>

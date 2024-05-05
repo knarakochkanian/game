@@ -104,6 +104,13 @@ $unvisible: rgba(0, 0, 0, 0);
   transform: translate(-50%, -50%);
 }
 
+@mixin modalCtnStyles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 //Typography
 @mixin TypoBodyBig {
   font-size: 34px;
@@ -139,4 +146,33 @@ $unvisible: rgba(0, 0, 0, 0);
   font-variant-numeric: slashed-zero;
   @include set-font-size-weight(56px, 600);
   line-height: 120%; /* 67.2px */
+}
+
+@mixin newsCardTextStyles {
+  font-variant-numeric: slashed-zero;
+  @include set-font-size-weight(28px, 400);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 120%; /* 33.6px */
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
+}
+
+//other
+@mixin showEllipsisInTheEnd($numOfLines, $maxWidth) {
+  display: -webkit-box;
+  max-width: $maxWidth;
+  -webkit-line-clamp: $numOfLines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin unsetEllipsisInTheEnd {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: scroll;
+  text-overflow: unset;
+  max-width: none;
 }

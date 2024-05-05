@@ -1,15 +1,22 @@
 import Image from 'next/image';
-import { arrowDown, arrowUp } from '../../public/summary';
+import {
+  arrowDown,
+  arrowDownGray,
+  arrowUp,
+  arrowUpGray,
+} from '../../public/summary';
 
 import styles from './Arrow.module.scss';
 
 const Arrow = ({ open, name = '' }: { open: boolean; name?: string }) => {
+  const isArrowGray = name === 'inAttackWithDataCard';
+
   return (
     <>
       {open ? (
         <Image
           className={`${styles.arrow} ${styles[name]} ${styles.isOpen}`}
-          src={arrowUp}
+          src={isArrowGray ? arrowUpGray : arrowUp}
           alt="arrowUp"
           width={24}
           height={24}
@@ -18,7 +25,7 @@ const Arrow = ({ open, name = '' }: { open: boolean; name?: string }) => {
       ) : (
         <Image
           className={`${styles.arrow} ${styles[name]}`}
-          src={arrowDown}
+          src={isArrowGray ? arrowDownGray : arrowDown}
           alt="arrowDown"
           width={24}
           height={24}

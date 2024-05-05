@@ -14,3 +14,11 @@
     right: 0;
   }
 }
+
+.modalContainer.singleNews {
+  width: 1138px;
+  padding-top: 81px;
+  padding-bottom: 0;
+  background-color: $card;
+  @include modalCtnStyles;
+}
