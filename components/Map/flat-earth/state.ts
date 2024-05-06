@@ -1,5 +1,5 @@
 import { Position } from 'geojson';
-import { EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, Shape, ShapeGeometry, Vector2 } from 'three';
+import { Color, EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, MeshStandardMaterial, RepeatWrapping, Shape, ShapeGeometry, TextureLoader, Vector2 } from 'three';
 import merc from 'mercator-projection'
 import { getCountryGeometryByA3Code, getUSStateGeometryByGN_A1Code } from '../utils/utils';
 import { ComplexCountry } from './complex-country';
@@ -52,10 +52,11 @@ export class State {
 
   createMesh() {
     const geometry = this.createGeometry(this.geometry)
+    const material = new MeshBasicMaterial({ color: this.shapeColor })
 
     const mesh = new Mesh(
       geometry,
-      new MeshBasicMaterial({ color: this.shapeColor })
+      material,
     );
 
     const edgesGeom = new EdgesGeometry(geometry)
@@ -65,7 +66,7 @@ export class State {
     mesh.name = this.A3Code
     mesh.userData = this;
 
-    if (mesh.name === "LSO") {
+    if (mesh.name === "LSO") { // overcoming the problem with improper rendering of the Lesotho
       mesh.position.z = 0.1;
     }
 
@@ -85,7 +86,12 @@ export class State {
       for (let i = 0; i < P.length; ++i) {
         const lat = P[i][1]
         const lng = P[i][0]
-        const { x, y } = merc.fromLatLngToPoint({ lat, lng });
+        let { x, y } = merc.fromLatLngToPoint({ lat, lng });
+
+        // fix for russia to make eastern part of the country on the right
+        if (this.A3Code === "RUS" && x < 50) {
+          x += 256; // 256 is current tilesize
+        }
 
         vecs2.push(new Vector2(x, -y));
       }

@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from "react";
 import { DEFAULT_COLOR, PICKED_COLOR } from "./theme";
 import { UseMap } from "./use-map.hook";
@@ -25,15 +27,26 @@ export const SphereMap = ({ visible }: MapProps) => {
     focusOnCountry.current ? focusOnCountry.current(name) : null
   }
 
-  const { ref, highlightCountry, focusOnCountry } = UseMap({ onCountryPicked: onPolygonClick, mapType: MapType.sphere, isNotInteractive: false })
+  const { ref, highlightCountry, focusOnCountry, resetHighlighting } = UseMap({ onCountryPicked: onPolygonClick, mapType: MapType.sphere, isNotInteractive: false })
 
   useEffect(() => {
     highlightCountry.current("Соединённые Штаты Америки")
   })
 
+  useEffect(() => {
+    setTimeout(() => {
+      resetHighlighting.current()
+    }, 3000)
+  })
+
   return (
     <>
       <div ref={ref} style={{ width: '100%', height: '100%', display: visible ? "block" : "none" }} />
+      <div style={{
+        position: "absolute",
+        zIndex: 1,
+        background: "radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)",
+         }} />
     </>
   )
 }

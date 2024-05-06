@@ -2,11 +2,13 @@ import geojson from "../geodata/map+zaporizhzhia+kherson.geo.json"
 import usstates from "../geodata/usa-states.geo.json"
 import Globe, { GlobeInstance } from "globe.gl";
 import { Feature } from "geojson";
-import { DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, PICKED_COLOR } from "../theme";
+import { BACKGROUND_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, PICKED_COLOR } from "../theme";
 import { EarthParameters, IEarth } from "../map.types";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
 import bbox from 'geojson-bbox';
-import { MathUtils } from "three";
+import { MathUtils, Mesh, MeshBasicMaterial, RepeatWrapping, TextureLoader } from "three";
+import { getRegionsNamesByCountryName } from "../utils/utils";
+import { complexCountriesNames } from "../geodata/complex-countries";
 
 const MIN_ZOOM_ALTITUDE = 0.5
 const MAX_ZOOM_ALTITUDE = 1.6
@@ -41,14 +43,23 @@ export class Earth implements IEarth {
     const polygonsData = countriesData as Feature[];
     polygonsData.push(...usStatesData as Feature[]);
 
-    const globe = Globe()
+    // const noiseTexture = new TextureLoader().load("map/noiseMap.png")
+    // noiseTexture.wrapS = RepeatWrapping;
+    // noiseTexture.wrapT = RepeatWrapping;
+    // noiseTexture.repeat.set(6.5, 6.5);
+    // const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture });
+
+    const globe = Globe({ animateIn: false })
       // .polygonsData(geojson.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
       .polygonCapCurvatureResolution(1)
       .polygonsData(polygonsData)
       .polygonStrokeColor(() => contourColor)
       .polygonAltitude(() => 0.005)
-      .polygonSideColor(() => "rgba(0, 0, 0, 0)")
+      .polygonSideColor(() => "rgba(0, 0, 0, 0)") // hidden
       .showGraticules(true)
+      .backgroundColor(BACKGROUND_COLOR)
+      .showAtmosphere(false)
+      .globeImageUrl("map/noiseMap.png")
 
     this.globe = globe;
 
@@ -75,12 +86,24 @@ export class Earth implements IEarth {
   }
 
   public highlightCountry(name: string, color: string = PICKED_COLOR) {
-    const code = countriesNamesToCode[name]
-    if (!code) {
-      console.error(`no code for ${name}`)
-      return;
+    let namesToHighlight: string[];
+    if (complexCountriesNames.includes(name)) {
+      const regionNames = getRegionsNamesByCountryName(name)
+      namesToHighlight = regionNames
+    } else {
+      namesToHighlight = [name]
     }
-    this.stateCodeToCurrentColor.set(code, color)
+    console.log(namesToHighlight)
+
+    namesToHighlight.forEach(n => {
+      const code = countriesNamesToCode[n]
+      if (!code) {
+        console.error(`no code for ${n}`)
+        return;
+      }
+      this.stateCodeToCurrentColor.set(code, color)
+      console.log(this.stateCodeToCurrentColor)
+    })
     this.updateCountryColors()
   }
 
@@ -104,6 +127,11 @@ export class Earth implements IEarth {
     const altitude = MathUtils.clamp(zoom / 10, MIN_ZOOM_ALTITUDE, MAX_ZOOM_ALTITUDE)
 
     this.globe?.pointOfView({ lat: center[1], lng: center[0], altitude }, animationDurationMs)
+  }
+
+  public resetHighlighting() {
+    this.stateCodeToCurrentColor.clear()
+    this.updateCountryColors()
   }
 
   public onWindowResize() {

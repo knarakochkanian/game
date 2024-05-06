@@ -6,6 +6,7 @@ export enum MapType {
 export interface IEarth {
   render: (parentHtmlElement: HTMLElement) => void
   highlightCountry: (name: string, color?: string) => void
+  resetHighlighting: () => void
   moveCameraToCountry: (name: string) => void
   onWindowResize: () => void
   dispose: () => void

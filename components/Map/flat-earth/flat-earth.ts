@@ -1,21 +1,23 @@
 import anime from 'animejs'
-import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils } from "three";
-import { MapControls } from "three/examples/jsm/Addons.js";
+import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry } from "three";
+import { EffectComposer, MapControls, RenderPass, ShaderPass } from "three/examples/jsm/Addons.js";
 import { State } from "./state";
-import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR } from "../theme";
+import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
 import { ComplexCountry } from "./complex-country";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
 import { EarthParameters, IEarth } from '../map.types';
+import { complexCountriesNames } from "../geodata/complex-countries";
+import { VignetteShader } from '../utils/VignetteShader';
 
 const FOV = 50;
-const MIN_ZOOM = 50;
+const MIN_ZOOM = 40;
 const MAX_ZOOM = 180;
 const MAX_X = 215;
-const MAX_Z = 130;
+const MAX_Z = 160;
 const MIN_X = 40;
-const MIN_Z = 35;
+const MIN_Z = 25;
+const DEFAULT_ZOOM = 140;
 
-const complexCountriesNames = ["Соединённые Штаты Америки"]
 
 export class FlatEarth implements IEarth {
   // todo: dispose everything
@@ -27,6 +29,8 @@ export class FlatEarth implements IEarth {
 
   private controls: MapControls | undefined
 
+  private composer: EffectComposer | undefined;
+
   // private mapGroup: Group | undefined
 
   private parentHtmlElement: HTMLElement | undefined
@@ -37,20 +41,40 @@ export class FlatEarth implements IEarth {
 
   private isNotInteractive: boolean
 
+  private countryColor: string
+
+  private contourColor: string
+
   constructor({ countries, onCountryClick, isNotInteractive, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR }: EarthParameters) {
     this.onCountryClick = onCountryClick
     this.isNotInteractive = !!isNotInteractive
+    this.contourColor = contourColor
+    this.countryColor = countryColor
 
     const scene = createScene();
     this.scene = scene
 
     this.camera = createFlatEarthCamera();
 
+
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer = renderer;
 
     this.controls = createFlatEarthControls(this.camera, renderer);
+
+    const composer = new EffectComposer(this.renderer);
+    const pass = new RenderPass(scene, this.camera);
+    composer.addPass(pass);
+    this.composer = composer;
+
+    // var vignette = new ShaderPass(VignetteShader);
+    // console.log(window.innerWidth, window.innerHeight)
+    // vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+    // vignette.uniforms["radius"].value = .9; // default is 0.75
+    // vignette.uniforms["softness"].value = .9; // default is 0.3
+    // vignette.uniforms["gain"].value = .1; // default is 0.9
+    // composer.addPass(vignette);
 
     const mapGroup = new Group();
     mapGroup.rotateX(-Math.PI / 2);
@@ -80,7 +104,6 @@ export class FlatEarth implements IEarth {
       const country = State.fromA3Code(a3code, contourColor, countryColor);
       if (country) {
         this.countries[a3code] = country
-        console.log(a3code)
         const shape = country.createMesh()
         mapGroup.add(shape)
       }
@@ -89,7 +112,7 @@ export class FlatEarth implements IEarth {
     // this.controls.addEventListener("change", this._render.bind(this));
     renderer.domElement.addEventListener('click', this.onClick.bind(this));
 
-    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, 140, (MAX_Z + MIN_Z) / 2), 140, 0)
+    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, 0)
   }
 
   public render(parentHtmlElement: HTMLElement) {
@@ -118,7 +141,6 @@ export class FlatEarth implements IEarth {
   }
 
   public onClick(event: MouseEvent) {
-    console.log("clicked")
     if (!this.camera || !this.scene) {
       console.log("no camera or scene")
       return;
@@ -205,7 +227,13 @@ export class FlatEarth implements IEarth {
     }
   }
 
-  setCameraPositionOnMap(position: Vector3, zoom: number, animationDurationMs = 500) {
+  public resetHighlighting() {
+    for (const country of Object.values(this.countries)) {
+      country.setColor(this.countryColor)
+    }
+  }
+
+  private setCameraPositionOnMap(position: Vector3, zoom: number, animationDurationMs = 500) {
     if (!this.camera || !this.controls) {
       return;
     }
@@ -272,6 +300,7 @@ export class FlatEarth implements IEarth {
     const renderer = this.renderer
     const scene = this.scene
     const controls = this.controls
+    const composer = this.composer
 
     function animate() {
       if (!scene || !renderer || !controls || !camera) {
@@ -280,6 +309,7 @@ export class FlatEarth implements IEarth {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
       controls.update()
+      composer?.render()
     }
     animate();
   }
@@ -311,7 +341,35 @@ export class FlatEarth implements IEarth {
 
 function createScene(): Scene {
   const scene = new Scene();
-  scene.background = new Color(0x222222);
+  scene.background = new Color(BACKGROUND_COLOR);
+
+  const geometry = new PlaneGeometry(512, 512);
+
+
+  const noiseTexture = new TextureLoader().load("map/noiseMap.png")
+  noiseTexture.wrapS = RepeatWrapping;
+  noiseTexture.wrapT = RepeatWrapping;
+  noiseTexture.repeat.set(6.5, 6.5);
+  const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture });
+  const noiseBackgroundMesh = new Mesh(geometry, noiseMaterial);
+  noiseBackgroundMesh.rotateX(-Math.PI / 2);
+  noiseBackgroundMesh.position.set(128, 5, 128)
+  noiseMaterial.transparent = true;
+  noiseMaterial.opacity = 0.5
+  scene.add(noiseBackgroundMesh);
+
+  const gridTexture = new TextureLoader().load("map/grid.png")
+  gridTexture.wrapS = RepeatWrapping;
+  gridTexture.wrapT = RepeatWrapping;
+  gridTexture.repeat.set(1.3, 2.5);
+  const gridMaterial = new MeshBasicMaterial({ map: gridTexture });
+  gridMaterial.transparent = true;
+  gridMaterial.opacity = 0.1
+  const gridBackgroundMesh = new Mesh(geometry, gridMaterial);
+  gridBackgroundMesh.rotateX(-Math.PI / 2);
+  gridBackgroundMesh.position.set(128, -5, 128)
+  scene.add(gridBackgroundMesh);
+
   return scene;
 }
 

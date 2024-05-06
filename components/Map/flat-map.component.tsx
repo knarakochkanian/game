@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from "react";
 import { DEFAULT_COLOR, PICKED_COLOR } from "./theme";
 import { UseMap } from "./use-map.hook";
@@ -25,7 +27,7 @@ export const FlatMap = ({ visible }: MapProps) => {
     focusOnCountry.current ? focusOnCountry.current(name) : null
   }
 
-  const { ref, highlightCountry, focusOnCountry } = UseMap({ onCountryPicked: onPolygonClick,mapType: MapType.plane, isNotInteractive: false })
+  const { ref, highlightCountry, focusOnCountry, resetHighlighting } = UseMap({ onCountryPicked: onPolygonClick,mapType: MapType.plane, isNotInteractive: false })
 
   useEffect(() => {
     highlightCountry.current("Соединённые Штаты Америки")
