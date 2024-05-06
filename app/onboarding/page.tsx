@@ -15,7 +15,7 @@ import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
 
 export default function Onboarding() {
-  const [currentRegionId, setCurrentRegionId] = useState(null);
+  const [currentRegionId, setCurrentRegionId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
   const [modalOpen3, setModalOpen3] = useState(false);
@@ -24,16 +24,19 @@ export default function Onboarding() {
   const [modalOpen6, setModalOpen6] = useState(false);
   const [selectOpen, setSelectOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [expanded, setExpanded] = useState(regions[1]?.regions?.[0]?.id);
+  const [expanded, setExpanded] = useState<boolean | undefined | string>(
+    regions[1]?.regions?.[0]?.id
+  );
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [blur, setBlur] = useState(false);
   const [addColor, setAddColor] = useState(false);
   const [vpkSelected, setVpkSelected] = useState(false);
-  const handleExpansion = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  const handleExpansion =
+    (panel: string) => (event: unknown, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
-  const handleSelectRegion = (regionId) => {
+  const handleSelectRegion = (regionId: number) => {
     setCurrentRegionId(regionId);
     setSelectOpen(true);
     setButtonsDisabled(true);
@@ -168,7 +171,9 @@ export default function Onboarding() {
                     }}
                   >
                     <button
-                      className={` ${addColor ? 'Green' : ''} ModalButton1 ${modalOpen5 ? 'SecondarySmallShine' : ''}`}
+                      className={` ${addColor ? 'Green' : ''} ModalButton1 ${
+                        modalOpen5 ? 'SecondarySmallShine' : ''
+                      }`}
                       onClick={handleSelectAllVPK}
                     >
                       <span>
@@ -186,8 +191,8 @@ export default function Onboarding() {
                             addColor
                               ? 'Green'
                               : option.name == 'США'
-                                ? 'SecondarySmallShine'
-                                : 'SecondarySmallDisable'
+                              ? 'SecondarySmallShine'
+                              : 'SecondarySmallDisable'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >

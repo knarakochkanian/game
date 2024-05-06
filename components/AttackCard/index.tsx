@@ -9,7 +9,7 @@ import SelectRegionAndIndustry from '../SelectRegionAndIndustry.tsx';
 import styles from './AttackCard.module.scss';
 
 export interface IAttackCardProps {
-  setAttackId: TSetString;
+  setAttackId?: TSetString;
   attack: IAttack;
   fromDetails?: boolean;
 }

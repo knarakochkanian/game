@@ -1,4 +1,4 @@
-import ModalContainer from '../../common/ModalContainer';
+import ModalContainer from '../../common/Modals/ModalContainer';
 import NewsCardLarge from '../NewsCardLarge';
 import styles from './SingleNewsModal.module.scss';
 

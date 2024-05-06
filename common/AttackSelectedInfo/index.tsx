@@ -10,12 +10,19 @@ const AttackSelectedInfo = ({
   setAttackId,
   fromDetails,
 }: IAttackCardProps) => {
+  const handleClick = () => {
+    if (!setAttackId) {
+      return;
+    }
+    setAttackId(fromDetails ? '' : attack.id);
+  };
+
   return (
     <div className={styles.attackSelectedInfo}>
       <span>{attack.region.label}</span>
       <span>{attack.industry.label}</span>
 
-      <button onClick={() => setAttackId(fromDetails ? '' : attack.id)}>
+      <button onClick={handleClick}>
         <Image
           className={styles.arrowDown}
           src={arrowDown}

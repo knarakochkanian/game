@@ -11,12 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
-    "@mui/icons-material": "^5.0.0",
-    "@mui/material": "^5.0.0",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
-    "@mui/types": "^7.2.14",
+    "@mui/icons-material": "^5.15.16",
+    "@mui/material": "^5.15.16",
     "next": "14.2.1",
     "react": "^18",
     "react-dom": "^18",
@@ -25,11 +21,14 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.80",
     "@types/react-dom": "^18",
+    "css-loader": "^7.1.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
-    "sass": "^1.75.0",
+    "sass": "^1.76.0",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^4.0.0",
     "typescript": "^5"
   }
 }

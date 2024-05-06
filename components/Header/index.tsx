@@ -10,11 +10,15 @@ import { IAttackCardProps } from '../AttackCard';
 import styles from './Header.module.scss';
 
 const Header = ({ attack, setAttackId, fromDetails }: IAttackCardProps) => {
+  const handleClick = () => {
+    if (!setAttackId) {
+      return;
+    }
+    setAttackId(fromDetails ? '' : attack.id);
+  };
+
   return (
-    <button
-      className={styles.header}
-      onClick={() => setAttackId(fromDetails ? '' : attack.id)}
-    >
+    <button className={styles.header} onClick={handleClick}>
       <div className={styles.leftPart}>
         <h2 className={styles.attackTitle}>Атака #{attack.name}</h2>
         <span className={styles.delayedStart}>
