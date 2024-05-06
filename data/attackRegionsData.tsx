@@ -9,7 +9,7 @@ interface RegionCategory {
   options?: Option[];
 }
 
-interface Region {
+export interface Region {
   id: number;
   nameMain: string;
   regions?: RegionCategory[];

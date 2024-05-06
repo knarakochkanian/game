@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import BaseButton from '../../common/BaseButtton';
 import Modal from '../../common/Modals/Modal';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
-import { regions } from '../../data/attackRegionsData';
+import { Region, regions } from '../../data/attackRegionsData';
 
 import styles from './RegionAndOtherButtons.module.scss';
 
@@ -22,9 +22,12 @@ interface IRegionAndOtherButtonsProps {
   setDrawerOpen: TSetBoolean;
 }
 
-const RegionAndOtherButtons = ({drawerOpen, setDrawerOpen}: IRegionAndOtherButtonsProps) => {
+const RegionAndOtherButtons = ({
+  drawerOpen,
+  setDrawerOpen,
+}: IRegionAndOtherButtonsProps) => {
   const [modalOpen3, setModalOpen3] = useState(false);
-  const [selectOpen, setSelectOpen] = useState(false);  
+  const [selectOpen, setSelectOpen] = useState(false);
 
   const [expanded, setExpanded] = useState(regions[0].id);
 
@@ -69,10 +72,10 @@ const RegionAndOtherButtons = ({drawerOpen, setDrawerOpen}: IRegionAndOtherButto
         </div>
 
         <div>
-          {regions.map((region, index) => (
+          {regions[0].regions?.map((region, index) => (
             <Accordion
               key={index}
-              expanded={expanded === region.id}
+              expanded={String(expanded) === region.id}
               onChange={handleExpansion(region.id)}
               sx={{
                 backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
@@ -90,7 +93,7 @@ const RegionAndOtherButtons = ({drawerOpen, setDrawerOpen}: IRegionAndOtherButto
               <AccordionDetails
                 style={{ flexWrap: 'wrap', display: 'flex', gap: '10px' }}
               >
-                {region.options.map((option) => (
+                {region.options?.map((option) => (
                   <div
                     key={option.id}
                     style={{ flexWrap: 'wrap', gap: '10px' }}
