@@ -63,7 +63,7 @@ $unvisible: rgba(0, 0, 0, 0);
 @mixin flex-start {
   display: flex;
   align-items: stretch;
-  justify-content: start;
+  justify-content: flex-start;
 }
 //Container
 @mixin containerOnly {

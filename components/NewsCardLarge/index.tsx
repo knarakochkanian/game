@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { read } from '../../public/news';
 import DateAndMinutes from '../../common/DateAndMinutes';
 
 import styles from './NewsCardLarge.module.scss';

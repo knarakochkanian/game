@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import Arrow from '../Arrow';
 import GreenLineBorders from '../GreenLineBorders';
-import styles from './AttackWithDataCard.module.scss';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+
+import styles from './AttackWithDataCard.module.scss';
 
 interface IAttackWithDataCardProps {
   name: string;

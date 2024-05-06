@@ -14,8 +14,10 @@ import target from './target.svg';
 import smallCircle from './smallCircle.svg';
 import mediumCircle from './mediumCircle.svg';
 import bigCircle from './bigCircle.svg';
+import bottomNarrowLines from './bottomNarrowLines.svg';
 
 export {
+  bottomNarrowLines,
   bigCircle,
   mediumCircle,
   smallCircle,

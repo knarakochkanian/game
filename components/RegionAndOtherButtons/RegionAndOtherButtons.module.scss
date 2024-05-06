@@ -1,0 +1,14 @@
+@import '/app/variables.module.scss';
+
+.regionAndOtherButtons {
+  position: fixed;
+  display: inline-flex;
+  gap: 24px;
+  z-index: 10;
+  &Input {
+    border: 2px solid var(--grayscale-white-40, rgba(255, 255, 255, 0.4));
+    background: var(--Grayscale-Card, #080808);
+    display: flex;
+    margin-bottom: 16px;
+  }
+}

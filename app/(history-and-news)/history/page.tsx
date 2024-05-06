@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
-import Attacks from '../../../components/Attacks';
 import attacks from '../../../data/attacks';
+import History from '../../../components/History';
 
 export const metadata: Metadata = {
   title: 'История запусков',
   description: 'История запусков',
 };
 
-const History = () => {
-  return <Attacks attacks={attacks} />;
+const HistoryPage = () => {
+  return <History attacks={attacks} />;
 };
 
-export default History;
+export default HistoryPage;

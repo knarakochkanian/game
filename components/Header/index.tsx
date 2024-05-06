@@ -5,12 +5,16 @@ import {
   rightSquareBracket,
   trash,
 } from '../../public/summary';
+import { IAttackCardProps } from '../AttackCard';
 
 import styles from './Header.module.scss';
 
-const Header = ({ attack }: { attack: IAttack }) => {
+const Header = ({ attack, setAttackId, fromDetails }: IAttackCardProps) => {
   return (
-    <header className={styles.header}>
+    <button
+      className={styles.header}
+      onClick={() => setAttackId(fromDetails ? '' : attack.id)}
+    >
       <div className={styles.leftPart}>
         <h2 className={styles.attackTitle}>Атака #{attack.name}</h2>
         <span className={styles.delayedStart}>
@@ -51,7 +55,7 @@ const Header = ({ attack }: { attack: IAttack }) => {
           </button>
         )}
       </div>
-    </header>
+    </button>
   );
 };
 

@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import NewsCardLarge from '../NewsCardLarge';
-import styles from './SingleAttackNews.module.scss';
 import SingleNewsModal from '../SingleNewsModal';
 import useCloseModal from '../../hooks/useCloseModal';
+
+import styles from './SingleAttackNews.module.scss';
 
 const SingleAttackNews = ({ news }: { news: INews[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
