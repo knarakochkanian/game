@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { connected, notConnected } from '../../public/ui_kit';
-import ModalData from '../ModalData';
+import ModalData from '../Modals/ModalData';
 import { CONNECTED, NOT_CONNECTED } from '../../constants';
 import OnOffLine from '../OnOffLine';
 

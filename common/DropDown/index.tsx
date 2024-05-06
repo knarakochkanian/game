@@ -1,11 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import useCloseModal from '../../hooks/useCloseModal';
 import TitleAndInfo from '../TitleAndInfo';
-import DropdownArrow from '../Arrow';
+import { arrowDown, arrowUp } from '../../public/summary';
+import Box from "@mui/material/Box";
 
 import styles from './DropDown.module.scss';
+import DropdownArrow from '../Arrow';
+import {SxProps, Theme} from "@mui/system";
 
 interface IDropDownOption {
   value: string;
@@ -21,6 +25,7 @@ interface IDropDownProps {
   initiallySelectedOption?: IDropDownOption;
   makeTheChange?: (option: IDropDownOption) => void;
   from?: string;
+  sx?: SxProps<Theme>;
 }
 
 const DropDown = ({
@@ -32,6 +37,7 @@ const DropDown = ({
   disabled,
   optionsTitle,
   from,
+  sx
 }: IDropDownProps) => {
   let defaultOpen = false;
   if (from && from === 'onboarding') {
@@ -39,9 +45,9 @@ const DropDown = ({
   }
 
   const className = `${name}Dropdown`;
-  const [dropdownOpen, setDropdownOpen] = useState(defaultOpen);  
+  const [dropdownOpen, setDropdownOpen] = useState(defaultOpen);
   const [selectedOption, setSelectedOption] = useState(initiallySelectedOption);
-  
+
   const handleOptionChange = (option: IDropDownOption) => {
     makeTheChange && makeTheChange(option);
     setSelectedOption(option);
@@ -70,8 +76,9 @@ const DropDown = ({
   };
 
   return (
-    <div
+    <Box
       role="button"
+      sx={sx}
       tabIndex={0}
       aria-expanded={dropdownOpen ? 'true' : 'false'}
       className={`${styles.dropdownCtn} ${styles[className]} ${
@@ -88,7 +95,7 @@ const DropDown = ({
       <div className={styles.dropdownHeader}>
         <TitleAndInfo info={String(selectedOptionIndex + 1)} title={title} />
       </div>
-      
+
       {dropdownOpen && (
         <div className={styles.dialogCtn}>
           <dialog className={styles.dropdownOptions}>
@@ -99,7 +106,7 @@ const DropDown = ({
       )}
 
       <DropdownArrow open={dropdownOpen} />
-    </div>
+    </Box>
   );
 };
 

@@ -1,12 +1,12 @@
 @import "/app/variables.module";
 .onboarding{
   position: fixed;
-  z-index: 10;
   left: 1130px;
-
   &Wrapper{
-    @include flex-start;
-    padding: 51px 35px;
+    display: flex;
+    padding: 35px 0 0 51px;
+    position: relative;
+    z-index: 3;
   }
   &Buttons{
     display: inline-flex;
@@ -18,8 +18,28 @@
     display: flex;
     margin-bottom: 16px;
   }
+  &Accordion {
+    &Wrapper{
+      position: absolute;
+      top: 400px;
+      width: 764px;
+    }
+    &Details{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-left: 20px;
+    }
+    &Column{
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
   &Attack{
     width: 540px;
+    margin-left: 310px;
     @include flex-between;
     >button{
       @include TypoBodyBig;
@@ -62,6 +82,8 @@
     background: #1c4995;
   }
 &Globus{
-  margin-top: 310px;
+  position: absolute;
+  bottom: 10%;
+  left: 30%;
 }
 }

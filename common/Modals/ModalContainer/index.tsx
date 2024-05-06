@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Image from 'next/image';
-import { closeXButton } from '../../public/ui_kit';
+import { closeXButton } from '../../../public/ui_kit';
 
 import styles from './ModalContainer.module.scss';
 
