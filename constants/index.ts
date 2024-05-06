@@ -5,6 +5,9 @@ export const NETWORK = 'Сеть';
 export const WAVE_STATE = 'Состояние';
 export const IP = 'IP';
 
+export const ATTACK = 'атака';
+export const PROTECTION = 'защита';
+
 //pages
 export const ONBOARDING = 'onboarding';
 export const HISTORY = 'history';
