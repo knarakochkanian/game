@@ -1,5 +1,6 @@
 import ModalContainer from '../../common/Modals/ModalContainer';
 import NewsCardLarge from '../NewsCardLarge';
+
 import styles from './SingleNewsModal.module.scss';
 
 const SingleNewsModal = ({

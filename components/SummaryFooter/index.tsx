@@ -28,7 +28,7 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
         className={styles.opacityOfButton}
         src={summaryFooterGradient}
         alt="opacityOfButton"
-        width={1264}
+        width={1483}
         height={363}
         priority
       />

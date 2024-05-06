@@ -5,14 +5,9 @@ import styles from './Help.module.scss';
 
 const Help = () => {
   return (
-    <Image
-      alt="helpIcon"
-      className={styles.helpIcon}
-      src={helpIcon}
-      width={88}
-      height={88}
-      priority
-    />
+    <button className={styles.helpIcon}>
+      <Image alt="helpIcon" src={helpIcon} width={88} height={88} priority />
+    </button>
   );
 };
 

@@ -18,7 +18,10 @@ const Header = ({ attack, setAttackId, fromDetails }: IAttackCardProps) => {
   };
 
   return (
-    <button className={styles.header} onClick={handleClick}>
+    <header
+      className={`${styles.header} ${setAttackId ? styles.cursorPointer : ''}`}
+      onClick={handleClick}
+    >
       <div className={styles.leftPart}>
         <h2 className={styles.attackTitle}>Атака #{attack.name}</h2>
         <span className={styles.delayedStart}>
@@ -59,7 +62,7 @@ const Header = ({ attack, setAttackId, fromDetails }: IAttackCardProps) => {
           </button>
         )}
       </div>
-    </button>
+    </header>
   );
 };
 

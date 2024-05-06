@@ -6,6 +6,7 @@ import launchHistoryIndustryOptions from '../../data/launchHistoryIndustryOption
 import launchHistoryRegionOptions from '../../data/launchHistoryRegionOptions';
 import Header from '../Header';
 import SelectRegionAndIndustry from '../SelectRegionAndIndustry.tsx';
+
 import styles from './AttackCard.module.scss';
 
 export interface IAttackCardProps {
