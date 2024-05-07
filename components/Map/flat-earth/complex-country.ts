@@ -19,7 +19,7 @@ export class ComplexCountry {
 
     const regions = regionNames.map(regionName => 
       State.fromGN_A1Code(countriesNamesToCode[regionName], DEFAULT_CONTOUR_COLOR, DEFAULT_COLOR)
-    ).filter(region => !!region) as State[]
+  ).filter(region => !!region) as State[]
 
     const a3code = countriesNamesToCode[name]
 

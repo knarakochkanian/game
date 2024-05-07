@@ -58,7 +58,6 @@ export class State {
       geometry,
       material,
     );
-
     const edgesGeom = new EdgesGeometry(geometry)
     const edges = new LineSegments(edgesGeom, new LineBasicMaterial( { color: this.lineColor } ) );
     mesh.add(edges)
