@@ -1,12 +1,12 @@
 import { Position } from "geojson";
-import countriesJson from "../geodata/map+zaporizhzhia+kherson.geo.json"
+import countriesJson from "../geodata/map-edited.geo.json"
 import usStatesJson from "../geodata/usa-states.geo.json"
 import { countries } from "../geodata/countries";
 
 export function getCountryGeometryByA3Code(a3Code: string): Position[][] | Position[][][] | undefined {
   for (const country of countriesJson.features) {
-    if (country.properties?.GU_A3 === a3Code) {
-      return country.geometry.coordinates;
+    if (country.properties?.country_a3 === a3Code) {
+      return country.geometry?.coordinates;
     }
   }
 }

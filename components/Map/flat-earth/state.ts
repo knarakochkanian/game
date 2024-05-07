@@ -3,6 +3,7 @@ import { Color, EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicM
 import merc from 'mercator-projection'
 import { getCountryGeometryByA3Code, getUSStateGeometryByGN_A1Code } from '../utils/utils';
 import { ComplexCountry } from './complex-country';
+import { getCountryOrStateNameByCode } from '../geodata/countries-names-to-a3-map';
 
 /**
  * defines a single country or one state of a complex country
@@ -34,7 +35,8 @@ export class State {
   static fromA3Code(A3Code: string, lineColor: string, shapeColor: string) {
     const geometry = getCountryGeometryByA3Code(A3Code)
     if (!geometry) {
-      console.error(`no geometry for ${A3Code}`)
+      const name = getCountryOrStateNameByCode(A3Code)
+      console.error(`no geometry for ${name}`)
       return;
     }
     return new State(A3Code, geometry, lineColor, shapeColor)

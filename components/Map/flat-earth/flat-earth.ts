@@ -7,7 +7,6 @@ import { ComplexCountry } from "./complex-country";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
 import { EarthParameters, IEarth } from '../map.types';
 import { complexCountriesNames } from "../geodata/complex-countries";
-import { VignetteShader } from '../utils/VignetteShader';
 
 const FOV = 50;
 const MIN_ZOOM = 40;
