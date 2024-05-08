@@ -36,6 +36,24 @@
       gap: 20px;
     }
   }
+  &TheGorge {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    &List{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      >li{
+        padding: 24px;
+        @include flex-between;
+        >div{
+          @include flex-start;
+          gap: 32px;
+        }
+      }
+    }
+  }
 
   &Attack{
     width: 540px;

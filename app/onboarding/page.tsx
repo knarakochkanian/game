@@ -24,15 +24,16 @@ export default function Onboarding() {
   const [modalOpen6, setModalOpen6] = useState(false);
   const [selectOpen, setSelectOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [expanded, setExpanded] = useState<boolean | undefined | string>(
-    regions[1]?.regions?.[0]?.id
+  const [inputTheGorge, setInputTheGorge] = useState(true);
+  const [expanded, setExpanded] = useState<boolean | undefined | number>(
+    regions[0]?.regions?.[0]?.id
   );
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [blur, setBlur] = useState(false);
   const [addColor, setAddColor] = useState(false);
   const [vpkSelected, setVpkSelected] = useState(false);
   const handleExpansion =
-    (panel: string) => (event: unknown, isExpanded: boolean) => {
+    (panel: number) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -82,15 +83,19 @@ export default function Onboarding() {
   const handleNext4 = () => {
     setModalOpen4(false);
     setModalOpen5(true);
+    setDrawerOpen(true);
     setBlur(true);
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
-    setBlur(false);
+    setBlur(true);
     setModalOpen5(false);
     setModalOpen6(true);
+    setInputTheGorge(false);
   };
-  const handleNext6 = () => {};
+  const handleNext6 = () => {
+    console.log(regions[2]?.id, '33333333');
+  };
   const handleSelectOpen = () => {
     setSelectOpen(true);
   };
@@ -99,7 +104,6 @@ export default function Onboarding() {
     setAddColor(true);
     setVpkSelected(true);
   };
-
   return (
     <>
       <div className={styles.onboardingWrapper}>
@@ -132,7 +136,99 @@ export default function Onboarding() {
             </button>
           </div>
         </Modal>
-        <div className={styles.onboardingAccordionWrapper}>
+        <div
+          className={styles.onboardingAccordionWrapper}
+          style={{ top: inputTheGorge ? '400px' : '200px' }}
+        >
+          {inputTheGorge ? (
+            <ModalWithSelect isOpen={selectOpen} onClose={closeModal2}>
+              <div className={styles.onboardingInput}>
+                <InputBase
+                  sx={{
+                    ml: 1,
+                    flex: 1,
+                    color: '#D9D9D9',
+                    fontSize: '34px',
+                  }}
+                  placeholder="Поиск"
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: '10px', color: '#D9D9D9' }}
+                  aria-label="search"
+                >
+                  <SearchIcon
+                    sx={{
+                      color: '#D9D9D9',
+                      width: '48px',
+                      height: '48px',
+                    }}
+                  />
+                </IconButton>
+              </div>
+            </ModalWithSelect>
+          ) : (
+            <div className={styles.onboardingTheGorge}>
+              <h5>уровень ущерба</h5>
+              <div className="TypoBodyBig" style={{ color: '#787878' }}>
+                Для каждой задачи доступен выбор только одного уровня ущерба.
+              </div>
+              <ul className={styles.onboardingTheGorgeList}>
+                <li>
+                  <div>
+                    <Image
+                      src={'onboarding/square.svg'}
+                      alt={'square'}
+                      width={40}
+                      height={40}
+                    />
+                    <h4>критический</h4>
+                  </div>
+                  <Image
+                    src={'onboarding/info.svg'}
+                    alt={'square'}
+                    width={40}
+                    height={40}
+                  />
+                </li>
+                <li>
+                  <div>
+                    <Image
+                      src={'onboarding/squareMid.svg'}
+                      alt={'square'}
+                      width={40}
+                      height={40}
+                    />
+                    <h4>минимальный</h4>
+                  </div>
+
+                  <Image
+                    src={'onboarding/info.svg'}
+                    alt={'square'}
+                    width={40}
+                    height={40}
+                  />
+                </li>
+                <li>
+                  <div>
+                    <Image
+                      src={'onboarding/squareLittle.svg'}
+                      alt={'square'}
+                      width={40}
+                      height={40}
+                    />
+                    <h4>предупреждение</h4>
+                  </div>
+                  <Image
+                    src={'onboarding/info.svg'}
+                    alt={'square'}
+                    width={40}
+                    height={40}
+                  />
+                </li>
+              </ul>
+            </div>
+          )}
           {currentRegionId &&
             regions
               .find((region) => region.id === currentRegionId)
@@ -191,8 +287,8 @@ export default function Onboarding() {
                             addColor
                               ? 'Green'
                               : option.name == 'США'
-                              ? 'SecondarySmallShine'
-                              : 'SecondarySmallDisable'
+                                ? 'SecondarySmallShine'
+                                : 'SecondarySmallDisable'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
@@ -229,32 +325,6 @@ export default function Onboarding() {
             </button>
           </div>
         </Modal>
-        <ModalWithSelect isOpen={selectOpen} onClose={closeModal2}>
-          <div className={styles.onboardingInput}>
-            <InputBase
-              sx={{
-                ml: 1,
-                flex: 1,
-                color: '#D9D9D9',
-                fontSize: '34px',
-                // display:
-                //   regions[1]?.regions[0]?.title == 'Критический'
-                //     ? 'none'
-                //     : 'block',
-              }}
-              placeholder="Поиск"
-            />
-            <IconButton
-              type="button"
-              sx={{ p: '10px', color: '#D9D9D9' }}
-              aria-label="search"
-            >
-              <SearchIcon
-                sx={{ color: '#D9D9D9', width: '48px', height: '48px' }}
-              />
-            </IconButton>
-          </div>
-        </ModalWithSelect>
         <Modal
           isOpen={modalOpen3}
           onClose={closeModal3}

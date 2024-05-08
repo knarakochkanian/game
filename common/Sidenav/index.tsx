@@ -34,6 +34,7 @@ function Sidenav({ isOpen, onClose, sx, vpkSelected }: SidenavProps) {
           <div className="AccordionsWrap">
             <Accordion
               defaultExpanded
+              disabled
               sx={(theme) => ({
                 backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
                 color: '#FFF',

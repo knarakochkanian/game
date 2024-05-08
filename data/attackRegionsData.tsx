@@ -4,7 +4,7 @@ interface Option {
 }
 
 interface RegionCategory {
-  id: string;
+  id: number;
   title?: string;
   options?: Option[];
 }
@@ -23,7 +23,7 @@ export const regions: Region[] = [
     nameMain: 'Регион',
     regions: [
       {
-        id: '1',
+        id: 1,
         title: 'наиболее вероятный выбор',
         options: [
           { id: 'G7', name: 'G7' },
@@ -34,32 +34,32 @@ export const regions: Region[] = [
         ],
       },
       {
-        id: '2',
+        id: 2,
         title: 'недружественные страны',
         options: [],
       },
       {
-        id: '3',
+        id: 3,
         title: 'военные блоки',
         options: [],
       },
       {
-        id: '4',
+        id: 4,
         title: 'политичнские блоки',
         options: [],
       },
       {
-        id: '5',
+        id: 5,
         title: 'континеты',
         options: [],
       },
       {
-        id: '6',
+        id: 6,
         title: 'регионы',
         options: [],
       },
       {
-        id: '7',
+        id: 7,
         title: 'страны',
         options: [],
       },
@@ -70,7 +70,7 @@ export const regions: Region[] = [
     nameMain: 'Отрасль',
     regions: [
       {
-        id: '1',
+        id: 8,
         title: 'ВПК',
         options: [
           { id: '01', name: 'вооруженные силы' },
@@ -81,32 +81,32 @@ export const regions: Region[] = [
         ],
       },
       {
-        id: '2',
+        id: 9,
         title: 'гос. инфраструктура',
         options: [],
       },
       {
-        id: '3',
+        id: 10,
         title: 'космос',
         options: [],
       },
       {
-        id: '4',
+        id: 11,
         title: 'логистика и траспорт',
         options: [],
       },
       {
-        id: '5',
+        id: 12,
         title: 'промышленность',
         options: [],
       },
       {
-        id: '6',
+        id: 13,
         title: 'розничная торговля',
         options: [],
       },
       {
-        id: '7',
+        id: 14,
         title: 'финансы',
         options: [],
       },
@@ -115,19 +115,5 @@ export const regions: Region[] = [
   {
     id: 3,
     nameMain: 'Ущерб',
-    regions: [
-      {
-        id: '1',
-        title: 'Критический',
-      },
-      {
-        id: '2',
-        title: 'Минимальный',
-      },
-      {
-        id: '3',
-        title: 'Предупреждение',
-      },
-    ],
   },
 ];
