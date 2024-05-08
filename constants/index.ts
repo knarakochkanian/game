@@ -5,11 +5,20 @@ export const NETWORK = 'Сеть';
 export const WAVE_STATE = 'Состояние';
 export const IP = 'IP';
 
+export const ATTACK = 'атака';
+export const PROTECTION = 'защита';
+
 //pages
 export const ONBOARDING = 'onboarding';
 export const HISTORY = 'history';
+export const NEWS = 'news';
+export const COUNT_DOWN = 'count-down';
 
 export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY];
+export const bottomLinesAreStraightPages = [NEWS, HISTORY];
+export const pagesWithoutGrid = [NEWS];
+export const pagesWithoutLocalTime = [COUNT_DOWN];
+export const bottomLinesAreNarrowPages = [ONBOARDING];
 
 //damage levels
 export const CRITICAL = 'Критический';

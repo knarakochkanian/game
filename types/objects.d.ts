@@ -16,7 +16,11 @@ interface IAttack {
 }
 
 interface INews {
+  contentInDetails?: string;
+  imgSrc?: string;
   channelLogoSrc: string;
   title: string;
   content: string;
+  date?: string;
+  minutes?: number;
 }

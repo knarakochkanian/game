@@ -1,6 +1,7 @@
 @import '/app/variables.module.scss';
 
 .header {
+  width: 100%;
   padding: 20px 44px 20px 16px;
   display: flex;
   justify-content: space-between;
@@ -39,4 +40,8 @@
       }
     }
   }
+}
+
+.header.cursorPointer {
+  cursor: pointer;
 }

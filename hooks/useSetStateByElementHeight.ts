@@ -12,9 +12,9 @@ const useSetStateByElementHeight = (
       );
 
       if (titleHeight > lineHeight * 1.1) {
-        setState(59);
+        setState(2);
       } else {
-        setState(82);
+        setState(3);
       }
     }
   }, []);

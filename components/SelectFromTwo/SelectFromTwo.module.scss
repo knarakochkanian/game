@@ -1,0 +1,21 @@
+@import '/app/variables.module.scss';
+
+.selectFromTwo {
+  position: fixed;
+  z-index: 10;
+  left: 1130px;
+  &Attack {
+    width: 540px;
+    @include flex-between;
+    > button {
+      @include TypoBodyBig;
+      text-transform: uppercase;
+    }
+    > div > img:nth-child(1) {
+      background-color: $attack-green;
+    }
+    > div > img:nth-child(2) {
+      border: 3px solid $mid-dark-gray;
+    }
+  }
+}

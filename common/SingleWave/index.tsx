@@ -5,7 +5,7 @@ import {
   NOT_CONNECTED,
   WAVE_STATE,
 } from '../../constants';
-import ModalData from '../ModalData';
+import ModalData from '../Modals/ModalData';
 import OnOffLine from '../OnOffLine';
 
 import styles from './SingleWave.module.scss';

@@ -2,16 +2,27 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { bottom, top } from '../../public/count-down';
+import { bottom, bottomNarrowLines, top } from '../../public/count-down';
 import BottomStraightLines from '../BottomStraightLines';
-import useGetPage from '../../hooks/useGetPage';
-import { HISTORY } from '../../constants';
+import {
+  bottomLinesAreNarrowPages,
+  bottomLinesAreStraightPages,
+} from '../../constants';
 
 import styles from './TopBottomLines.module.scss';
 
 const TopBottomLines = () => {
   const pathname = usePathname();
-  const isInHistory = pathname?.split('/').includes(HISTORY);
+  const areBottomLinesStraight = bottomLinesAreStraightPages.some((page) =>
+    pathname?.split('/').includes(page)
+  );
+
+  const bottomLinesAreNarrow =
+    bottomLinesAreNarrowPages.some((page) =>
+      pathname?.split('/').includes(page)
+    ) || pathname === '/';
+
+  console.log('pathname', pathname);
 
   return (
     <>
@@ -23,8 +34,17 @@ const TopBottomLines = () => {
         height={81}
         priority
       />
-      {isInHistory ? (
+      {areBottomLinesStraight ? (
         <BottomStraightLines />
+      ) : bottomLinesAreNarrow ? (
+        <Image
+          className={styles.bottom}
+          src={bottomNarrowLines}
+          alt="bottom"
+          width={2752}
+          height={81}
+          priority
+        />
       ) : (
         <Image
           className={styles.bottom}

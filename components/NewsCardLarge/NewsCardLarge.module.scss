@@ -1,0 +1,59 @@
+@import '/app/variables.module.scss';
+
+.newsCardLarge {
+  @include flex-column(40px);
+  .infoCtn {
+    margin-top: 24px;
+    @include flex-column(16px);
+    h2,
+    p {
+      color: $white;
+      font-variant-numeric: slashed-zero;
+      line-height: 120%; /* 48px */
+    }
+    h2 {
+      @include showEllipsisInTheEnd(2, 735px);
+      @include set-font-size-weight(40px, 600);
+      letter-spacing: 0.4px;
+    }
+    p {
+      @include showEllipsisInTheEnd(3, 735px);
+      @include set-font-size-weight(36px, 400);
+      letter-spacing: 0.36px;
+    }
+  }
+
+  .imgContainer {
+    height: 460px;
+    .newsCardImg {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  button {
+    align-self: flex-start;
+    padding: 16px 24px;
+    border: 2px solid $white;
+    color: $white;
+    @include newsCardTextStyles;
+  }
+}
+
+.newsCardLarge.fromSingleNewsModal {
+  .logoAndDateCtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .infoCtn {
+    p {
+      @include unsetEllipsisInTheEnd;
+      max-height: 910px;
+    }
+  }
+  .imgContainer {
+    height: 469px;
+    overflow: hidden;
+  }
+}

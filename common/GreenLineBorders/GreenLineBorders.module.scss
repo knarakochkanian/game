@@ -1,0 +1,31 @@
+@import '/app/variables.module.scss';
+
+.upLeft,
+.upRight,
+.downLeft,
+.downRight {
+  position: absolute;
+}
+
+.upLeft,
+.upRight {
+  top: 0;
+}
+
+.downLeft,
+.downRight {
+  bottom: 0;
+}
+
+.upLeft {
+  left: 0;
+}
+.upRight {
+  right: 0;
+}
+.downLeft {
+  left: 0;
+}
+.downRight {
+  right: 0;
+}

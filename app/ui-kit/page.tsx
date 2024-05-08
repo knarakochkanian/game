@@ -1,6 +1,6 @@
 'use client';
 import Grid from '../../common/Grid';
-import ModalContainer from '../../common/ModalContainer';
+import ModalContainer from '../../common/Modals/ModalContainer';
 import SimCards from '../../common/SimCards';
 import SystemState from '../../common/SystemState';
 import Waves from '../../common/Waves';
@@ -20,19 +20,19 @@ export default function Test() {
 
       <Grid />
       <div className={styles.test}>
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SimCards simCards={simCards} />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <Waves waves={waves} />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SystemState isOn />
         </ModalContainer>
 
-        <ModalContainer>
+        <ModalContainer setModalClose={() => {}}>
           <SystemState isOn={false} />
         </ModalContainer>
       </div>

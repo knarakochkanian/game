@@ -15,6 +15,7 @@
     @include set-font-size-weight(36px, 400);
     line-height: 120%; /* 43.2px */
     letter-spacing: 0.36px;
+    @include showEllipsisInTheEnd(1, 100%);
   }
   .arrowDown {
     position: absolute;

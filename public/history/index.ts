@@ -6,8 +6,12 @@ import BBCLogo from './BBCLogo.svg';
 import foxNewsLogo from './foxNewsLogo.svg';
 import skyNewsLogo from './skyNewsLogo.svg';
 import theTimesLogo from './theTimesLogo.svg';
+import darkerGradient from './darkerGradient.svg';
+import noise from './noise.svg';
 
 export {
+  noise,
+  darkerGradient,
   target_2,
   bottomStraightLeft,
   bottomStraightRight,

@@ -1,10 +1,17 @@
 'use client';
-// Index.tsx
+
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { pagesWithoutLocalTime } from '../../constants';
+
 import styles from './LocalTime.module.scss';
 
 const Index: React.FC = () => {
   const [dateTime, setDateTime] = useState<string>('');
+  const pathname = usePathname();
+  const localTimeDisplayNone = pagesWithoutLocalTime.some((page) =>
+    pathname?.split('/').includes(page)
+  );
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -35,7 +42,15 @@ const Index: React.FC = () => {
     };
   }, []);
 
-  return <span className={styles.DateTime}>{dateTime}</span>;
+  return (
+    <span
+      className={`${styles.DateTime} ${
+        localTimeDisplayNone ? styles.displayNone : ''
+      }`}
+    >
+      {dateTime}
+    </span>
+  );
 };
 
 export default Index;

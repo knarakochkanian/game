@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { noiseMap } from '../../public/summary';
-import ModalData from '../../common/ModalData';
+import ModalData from '../../common/Modals/ModalData';
 import '../../app/globals.scss';
 
 import {

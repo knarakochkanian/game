@@ -1,20 +1,23 @@
 'use client';
 
 import Image from 'next/image';
-import { truncateString } from '../../helpers';
 import { useRef, useState } from 'react';
 import useSetStateByElementHeight from '../../hooks/useSetStateByElementHeight';
 
 import styles from './NewsCard.module.scss';
 
 const NewsCard = ({ news }: { news: INews }) => {
-  const [pMaxLength, setPMaxLength] = useState(82); // Default max length
+  const [pNumOfLines, setPNumOfLines] = useState(3); // Default max length
   const titleRef = useRef<HTMLHeadingElement>(null); // Reference to the title element
 
-  useSetStateByElementHeight(setPMaxLength, titleRef);
+  useSetStateByElementHeight(setPNumOfLines, titleRef);
 
   return (
-    <article className={styles.newsCard}>
+    <article
+      className={`${styles.newsCard} ${
+        pNumOfLines === 2 ? styles.pTwoLines : ''
+      }`}
+    >
       <Image
         src={news.channelLogoSrc}
         alt="channelLogo"
@@ -25,7 +28,7 @@ const NewsCard = ({ news }: { news: INews }) => {
 
       <div>
         <h2 ref={titleRef}>{news.title}</h2>
-        <p>{truncateString(news.content, pMaxLength)}</p>
+        <p>{news.content}</p>
       </div>
     </article>
   );

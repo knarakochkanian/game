@@ -1,0 +1,24 @@
+@import '/app/variables.module';
+
+.modalContainer {
+  display: block;
+  position: relative;
+  padding: 48px;
+  width: 673px;
+  background-color: $pre-black;
+
+  .closeXButton {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.modalContainer.singleNews {
+  width: 1138px;
+  padding-top: 81px;
+  padding-bottom: 0;
+  background-color: $card;
+  @include modalCtnStyles;
+}
