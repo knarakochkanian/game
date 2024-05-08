@@ -1,0 +1,108 @@
+@import '/app/variables.module.scss';
+
+.react-simple-keyboard.simple-keyboard.hg-theme-default.myTheme1.hg-layout-default {
+  // width: 100%;
+}
+
+.hg-rows {
+  .hg-row {
+    .hg-button {
+      border: 2px solid $white;
+    }
+  }
+  .hg-row:nth-child(1) {
+    .hg-button.hg-standardBtn:nth-child(1),
+    .hg-button.hg-standardBtn:nth-child(12),
+    .hg-button.hg-standardBtn:nth-child(13) {
+      display: none !important;
+    }
+  }
+  .hg-row:nth-child(2) {
+    .hg-button.hg-functionBtn.hg-button-tab,
+    .hg-button.hg-standardBtn:nth-child(12),
+    .hg-button.hg-standardBtn:nth-child(13),
+    .hg-button.hg-standardBtn:nth-child(14) {
+      display: none !important;
+    }
+  }
+  .hg-row:nth-child(3) {
+    .hg-button.hg-standardBtn:nth-child(11),
+    .hg-button.hg-standardBtn:nth-child(12) {
+      display: none !important;
+    }
+  }
+  .hg-row:nth-child(4) {
+    .hg-button.hg-standardBtn:nth-child(9),
+    .hg-button.hg-standardBtn:nth-child(11) {
+      display: none !important;
+    }
+  }
+  .hg-row:nth-child(5) {
+    .hg-button.hg-standardBtn:nth-child(1) {
+      max-width: 228px;
+    }
+    .hg-button.hg-standardBtn:nth-child(2) {
+      display: none !important;
+    }
+  }
+}
+
+.hg-button.hg-functionBtn.hg-button-lock {
+  display: none !important;
+}
+
+.simple-keyboard.myTheme1 .hg-button {
+  padding: 24px 60px;
+  width: unset;
+  height: unset !important;
+  color: $white;
+  font-family: 'Roboto';
+  @include set-font-size-weight(70px, 400);
+}
+
+.hg-button.hg-functionBtn.hg-button-bksp {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+input {
+  width: 100%;
+  height: 100px;
+  padding: 20px;
+  font-size: 20px;
+  border: none;
+  box-sizing: border-box;
+}
+
+.simple-keyboard {
+  max-width: 2058px;
+  margin: auto;
+}
+
+/*
+    Theme: myTheme1
+  */
+.simple-keyboard.myTheme1 {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.simple-keyboard.myTheme1 .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.simple-keyboard.myTheme1 .hg-button:active {
+  background: #1c4995;
+  color: white;
+}
+
+#root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+  background: #1c4995;
+}

@@ -2,7 +2,7 @@
 
 .selectFromTwo {
   position: fixed;
-  z-index: 10;
+  z-index: 9;
   left: 1130px;
   &Attack {
     width: 540px;
@@ -18,4 +18,8 @@
       border: 3px solid $mid-dark-gray;
     }
   }
+}
+
+.selectFromTwo.mapOrGlobe {
+  bottom: 56px;
 }

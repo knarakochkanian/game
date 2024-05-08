@@ -8,8 +8,8 @@ import Help from '../../common/Help';
 import SelectFromTwo from '../SelectFromTwo';
 
 import styles from './MainScreen.module.scss';
-import { ATTACK, PROTECTION } from '../../constants';
-import { AttackSign, ProtectSign } from '../../public/main-screen';
+import { ATTACK, GLOBE, MAP, PROTECTION } from '../../constants';
+import { AttackSign, Globe, Map, ProtectSign } from '../../public/main-screen';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -29,6 +29,13 @@ const MainScreen = () => {
       />
       <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
+      <SelectFromTwo
+        button_1={GLOBE}
+        button_2={MAP}
+        imgSrc_1={Globe}
+        imgSrc_2={Map}
+        name='mapOrGlobe'
+      />
     </main>
   );
 };

@@ -1,6 +1,6 @@
 .DateTime {
   min-width: 250px;
-  position: absolute;
+  position: fixed;
   font-size: 34px;
   font-style: normal;
   font-weight: 400;
@@ -9,7 +9,7 @@
   text-transform: uppercase;
   right: 75px;
   top: 56px;
-  z-index: 9999;
+  z-index: 13;
 }
 
 .DateTime.displayNone {

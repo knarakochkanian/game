@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
+import Image from 'next/image';
 import {
   Accordion,
   AccordionDetails,
@@ -11,9 +12,13 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import BaseButton from '../../common/BaseButtton';
-import Modal from '../../common/Modals/Modal';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
-import { Region, regions } from '../../data/attackRegionsData';
+import { regions } from '../../data/attackRegionsData';
+import Keyboard from '../Keyboard';
+import useCloseModal from '../../hooks/useCloseModal';
+import { slashes_90_degree } from '../../public/main-screen';
+import { closeXButton } from '../../public/ui_kit';
+import PlaceCard from '../../common/PlaceCard';
 
 import styles from './RegionAndOtherButtons.module.scss';
 
@@ -26,12 +31,23 @@ const RegionAndOtherButtons = ({
   drawerOpen,
   setDrawerOpen,
 }: IRegionAndOtherButtonsProps) => {
-  const [modalOpen3, setModalOpen3] = useState(false);
+  const [showKeyboard, setShowKeyboard] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
   const [selectOpen, setSelectOpen] = useState(false);
-
+  const keyboardRef = useRef<{
+    setSearchInput: (input: string) => void;
+  } | null>(null);
   const [expanded, setExpanded] = useState(regions[0].id);
 
-  const closeModal3 = () => setModalOpen3(false);
+  const onChangeInput = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const newInput = event.target.value;
+    setSearchInput(newInput);
+    if (keyboardRef.current && keyboardRef.current.setSearchInput) {
+      keyboardRef.current.setSearchInput(newInput);
+    }
+  };
 
   const handleNext3 = () => {
     setDrawerOpen(!drawerOpen);
@@ -46,6 +62,12 @@ const RegionAndOtherButtons = ({
     setExpanded(isExpanded ? panel : false);
   };
 
+  const onSearchClick = () => {
+    setShowKeyboard(true);
+  };
+
+  useCloseModal(showKeyboard, setShowKeyboard, 'dialog', 'input');
+
   return (
     <div className={styles.regionAndOtherButtons}>
       <BaseButton active={selectOpen} onClick={handleSelectOpen}>
@@ -57,25 +79,61 @@ const RegionAndOtherButtons = ({
           <InputBase
             sx={{ ml: 1, flex: 1, color: '#D9D9D9', fontSize: '34px' }}
             placeholder="Поиск"
-            // value={input}
-            // onChange={(e) => setInput(e.target.value)}
+            value={searchInput}
+            onChange={(e) => onChangeInput(e)}
+            onClick={onSearchClick}
           />
           <IconButton
             type="button"
             sx={{ p: '10px', color: '#D9D9D9' }}
             aria-label="search"
           >
-            <SearchIcon
-              sx={{ color: '#D9D9D9', width: '48px', height: '48px' }}
-            />
+            {searchInput ? (
+              <div
+                role="button"
+                className={styles.closeXButton}
+                onClick={() => setSearchInput('')}
+              >
+                <Image
+                  src={closeXButton}
+                  alt="closeXButton"
+                  width={40}
+                  height={40}
+                  priority
+                />
+              </div>
+            ) : (
+              <SearchIcon
+                sx={{ color: '#D9D9D9', width: '48px', height: '48px' }}
+              />
+            )}
           </IconButton>
         </div>
 
-        <div>
+        {
+          <dialog
+            className={`${styles.searchResult} ${
+              showKeyboard ? '' : styles.displayNone
+            }`}
+          >
+            <h5>результаты поиска</h5>
+            <Image
+              className={styles.slashes_90_degree}
+              src={slashes_90_degree}
+              alt="slashes_90_degree"
+              width={24}
+              height={150}
+              priority
+            />
+            {/* <PlaceCard place={{ id: 192, name: 'Словения', code: 421 }} /> */}
+          </dialog>
+        }
+
+        <div className={showKeyboard ? styles.hideSelectionPanel : ''}>
           {regions[0].regions?.map((region, index) => (
             <Accordion
               key={index}
-              expanded={String(expanded) === region.id}
+              expanded={expanded === region.id}
               onChange={handleExpansion(region.id)}
               sx={{
                 backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
@@ -115,28 +173,15 @@ const RegionAndOtherButtons = ({
           ))}
         </div>
       </ModalWithSelect>
-      <Modal
-        isOpen={modalOpen3}
-        onClose={closeModal3}
-        counter={3}
-        sx={{ left: '30%', position: 'fixed' }}
-      >
-        <p>
-          {' '}
-          Возможен выбор группы стран с помощью быстрых фильтров, списка или
-          поиска.
-        </p>
-        <p> Нажмите на “США”, чтобы добавить страну в задачу.</p>
-        <div className="ModalButtons">
-          <button className="ModalButton1">далее</button>
-          <button className="SecondarySmall" onClick={closeModal3}>
-            <span>пропустить</span>
-          </button>
-        </div>
-      </Modal>
 
       <BaseButton disabled={true}>Отрасль</BaseButton>
       <BaseButton disabled={true}>Ущерб</BaseButton>
+
+      {showKeyboard && (
+        <dialog>
+          <Keyboard setSearchInput={setSearchInput} keyboardRef={keyboardRef} />
+        </dialog>
+      )}
     </div>
   );
 };

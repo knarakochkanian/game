@@ -3,13 +3,13 @@
 .newsLayout {
   margin: 224px 177px 260px 255px;
   position: relative;
-  z-index: 99999;
+  z-index: 14;
   h1 {
     position: relative;
     color: $white;
     @include set-font-size-weight(78px, 400);
     line-height: 120%; /* 93.6px */
-    z-index: 999;
+    z-index: 12;
   }
   .container {
     margin-top: 80px;

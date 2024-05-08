@@ -23,6 +23,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-simple-keyboard": "^3.7.114",
+    "react-world-flags": "^1.6.0",
     "styled-components": "^6.1.8",
     "three": "^0.164.1"
   },

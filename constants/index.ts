@@ -7,6 +7,8 @@ export const IP = 'IP';
 
 export const ATTACK = 'атака';
 export const PROTECTION = 'защита';
+export const GLOBE = 'глобус';
+export const MAP = 'карта';
 
 //pages
 export const ONBOARDING = 'onboarding';

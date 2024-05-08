@@ -7,7 +7,7 @@
   h5 {
     padding-left: 25px;
     position: relative;
-    z-index: 9999;
+    z-index: 13;
   }
   .timerAndAttackCtn {
     display: flex;
@@ -30,7 +30,7 @@
         line-height: 120%; /* 336px */
         letter-spacing: -2.8px;
         text-transform: uppercase;
-        z-index: 9999;
+        z-index: 13;
         min-width: 415px;
         .hours,
         .minutes,
@@ -50,7 +50,7 @@
       flex-direction: column;
       justify-content: space-between;
       padding: 70px 0;
-      z-index: 9999;
+      z-index: 13;
       h2.attackTitle {
         @include TypoH2;
       }
@@ -69,5 +69,5 @@
   position: fixed;
   bottom: 26px;
   left: 20px;
-  z-index: 9999;
+  z-index: 13;
 }

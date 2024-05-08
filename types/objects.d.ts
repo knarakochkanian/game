@@ -1,3 +1,5 @@
+declare module 'react-world-flags';
+
 interface IOption {
   value: string;
   label: string;
@@ -23,4 +25,11 @@ interface INews {
   content: string;
   date?: string;
   minutes?: number;
+}
+
+interface IPlace {
+  id: number;
+  name: string;
+  regions?: IPlace[];
+  code?: number;
 }
