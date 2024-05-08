@@ -1,5 +1,5 @@
 import { Position } from "geojson";
-import countriesJson from "../geodata/map-edited.geo.json"
+import countriesJson from "../geodata/geodata.json"
 import usStatesJson from "../geodata/usa-states.geo.json"
 import { countries } from "../geodata/countries";
 

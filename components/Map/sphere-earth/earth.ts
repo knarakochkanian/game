@@ -1,4 +1,4 @@
-import geojson from "../geodata/map+zaporizhzhia+kherson.geo.json"
+import geojson from "../geodata/geodata.json"
 import usstates from "../geodata/usa-states.geo.json"
 import Globe, { GlobeInstance } from "globe.gl";
 import { Feature } from "geojson";
@@ -30,11 +30,11 @@ export class Earth implements IEarth {
     this.contourColor = contourColor
     this.countryColor = countryColor
 
-    const countriesData = geojson.features.filter(d => !["USA", "ATA"].includes(d.properties.ADM0_A3))
+    const countriesData = geojson.features.filter(d => !["USA", "ATA"].includes(d.properties.country_a3))
     const usStatesData = usstates.features
 
     countriesData.forEach(d => {
-      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.ADM0_A3)
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.country_a3)
     })
     usStatesData.forEach(d => {
       this.geojsonFeatureToStateCode.set(d as Feature, d.properties.gn_a1_code)
@@ -50,16 +50,14 @@ export class Earth implements IEarth {
     // const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture });
 
     const globe = Globe({ animateIn: false })
-      // .polygonsData(geojson.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
-      .polygonCapCurvatureResolution(1)
       .polygonsData(polygonsData)
+      .polygonCapCurvatureResolution(5)
       .polygonStrokeColor(() => contourColor)
-      .polygonAltitude(() => 0.005)
+      .polygonAltitude(() => 0.01)
       .polygonSideColor(() => "rgba(0, 0, 0, 0)") // hidden
       .showGraticules(true)
       .backgroundColor(BACKGROUND_COLOR)
       .showAtmosphere(false)
-      .globeImageUrl("map/noiseMap.png")
 
     this.globe = globe;
 
@@ -77,7 +75,6 @@ export class Earth implements IEarth {
         console.error(`no state code for ${feature}`)
         return;
       }
-      console.log(stateCode)
       const name = getCountryOrStateNameByCode(stateCode)
       if (name) {
         onCountryClick(name)
@@ -93,7 +90,6 @@ export class Earth implements IEarth {
     } else {
       namesToHighlight = [name]
     }
-    console.log(namesToHighlight)
 
     namesToHighlight.forEach(n => {
       const code = countriesNamesToCode[n]
@@ -102,7 +98,6 @@ export class Earth implements IEarth {
         return;
       }
       this.stateCodeToCurrentColor.set(code, color)
-      console.log(this.stateCodeToCurrentColor)
     })
     this.updateCountryColors()
   }
@@ -125,6 +120,12 @@ export class Earth implements IEarth {
     const height = boundingBox[3] - boundingBox[1]
     const zoom = Math.max(width, height)
     const altitude = MathUtils.clamp(zoom / 10, MIN_ZOOM_ALTITUDE, MAX_ZOOM_ALTITUDE)
+
+    // for Russia target coords need do be changed -- because it's in two hemispheres
+    if (code === "RUS") {
+      center[0] = 95.309706
+      center[1] = 67.102754
+    }
 
     this.globe?.pointOfView({ lat: center[1], lng: center[0], altitude }, animationDurationMs)
   }
