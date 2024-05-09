@@ -31,5 +31,5 @@ interface IPlace {
   id: number;
   name: string;
   regions?: IPlace[];
-  code?: number;
+  code?: string;
 }

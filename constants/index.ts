@@ -10,6 +10,10 @@ export const PROTECTION = 'защита';
 export const GLOBE = 'глобус';
 export const MAP = 'карта';
 
+//languages
+export const ENGLISH = 'english';
+export const RUSSIAN = 'russian';
+
 //pages
 export const ONBOARDING = 'onboarding';
 export const HISTORY = 'history';

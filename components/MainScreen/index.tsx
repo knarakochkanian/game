@@ -6,10 +6,10 @@ import Sidenav from '../../common/Sidenav';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
 import Help from '../../common/Help';
 import SelectFromTwo from '../SelectFromTwo';
-
-import styles from './MainScreen.module.scss';
 import { ATTACK, GLOBE, MAP, PROTECTION } from '../../constants';
 import { AttackSign, Globe, Map, ProtectSign } from '../../public/main-screen';
+
+import styles from './MainScreen.module.scss';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -34,7 +34,7 @@ const MainScreen = () => {
         button_2={MAP}
         imgSrc_1={Globe}
         imgSrc_2={Map}
-        name='mapOrGlobe'
+        name="mapOrGlobe"
       />
     </main>
   );

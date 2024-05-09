@@ -5,51 +5,69 @@
 }
 
 .hg-rows {
+  @include flex-column(15px);
   .hg-row {
+    gap: 12px;
     .hg-button {
       border: 2px solid $white;
     }
   }
-  .hg-row:nth-child(1) {
-    .hg-button.hg-standardBtn:nth-child(1),
-    .hg-button.hg-standardBtn:nth-child(12),
-    .hg-button.hg-standardBtn:nth-child(13) {
-      display: none !important;
-    }
-  }
+  // .hg-row:nth-child(1) {
+  //   .hg-button.hg-standardBtn:nth-child(1),
+  //   .hg-button.hg-standardBtn:nth-child(12),
+  //   .hg-button.hg-standardBtn:nth-child(13) {
+  //     display: none !important;
+  //   }
+  // }
+  // .hg-row:nth-child(2) {
+  //   .hg-button.hg-functionBtn.hg-button-tab,
+  //   .hg-button.hg-standardBtn:nth-child(12),
+  //   .hg-button.hg-standardBtn:nth-child(13),
+  //   .hg-button.hg-standardBtn:nth-child(14) {
+  //     display: none !important;
+  //   }
+  // }
+  // .hg-row:nth-child(3) {
+  //   .hg-button.hg-standardBtn:nth-child(11),
+  //   .hg-button.hg-standardBtn:nth-child(12) {
+  //     display: none !important;
+  //   }
+  // }
+  // .hg-row:nth-child(4) {
+  //   .hg-button.hg-standardBtn:nth-child(9),
+  //   .hg-button.hg-standardBtn:nth-child(11) {
+  //     display: none !important;
+  //   }
+  // }
+  // .hg-row:nth-child(5) {
+  //   .hg-button.hg-standardBtn:nth-child(1) {
+  //     max-width: 228px;
+  //   }
+  //   .hg-button.hg-standardBtn:nth-child(2) {
+  //     display: none !important;
+  //   }
+  // }
+
   .hg-row:nth-child(2) {
-    .hg-button.hg-functionBtn.hg-button-tab,
-    .hg-button.hg-standardBtn:nth-child(12),
-    .hg-button.hg-standardBtn:nth-child(13),
-    .hg-button.hg-standardBtn:nth-child(14) {
-      display: none !important;
+    // max-height: 132px;
+    .hg-button.hg-standardBtn:nth-child(2),
+    .hg-button.hg-standardBtn:nth-child(3) {
+      // max-width: 56px;
     }
   }
-  .hg-row:nth-child(3) {
-    .hg-button.hg-standardBtn:nth-child(11),
-    .hg-button.hg-standardBtn:nth-child(12) {
-      display: none !important;
-    }
-  }
+
   .hg-row:nth-child(4) {
-    .hg-button.hg-standardBtn:nth-child(9),
-    .hg-button.hg-standardBtn:nth-child(11) {
-      display: none !important;
-    }
-  }
-  .hg-row:nth-child(5) {
-    .hg-button.hg-standardBtn:nth-child(1) {
-      max-width: 228px;
-    }
-    .hg-button.hg-standardBtn:nth-child(2) {
-      display: none !important;
+    // .hg-button.hg-standardBtn:nth-child(6),
+    // .hg-button.hg-standardBtn:nth-child(7)
+    .hg-button.hg-standardBtn {
+      max-width: 56px;
     }
   }
 }
 
-.hg-button.hg-functionBtn.hg-button-lock {
-  display: none !important;
-}
+// .hg-button.hg-functionBtn.hg-button-lock {
+//   display: none !important;
+// }
 
 .simple-keyboard.myTheme1 .hg-button {
   padding: 24px 60px;
@@ -61,8 +79,10 @@
 }
 
 .hg-button.hg-functionBtn.hg-button-bksp {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 24px 15px;
+}
+.hg-button.hg-functionBtn.hg-button-shift {
+  padding: 24px 15px;
 }
 
 input {

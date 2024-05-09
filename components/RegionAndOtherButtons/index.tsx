@@ -18,7 +18,7 @@ import Keyboard from '../Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
 import { slashes_90_degree } from '../../public/main-screen';
 import { closeXButton } from '../../public/ui_kit';
-import PlaceCard from '../../common/PlaceCard';
+import FoundPlaces from '../FoundPlaces';
 
 import styles from './RegionAndOtherButtons.module.scss';
 
@@ -113,7 +113,7 @@ const RegionAndOtherButtons = ({
         {
           <dialog
             className={`${styles.searchResult} ${
-              showKeyboard ? '' : styles.displayNone
+              showKeyboard || searchInput ? '' : styles.displayNone
             }`}
           >
             <h5>результаты поиска</h5>
@@ -125,11 +125,15 @@ const RegionAndOtherButtons = ({
               height={150}
               priority
             />
-            {/* <PlaceCard place={{ id: 192, name: 'Словения', code: 421 }} /> */}
+            <FoundPlaces searchInput={searchInput} />
           </dialog>
         }
 
-        <div className={showKeyboard ? styles.hideSelectionPanel : ''}>
+        <div
+          className={
+            showKeyboard || searchInput ? styles.hideSelectionPanel : ''
+          }
+        >
           {regions[0].regions?.map((region, index) => (
             <Accordion
               key={index}
@@ -146,7 +150,7 @@ const RegionAndOtherButtons = ({
                 aria-controls={`${region.id}-content`}
                 id={`${region.id}-header`}
               >
-                <h5>{region.title}</h5>
+                <h5>{region.title}guhgkhk</h5>
               </AccordionSummary>
               <AccordionDetails
                 style={{ flexWrap: 'wrap', display: 'flex', gap: '10px' }}

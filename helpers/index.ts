@@ -1,4 +1,5 @@
 import attacks from '../data/attacks';
+import countriesWithCodes from '../data/countriesWithCodes';
 
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
@@ -17,4 +18,14 @@ export const truncateString = (inputString: string, maxLength: number) => {
 
 export const getAttack = (attackId: string): IAttack | undefined => {
   return attacks.find((attack) => attack.id === attackId);
+};
+
+export const search = (searchText: string) => {
+  if (!searchText) return;
+
+  const foundPlaces = countriesWithCodes.filter((country) => {
+    return country.name.toLowerCase().includes(searchText.toLowerCase());
+  });
+
+  return foundPlaces;
 };

@@ -16,12 +16,14 @@
   .searchResult {
     position: relative;
     background-color: $card;
-    height: 292px;
-    padding: 32px 0 0 32px;
+    min-height: 292px;
+    max-height: 960px;
+    padding: 32px 0 32px 32px;
+    @include scrollStyles;
     .slashes_90_degree {
       position: absolute;
       right: 0;
-      bottom: 30px;
+      top: 113px;
     }
     h5 {
       color: $white;
