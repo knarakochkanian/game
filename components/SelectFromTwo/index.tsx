@@ -7,6 +7,7 @@ interface ISelectFromTwoProps {
   imgSrc_1: string;
   imgSrc_2: string;
   name?: string;
+  setFirstActive: (bool: boolean) => void;
 }
 
 const SelectFromTwo = ({
@@ -15,42 +16,20 @@ const SelectFromTwo = ({
   imgSrc_1,
   imgSrc_2,
   name,
+  setFirstActive,
 }: ISelectFromTwoProps) => {
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
-        <button>{button_1}</button>
+        <button onClick={() => setFirstActive(true)}>{button_1}</button>
         <div>
           <Image src={imgSrc_1} alt={'Icon'} width={48} height={48} />
           <Image src={imgSrc_2} alt={'Icon'} width={48} height={48} />
         </div>
-        <button>{button_2}</button>
+        <button onClick={() => setFirstActive(false)}>{button_2}</button>
       </div>
     </div>
   );
 };
 
 export default SelectFromTwo;
-
-{
-  /* <div className={styles.selectFromTwo}>
-      <div className={styles.selectFromTwoAttack}>
-        <button>атака</button>
-        <div>
-          <Image
-            src={'onboarding/AttackSign.svg'}
-            alt={'attack'}
-            width={48}
-            height={48}
-          />
-          <Image
-            src={'onboarding/ProtectSign.svg'}
-            alt={'protect'}
-            width={48}
-            height={48}
-          />
-        </div>
-        <button>защита</button>
-      </div>
-    </div> */
-}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 import Loading from '../../components/Loading';
 import BackButton from '../../common/BackButton';
@@ -15,9 +16,8 @@ export default function HistoryAndNewsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const onBack = () => {
-    console.log('onBack');
-  };
+  const router = useRouter();
+  const onBack = () => router.back();
 
   return (
     <div>

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import RedirectHome from '../../../common/RedirectHome';
 
 export const metadata: Metadata = {
   title: 'Новости',
@@ -6,8 +7,7 @@ export const metadata: Metadata = {
 };
 
 const News = () => {
-  
-  return <></>;
+  return <RedirectHome />;
 };
 
 export default News;

@@ -1,0 +1,19 @@
+@import '/app/variables.module.scss';
+
+.historyAndNewsBtns {
+  display: flex;
+  gap: 24px;
+  position: fixed;
+  left: 75px;
+  bottom: 56px;
+  z-index: 9;
+  button {
+    padding: 24px 32px;
+    color: $white;
+    @include set-font-size-weight(34px, 600);
+    line-height: 120%; /* 40.8px */
+    letter-spacing: -0.34px;
+    text-transform: uppercase;
+    border: 2px solid $light-gray;
+  }
+}

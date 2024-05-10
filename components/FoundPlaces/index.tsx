@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Theme,
 } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
@@ -13,13 +12,12 @@ import styles from './FoundPlaces.module.scss';
 const FoundPlaces = ({ searchInput }: { searchInput: string }) => {
   return (
     <div className={styles.foundPlaces}>
-      <h4> {JSON.stringify(search(searchInput))}</h4>
       {search(searchInput)?.map((place) => {
         if (place.regions) {
           return (
             <Accordion
               key={place.code}
-              sx={(theme) => ({
+              sx={() => ({
                 backgroundColor: '#080808 !important',
                 color: '#FFF',
                 marginBottom: '10px',

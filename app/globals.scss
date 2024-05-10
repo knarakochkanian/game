@@ -63,7 +63,7 @@ h2 {
   font-weight: 600;
   line-height: 120%; /* 67.2px */
 }
-h3{
+h3 {
   font-size: 50px;
   font-style: normal;
   font-weight: 400;
@@ -125,10 +125,10 @@ button {
 .ModalButton1 {
   border: 2px solid #fff;
 }
-.Green{
+.Green {
   @include TypoBodyBig;
 
-  >span>span>button {
+  > span > span > button {
     text-transform: uppercase;
   }
   color: $attack-green-40;
@@ -139,27 +139,27 @@ button {
   border-left: 2px solid #787878;
   position: relative;
   cursor: pointer;
-  padding: 16px  24px;
+  padding: 16px 24px;
   @include TypoBodyBig;
-  &::after{
+  &::after {
     content: '';
     width: 16px;
     position: absolute;
     height: 2px;
-    background:  #787878;
+    background: #787878;
     bottom: 0;
     left: 0;
   }
-  &::before{
+  &::before {
     content: '';
     position: absolute;
     width: 16px;
     height: 2px;
-    background:  #787878;
+    background: #787878;
     bottom: 0;
     right: 0;
   }
-  >span{
+  > span {
     &::before {
       content: '';
       width: 16px;
@@ -170,83 +170,94 @@ button {
       left: 0;
     }
   }
-  >span{
-    &::after{
+  > span {
+    &::after {
       content: '';
       position: absolute;
       width: 16px;
       height: 2px;
-      background:  #787878;
+      background: #787878;
       top: 0;
       right: 0;
     }
   }
 }
-.SecondarySmallDisable{
+.SecondarySmallDisable {
   @extend .SecondarySmall;
   opacity: 0.4;
 }
 .SecondarySmallShine {
-    border-right: 2px solid #ffffff;
-    border-left: 2px solid #ffffff;
-    position: relative;
-    cursor: pointer;
-    padding: 16px 24px;
-    overflow: hidden;
-    color: #fff;
-    opacity: 1;
-    @include TypoBodyBig;
-    &:focus{
-      border-top: 1px solid #5ED1C5;
-      border-bottom: 1px solid #5ED1C5;
-      border-right: 2px solid #5ED1C5;
-      border-left: 2px solid #5ED1C5;
-      background:  #011A17;
-      color: #5ED1C5;
-    }
-    &>span>span::after {
-      content: '';
-      position: absolute;
-      top: -50%; /* Position the shine above the button */
-      left: -50%;
-      width: 100%; /* Width must be enough to cover the entire button */
-      height: 200%;
-      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 75%);
-      animation: shine 3s infinite;
-    }
-    &::before, > span::before, > span::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 2px;
-      bottom: 0;
-    }
-    &::before {
-      right: 0;
-    }
-    > span::before {
-      top: 0;
-      left: 0;
-    }
-    > span::after {
-      top: 0;
-      right: 0;
-    }
+  border-right: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  position: relative;
+  cursor: pointer;
+  padding: 16px 24px;
+  overflow: hidden;
+  color: #fff;
+  opacity: 1;
+  @include TypoBodyBig;
+  &:focus {
+    border-top: 1px solid #5ed1c5;
+    border-bottom: 1px solid #5ed1c5;
+    border-right: 2px solid #5ed1c5;
+    border-left: 2px solid #5ed1c5;
+    background: #011a17;
+    color: #5ed1c5;
+  }
+  & > span > span::after {
+    content: '';
+    position: absolute;
+    top: -50%; /* Position the shine above the button */
+    left: -50%;
+    width: 100%; /* Width must be enough to cover the entire button */
+    height: 200%;
+    background: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgb(255, 255, 255) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
+    animation: shine 3s infinite;
+  }
+  &::before,
+  > span::before,
+  > span::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    bottom: 0;
+  }
+  &::before {
+    right: 0;
+  }
+  > span::before {
+    top: 0;
+    left: 0;
+  }
+  > span::after {
+    top: 0;
+    right: 0;
+  }
 }
 
-  @keyframes shine {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(200%);
-    }
+@keyframes shine {
+  0% {
+    transform: translateX(0);
   }
-  .AccordionsWrap{
-    @include flex-start;
-    flex-direction: column;
-    gap: 56px;
+  100% {
+    transform: translateX(200%);
   }
-  .TypoBodyBig{
-    @include TypoBodyBig;
-  }
+}
+.AccordionsWrap {
+  @include flex-start;
+  flex-direction: column;
+  gap: 56px;
+}
+.TypoBodyBig {
+  @include TypoBodyBig;
+}
+
+a {
+  text-decoration: none;
+}
