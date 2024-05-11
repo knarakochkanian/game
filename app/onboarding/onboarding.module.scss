@@ -44,13 +44,16 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      >li{
-        padding: 24px;
+      >li>button {
+        width: 100%;
+      }
+      >li>button>span{
+        width: 100%;
         @include flex-between;
-        >div{
-          @include flex-start;
-          gap: 32px;
-        }
+      }
+      &Item{
+        @include flex-start;
+        gap: 32px;
       }
     }
   }

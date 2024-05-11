@@ -257,6 +257,10 @@ button {
 .TypoBodyBig {
   @include TypoBodyBig;
 }
+.Lead{
+  @include set-font-size-weight(40px, 400);
+  line-height: 120%; /* 43.2px */
+}
 
 a {
   text-decoration: none;

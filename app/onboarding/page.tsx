@@ -25,6 +25,7 @@ export default function Onboarding() {
   const [selectOpen, setSelectOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [inputTheGorge, setInputTheGorge] = useState(true);
+  const [addConfirm, setAddConfirm] = useState(false);
   const [expanded, setExpanded] = useState<boolean | undefined | number>(
     regions[0]?.regions?.[0]?.id
   );
@@ -32,6 +33,7 @@ export default function Onboarding() {
   const [blur, setBlur] = useState(false);
   const [addColor, setAddColor] = useState(false);
   const [vpkSelected, setVpkSelected] = useState(false);
+  const [theGorgeSelected, setTheGorgeSelected] = useState(false);
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -72,6 +74,10 @@ export default function Onboarding() {
       setDrawerOpen(!drawerOpen);
     }
   };
+  const handleAddTheGorge = () => {
+    setBlur(false);
+    setAddConfirm(true);
+  };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
     setCurrentRegionId(2);
@@ -94,7 +100,8 @@ export default function Onboarding() {
     setInputTheGorge(false);
   };
   const handleNext6 = () => {
-    console.log(regions[2]?.id, '33333333');
+    setBlur(false);
+    setTheGorgeSelected(true);
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);
@@ -175,56 +182,73 @@ export default function Onboarding() {
               </div>
               <ul className={styles.onboardingTheGorgeList}>
                 <li>
-                  <div>
-                    <Image
-                      src={'onboarding/square.svg'}
-                      alt={'square'}
-                      width={40}
-                      height={40}
-                    />
-                    <h4>критический</h4>
-                  </div>
-                  <Image
-                    src={'onboarding/info.svg'}
-                    alt={'square'}
-                    width={40}
-                    height={40}
-                  />
-                </li>
-                <li>
-                  <div>
-                    <Image
-                      src={'onboarding/squareMid.svg'}
-                      alt={'square'}
-                      width={40}
-                      height={40}
-                    />
-                    <h4>минимальный</h4>
-                  </div>
+                  <button
+                    className="SecondarySmall"
+                    onClick={handleAddTheGorge}
+                  >
+                    <span>
+                      <div className={styles.onboardingTheGorgeListItem}>
+                        <Image
+                          src={'onboarding/square.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
 
-                  <Image
-                    src={'onboarding/info.svg'}
-                    alt={'square'}
-                    width={40}
-                    height={40}
-                  />
+                        <h4>критический</h4>
+                      </div>
+                      <Image
+                        src={'onboarding/info.svg'}
+                        alt={'square'}
+                        width={40}
+                        height={40}
+                      />
+                    </span>
+                  </button>
                 </li>
                 <li>
-                  <div>
-                    <Image
-                      src={'onboarding/squareLittle.svg'}
-                      alt={'square'}
-                      width={40}
-                      height={40}
-                    />
-                    <h4>предупреждение</h4>
-                  </div>
-                  <Image
-                    src={'onboarding/info.svg'}
-                    alt={'square'}
-                    width={40}
-                    height={40}
-                  />
+                  <button className="SecondarySmall">
+                    <span>
+                      <div className={styles.onboardingTheGorgeListItem}>
+                        <Image
+                          src={'onboarding/squareMid.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
+
+                        <h4>минимальный</h4>
+                      </div>
+                      <Image
+                        src={'onboarding/info.svg'}
+                        alt={'square'}
+                        width={40}
+                        height={40}
+                      />
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button className="SecondarySmall">
+                    <span>
+                      <div className={styles.onboardingTheGorgeListItem}>
+                        <Image
+                          src={'onboarding/squareLittle.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
+
+                        <h4>предупреждение</h4>
+                      </div>
+                      <Image
+                        src={'onboarding/info.svg'}
+                        alt={'square'}
+                        width={40}
+                        height={40}
+                      />
+                    </span>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -421,6 +445,8 @@ export default function Onboarding() {
         isOpen={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         vpkSelected={vpkSelected}
+        addConfirm={addConfirm}
+        theGorgeSelected={theGorgeSelected}
         sx={{ filter: blur ? 'blur(22px)' : 'none' }}
       />
       <Image

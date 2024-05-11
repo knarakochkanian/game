@@ -14,9 +14,18 @@ interface SidenavProps {
   onClose: () => void;
   sx?: SxProps<Theme>;
   vpkSelected?: boolean;
+  theGorgeSelected?: boolean;
+  addConfirm?: boolean;
 }
 
-function Sidenav({ isOpen, onClose, sx, vpkSelected }: SidenavProps) {
+function Sidenav({
+  isOpen,
+  onClose,
+  sx,
+  vpkSelected,
+  theGorgeSelected,
+  addConfirm,
+}: SidenavProps) {
   return (
     <>
       <Box
@@ -116,6 +125,9 @@ function Sidenav({ isOpen, onClose, sx, vpkSelected }: SidenavProps) {
               >
                 <div className={styles.sidenavAccordionSummary}>
                   <h3>Ущерб</h3>
+                  {theGorgeSelected && (
+                    <h3 style={{ color: '#fff !important' }}>Критический </h3>
+                  )}
                 </div>
               </AccordionSummary>
             </Accordion>
@@ -129,6 +141,14 @@ function Sidenav({ isOpen, onClose, sx, vpkSelected }: SidenavProps) {
               />
             </div>
           </div>
+          {addConfirm && (
+            <div className={styles.sidenavAddConfirm}>
+              <span className="Lead" style={{ color: '#787878' }}>
+                Для перехода к запуску <br /> атаки нажмите кнопку
+              </span>
+              <span className="Lead">ПОДТВЕРДИТЬ</span>
+            </div>
+          )}
         </div>
       </Box>
     </>

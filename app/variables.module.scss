@@ -157,10 +157,7 @@ $unvisible: rgba(0, 0, 0, 0);
   > span {
     color: $white;
     text-align: center;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%;
+    @include set-font-size-weight(40px, 400);
     margin-left: 24px;
   }
 }

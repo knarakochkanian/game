@@ -1,12 +1,14 @@
 'use client';
+import { useState, useEffect } from 'react';
+import { io, Socket as IOSocket } from 'socket.io-client';
 
-import { useState } from 'react';
 import Grid from '../../common/Grid';
 import Sidenav from '../../common/Sidenav';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
 import Help from '../../common/Help';
 import SelectFromTwo from '../SelectFromTwo';
 import { ATTACK, GLOBE, MAP, PROTECTION } from '../../constants';
+import { Socket } from 'net';
 import {
   AttackSign,
   AttackSignActive,
@@ -28,6 +30,56 @@ import styles from './MainScreen.module.scss';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    // Establish WebSocket connection
+    let socket = new WebSocket('ws://britishellie.ru:8888');
+    console.log(socket, '44444');
+    socket.onopen = (ev) => {
+      console.log(ev, 'onopen');
+    };
+
+    socket.onclose = (ev) => {
+      console.log(ev, 'onclose');
+    };
+
+    socket.onerror = (ev) => {
+      console.log(ev, 'onerror');
+    };
+    socket.onmessage = (ev) => {
+      console.log(ev, 'onmessage');
+    };
+    // socket?.onmessage((event) => {
+    //   console.log('event', event);
+    // });
+    //   const newSocket = io('ws://britishellie.ru:8888', {
+    //   transports: ['websocket'],
+    // });
+
+    // Log successful connection
+    // newSocket.on('connect', () => {
+    //   console.log('WebSocket connected:', newSocket.id);
+    // });
+    //
+    // // Log messages received from the server
+    // newSocket.on('message', (message) => {
+    //   console.log('Message received:', message);
+    // });
+    //
+    // // Handle any errors
+    // newSocket.on('connect_error', (err) => {
+    //   console.error('Connection Error:', err);
+    // });
+    //
+    // // @ts-ignore
+    // setSocket(newSocket);
+    //
+    // return () => {
+    //   newSocket.close();
+    //   console.log('WebSocket disconnected');
+    // };
+  }, []);
   const [isAttacking, setIsAttacking] = useState(true);
   const [globeActive, setGlobeActive] = useState(true);
 

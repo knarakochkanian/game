@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.16",
     "@types/geojson": "^7946.0.14",
     "animejs": "^3.2.2",
+    "clsx": "^2.1.1",
     "geojson-bbox": "^0.0.1",
     "globe.gl": "^2.32.4",
     "mercator-projection": "^0.0.2",
@@ -24,6 +25,7 @@
     "react-dom": "^18",
     "react-simple-keyboard": "^3.7.114",
     "react-world-flags": "^1.6.0",
+    "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.8",
     "three": "^0.164.1"
   },

@@ -17,6 +17,19 @@
   &AccordionSummary{
     @include AccordionSummary;
   }
+  &AddConfirm{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: fixed;
+    bottom: 0;
+    background-image: url(~/public/onboarding/backgroundImgGreen.svg);
+    background-repeat: no-repeat;
+    height: 218px;
+    width: 100%;
+    padding: 32px;
+  }
   &Square{
     @include flex-start;
     gap: 30px;
