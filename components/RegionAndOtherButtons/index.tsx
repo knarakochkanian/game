@@ -9,7 +9,6 @@ import {
   IconButton,
   InputBase,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
@@ -146,14 +145,27 @@ const RegionAndOtherButtons = ({
               }}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={
+                  <Image
+                    src={'onboarding/arrow.svg'}
+                    alt={'arrow'}
+                    width={24}
+                    height={24}
+                  />
+                }
                 aria-controls={`${region.id}-content`}
                 id={`${region.id}-header`}
               >
                 <h5>{region.title}</h5>
               </AccordionSummary>
               <AccordionDetails
-                style={{ flexWrap: 'wrap', display: 'flex', gap: '10px' }}
+                style={{
+                  flexWrap: 'wrap',
+                  display: 'flex',
+                  gap: '10px',
+                  overflow: 'scroll',
+                  height: '286px',
+                }}
               >
                 {region.options?.map((option) => (
                   <div

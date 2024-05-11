@@ -1,5 +1,7 @@
+import countriesWithCodes, { USARegions } from './countriesWithCodes';
+
 interface Option {
-  id: string;
+  id: number | string;
   name: string;
 }
 
@@ -56,12 +58,12 @@ export const regions: Region[] = [
       {
         id: 6,
         title: 'регионы',
-        options: [],
+        options: USARegions,
       },
       {
         id: 7,
         title: 'страны',
-        options: [],
+        options: countriesWithCodes,
       },
     ],
   },
