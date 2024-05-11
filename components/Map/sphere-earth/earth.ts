@@ -3,12 +3,15 @@ import usstates from "../geodata/usa-states.geo.json"
 import Globe, { GlobeInstance } from "globe.gl";
 import { Feature } from "geojson";
 import { BACKGROUND_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, PICKED_COLOR } from "../theme";
-import { EarthParameters, IEarth } from "../map.types";
+import { EarthParameters } from "../map.types";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
 import bbox from 'geojson-bbox';
-import { MathUtils, Mesh, MeshBasicMaterial, RepeatWrapping, TextureLoader } from "three";
+import { MathUtils, Mesh, MeshBasicMaterial, RepeatWrapping, TextureLoader, Vector2 } from "three";
 import { getRegionsNamesByCountryName } from "../utils/utils";
 import { complexCountriesNames } from "../geodata/complex-countries";
+import { IEarth } from "../IEarth";
+import { EffectComposer, RenderPass, ShaderPass, GammaCorrectionShader } from "three/examples/jsm/Addons.js";
+import { VignetteShader } from "../utils/VignetteShader";
 
 const MIN_ZOOM_ALTITUDE = 0.5
 const MAX_ZOOM_ALTITUDE = 1.6
@@ -20,11 +23,11 @@ export class Earth implements IEarth {
 
   private stateCodeToCurrentColor: Map<string, string> = new Map<string, string>();
 
+  private stateCodeToCurrentContourVisibility: Map<string, boolean> = new Map<string, boolean>();
+
   private countryColor: string;
 
   private contourColor: string;
-
-  // private countryNameToCurrentStrokeColor: Map<string, number> = new Map<string, number>();
 
   constructor({ onCountryClick, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR }: EarthParameters) {
     this.contourColor = contourColor
@@ -52,7 +55,7 @@ export class Earth implements IEarth {
     const globe = Globe({ animateIn: false })
       .polygonsData(polygonsData)
       .polygonCapCurvatureResolution(5)
-      .polygonStrokeColor(() => contourColor)
+      // .polygonStrokeColor(() => contourColor)
       .polygonAltitude(() => 0.01)
       .polygonSideColor(() => "rgba(0, 0, 0, 0)") // hidden
       .showGraticules(true)
@@ -64,6 +67,9 @@ export class Earth implements IEarth {
     this.onWindowResize()
 
     this.updateCountryColors()
+
+    this.resetContours()
+    this.updateCountryContoursVisibility()
 
     this.setupOnCountryClick(onCountryClick)
   }
@@ -82,14 +88,19 @@ export class Earth implements IEarth {
     })
   }
 
-  public highlightCountry(name: string, color: string = PICKED_COLOR) {
-    let namesToHighlight: string[];
-    if (complexCountriesNames.includes(name)) {
-      const regionNames = getRegionsNamesByCountryName(name)
-      namesToHighlight = regionNames
-    } else {
-      namesToHighlight = [name]
-    }
+  public setCountryColor(name: string | string[], color: string = PICKED_COLOR) {
+    const names = Array.isArray(name) ? name : [name]
+
+    const namesToHighlight: string[] = []
+
+    names.forEach(name => {
+      if (complexCountriesNames.includes(name)) {
+        const regionNames = getRegionsNamesByCountryName(name)
+        namesToHighlight.push(...regionNames)
+      } else {
+        namesToHighlight.push(name)
+      }
+    })
 
     namesToHighlight.forEach(n => {
       const code = countriesNamesToCode[n]
@@ -102,7 +113,7 @@ export class Earth implements IEarth {
     this.updateCountryColors()
   }
 
-  public moveCameraToCountry(name: string, animationDurationMs = 500) {
+  public moveCameraToCountry(name: string, animationDurationMs = 500, _extendBbox?: number) {
     const code = countriesNamesToCode[name]
     if (!code) {
       console.error(`no code for ${name}`)
@@ -130,9 +141,42 @@ export class Earth implements IEarth {
     this.globe?.pointOfView({ lat: center[1], lng: center[0], altitude }, animationDurationMs)
   }
 
-  public resetHighlighting() {
+  public setCountryContourVisibility(name: string | string[], visible: boolean) {
+    const names = Array.isArray(name) ? name : [name]
+    names.forEach(name => {
+      const code = countriesNamesToCode[name]
+      if (!code) {
+        console.error(`no code for ${name}`)
+        return;
+      }
+      this.stateCodeToCurrentContourVisibility.set(code, visible)      
+    })
+
+    this.updateCountryContoursVisibility()
+  }
+
+  public resetCountryColors() {
     this.stateCodeToCurrentColor.clear()
     this.updateCountryColors()
+  }
+
+  public resetContours() {
+    this.stateCodeToCurrentContourVisibility.clear()
+    const regionsNames: string[] = [] 
+    complexCountriesNames.forEach(name => {
+      const regions = getRegionsNamesByCountryName(name)
+      regionsNames.push(...regions)
+    })
+
+    this.geojsonFeatureToStateCode.forEach((code, feature) => {
+      const name = getCountryOrStateNameByCode(code)
+      if (!name) {
+        return;
+      }
+      if (regionsNames.includes(name)) {
+        this.stateCodeToCurrentContourVisibility.set(code, false)
+      }
+    })
   }
 
   public onWindowResize() {
@@ -146,6 +190,21 @@ export class Earth implements IEarth {
     }
 
     this.globe(parentHtmlElement)
+
+    //#region post-processing
+    const composer = this.globe.postProcessingComposer()
+
+    const vignette = new ShaderPass(VignetteShader);
+    vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+    vignette.uniforms["radius"].value = .6;
+    vignette.uniforms["softness"].value = .8;
+    vignette.uniforms["gain"].value = .9;
+    composer.addPass(vignette);
+
+    const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);  
+    composer.addPass(gammaCorrectionPass);
+    // #endregion
+      
   }
 
   public dispose() {
@@ -164,11 +223,26 @@ export class Earth implements IEarth {
     })
   }
 
-  private getCountryFeatureByCode(targetCode: string) {
-    for (const [feature, code] of this.geojsonFeatureToStateCode.entries()) {
-      if (code === targetCode) {
-        return feature
+  private updateCountryContoursVisibility() {
+    this.globe?.polygonStrokeColor(feature => {
+      const stateCode = this.geojsonFeatureToStateCode.get(feature as Feature)
+      if (!stateCode) {
+        return this.contourColor
       }
-    }
+      const visible = this.stateCodeToCurrentContourVisibility.get(stateCode)
+      const isVisible = visible !== undefined ? visible : true // set to true by default
+      return isVisible ? this.contourColor : "rgba(0, 0, 0, 0)"
+    })
+  }
+
+  private getCountryFeatureByCode(targetCode: string) {
+    let foundFeature: Feature | undefined
+
+    this.geojsonFeatureToStateCode.forEach((code, feature) => {
+      if (code === targetCode) {
+        foundFeature = feature
+      }
+    })
+    return foundFeature
   }
 }

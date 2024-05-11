@@ -1,7 +1,6 @@
 import { Position } from 'geojson';
-import { Color, EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, MeshStandardMaterial, RepeatWrapping, Shape, ShapeGeometry, TextureLoader, Vector2 } from 'three';
-import merc from 'mercator-projection'
-import { getCountryGeometryByA3Code, getUSStateGeometryByGN_A1Code } from '../utils/utils';
+import { EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, ShapeGeometry } from 'three';
+import { createShapeGeometry, getCountryGeometryByA3Code, getUSStateGeometryByGN_A1Code } from '../utils/utils';
 import { ComplexCountry } from './complex-country';
 import { getCountryOrStateNameByCode } from '../geodata/countries-names-to-a3-map';
 
@@ -16,11 +15,13 @@ export class State {
 
   private geometry: Position[][] | Position[][][]
 
-  private lineColor: string
+  private defaultContourColor: string
 
-  private shapeColor: string
+  private defaultColor: string
 
   private mesh: Mesh | undefined;
+
+  private outlineMesh: LineSegments | undefined;
 
   static fromGN_A1Code(GN_A1Code: string, lineColor: string, shapeColor: string) {
     // for now for us states only
@@ -44,25 +45,24 @@ export class State {
 
   private constructor(A3Code: string, geometry: Position[][] | Position[][][], lineColor: string, shapeColor: string) {
     this.A3Code = A3Code
-    
-
     this.geometry = geometry;
-
-    this.lineColor = lineColor;
-    this.shapeColor = shapeColor;
+    this.defaultContourColor = lineColor;
+    this.defaultColor = shapeColor;
   }
 
-  createMesh() {
-    const geometry = this.createGeometry(this.geometry)
-    const material = new MeshBasicMaterial({ color: this.shapeColor })
+  public createMesh() {
+    const geometry = createShapeGeometry(this.A3Code, this.geometry)
+    const material = new MeshBasicMaterial({ color: this.defaultColor })
 
     const mesh = new Mesh(
       geometry,
       material,
     );
+
     const edgesGeom = new EdgesGeometry(geometry)
-    const edges = new LineSegments(edgesGeom, new LineBasicMaterial( { color: this.lineColor } ) );
+    const edges = new LineSegments(edgesGeom, new LineBasicMaterial({ color: this.defaultContourColor }));
     mesh.add(edges)
+    this.outlineMesh = edges;
 
     mesh.name = this.A3Code
     mesh.userData = this;
@@ -75,36 +75,7 @@ export class State {
     return mesh;
   }
 
-  createGeometry(geoCoords: Position[][] | Position[][][]) {
-    const spareArray = [];
-
-    for (let P of geoCoords) {
-      const vecs2 = [];
-      if (isPosition2dArray(P)) {
-        P = P[0];
-      }
-
-      for (let i = 0; i < P.length; ++i) {
-        const lat = P[i][1]
-        const lng = P[i][0]
-        let { x, y } = merc.fromLatLngToPoint({ lat, lng });
-
-        // fix for russia to make eastern part of the country on the right
-        if (this.A3Code === "RUS" && x < 50) {
-          x += 256; // 256 is current tilesize
-        }
-
-        vecs2.push(new Vector2(x, -y));
-      }
-
-      spareArray.push(new Shape(vecs2));
-    }
-
-    const shapeGeo = new ShapeGeometry(spareArray);
-    return shapeGeo;
-  }
-
-  setColor(color: string) {
+  public setColor(color: string) {
     if (!this.mesh) {
       return;
     }
@@ -114,7 +85,14 @@ export class State {
     }
   }
 
-  getBoundingBox() {
+  public setContourVisible(enabled: boolean) {
+    if (!this.outlineMesh) {
+      return;
+    }
+    this.outlineMesh.visible = enabled;
+  }
+
+  public getBoundingBox() {
     const geometry = this.mesh?.geometry;
     if (!this.mesh || !(geometry instanceof ShapeGeometry)) {
       return;
@@ -129,13 +107,9 @@ export class State {
     return geometry.boundingBox.clone().applyMatrix4(this.mesh.matrixWorld);
   }
 
-  dispose() {
+  public dispose() {
     this.mesh?.geometry.dispose();
     this.mesh = undefined;
     this.parentCountry = undefined;
   }
-}
-
-function isPosition2dArray(a: unknown[]): a is Position[][] {
-  return Array.isArray(a[0]) && Array.isArray(a[0][0]) && typeof a[0][0][0] === 'number';
 }

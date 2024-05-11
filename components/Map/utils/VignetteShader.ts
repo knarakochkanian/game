@@ -64,7 +64,7 @@ export const VignetteShader = {
     "float len = length(position) * gain;",
 
     "float x = gl_FragCoord.x / resolution.x;",
-    "gl_FragColor = vec4 ( c * vec3 (smoothstep(radius, radius - softness, len)), 1.0);",
+    "gl_FragColor = vec4 ( c * vec3 (smoothstep(radius, radius - softness, len)), 0.3);",
     "}"
 
   ].join("\n")
