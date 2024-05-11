@@ -1,6 +1,6 @@
 @import '/app/variables.module.scss';
 
-.attackSelectedInfo {
+.actionSelectedInfo {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -17,7 +17,7 @@
     letter-spacing: 0.36px;
     @include showEllipsisInTheEnd(1, 100%);
   }
-  .arrowDown {
+  .arrow {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -27,4 +27,8 @@
     bottom: 0;
     right: 25px;
   }
+}
+
+.actionSelectedInfo.fromDetails {
+  position: static;
 }

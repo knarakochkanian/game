@@ -1,4 +1,4 @@
-import { CRITICAL, MINIMAL, WARNING } from '../constants';
+import { ATTACK, CRITICAL, MINIMAL, WARNING } from '../constants';
 import regionOptionsUSA from './USAdropdown';
 import industryOptions from './industryOptions';
 import launchConsequences from './launchConsequences';
@@ -15,11 +15,12 @@ import {
 import news, { news_2 } from './news';
 
 export const attackExample = {
+  actionType: ATTACK,
   news: news_2,
   launchConsequences: launchConsequences,
   id: '4',
   damage: CRITICAL,
-  date: '03.02.2024 20:13',
+  date: '03.02.2024 12:30',
   industry: industryOptions[0],
   isCompleted: false,
   name: '000-001',
@@ -28,6 +29,7 @@ export const attackExample = {
 
 const attacks: IAttack[] = [
   {
+    actionType: ATTACK,
     news: news_2,
     launchConsequences: launchConsequences,
     id: '3',
@@ -46,6 +48,7 @@ const attacks: IAttack[] = [
     industry: industryOption_2,
     isCompleted: true,
     name: '000-002',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_2,
   },
@@ -57,10 +60,12 @@ const attacks: IAttack[] = [
     industry: industryOption_3,
     isCompleted: true,
     name: '000-001',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_3,
   },
   {
+    actionType: ATTACK,
     news: news_2,
     launchConsequences: launchConsequences,
     id: '4',
@@ -79,6 +84,7 @@ const attacks: IAttack[] = [
     industry: industryOption_2,
     isCompleted: true,
     name: '000-005',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_2,
   },
@@ -90,6 +96,7 @@ const attacks: IAttack[] = [
     industry: industryOption_3,
     isCompleted: true,
     name: '000-006',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_3,
   },
@@ -101,6 +108,7 @@ const attacks: IAttack[] = [
     industry: industryOption_2,
     isCompleted: true,
     name: '000-007',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_2,
   },
@@ -112,6 +120,7 @@ const attacks: IAttack[] = [
     industry: industryOption_3,
     isCompleted: true,
     name: '000-008',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_3,
   },
@@ -123,6 +132,7 @@ const attacks: IAttack[] = [
     industry: industryOption_2,
     isCompleted: true,
     name: '000-009',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_2,
   },
@@ -134,6 +144,7 @@ const attacks: IAttack[] = [
     industry: industryOption_3,
     isCompleted: true,
     name: '000-010',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_3,
   },
@@ -145,6 +156,7 @@ const attacks: IAttack[] = [
     industry: industryOption_2,
     isCompleted: true,
     name: '000-011',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_2,
   },
@@ -156,6 +168,7 @@ const attacks: IAttack[] = [
     industry: industryOption_3,
     isCompleted: true,
     name: '000-012',
+    actionType: ATTACK,
     news: news_2,
     region: regionOption_3,
   },

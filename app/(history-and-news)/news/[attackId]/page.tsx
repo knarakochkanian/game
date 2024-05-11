@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getAttack } from '../../../../helpers';
+import { getAction } from '../../../../helpers';
 import SingleAttackNews from '../../../../components/SingleAttackNews';
+import attacks from '../../../../data/attacks';
 
 type Params = {
   params: {
@@ -9,7 +10,7 @@ type Params = {
 };
 
 export async function generateMetadata({ params: { attackId } }: Params) {
-  const attack = getAttack(attackId);
+  const attack = getAction(attackId, attacks);
 
   if (!attack) {
     return {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params: { attackId } }: Params) {
 }
 
 const SingleAttackNewsPage = ({ params: { attackId } }: Params) => {
-  const attack = getAttack(attackId);
+  const attack = getAction(attackId, attacks) as IAttack | undefined;
 
   if (!attack) notFound();
 

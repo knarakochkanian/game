@@ -12,16 +12,19 @@
     gap: 40px;
     padding-left: 16px;
     align-items: center;
-    h2.attackTitle {
+    h2.actionTitle {
       @include TypoH2;
       line-height: 86%;
     }
-    .delayedStart {
+    .actionStatus {
       color: $attack-green;
       font-variant-numeric: slashed-zero;
       text-transform: uppercase;
       @include TypoBodySmall;
       @include flex-center;
+    }
+    .actionStatus.protection {
+      color: $protect-blue;
     }
   }
   .rightPart {
@@ -37,6 +40,11 @@
         font-variant-numeric: slashed-zero;
         text-transform: uppercase;
         @include TypoBodySmall;
+      }
+    }
+    .completingDate.protection {
+      span {
+        color: $protect-blue;
       }
     }
   }

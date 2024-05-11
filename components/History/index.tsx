@@ -1,18 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import Attacks from '../Attacks';
-import AttackInDetails from '../AttackInDetails';
+import Actions from '../Actions';
+import ActionInDetails from '../ActionInDetails';
 
-const History = ({ attacks }: { attacks: IAttack[] }) => {
+import styles from './history.module.scss';
+
+interface IHistoryProps {
+  attacks: IAttack[];
+}
+
+const History = ({ attacks }: IHistoryProps) => {
   const [attackId, setAttackId] = useState('');
 
   return (
     <>
+      <h1 className={styles.title}>История запусков</h1>
       {attackId ? (
-        <AttackInDetails setAttackId={setAttackId} attackId={attackId} />
+        <ActionInDetails
+          data={attacks}
+          actionId={attackId}
+          setActionId={setAttackId}
+        />
       ) : (
-        <Attacks setAttackId={setAttackId} attacks={attacks} />
+        <Actions setActionId={setAttackId} actions={attacks} />
       )}
     </>
   );

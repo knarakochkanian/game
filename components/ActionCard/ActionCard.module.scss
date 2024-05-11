@@ -1,12 +1,16 @@
 @import '/app/variables.module.scss';
 
-.attackCard {
+.actionCard {
   position: relative;
   background-color: $black-80;
-  .attackImg {
+  .actionImg {
     position: absolute;
     z-index: 12;
     top: 4px;
     left: -120px;
   }
+}
+
+.actionCard.fromDetails {
+  position: static;
 }

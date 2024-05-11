@@ -1,0 +1,10 @@
+@import '/app/variables.module.scss';
+
+.title {
+    position: absolute;
+    top: 160px;
+    left: 394px;
+    color: $white;
+    @include set-font-size-weight(78px, 400);
+    line-height: 120%; /* 93.6px */
+  }

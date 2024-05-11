@@ -14,8 +14,14 @@ import backArrow from './backArrow.svg';
 import forwardArrow from './forwardArrow.svg';
 import backBtnShape from './backBtnShape.svg';
 import forwardBtnShape from './forwardBtnShape.svg';
+import protectBlueTrash from './protectBlueTrash.svg';
+import leftSquareBracketBlue from './leftSquareBracketBlue.svg';
+import rightSquareBracketBlue from './rightSquareBracketblue.svg';
 
 export {
+  leftSquareBracketBlue,
+  rightSquareBracketBlue,
+  protectBlueTrash,
   arrowDownGray,
   arrowUpGray,
   backArrow,

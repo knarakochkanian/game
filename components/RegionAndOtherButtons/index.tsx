@@ -150,7 +150,7 @@ const RegionAndOtherButtons = ({
                 aria-controls={`${region.id}-content`}
                 id={`${region.id}-header`}
               >
-                <h5>{region.title}guhgkhk</h5>
+                <h5>{region.title}</h5>
               </AccordionSummary>
               <AccordionDetails
                 style={{ flexWrap: 'wrap', display: 'flex', gap: '10px' }}

@@ -2,25 +2,7 @@
 
 .foundPlaces {
   margin-top: 86px;
-  h4 {
-    margin-top: 24px;
-    color: $white;
-    font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(38px, 400);
-    line-height: 120%; /* 45.6px */
-    letter-spacing: 0.38px;
-    text-transform: uppercase;
-  }
   .foundPlacesAccordionSummary {
     @include AccordionSummary;
-    h4 {
-      margin-top: 24px;
-      color: $white;
-      font-variant-numeric: slashed-zero;
-      @include set-font-size-weight(38px, 400);
-      line-height: 120%; /* 45.6px */
-      letter-spacing: 0.38px;
-      text-transform: uppercase;
-    }
   }
 }

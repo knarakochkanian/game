@@ -1,6 +1,6 @@
 @import '/app/variables.module.scss';
 
-.attacks {
+.actions {
   @include attacksCtnStyles;
   @include flex-column(64px);
   left: 14%;

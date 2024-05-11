@@ -8,8 +8,10 @@ import skyNewsLogo from './skyNewsLogo.svg';
 import theTimesLogo from './theTimesLogo.svg';
 import darkerGradient from './darkerGradient.svg';
 import noise from './noise.svg';
+import protectionIcon from './protectionIcon.svg';
 
 export {
+  protectionIcon,
   noise,
   darkerGradient,
   target_2,

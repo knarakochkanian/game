@@ -5,16 +5,20 @@ interface IOption {
   label: string;
 }
 
-interface IAttack {
-  news: INews[];
+interface IAction {
   launchConsequences: ILaunchConsequences;
   id: string;
+  actionType: string;
   isCompleted: boolean;
   name: string;
   date: string;
   region: IOption;
   industry: IOption;
   damage: string;
+}
+
+interface IAttack extends IAction {
+  news: INews[];
 }
 
 interface INews {
@@ -33,3 +37,5 @@ interface IPlace {
   regions?: IPlace[];
   code?: string;
 }
+
+interface IProtection extends IAction {}

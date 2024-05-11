@@ -1,9 +1,9 @@
 import NewsCard from '../NewsCard';
-import styles from './AttackNews.module.scss';
+import styles from './ActionNews.module.scss';
 
-const AttackNews = ({ news }: { news: INews[] }) => {
+const ActionNews = ({ news }: { news: INews[] }) => {
   return (
-    <section className={styles.attackNewsCtn}>
+    <section className={styles.actionNewsCtn}>
       <div className={styles.titleAndBtnCtn}>
         <h5>последствия в новостях</h5>
         <button>смотреть все</button>
@@ -18,4 +18,4 @@ const AttackNews = ({ news }: { news: INews[] }) => {
   );
 };
 
-export default AttackNews;
+export default ActionNews;

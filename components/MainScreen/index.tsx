@@ -10,7 +10,7 @@ import { ATTACK, GLOBE, MAP, PROTECTION } from '../../constants';
 import {
   AttackSign,
   AttackSignActive,
-  Globe,
+  Globe as globe,
   GlobeActive,
   GlobeUnderProtection,
   Map,
@@ -19,9 +19,10 @@ import {
   ProtectActive,
   ProtectSign,
 } from '../../public/main-screen';
-import { SphereMap } from '../Map/sphere-map.component';
-import { FlatMap } from '../Map/flat-map.component';
 import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
+import Globe from '../Globe';
+import QueueModal from '../QueueModal';
+import queue from '../../data/queue';
 
 import styles from './MainScreen.module.scss';
 
@@ -57,7 +58,7 @@ const MainScreen = () => {
             ? isAttacking
               ? GlobeActive
               : GlobeUnderProtection
-            : Globe
+            : globe
         }
         imgSrc_2={
           globeActive ? Map : isAttacking ? MapActive : MapActiveUnderProtection
@@ -65,8 +66,9 @@ const MainScreen = () => {
         name="mapOrGlobe"
       />
 
-      {/* <SphereMap visible={globeActive} /> */}
-      {/* <FlatMap visible /> */}
+      {/* <Globe visible={globeActive} /> */}
+
+      {true && <QueueModal queue={queue} />}
 
       <HistoryAndNewsBtns />
     </main>

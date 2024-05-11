@@ -21,7 +21,7 @@ interface IKeyBoardProps {
 
 const Keyboard = ({ setSearchInput, keyboardRef }: IKeyBoardProps) => {
   const [layoutName, setLayoutName] = useState('default');
-  const [language, setLanguage] = useState(ENGLISH);
+  const [language, setLanguage] = useState(RUSSIAN);
 
   const onChange = (input: string) => {
     setSearchInput(input);

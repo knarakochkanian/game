@@ -19,6 +19,7 @@ export const ONBOARDING = 'onboarding';
 export const HISTORY = 'history';
 export const NEWS = 'news';
 export const COUNT_DOWN = 'count-down';
+export const QUEUE = 'queue';
 
 export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY];
 export const bottomLinesAreStraightPages = [NEWS, HISTORY];

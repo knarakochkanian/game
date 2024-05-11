@@ -1,32 +1,36 @@
 import Image from 'next/image';
-import { arrowDown } from '../../public/summary';
+import { arrowDown, arrowUp } from '../../public/summary';
 import { slashes } from '../../public/history';
-import { IAttackCardProps } from '../../components/AttackCard';
+import { IActionCardProps } from '../../components/ActionCard';
 
-import styles from './AttackSelectedInfo.module.scss';
+import styles from './ActionSelectedInfo.module.scss';
 
-const AttackSelectedInfo = ({
-  attack,
-  setAttackId,
+const ActionSelectedInfo = ({
+  action,
+  setActionId,
   fromDetails,
-}: IAttackCardProps) => {
+}: IActionCardProps) => {
   const handleClick = () => {
-    if (!setAttackId) {
+    if (!setActionId) {
       return;
     }
-    setAttackId(fromDetails ? '' : attack.id);
+    setActionId(fromDetails ? '' : action.id);
   };
 
   return (
-    <div className={styles.attackSelectedInfo}>
-      <span>{attack.region.label}</span>
-      <span>{attack.industry.label}</span>
+    <div
+      className={`${styles.actionSelectedInfo} ${
+        fromDetails ? styles.fromDetails : ''
+      }`}
+    >
+      <span>{action.region.label}</span>
+      <span>{action.industry.label}</span>
 
       <button onClick={handleClick}>
         <Image
-          className={styles.arrowDown}
-          src={arrowDown}
-          alt="arrowDown"
+          className={styles.arrow}
+          src={fromDetails ? arrowUp : arrowDown}
+          alt="arrow"
           width={24}
           height={24}
           priority
@@ -44,4 +48,4 @@ const AttackSelectedInfo = ({
   );
 };
 
-export default AttackSelectedInfo;
+export default ActionSelectedInfo;

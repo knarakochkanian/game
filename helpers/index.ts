@@ -16,8 +16,11 @@ export const truncateString = (inputString: string, maxLength: number) => {
   }
 };
 
-export const getAttack = (attackId: string): IAttack | undefined => {
-  return attacks.find((attack) => attack.id === attackId);
+export const getAction = (
+  actionId: string,
+  actions: (IAttack | IProtection)[]
+): IAttack | IProtection | undefined => {
+  return actions.find((action) => action.id === actionId);
 };
 
 export const search = (searchText: string) => {

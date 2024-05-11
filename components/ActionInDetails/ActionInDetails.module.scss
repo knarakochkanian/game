@@ -1,10 +1,16 @@
 @import '/app/variables.module.scss';
 
-.attack {
+.action {
   @include attacksCtnStyles;
   @include flex-column(64px);
   left: 14%;
   top: 17%;
   transform: unset;
   background-color: $black-80;
+}
+
+.action.inQueue {
+  position: relative;
+  top: unset;
+  left: unset;
 }
