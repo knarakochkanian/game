@@ -1,12 +1,14 @@
 import anime from 'animejs'
 import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry } from "three";
-import { EffectComposer, MapControls, RenderPass, ShaderPass } from "three/examples/jsm/Addons.js";
+import { EffectComposer, GammaCorrectionShader, MapControls, RenderPass, ShaderPass } from "three/examples/jsm/Addons.js";
 import { State } from "./state";
 import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
 import { ComplexCountry } from "./complex-country";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
-import { EarthParameters, IEarth } from '../map.types';
+import { EarthParameters } from '../map.types';
 import { complexCountriesNames } from "../geodata/complex-countries";
+import { VignetteShader } from '../utils/VignetteShader';
+import { IEarth } from '../IEarth';
 
 const FOV = 50;
 const MIN_ZOOM = 40;
@@ -29,8 +31,6 @@ export class FlatEarth implements IEarth {
   private controls: MapControls | undefined
 
   private composer: EffectComposer | undefined;
-
-  // private mapGroup: Group | undefined
 
   private parentHtmlElement: HTMLElement | undefined
 
@@ -60,20 +60,24 @@ export class FlatEarth implements IEarth {
     renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer = renderer;
 
-    this.controls = createFlatEarthControls(this.camera, renderer);
+    if (!this.isNotInteractive) {
+      this.controls = createFlatEarthControls(this.camera, renderer);
+    }
 
     const composer = new EffectComposer(this.renderer);
     const pass = new RenderPass(scene, this.camera);
     composer.addPass(pass);
     this.composer = composer;
 
-    // var vignette = new ShaderPass(VignetteShader);
-    // console.log(window.innerWidth, window.innerHeight)
-    // vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
-    // vignette.uniforms["radius"].value = .9; // default is 0.75
-    // vignette.uniforms["softness"].value = .9; // default is 0.3
-    // vignette.uniforms["gain"].value = .1; // default is 0.9
-    // composer.addPass(vignette);
+    const vignette = new ShaderPass(VignetteShader);
+    vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+    vignette.uniforms["radius"].value = .65;
+    vignette.uniforms["softness"].value = .65;
+    vignette.uniforms["gain"].value = .9;
+    composer.addPass(vignette);
+
+    const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);  
+    composer.addPass(gammaCorrectionPass);
 
     const mapGroup = new Group();
     mapGroup.rotateX(-Math.PI / 2);
@@ -93,7 +97,7 @@ export class FlatEarth implements IEarth {
       }
 
       if (complexCountriesNames.includes(name)) {
-        const complexCountry = ComplexCountry.fromName(name, mapGroup)
+        const complexCountry = ComplexCountry.fromName(name, mapGroup, contourColor, countryColor)
         if (complexCountry) {
           this.countries[a3code] = complexCountry
         }
@@ -109,7 +113,9 @@ export class FlatEarth implements IEarth {
     })
 
     // this.controls.addEventListener("change", this._render.bind(this));
-    renderer.domElement.addEventListener('click', this.onClick.bind(this));
+    if (!this.isNotInteractive) {
+      renderer.domElement.addEventListener('click', this.onClick.bind(this));
+    }
 
     this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, 0)
   }
@@ -167,14 +173,17 @@ export class FlatEarth implements IEarth {
     }
   }
 
-  public highlightCountry(name: string, color?: string) {
-    const country = this.getCountryOrRegionByName(name)
-    if (!country) {
-      console.error(`no country with name ${name}`)
-      return;
-    }
-
-    country.setColor(color ?? PICKED_COLOR)
+  public setCountryColor(name: string | string[], color?: string) {
+    const names = Array.isArray(name) ? name : [name]
+    names.forEach(name => {
+      const country = this.getCountryOrRegionByName(name)
+      if (!country) {
+        console.error(`no country with name ${name}`)
+        return;
+      }
+  
+      country.setColor(color ?? PICKED_COLOR)
+    })
 
     if (this.isNotInteractive) {
       this._render()
@@ -226,14 +235,42 @@ export class FlatEarth implements IEarth {
     }
   }
 
-  public resetHighlighting() {
+  public resetCountryColors() {
     for (const country of Object.values(this.countries)) {
       country.setColor(this.countryColor)
     }
   }
 
+  public resetContours() {
+    for (const country of Object.values(this.countries)) {
+      if (country instanceof ComplexCountry) {
+        country.setSelfContourVisible(true)
+        country.setChildrenContoursVisible(false)
+      } else {
+        country.setContourVisible(true)
+      }
+    }
+  }
+
+  public setCountryContourVisibility(name: string | string[], visible: boolean) {
+    const names = Array.isArray(name) ? name : [name]
+    names.forEach(name => {
+      const country = this.getCountryOrRegionByName(name)
+      if (!country) {
+        console.error(`no country with name ${name}`)
+        return;
+      }
+  
+      if (country instanceof ComplexCountry) {
+        country.setSelfContourVisible(visible)
+      } else {
+        country.setContourVisible(visible)
+      }
+    })
+  }
+
   private setCameraPositionOnMap(position: Vector3, zoom: number, animationDurationMs = 500) {
-    if (!this.camera || !this.controls) {
+    if (!this.camera) {
       return;
     }
 
@@ -245,9 +282,12 @@ export class FlatEarth implements IEarth {
     if (animationDurationMs === 0) {
       this.controls?.target.set(target.x, target.y, target.z);
       this.camera.position.set(target.x, MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM), target.z);
+      if (this.isNotInteractive) {
+        this.camera.lookAt(target.x, target.y, target.z);
+      }
     } else {
       anime({
-        targets: this.controls.target,
+        targets: this.controls?.target,
         x: target.x,
         y: target.y,
         z: target.z,
@@ -294,7 +334,7 @@ export class FlatEarth implements IEarth {
     this.renderer?.render(this.scene, this.camera);
   }
 
-  runRenderLoop() {
+  private runRenderLoop() {
     const camera = this.camera
     const renderer = this.renderer
     const scene = this.scene
@@ -372,7 +412,7 @@ function createScene(): Scene {
   return scene;
 }
 
-function createFlatEarthControls(camera: PerspectiveCamera, renderer: WebGLRenderer): MapControls {
+function createFlatEarthControls(camera: PerspectiveCamera, renderer: WebGLRenderer, isNotInteractive = false): MapControls {
   const controls = new MapControls(camera, renderer.domElement);
   controls.minDistance = MIN_ZOOM;
   controls.maxDistance = MAX_ZOOM;
