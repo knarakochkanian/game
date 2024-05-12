@@ -6,7 +6,7 @@ import useGetPage from '../../hooks/useGetPage';
 
 import styles from './AttacksWithDates.module.scss';
 
-const AttacksWithDates = ({ attacks }: { attacks: IAttack[] }) => {
+const AttacksWithDates = ({ attacks }: { attacks: (IAttack | IProtection)[] }) => {
   const attackId = useGetPage();
 
   const [activeAttackId, setActiveAttackId] = useState<string>(attackId as string);

@@ -1,5 +1,4 @@
 import Arrow from '../Arrow';
-import { truncateString } from '../../helpers';
 
 import styles from './Paragraph.module.scss';
 
@@ -22,7 +21,7 @@ const Paragraph = ({ content, isOpen, setIsOpen }: IParagraphProps) => {
       ) : (
         <button onClick={() => setIsOpen(true)}>
           <p className={styles.paragraph}>
-            {truncateString(content, 129)}
+            {content}
             <Arrow name="paragraph" open={false} />
           </p>
         </button>

@@ -1,30 +1,30 @@
-import SelectRegionAndIndustry from '../SelectRegionAndIndustry.tsx';
+import SelectRegionAndIndustry from '../SelectRegionAndIndustry';
 import LaunchConsequences from '../LaunchConsequences';
 import industryOptions from '../../data/industryOptions';
 import regionOptionsUSA from '../../data/USAdropdown';
 import Header from '../Header';
 
-import styles from './AttackDetails.module.scss';
+import styles from './ActionDetails.module.scss';
 
-const AttackDetails = ({
+const ActionDetails = ({
   from = '',
-  attack,
+  action,
 }: {
   from?: string;
-  attack: IAttack;
+  action: IAttack | IProtection;
 }) => {
   return (
-    <div className={`${styles.attackDetails} ${styles[from]}`}>
-      <Header attack={attack} />
+    <div className={`${styles.actionDetails} ${styles[from]}`}>
+      <Header action={action} />
       <SelectRegionAndIndustry
-        attack={attack}
+        action={action}
         from={from}
         industryOptions={industryOptions}
         regionOptions={regionOptionsUSA}
       />
-      <LaunchConsequences launchConsequences={attack.launchConsequences} />
+      <LaunchConsequences action={action} />
     </div>
   );
 };
 
-export default AttackDetails;
+export default ActionDetails;

@@ -21,6 +21,10 @@
       line-height: 120%; /* 60px */
     }
   }
+  .info.protectMode {
+    border: 2px solid $protect-blue;
+    background: $protect-dark-blue-select-60;
+  }
 }
 
 .launchConsequences.paragraphIsOpen {

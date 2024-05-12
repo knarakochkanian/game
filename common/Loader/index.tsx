@@ -1,20 +1,24 @@
 import Image from 'next/image';
 import {
   bigCircle,
+  bigCircleBlue,
+  blueLight,
   greenLight,
   mediumCircle,
+  mediumCircleBlue,
   smallCircle,
+  smallCircleBlue,
   target,
 } from '../../public/count-down';
 
 import styles from './Loader.module.scss';
 
-const Loader = () => {
+const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
   return (
     <div className={styles.loader}>
       <Image
         className={styles.smallCircle}
-        src={smallCircle}
+        src={isAttacking ? smallCircle : smallCircleBlue }
         alt="smallCircle"
         width={515}
         height={515}
@@ -22,7 +26,7 @@ const Loader = () => {
       />
       <Image
         className={styles.mediumCircle}
-        src={mediumCircle}
+        src={isAttacking ? mediumCircle : mediumCircleBlue }
         alt="mediumCircle"
         width={791}
         height={791}
@@ -30,16 +34,16 @@ const Loader = () => {
       />
       <Image
         className={styles.bigCircle}
-        src={bigCircle}
+        src={isAttacking ? bigCircle : bigCircleBlue }
         alt="bigCircle"
         width={1015}
         height={1015}
         priority
       />
-      <div className={styles.greenLight}>
+      <div className={styles.light}>
         <Image
-          src={greenLight}
-          alt="greenLight"
+          src={isAttacking ? greenLight : blueLight}
+          alt="light"
           width={2312}
           height={1672}
           priority

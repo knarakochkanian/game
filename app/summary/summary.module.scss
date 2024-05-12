@@ -1,13 +1,13 @@
 @import '/app/variables.module.scss';
 .main {
   display: block;
-  .attackCtn {
+  .imgCtn {
     width: 2072px;
     height: 851px;
     position: relative;
     top: 346px;
     left: 364px;
-    .attackImg {
+    .img {
       position: absolute;
       left: -120px;
       top: 5px;

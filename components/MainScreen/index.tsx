@@ -29,9 +29,9 @@ import styles from './MainScreen.module.scss';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isAttacking, setIsAttacking] = useState(true);
   const [globeActive, setGlobeActive] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [isAttacking, setIsAttacking] = useState(true);
 
   useEffect(() => {
     // Establish WebSocket connection
@@ -83,47 +83,52 @@ const MainScreen = () => {
   }, []);
 
   return (
-    <main className={styles.mainScreen}>
-      <Grid />
-      <RegionAndOtherButtons
-        isAttacking={isAttacking}
-        drawerOpen={drawerOpen}
-        setDrawerOpen={setDrawerOpen}
-      />
-      <SelectFromTwo
-        setFirstActive={setIsAttacking}
-        button_1={ATTACK}
-        button_2={PROTECTION}
-        imgSrc_1={isAttacking ? AttackSignActive : AttackSign}
-        imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
-      />
-      <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-      <Help />
-      <h1>{String(isAttacking)}</h1>
-      {String(globeActive)}
-      <SelectFromTwo
-        setFirstActive={setGlobeActive}
-        button_1={GLOBE}
-        button_2={MAP}
-        imgSrc_1={
-          globeActive
-            ? isAttacking
-              ? GlobeActive
-              : GlobeUnderProtection
-            : globe
-        }
-        imgSrc_2={
-          globeActive ? Map : isAttacking ? MapActive : MapActiveUnderProtection
-        }
-        name="mapOrGlobe"
-      />
+    
+      <main className={styles.mainScreen}>
+        <Grid />
+        <RegionAndOtherButtons
+          isAttacking={isAttacking}
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+        />
+        <SelectFromTwo
+          setFirstActive={setIsAttacking}
+          button_1={ATTACK}
+          button_2={PROTECTION}
+          imgSrc_1={isAttacking ? AttackSignActive : AttackSign}
+          imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
+        />
+        <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+        <Help />
+        <h1>{String(isAttacking)}</h1>
+        {String(globeActive)}
+        <SelectFromTwo
+          setFirstActive={setGlobeActive}
+          button_1={GLOBE}
+          button_2={MAP}
+          imgSrc_1={
+            globeActive
+              ? isAttacking
+                ? GlobeActive
+                : GlobeUnderProtection
+              : globe
+          }
+          imgSrc_2={
+            globeActive
+              ? Map
+              : isAttacking
+              ? MapActive
+              : MapActiveUnderProtection
+          }
+          name="mapOrGlobe"
+        />
 
-      {/* <Globe visible={globeActive} /> */}
+        {/* <Globe visible={globeActive} /> */}
 
-      {false && <QueueModal queue={queue} />}
+        {false && <QueueModal queue={queue} />}
 
-      <HistoryAndNewsBtns />
-    </main>
+        <HistoryAndNewsBtns />
+      </main>
   );
 };
 

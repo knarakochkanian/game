@@ -7,10 +7,10 @@ import ActionInDetails from '../ActionInDetails';
 import styles from './history.module.scss';
 
 interface IHistoryProps {
-  attacks: IAttack[];
+  actions: (IAttack | IProtection)[];
 }
 
-const History = ({ attacks }: IHistoryProps) => {
+const History = ({ actions }: IHistoryProps) => {
   const [attackId, setAttackId] = useState('');
 
   return (
@@ -18,12 +18,12 @@ const History = ({ attacks }: IHistoryProps) => {
       <h1 className={styles.title}>История запусков</h1>
       {attackId ? (
         <ActionInDetails
-          data={attacks}
+          data={actions}
           actionId={attackId}
           setActionId={setAttackId}
         />
       ) : (
-        <Actions setActionId={setAttackId} actions={attacks} />
+        <Actions setActionId={setAttackId} actions={actions} />
       )}
     </>
   );

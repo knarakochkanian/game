@@ -8,7 +8,7 @@ interface ISelectRegionAndIndustryProps {
   from?: string;
   regionOptions: IOption[];
   industryOptions: IOption[];
-  action: IAction;
+  action: IAttack | IProtection;
 }
 
 const SelectRegionAndIndustry = ({
@@ -24,7 +24,7 @@ const SelectRegionAndIndustry = ({
         title="Регион"
         name="region"
         options={regionOptions}
-        initiallySelectedOption={action.region}
+        initiallySelectedOption={action?.region}
       />
       <DropDown
         disabled={pagesWhereDropdownDisabled.includes(from)}
@@ -32,10 +32,10 @@ const SelectRegionAndIndustry = ({
         title="Отрасль"
         name="industry"
         options={industryOptions}
-        initiallySelectedOption={action.industry}
+        initiallySelectedOption={action?.industry}
       />
       <div className={styles.damage}>
-        <TitleAndInfo info={action.damage} title="Ущерб" />
+        <TitleAndInfo info={action?.damage} title="Ущерб" />
       </div>
     </div>
   );

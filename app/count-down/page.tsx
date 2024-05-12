@@ -8,11 +8,14 @@ import Slashes from '../../common/Slashes';
 import Loader from '../../common/Loader';
 import SideLines from '../../common/SideLines';
 import Grid from '../../common/Grid';
+import { A_TTACK, P_ROTECTION } from '../../constants';
 
 import styles from './count-down.module.scss';
+import { protectionIcon } from '../../public/history';
 
 export default function CountDown() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
+  let isAttacking = false;
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -58,15 +61,23 @@ export default function CountDown() {
           </div>
 
           <div className={styles.attack}>
-            <Image src={attack} alt="attack" width={80} height={80} priority />
-            <h2 className={styles.attackTitle}>Атака #000-001</h2>
+            <Image
+              src={isAttacking ? attack : protectionIcon}
+              alt="attack or protect"
+              width={80}
+              height={80}
+              priority
+            />
+            <h2 className={styles.attackTitle}>
+              {isAttacking ? A_TTACK : P_ROTECTION} #000-001
+            </h2>
           </div>
         </div>
       </div>
 
       <Grid />
       <SideLines />
-      <Loader />
+      <Loader isAttacking={isAttacking} />
       <Slashes />
 
       <Footer cancelCountdown={cancelCountdown} />

@@ -1,4 +1,4 @@
-import { ATTACK, CRITICAL, MINIMAL, WARNING } from '../constants';
+import { ATTACK, CRITICAL, MINIMAL, PROTECTION, WARNING } from '../constants';
 import regionOptionsUSA from './USAdropdown';
 import industryOptions from './industryOptions';
 import launchConsequences from './launchConsequences';
@@ -27,7 +27,31 @@ export const attackExample = {
   region: regionOptionsUSA[0],
 };
 
-const attacks: IAttack[] = [
+export const protectionExample = {
+  actionType: PROTECTION,
+  launchConsequences: launchConsequences,
+  id: '99',
+  damage: CRITICAL,
+  date: '03.02.2024 12:30',
+  industry: industryOptions[0],
+  isCompleted: false,
+  name: '000-001',
+  region: regionOptionsUSA[0],
+};
+
+const attacks: (IAttack | IProtection)[] = [
+  {
+    actionType: PROTECTION,
+    launchConsequences: launchConsequences,
+    id: '99',
+    damage: CRITICAL,
+    date: '03.02.2024 12:30',
+    industry: industryOptions[0],
+    isCompleted: false,
+    name: '000-001',
+    region: regionOptionsUSA[0],
+    news: news_2,
+  },
   {
     actionType: ATTACK,
     news: news_2,
@@ -39,6 +63,18 @@ const attacks: IAttack[] = [
     isCompleted: true,
     name: '000-003',
     region: regionOption_1,
+  },
+  {
+    actionType: PROTECTION,
+    launchConsequences: launchConsequences,
+    id: '100',
+    damage: CRITICAL,
+    date: '03.02.2024 12:30',
+    industry: industryOptions[0],
+    isCompleted: false,
+    name: '000-100',
+    region: regionOptionsUSA[0],
+    news: news_2,
   },
   {
     launchConsequences: launchConsequences,

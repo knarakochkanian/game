@@ -10,7 +10,6 @@ type TStyle = {
 interface IAccordionWrapperProps {
   region: RegionCategory;
   children: ReactNode;
-  index: number;
   expanded: number;
   styles: TStyle;
   handleExpansion: (panel: any) => (event: any, isExpanded: any) => void;
@@ -18,7 +17,6 @@ interface IAccordionWrapperProps {
 
 const AccordionWrapper = ({
   children,
-  index,
   expanded,
   region,
   handleExpansion,
@@ -26,7 +24,6 @@ const AccordionWrapper = ({
 }: IAccordionWrapperProps) => {
   return (
     <Accordion
-      key={index}
       expanded={expanded === region.id}
       onChange={handleExpansion(region.id)}
       sx={{

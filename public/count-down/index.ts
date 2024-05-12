@@ -15,8 +15,16 @@ import smallCircle from './smallCircle.svg';
 import mediumCircle from './mediumCircle.svg';
 import bigCircle from './bigCircle.svg';
 import bottomNarrowLines from './bottomNarrowLines.svg';
+import blueLight from './blueLight.svg';
+import mediumCircleBlue from './mediumCircleBlue.svg';
+import smallCircleBlue from './smallCircleBlue.svg';
+import bigCircleBlue from './bigCircleBlue.svg';
 
 export {
+  mediumCircleBlue,
+  smallCircleBlue,
+  bigCircleBlue,
+  blueLight,
   bottomNarrowLines,
   bigCircle,
   mediumCircle,

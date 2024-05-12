@@ -17,8 +17,12 @@ import forwardBtnShape from './forwardBtnShape.svg';
 import protectBlueTrash from './protectBlueTrash.svg';
 import leftSquareBracketBlue from './leftSquareBracketBlue.svg';
 import rightSquareBracketBlue from './rightSquareBracketblue.svg';
+import forwardArrowProtect from './forwardArrowProtect.svg';
+import forwardBtnShapeProtect from './forwardBtnShapeProtect.svg';
 
 export {
+  forwardBtnShapeProtect,
+  forwardArrowProtect,
   leftSquareBracketBlue,
   rightSquareBracketBlue,
   protectBlueTrash,

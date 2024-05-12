@@ -31,7 +31,7 @@ const SingleAttackNews = ({ news }: { news: INews[] }) => {
             ))}
           </div>
         ) : (
-          <h1>Нет новостей об этой атаке</h1>
+          <h1>Нет новостей об этой действие</h1>
         )}
       </section>
 

@@ -8,25 +8,27 @@ import '../../app/globals.scss';
 
 import {
   LAUNCH_CONSEQUENCES,
+  PROTECTION,
   citiesUnderAttack,
   consequencesParagraph,
   populationSuffering,
   wholeDamage,
 } from '../../constants';
-import { ILaunchConsequences } from '../../data/launchConsequences';
 import { formatNumber } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
 
 import styles from './LaunchConsequences.module.scss';
 
-const LaunchConsequences = ({
-  launchConsequences,
-  from = '',
-}: {
-  launchConsequences: ILaunchConsequences;
+interface ILaunchConsequencesProps {
+  action: IAttack | IProtection;
   from?: string;
-}) => {
+}
+
+const LaunchConsequences = ({
+  action,
+  from = '',
+}: ILaunchConsequencesProps) => {
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
 
   return (
@@ -35,7 +37,11 @@ const LaunchConsequences = ({
         paragraphIsOpen ? styles.paragraphIsOpen : ''
       } ${from} ${styles[from]}`}
     >
-      <div className={styles.info}>
+      <div
+        className={`${styles.info} ${
+          action.actionType === PROTECTION ? styles.protectMode : ''
+        }`}
+      >
         <h3 className={styles.title}>Последствия запуска</h3>
         <Paragraph
           isOpen={paragraphIsOpen}
@@ -46,17 +52,19 @@ const LaunchConsequences = ({
           <ModalData
             from={LAUNCH_CONSEQUENCES}
             name={citiesUnderAttack}
-            value={String(launchConsequences.citiesUnderAttack)}
+            value={String(action.launchConsequences.citiesUnderAttack)}
           />
           <ModalData
             from={LAUNCH_CONSEQUENCES}
             name={populationSuffering}
-            value={formatNumber(String(launchConsequences.populationSuffering))}
+            value={formatNumber(
+              String(action.launchConsequences.populationSuffering)
+            )}
           />
           <ModalData
             from={LAUNCH_CONSEQUENCES}
             name={wholeDamage}
-            value={String(launchConsequences.wholeDamage) + ' млн $'}
+            value={String(action.launchConsequences.wholeDamage) + ' млн $'}
           />
         </div>
       </div>

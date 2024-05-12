@@ -151,8 +151,8 @@ const RegionAndOtherButtons = ({
                     styles={{ accordionDetailsHeight: '686px' }}
                     expanded={expanded}
                     handleExpansion={handleExpansion}
-                    index={index}
                     region={region}
+                    key={index}
                   >
                     <Places places={region.options} />
                   </AccordionWrapper>
@@ -165,7 +165,6 @@ const RegionAndOtherButtons = ({
                 key={index}
                 expanded={expanded}
                 handleExpansion={handleExpansion}
-                index={index}
                 region={region}
               >
                 {region.options?.map((option) => (

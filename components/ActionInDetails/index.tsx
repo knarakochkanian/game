@@ -20,7 +20,7 @@ const ActionInDetails = ({
   data,
 }: IActionInDetailsProps) => {
   const page = useGetPage();
-  const action = getAction(actionId, data);
+  let action = getAction(actionId, data as (IAttack | IProtection)[]);
 
   if (!action) return <></>;
 
@@ -31,7 +31,7 @@ const ActionInDetails = ({
       <ActionCard setActionId={setActionId} fromDetails action={action} />
       <LaunchConsequences
         from={HISTORY}
-        launchConsequences={action.launchConsequences}
+        action={action}
       />
       {page !== QUEUE && <ActionNews news={(action as IAttack).news} />}
     </section>

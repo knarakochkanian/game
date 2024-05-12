@@ -1,4 +1,3 @@
-import attacks from '../data/attacks';
 import countriesWithCodes from '../data/countriesWithCodes';
 
 export function formatNumber(str: string) {

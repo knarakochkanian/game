@@ -6,7 +6,9 @@ export const WAVE_STATE = 'Состояние';
 export const IP = 'IP';
 
 export const ATTACK = 'атака';
+export const A_TTACK = 'Атака';
 export const PROTECTION = 'защита';
+export const P_ROTECTION = 'Защита';
 export const GLOBE = 'глобус';
 export const MAP = 'карта';
 

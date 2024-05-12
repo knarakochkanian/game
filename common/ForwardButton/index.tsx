@@ -1,13 +1,20 @@
 import Image from 'next/image';
-import { forwardArrow, forwardBtnShape } from '../../public/summary';
+import {
+  forwardArrow,
+  forwardArrowProtect,
+  forwardBtnShape,
+  forwardBtnShapeProtect,
+} from '../../public/summary';
 
 import styles from './ForwardButton.module.scss';
 
 const ForwardButton = ({ onForward }: { onForward: () => void }) => {
+  const isAttacking = false;
+
   return (
     <button onClick={onForward}>
       <Image
-        src={forwardArrow}
+        src={isAttacking ? forwardArrow : forwardArrowProtect}
         className={styles.forwardArrow}
         alt="forwardArrow"
         width={96}
@@ -16,7 +23,7 @@ const ForwardButton = ({ onForward }: { onForward: () => void }) => {
       />
 
       <Image
-        src={forwardBtnShape}
+        src={isAttacking ? forwardBtnShape : forwardBtnShapeProtect}
         className={styles.forwardBtnShape}
         alt="forwardBtnShape"
         width={139}
