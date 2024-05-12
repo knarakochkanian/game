@@ -29,6 +29,8 @@ export class Earth implements IEarth {
 
   private contourColor: string;
 
+  private vignetteShaderPass: ShaderPass | undefined;
+
   constructor({ onCountryClick, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR }: EarthParameters) {
     this.contourColor = contourColor
     this.countryColor = countryColor
@@ -182,6 +184,9 @@ export class Earth implements IEarth {
   public onWindowResize() {
     this.globe?.width(window.innerWidth)
     this.globe?.height(window.innerHeight)
+    if (this.vignetteShaderPass) {
+      this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+    }
   }
 
   public render(parentHtmlElement: HTMLElement) {
@@ -199,6 +204,7 @@ export class Earth implements IEarth {
     vignette.uniforms["radius"].value = .6;
     vignette.uniforms["softness"].value = .8;
     vignette.uniforms["gain"].value = .9;
+    this.vignetteShaderPass = vignette
     composer.addPass(vignette);
 
     const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);  
@@ -210,6 +216,11 @@ export class Earth implements IEarth {
   public dispose() {
     this.globe?._destructor()
     this.globe = undefined
+    this.vignetteShaderPass?.dispose()
+    this.vignetteShaderPass = undefined
+    this.geojsonFeatureToStateCode.clear()
+    this.stateCodeToCurrentColor.clear()
+    this.stateCodeToCurrentContourVisibility.clear()
   }
 
   private updateCountryColors() {

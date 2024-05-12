@@ -44,6 +44,8 @@ export class FlatEarth implements IEarth {
 
   private contourColor: string
 
+  private vignetteShaderPass: ShaderPass | undefined
+
   constructor({ countries, onCountryClick, isNotInteractive, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR }: EarthParameters) {
     this.onCountryClick = onCountryClick
     this.isNotInteractive = !!isNotInteractive
@@ -74,6 +76,7 @@ export class FlatEarth implements IEarth {
     vignette.uniforms["radius"].value = .65;
     vignette.uniforms["softness"].value = .65;
     vignette.uniforms["gain"].value = .9;
+    this.vignetteShaderPass = vignette
     composer.addPass(vignette);
 
     const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);  
@@ -135,10 +138,16 @@ export class FlatEarth implements IEarth {
     if (!this.camera || !this.renderer) {
       return;
     }
+
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.composer?.setSize(window.innerWidth, window.innerHeight);
+
+    if (this.vignetteShaderPass) {
+      this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+    }
 
     if (this.isNotInteractive) {
       this._render();
@@ -367,6 +376,8 @@ export class FlatEarth implements IEarth {
       this.parentHtmlElement?.removeChild(this.renderer.domElement)
     }
 
+    this.vignetteShaderPass = undefined;
+    this.composer = undefined;
     this.renderer = undefined;
     this.scene = undefined;
     this.camera = undefined;
