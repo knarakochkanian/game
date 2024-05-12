@@ -6,7 +6,13 @@ import Sidenav from '../../common/Sidenav';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
 import Help from '../../common/Help';
 import SelectFromTwo from '../SelectFromTwo';
-import { ATTACK, GLOBE, MAP, PROTECTION } from '../../constants';
+import {
+  ATTACK,
+  ATTACK_OR_PROTECT,
+  GLOBE,
+  MAP,
+  PROTECTION,
+} from '../../constants';
 import { Socket } from 'net';
 import {
   AttackSign,
@@ -24,6 +30,8 @@ import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
 import Globe from '../Globe';
 import QueueModal from '../QueueModal';
 import queue from '../../data/queue';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './MainScreen.module.scss';
 
@@ -31,7 +39,7 @@ const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [globeActive, setGlobeActive] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [isAttacking, setIsAttacking] = useState(true);
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   useEffect(() => {
     // Establish WebSocket connection
@@ -83,52 +91,47 @@ const MainScreen = () => {
   }, []);
 
   return (
-    
-      <main className={styles.mainScreen}>
-        <Grid />
-        <RegionAndOtherButtons
-          isAttacking={isAttacking}
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-        />
-        <SelectFromTwo
-          setFirstActive={setIsAttacking}
-          button_1={ATTACK}
-          button_2={PROTECTION}
-          imgSrc_1={isAttacking ? AttackSignActive : AttackSign}
-          imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
-        />
-        <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-        <Help />
-        <h1>{String(isAttacking)}</h1>
-        {String(globeActive)}
-        <SelectFromTwo
-          setFirstActive={setGlobeActive}
-          button_1={GLOBE}
-          button_2={MAP}
-          imgSrc_1={
-            globeActive
-              ? isAttacking
-                ? GlobeActive
-                : GlobeUnderProtection
-              : globe
-          }
-          imgSrc_2={
-            globeActive
-              ? Map
-              : isAttacking
-              ? MapActive
-              : MapActiveUnderProtection
-          }
-          name="mapOrGlobe"
-        />
+    <main className={styles.mainScreen}>
+      <Grid />
+      <RegionAndOtherButtons
+        isAttacking={isAttacking}
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+      />
+      <SelectFromTwo
+        button_1={ATTACK}
+        button_2={PROTECTION}
+        imgSrc_1={isAttacking ? AttackSignActive : AttackSign}
+        imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
+        name={ATTACK_OR_PROTECT}
+      />
+      <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <Help />
+      <h1>{String(isAttacking)}</h1>
+      {String(globeActive)}
+      <SelectFromTwo
+        setFirstActive={setGlobeActive}
+        button_1={GLOBE}
+        button_2={MAP}
+        imgSrc_1={
+          globeActive
+            ? isAttacking
+              ? GlobeActive
+              : GlobeUnderProtection
+            : globe
+        }
+        imgSrc_2={
+          globeActive ? Map : isAttacking ? MapActive : MapActiveUnderProtection
+        }
+        name="mapOrGlobe"
+      />
 
-        {/* <Globe visible={globeActive} /> */}
+      {/* <Globe visible={globeActive} /> */}
 
-        {false && <QueueModal queue={queue} />}
+      {false && <QueueModal queue={queue} />}
 
-        <HistoryAndNewsBtns />
-      </main>
+      <HistoryAndNewsBtns />
+    </main>
   );
 };
 

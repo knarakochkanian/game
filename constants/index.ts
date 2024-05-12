@@ -9,6 +9,8 @@ export const ATTACK = 'атака';
 export const A_TTACK = 'Атака';
 export const PROTECTION = 'защита';
 export const P_ROTECTION = 'Защита';
+export const ATTACK_OR_PROTECT = 'attackOrProtect';
+
 export const GLOBE = 'глобус';
 export const MAP = 'карта';
 

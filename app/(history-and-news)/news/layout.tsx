@@ -6,7 +6,6 @@ import AttacksWithDates from '../../../components/AttacksWithDates';
 import actions from '../../../data/attacks';
 
 import styles from './layout.module.scss';
-import { ATTACK } from '../../../constants';
 
 export default function NewsLayout({
   children,

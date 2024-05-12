@@ -1,5 +1,4 @@
 import { HISTORY, QUEUE } from '../../constants';
-import queue from '../../data/queue';
 import { getAction } from '../../helpers';
 import useGetPage from '../../hooks/useGetPage';
 import ActionCard from '../ActionCard';

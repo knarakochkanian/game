@@ -9,13 +9,15 @@ import Loader from '../../common/Loader';
 import SideLines from '../../common/SideLines';
 import Grid from '../../common/Grid';
 import { A_TTACK, P_ROTECTION } from '../../constants';
+import { protectionIcon } from '../../public/history';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './count-down.module.scss';
-import { protectionIcon } from '../../public/history';
 
 export default function CountDown() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
-  let isAttacking = false;
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   useEffect(() => {
     const countdown = setInterval(() => {

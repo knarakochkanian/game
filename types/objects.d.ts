@@ -1,5 +1,7 @@
 declare module 'react-world-flags';
 declare module 'socket.io-client';
+declare module 'redux-logger';
+// declare module '@/redux/store';
 
 interface IOption {
   value: string;

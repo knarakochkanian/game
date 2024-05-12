@@ -2,19 +2,20 @@
 
 import Image from 'next/image';
 import Grid from '../../common/Grid';
-import AttackDetails from '../../components/ActionDetails';
 import { attack } from '../../public/count-down';
 import SideLines from '../../common/SideLines';
 import SummaryFooter from '../../components/SummaryFooter';
 import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { attackExample, protectionExample } from '../../data/attacks';
 import ActionDetails from '../../components/ActionDetails';
+import { protectionIcon } from '../../public/history';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './summary.module.scss';
-import { protectionIcon } from '../../public/history';
 
 const Summary = () => {
-  let isAttacking = false;
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   const onClick = () => {
     console.log('Start attack clicked');

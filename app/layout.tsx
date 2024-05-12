@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
+import ReduxProvider from '../redux/provider';
 
 import './globals.scss';
 
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <Suspense fallback={<Loading />}>
         <body>
-          <TopBottomLines />
-          <LocalTime />
-          {children}
+          <ReduxProvider>
+            <TopBottomLines />
+            <LocalTime />
+            {children}
+          </ReduxProvider>
         </body>
       </Suspense>
     </html>

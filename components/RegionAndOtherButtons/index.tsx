@@ -19,10 +19,10 @@ import { slashes_90_degree } from '../../public/main-screen';
 import { closeXButton } from '../../public/ui_kit';
 import Places from '../Places';
 import { search } from '../../helpers';
-
-import styles from './RegionAndOtherButtons.module.scss';
 import { COUNTRIES, REGIONS } from '../../constants';
 import AccordionWrapper from '../../common/AccordionWrapper';
+
+import styles from './RegionAndOtherButtons.module.scss';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
