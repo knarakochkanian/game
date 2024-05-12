@@ -52,9 +52,9 @@ const RegionAndOtherButtons = ({
       keyboardRef.current.setSearchInput(newInput);
     }
   };
-
   const handleNext3 = () => {
     setDrawerOpen(!drawerOpen);
+    console.log();
   };
 
   const handleSelectOpen = () => {
@@ -173,10 +173,11 @@ const RegionAndOtherButtons = ({
                     style={{ flexWrap: 'wrap', gap: '10px' }}
                   >
                     <button
-                      className={`SecondarySmallDisable ${
-                        option.name == 'США' ? 'SecondarySmallShine' : ''
-                      }`}
-                      onClick={handleNext3}
+                      className="SecondarySmallDisable"
+                      // onClick={() => {
+                      //   console.log('Button clicked:', option.name);
+                      //   onOptionClick(option.name);
+                      // }}
                     >
                       <span>
                         <span>{option.name}</span>

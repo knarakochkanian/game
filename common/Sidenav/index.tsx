@@ -143,6 +143,13 @@ function Sidenav({
           </div>
           {addConfirm && (
             <div className={styles.sidenavAddConfirm}>
+              <Image
+                src={'/onboarding/backgroundImgGreen.svg'}
+                width={692}
+                height={216}
+                alt={'backgr'}
+                className={styles.sidenavAddConfirmImage}
+              />
               <span className="Lead" style={{ color: '#787878' }}>
                 Для перехода к запуску <br /> атаки нажмите кнопку
               </span>

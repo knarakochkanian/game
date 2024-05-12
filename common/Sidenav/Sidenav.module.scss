@@ -24,11 +24,20 @@
     gap: 8px;
     position: fixed;
     bottom: 0;
-    background-image: url(~/public/onboarding/backgroundImgGreen.svg);
     background-repeat: no-repeat;
     height: 218px;
     width: 100%;
-    padding: 32px;
+    z-index: 4;
+    >span{
+      padding: 0 32px;
+    }
+    &Image{
+      position: absolute;
+      background: linear-gradient(0deg, rgba(82, 227, 213, 0.12) 0%, rgba(82, 227, 213, 0.12) 100%),
+      radial-gradient(2289.82% 90.1% at 5.66% 56.94%, #111A19 0%, rgba(16, 23, 22, 0.70) 50.11%, #111A19 50%);
+      //backdrop-filter: blur(25px);
+      z-index: -1;
+    }
   }
   &Square{
     @include flex-start;

@@ -77,6 +77,7 @@ export default function Onboarding() {
   const handleAddTheGorge = () => {
     setBlur(false);
     setAddConfirm(true);
+    setTheGorgeSelected(true);
   };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
@@ -101,7 +102,6 @@ export default function Onboarding() {
   };
   const handleNext6 = () => {
     setBlur(false);
-    setTheGorgeSelected(true);
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);

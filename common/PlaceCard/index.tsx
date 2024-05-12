@@ -1,11 +1,18 @@
+'use client';
 import Flag from 'react-world-flags';
 
 import styles from './PlaceCard.module.scss';
+import { useAppDispatch } from '../../redux/hooks';
+import { setPlaceName } from '../../redux/features/generalSlice';
 
 const PlaceCard = ({ place }: { place: IPlace }) => {
-  
+  const dispatch = useAppDispatch();
   return (
-    <article
+    <button
+      onClick={() => {
+        console.log('Button clicked:', place.name);
+        dispatch(setPlaceName(place.name));
+      }}
       className={`${styles.placeCard} ${
         place.regions ? styles.withRegions : ''
       }`}
@@ -17,7 +24,7 @@ const PlaceCard = ({ place }: { place: IPlace }) => {
       )}
 
       <h4>{place.name}</h4>
-    </article>
+    </button>
   );
 };
 

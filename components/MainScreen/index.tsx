@@ -34,6 +34,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './MainScreen.module.scss';
+import { SphereMap } from '../Map/sphere-map.component';
+import { FlatMap } from '../Map/flat-map.component';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -59,6 +61,7 @@ const MainScreen = () => {
     socket.onmessage = (ev) => {
       console.log(ev, 'onmessage');
     };
+
     // socket?.onmessage((event) => {
     //   console.log('event', event);
     // });
@@ -105,6 +108,11 @@ const MainScreen = () => {
         imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
         name={ATTACK_OR_PROTECT}
       />
+      <SphereMap visible={globeActive} />
+      <div style={{ position: 'absolute' }}>
+        <FlatMap visible={!globeActive} />
+      </div>
+
       <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
       <h1>{String(isAttacking)}</h1>

@@ -5,27 +5,32 @@ import { DEFAULT_COLOR, PICKED_COLOR } from './theme';
 import { UseMap } from './use-map.hook';
 import { MapType } from './map.types';
 import { getRegionsNamesByCountryName } from './utils/utils';
+import { useAppSelector } from '../../redux/hooks';
+import { selectPlaceName } from '../../redux/features/generalSlice';
 
 export interface MapProps {
   visible: boolean;
+  pickedCountriesFromSideBar?: (optionName: string[]) => void;
 }
 
-export const SphereMap = ({ visible }: MapProps) => {
-  
-
+export const SphereMap = ({
+  visible,
+  pickedCountriesFromSideBar,
+}: MapProps) => {
   // пример коллбэка, который при клике по стране подсвечивает её
   const pickedCountries: string[] = [];
+  const clickedPlace = useAppSelector(selectPlaceName);
+
   const onPolygonClick = (name: string) => {
     console.log('clicked', name);
 
-    if (pickedCountries.includes(name)) {
+    if (pickedCountries?.includes(name)) {
       pickedCountries.splice(pickedCountries.indexOf(name), 1);
       setCountryColor.current
         ? setCountryColor.current(name, DEFAULT_COLOR)
         : null;
       return;
     }
-
     pickedCountries.push(name);
 
     setCountryColor.current
@@ -34,20 +39,33 @@ export const SphereMap = ({ visible }: MapProps) => {
     focusOnCountry.current ? focusOnCountry.current(name) : null;
   };
 
-
-  const { ref, focusOnCountry, resetColors, resetContours, setCountryColor, setCountryContourVisibility } = UseMap({
+  const {
+    ref,
+    focusOnCountry,
+    resetColors,
+    resetContours,
+    setCountryColor,
+    setCountryContourVisibility,
+  } = UseMap({
     onCountryPicked: onPolygonClick,
     mapType: MapType.sphere,
     isNotInteractive: false,
   });
 
-  // пример -- как отобразить контуры штатов (по умолчанию они скрыты) 
+  if (focusOnCountry.current) {
+    focusOnCountry.current(clickedPlace);
+  }
+  if (setCountryColor.current) {
+    setCountryColor.current(clickedPlace);
+  }
+
+  // пример -- как отобразить контуры штатов (по умолчанию они скрыты)
   // useEffect(() => {
   //   if (!setCountryContourVisibility.current) {
   //     return;
   //   }
 
-  //   const stateNames = getRegionsNamesByCountryName('Соединённые Штаты Америки');
+  //  const stateNames = getRegionsNamesByCountryName('Соединённые Штаты Америки');
 
   //   setCountryContourVisibility.current(stateNames, true);
   // })
