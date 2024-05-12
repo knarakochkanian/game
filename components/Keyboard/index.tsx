@@ -25,8 +25,6 @@ const Keyboard = ({ setSearchInput, keyboardRef }: IKeyBoardProps) => {
 
   const onChange = (input: string) => {
     setSearchInput(input);
-
-    console.log('Input changed', input);
   };
 
   const handleShift = () => {

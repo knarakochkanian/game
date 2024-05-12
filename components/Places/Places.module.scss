@@ -1,8 +1,8 @@
 @import '/app/variables.module.scss';
 
-.foundPlaces {
+.places {
   margin-top: 86px;
-  .foundPlacesAccordionSummary {
+  .placesAccordionSummary {
     @include AccordionSummary;
   }
 }

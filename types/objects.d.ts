@@ -1,4 +1,5 @@
 declare module 'react-world-flags';
+declare module 'socket.io-client';
 
 interface IOption {
   value: string;

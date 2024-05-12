@@ -17,18 +17,23 @@ import Keyboard from '../Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
 import { slashes_90_degree } from '../../public/main-screen';
 import { closeXButton } from '../../public/ui_kit';
-import FoundPlaces from '../FoundPlaces';
+import Places from '../Places';
+import { search } from '../../helpers';
 
 import styles from './RegionAndOtherButtons.module.scss';
+import { COUNTRIES, REGIONS } from '../../constants';
+import AccordionWrapper from '../../common/AccordionWrapper';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
   setDrawerOpen: TSetBoolean;
+  isAttacking: boolean;
 }
 
 const RegionAndOtherButtons = ({
   drawerOpen,
   setDrawerOpen,
+  isAttacking,
 }: IRegionAndOtherButtonsProps) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [searchInput, setSearchInput] = useState('');
@@ -69,7 +74,11 @@ const RegionAndOtherButtons = ({
 
   return (
     <div className={styles.regionAndOtherButtons}>
-      <BaseButton active={selectOpen} onClick={handleSelectOpen}>
+      <BaseButton
+        protectMode={!isAttacking}
+        active={selectOpen}
+        onClick={handleSelectOpen}
+      >
         Регион
       </BaseButton>
 
@@ -124,7 +133,7 @@ const RegionAndOtherButtons = ({
               height={150}
               priority
             />
-            <FoundPlaces searchInput={searchInput} />
+            <Places places={search(searchInput)} />
           </dialog>
         }
 
@@ -133,39 +142,31 @@ const RegionAndOtherButtons = ({
             showKeyboard || searchInput ? styles.hideSelectionPanel : ''
           }
         >
-          {regions[0].regions?.map((region, index) => (
-            <Accordion
-              key={index}
-              expanded={expanded === region.id}
-              onChange={handleExpansion(region.id)}
-              sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
-                color: '#fff',
-                marginBottom: '10px',
-              }}
-            >
-              <AccordionSummary
-                expandIcon={
-                  <Image
-                    src={'onboarding/arrow.svg'}
-                    alt={'arrow'}
-                    width={24}
-                    height={24}
-                  />
-                }
-                aria-controls={`${region.id}-content`}
-                id={`${region.id}-header`}
-              >
-                <h5>{region.title}</h5>
-              </AccordionSummary>
-              <AccordionDetails
-                style={{
-                  flexWrap: 'wrap',
-                  display: 'flex',
-                  gap: '10px',
-                  overflow: 'scroll',
-                  height: '286px',
-                }}
+          {regions[0].regions?.map((region, index) => {
+            switch (region.title) {
+              case REGIONS:
+              case COUNTRIES:
+                return (
+                  <AccordionWrapper
+                    styles={{ accordionDetailsHeight: '686px' }}
+                    expanded={expanded}
+                    handleExpansion={handleExpansion}
+                    index={index}
+                    region={region}
+                  >
+                    <Places places={region.options} />
+                  </AccordionWrapper>
+                );
+            }
+
+            return (
+              <AccordionWrapper
+                styles={{ accordionDetailsHeight: 'unset' }}
+                key={index}
+                expanded={expanded}
+                handleExpansion={handleExpansion}
+                index={index}
+                region={region}
               >
                 {region.options?.map((option) => (
                   <div
@@ -184,9 +185,9 @@ const RegionAndOtherButtons = ({
                     </button>
                   </div>
                 ))}
-              </AccordionDetails>
-            </Accordion>
-          ))}
+              </AccordionWrapper>
+            );
+          })}
         </div>
       </ModalWithSelect>
 

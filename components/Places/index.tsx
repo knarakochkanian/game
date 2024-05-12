@@ -1,18 +1,18 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
-import { search } from '../../helpers';
+import { Option } from '../../data/attackRegionsData';
 
-import styles from './FoundPlaces.module.scss';
+import styles from './Places.module.scss';
 
-const FoundPlaces = ({ searchInput }: { searchInput: string }) => {
+const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
+  if (places === undefined) {
+    return null;
+  }
+
   return (
-    <div className={styles.foundPlaces}>
-      {search(searchInput)?.map((place) => {
+    <div className={styles.places}>
+      {(places as IPlace[]).map((place) => {
         if (place.regions) {
           return (
             <Accordion
@@ -38,7 +38,7 @@ const FoundPlaces = ({ searchInput }: { searchInput: string }) => {
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
-                <div className={styles.foundPlacesAccordionSummary}>
+                <div className={styles.placesAccordionSummary}>
                   <PlaceCard key={place.code} place={place} />
                 </div>
               </AccordionSummary>
@@ -51,12 +51,10 @@ const FoundPlaces = ({ searchInput }: { searchInput: string }) => {
           );
         }
 
-
         return <PlaceCard key={place.code} place={place} />;
       })}
-
     </div>
   );
 };
 
-export default FoundPlaces;
+export default Places;

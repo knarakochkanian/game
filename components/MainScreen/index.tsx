@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { io, Socket as IOSocket } from 'socket.io-client';
-
 import Grid from '../../common/Grid';
 import Sidenav from '../../common/Sidenav';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
@@ -30,6 +29,8 @@ import styles from './MainScreen.module.scss';
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isAttacking, setIsAttacking] = useState(true);
+  const [globeActive, setGlobeActive] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
@@ -80,13 +81,12 @@ const MainScreen = () => {
     //   console.log('WebSocket disconnected');
     // };
   }, []);
-  const [isAttacking, setIsAttacking] = useState(true);
-  const [globeActive, setGlobeActive] = useState(true);
 
   return (
     <main className={styles.mainScreen}>
       <Grid />
       <RegionAndOtherButtons
+        isAttacking={isAttacking}
         drawerOpen={drawerOpen}
         setDrawerOpen={setDrawerOpen}
       />
@@ -120,7 +120,7 @@ const MainScreen = () => {
 
       {/* <Globe visible={globeActive} /> */}
 
-      {true && <QueueModal queue={queue} />}
+      {false && <QueueModal queue={queue} />}
 
       <HistoryAndNewsBtns />
     </main>

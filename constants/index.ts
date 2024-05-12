@@ -36,6 +36,9 @@ export const WARNING = 'Предупреждение';
 export const CANCEL = 'ОТМЕНА';
 export const START = 'ПУСК';
 
+export const REGIONS = 'регионы';
+export const COUNTRIES = 'страны';
+
 export const cancelAttackTitle = 'Для отмены атаки нажмите кнопку';
 export const startAttackTitle = 'Для запуска атаки нажмите кнопку';
 

@@ -1,14 +1,14 @@
 import countriesWithCodes, { USARegions } from './countriesWithCodes';
 
-interface Option {
+export interface Option {
   id: number | string;
   name: string;
 }
 
-interface RegionCategory {
+export interface RegionCategory {
   id: number;
   title?: string;
-  options?: Option[];
+  options?: (Option | IPlace)[];
 }
 
 export interface Region {

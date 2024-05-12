@@ -22,8 +22,6 @@ const TopBottomLines = () => {
       pathname?.split('/').includes(page)
     ) || pathname === '/';
 
-  console.log('pathname', pathname);
-
   return (
     <>
       <Image
