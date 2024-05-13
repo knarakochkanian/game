@@ -14,3 +14,12 @@
 .noiseImg {
   position: absolute;
 }
+
+.vignette {
+  z-index: 1;
+  box-shadow: 0 0 400px rgba(0,0,0,0.9) inset;
+  position: absolute;
+  top: 0;
+  max-width: 2800px;
+  overflow: hidden;
+}

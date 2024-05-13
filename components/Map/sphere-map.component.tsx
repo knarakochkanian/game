@@ -46,6 +46,8 @@ export const SphereMap = ({
     resetContours,
     setCountryColor,
     setCountryContourVisibility,
+    rotateLeft,
+    rotateRight,
   } = UseMap({
     onCountryPicked: onPolygonClick,
     mapType: MapType.sphere,
