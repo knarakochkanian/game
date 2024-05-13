@@ -24,10 +24,21 @@ export function getUSStateGeometryByGN_A1Code(a1Code: string): Position[][] | Po
 export function getRegionsNamesByCountryName(countryName: string): string[] {
   for (const country of countries) {
     if (country.name === countryName && country.regions) {
-      return country.regions.map(region => region.name) 
+      return country.regions.map(region => region.name)
     }
   }
   return []
+}
+
+export function getParentCountyNameByRegionName(regionName: string): string | undefined {
+  for (const country of countries) {
+    if (!country.regions) {
+      continue
+    }
+    if (country.regions.find(region => region.name === regionName)) {
+      return country.name
+    }
+  }
 }
 
 export function isPosition2dArray(a: unknown[]): a is Position[][] {

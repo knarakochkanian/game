@@ -1,43 +1,80 @@
-import { MutableRefObject, useEffect } from 'react';
+import { MutableRefObject, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
   addToPickedCountries,
   removeFromPickedCountries,
   selectFirstClick,
+  selectIsAttacking,
   selectPickedCountries,
   selectPlaceName,
+  setPlaceName,
 } from '../redux/features/generalSlice';
-import { DEFAULT_COLOR, PICKED_COLOR } from '../components/Map/theme';
+import { DEFAULT_COLOR, PICKED_COLOR, PROTECT_BLUE } from '../components/Map/theme';
+import { getParentCountyNameByRegionName, getRegionsNamesByCountryName } from '../components/Map/utils/utils';
+import { complexCountriesNames } from '../components/Map/geodata/complex-countries';
 
-type TSetCountryColor = MutableRefObject<
-  ((name: string | string[], color?: string | undefined) => void) | undefined
->;
-type TFocusOnCountry = MutableRefObject<((name: string) => void) | undefined>;
+export type TSetCountryColor =
+  ((name: string | string[], color?: string | undefined) => void);
+
+export type TFocusOnCountry = ((name: string) => void);
+
+export type TSetCountryContourVisibility = ((name: string | string[], visible: boolean) => void);
 
 const useManagePlaceClick = (
   setCountryColor: TSetCountryColor,
-  focusOnCountry: TFocusOnCountry
+  focusOnCountry: TFocusOnCountry,
+  setCountryContourVisibility: TSetCountryContourVisibility
 ) => {
   const dispatch = useAppDispatch();
   const pickedCountries: string[] = useAppSelector(selectPickedCountries);
-  const clickedPlace = useAppSelector(selectPlaceName);
   const firstClick = useAppSelector(selectFirstClick);
+  const isAttacking = useAppSelector(selectIsAttacking);
+  const highlightColor = isAttacking ? PICKED_COLOR : PROTECT_BLUE;
+
+  const regionsNames = useMemo(() => {
+    const regionsNames: string[] = []
+    complexCountriesNames.forEach(name => {
+      regionsNames.push(...getRegionsNamesByCountryName(name))
+    })
+    return regionsNames;
+  }, [])
+
+  const clickedPlaceName = useAppSelector(selectPlaceName);
 
   useEffect(() => {
-    if (pickedCountries?.includes(clickedPlace)) {
-      dispatch(removeFromPickedCountries(clickedPlace));
-
-      setCountryColor.current
-        ? setCountryColor.current(clickedPlace, DEFAULT_COLOR)
-        : null;
-    } else {
-      dispatch(addToPickedCountries(clickedPlace));
-      setCountryColor.current
-        ? setCountryColor.current(clickedPlace, PICKED_COLOR)
-        : null;
-      focusOnCountry.current ? focusOnCountry.current(clickedPlace) : null;
+    const handleTerritoryHighlighing = (name: string) => {
+      if (pickedCountries.includes(name)) {
+        setCountryColor(name, DEFAULT_COLOR)
+        dispatch(removeFromPickedCountries(name));
+      } else {
+        setCountryColor(name, highlightColor)
+        focusOnCountry(name);
+        dispatch(addToPickedCountries(name));
+      }
     }
-  }, [clickedPlace, firstClick]);
+
+    if (!regionsNames.includes(clickedPlaceName)) {
+      handleTerritoryHighlighing(clickedPlaceName)
+    }
+    
+    // если кликнули по региону страны, то сначала отображаем контуры регионов
+    const parentCountry = getParentCountyNameByRegionName(clickedPlaceName)
+    if (!parentCountry) {
+      return;
+    }
+    // определить, выделена ли сама страна
+    if (pickedCountries.includes(parentCountry)) {
+      // если выделена, то выделить конкретный кликнутый регион
+      handleTerritoryHighlighing(clickedPlaceName)
+    } else {
+      // если не выделена, то выделить контуры регионов
+      const regions = getRegionsNamesByCountryName(parentCountry);
+      setCountryContourVisibility(regions, true);
+      dispatch(addToPickedCountries(parentCountry));
+    }
+    return;
+
+  }, [clickedPlaceName, firstClick]);
 };
 
 export default useManagePlaceClick;

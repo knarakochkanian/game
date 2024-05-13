@@ -28,25 +28,8 @@ export const SphereMap = ({
   // пример коллбэка, который при клике по стране подсвечивает её
   const pickedCountries: string[] = []; 
 
-  const onPolygonClick = (name: string) => {
-    console.log('clicked', name);
-
-    if (pickedCountries?.includes(name)) {
-      dispatch(removeFromPickedCountries(name));
-      pickedCountries.splice(pickedCountries.indexOf(name), 1);
-      setCountryColor.current
-        ? setCountryColor.current(name, DEFAULT_COLOR)
-        : null;
-      return;
-    }
-
-    dispatch(addToPickedCountries(name));
+  const onPolygonClick = (name: string) => {    dispatch(addToPickedCountries(name));
     pickedCountries.push(name);
-
-    setCountryColor.current
-      ? setCountryColor.current(name, highlightColor)
-      : null;
-    focusOnCountry.current ? focusOnCountry.current(name) : null;
   };
 
   const {
@@ -64,7 +47,7 @@ export const SphereMap = ({
     isNotInteractive: false,
   });
 
-  useManagePlaceClick(setCountryColor, focusOnCountry);
+  // useManagePlaceClick(setCountryColor, focusOnCountry, setCountryContourVisibility);
 
   // пример -- как отобразить контуры штатов (по умолчанию они скрыты)
   // useEffect(() => {

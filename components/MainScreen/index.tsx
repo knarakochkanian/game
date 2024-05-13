@@ -34,17 +34,12 @@ import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './MainScreen.module.scss';
 import dynamic from 'next/dynamic';
+import { MapType } from '../Map/map.types';
 
-const SphereMap = dynamic(
-  () => import('../Map/sphere-map.component').then((mod) => mod.SphereMap),
+const WorldMap = dynamic(
+  () => import('../Map/map.component').then((mod) => mod.WorldMap),
   { ssr: false }
 )
-
-const FlatMap = dynamic(
-  () => import('../Map/flat-map.component').then((mod) => mod.FlatMap),
-  { ssr: false }
-)
-
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -118,10 +113,7 @@ const MainScreen = () => {
         name={ATTACK_OR_PROTECT}
       />
 
-      <SphereMap visible={globeActive} />
-      <div style={{ position: 'absolute' }}>
-        <FlatMap visible={!globeActive} />
-      </div>
+      <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
 
       <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
