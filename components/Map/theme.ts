@@ -7,3 +7,5 @@ export const HOVERED_COLOR = "#50ADA3"
 export const DEFAULT_COLOR = "#556160"
 
 export const DEFAULT_CONTOUR_COLOR = "#000000"
+
+export const PROTECT_BLUE = "#6291FF"

@@ -4,19 +4,27 @@ import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
 
 import styles from './Places.module.scss';
+import { COUNTRIES } from '../../constants';
 
-const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
+interface IPlacesProps {
+  places: (IPlace | Option)[] | undefined;
+  name?: string;
+}
+
+const Places = ({ places, name }: IPlacesProps) => {
+  const isCountry = name === COUNTRIES;
+
   if (places === undefined) {
     return null;
   }
 
   return (
     <div className={styles.places}>
-      {(places as IPlace[]).map((place) => {
+      {(places as IPlace[]).map((place, i) => {
         if (place.regions) {
           return (
             <Accordion
-              key={place.code}
+              key={i}
               sx={() => ({
                 backgroundColor: '#080808 !important',
                 color: '#FFF',
@@ -39,7 +47,7 @@ const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
                 id="panel2-header"
               >
                 <div className={styles.placesAccordionSummary}>
-                  <PlaceCard key={place.code} place={place} />
+                  <PlaceCard isCountry place={place} />
                 </div>
               </AccordionSummary>
               <AccordionDetails>
@@ -51,7 +59,7 @@ const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
           );
         }
 
-        return <PlaceCard key={place.code} place={place} />;
+        return <PlaceCard isCountry={isCountry} key={i} place={place} />;
       })}
     </div>
   );

@@ -27,7 +27,6 @@ import {
   ProtectSign,
 } from '../../public/main-screen';
 import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
-import Globe from '../Globe';
 import QueueModal from '../QueueModal';
 import queue from '../../data/queue';
 import { useAppSelector } from '../../redux/hooks';
@@ -108,6 +107,7 @@ const MainScreen = () => {
         imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
         name={ATTACK_OR_PROTECT}
       />
+
       <SphereMap visible={globeActive} />
       <div style={{ position: 'absolute' }}>
         <FlatMap visible={!globeActive} />
@@ -115,8 +115,6 @@ const MainScreen = () => {
 
       <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
-      <h1>{String(isAttacking)}</h1>
-      {String(globeActive)}
       <SelectFromTwo
         setFirstActive={setGlobeActive}
         button_1={GLOBE}
@@ -133,8 +131,6 @@ const MainScreen = () => {
         }
         name="mapOrGlobe"
       />
-
-      {/* <Globe visible={globeActive} /> */}
 
       {false && <QueueModal queue={queue} />}
 

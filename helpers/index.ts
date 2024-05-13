@@ -1,4 +1,13 @@
+import { MutableRefObject } from 'react';
 import countriesWithCodes from '../data/countriesWithCodes';
+import { DEFAULT_COLOR, PICKED_COLOR } from '../components/Map/theme';
+import { AppDispatch } from '../redux/store';
+import {
+  IAuthState,
+  addToPickedCountries,
+  removeFromPickedCountries,
+} from '../redux/features/generalSlice';
+import { Dispatch, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
