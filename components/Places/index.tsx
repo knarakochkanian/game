@@ -50,10 +50,12 @@ const Places = ({ places, name }: IPlacesProps) => {
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
+                {i === 0 && (
+                  <AlphabetLetter firstChild letter={place.name[0]} />
+                )}
                 <div className={styles.placesAccordionSummary}>
                   <PlaceCard isCountry place={place} />
                 </div>
-                {i === 0 && <AlphabetLetter letter={place.name[0]} />}
                 {placeFirstLetterChanged && (
                   <AlphabetLetter letter={places[i + 1]?.name[0]} />
                 )}
