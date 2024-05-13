@@ -2,20 +2,29 @@
 import Flag from 'react-world-flags';
 import { useAppDispatch } from '../../redux/hooks';
 import { setPlaceName } from '../../redux/features/generalSlice';
+import AlphabetLetter from '../AlphabetLetter';
 
 import styles from './PlaceCard.module.scss';
+import { Option } from '../../data/attackRegionsData';
 
 interface IPlaceCardProps {
   place: IPlace;
+  places?: (IPlace | Option)[];
+  i?: number;
   isCountry?: boolean;
   placeFirstLetterChanged?: boolean;
 }
 
-const PlaceCard = ({ place, isCountry, placeFirstLetterChanged }: IPlaceCardProps) => {
+const PlaceCard = ({
+  place,
+  isCountry,
+  placeFirstLetterChanged,
+  i,
+  places,
+}: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   return (
     <>
-      {isCountry && <div className={styles.alphabetLetter}></div>}
       <button
         onClick={() => {
           console.log('Button clicked:', place.name);
@@ -33,6 +42,10 @@ const PlaceCard = ({ place, isCountry, placeFirstLetterChanged }: IPlaceCardProp
 
         <h4>{place.name}</h4>
       </button>
+      {i === 0 && <AlphabetLetter letter={place.name[0]} />}
+      {isCountry && placeFirstLetterChanged && places && i && (
+        <AlphabetLetter letter={places[i + 1]?.name[0]} />
+      )}
     </>
   );
 };

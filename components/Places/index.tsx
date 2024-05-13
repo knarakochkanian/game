@@ -2,9 +2,10 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
+import { COUNTRIES } from '../../constants';
+import AlphabetLetter from '../../common/AlphabetLetter';
 
 import styles from './Places.module.scss';
-import { COUNTRIES } from '../../constants';
 
 interface IPlacesProps {
   places: (IPlace | Option)[] | undefined;
@@ -21,6 +22,9 @@ const Places = ({ places, name }: IPlacesProps) => {
   return (
     <div className={styles.places}>
       {(places as IPlace[]).map((place, i) => {
+        const placeFirstLetterChanged =
+          places[i].name[0] !== places[i + 1]?.name[0];
+
         if (place.regions) {
           return (
             <Accordion
@@ -49,6 +53,10 @@ const Places = ({ places, name }: IPlacesProps) => {
                 <div className={styles.placesAccordionSummary}>
                   <PlaceCard isCountry place={place} />
                 </div>
+                {i === 0 && <AlphabetLetter letter={place.name[0]} />}
+                {placeFirstLetterChanged && (
+                  <AlphabetLetter letter={places[i + 1]?.name[0]} />
+                )}
               </AccordionSummary>
               <AccordionDetails>
                 {place.regions.map((region, i) => (
@@ -59,7 +67,16 @@ const Places = ({ places, name }: IPlacesProps) => {
           );
         }
 
-        return <PlaceCard isCountry={isCountry} key={i} place={place} />;
+        return (
+          <PlaceCard
+            i={i}
+            places={places}
+            placeFirstLetterChanged={placeFirstLetterChanged}
+            isCountry={isCountry}
+            key={i}
+            place={place}
+          />
+        );
       })}
     </div>
   );
