@@ -96,8 +96,9 @@ export class Earth implements IEarth {
       .polygonAltitude(() => 0.01)
       .polygonSideColor(() => 'rgba(0, 0, 0, 0)') // hidden
       .showGraticules(true)
-      .backgroundColor(BACKGROUND_COLOR)
-      .showAtmosphere(false);
+      .backgroundColor(`${BACKGROUND_COLOR}77`)
+      .showAtmosphere(true)
+      .atmosphereColor("#37403f");
 
     this.globe = globe;
 
@@ -236,15 +237,34 @@ export class Earth implements IEarth {
     });
   }
 
+  public rotateLeft(): void {
+    if (!this.globe) {
+      return;
+    }
+
+    const pov = this.globe.pointOfView()
+    this.globe.pointOfView({ lng: pov.lng - 10 }, 200)
+  }
+
+  public rotateRight(): void {
+    if (!this.globe) {
+      return;
+    }
+
+    const pov = this.globe.pointOfView()
+    this.globe.pointOfView({ lng: pov.lng + 10 }, 200)
+  }
+
+
   public onWindowResize() {
-    this.globe?.width(window.innerWidth);
-    this.globe?.height(window.innerHeight);
     if (this.vignetteShaderPass) {
       this.vignetteShaderPass.uniforms['resolution'].value = new Vector2(
         window.innerWidth,
         window.innerHeight
       );
     }
+    this.globe?.width(window.innerWidth);
+    this.globe?.height(window.innerHeight);
   }
 
   public render(parentHtmlElement: HTMLElement) {
@@ -255,8 +275,8 @@ export class Earth implements IEarth {
     this.globe(parentHtmlElement);
 
     //#region post-processing
-    const composer = this.globe.postProcessingComposer();
-    //
+    // const composer = this.globe.postProcessingComposer();
+    
     // const vignette = new ShaderPass(VignetteShader);
     // vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
     // vignette.uniforms["radius"].value = .6;
@@ -265,8 +285,8 @@ export class Earth implements IEarth {
     // this.vignetteShaderPass = vignette
     // composer.addPass(vignette);
 
-    const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
-    composer.addPass(gammaCorrectionPass);
+    // const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
+    // composer.addPass(gammaCorrectionPass);
     // #endregion
   }
 

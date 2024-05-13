@@ -15,7 +15,7 @@ export default function Test() {
   return (
     <>
       <div className={styles.attackCtn}>
-        <AttackDetails from={ONBOARDING} attack={attackExample} />
+        <AttackDetails from={ONBOARDING} action={attackExample} />
       </div>
 
       <Grid />

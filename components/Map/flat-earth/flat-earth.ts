@@ -123,6 +123,14 @@ export class FlatEarth implements IEarth {
     this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, 0)
   }
 
+  public rotateLeft(): void {
+    console.error("rotation is only implemented for spherical map")
+  }
+
+  public rotateRight(): void {
+    console.error("rotation is only implemented for spherical map")
+  }
+
   public render(parentHtmlElement: HTMLElement) {
     if (!this.renderer) {
       return;

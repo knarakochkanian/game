@@ -154,7 +154,7 @@ const RegionAndOtherButtons = ({
                     region={region}
                     key={index}
                   >
-                    <Places places={region.options} />
+                    <Places name={region.title} places={region.options} />
                   </AccordionWrapper>
                 );
             }

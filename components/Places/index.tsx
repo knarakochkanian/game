@@ -2,21 +2,33 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
+import { COUNTRIES } from '../../constants';
+import AlphabetLetter from '../../common/AlphabetLetter';
 
 import styles from './Places.module.scss';
 
-const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
+interface IPlacesProps {
+  places: (IPlace | Option)[] | undefined;
+  name?: string;
+}
+
+const Places = ({ places, name }: IPlacesProps) => {
+  const isCountry = name === COUNTRIES;
+
   if (places === undefined) {
     return null;
   }
 
   return (
     <div className={styles.places}>
-      {(places as IPlace[]).map((place) => {
+      {(places as IPlace[]).map((place, i) => {
+        const placeFirstLetterChanged =
+          places[i].name[0] !== places[i + 1]?.name[0];
+
         if (place.regions) {
           return (
             <Accordion
-              key={place.code}
+              key={i}
               sx={() => ({
                 backgroundColor: '#080808 !important',
                 color: '#FFF',
@@ -38,9 +50,15 @@ const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
+                {i === 0 && (
+                  <AlphabetLetter firstChild letter={place.name[0]} />
+                )}
                 <div className={styles.placesAccordionSummary}>
-                  <PlaceCard key={place.code} place={place} />
+                  <PlaceCard isCountry place={place} />
                 </div>
+                {placeFirstLetterChanged && (
+                  <AlphabetLetter letter={places[i + 1]?.name[0]} />
+                )}
               </AccordionSummary>
               <AccordionDetails>
                 {place.regions.map((region, i) => (
@@ -51,7 +69,16 @@ const Places = ({ places }: { places: (IPlace | Option)[] | undefined }) => {
           );
         }
 
-        return <PlaceCard key={place.code} place={place} />;
+        return (
+          <PlaceCard
+            i={i}
+            places={places}
+            placeFirstLetterChanged={placeFirstLetterChanged}
+            isCountry={isCountry}
+            key={i}
+            place={place}
+          />
+        );
       })}
     </div>
   );

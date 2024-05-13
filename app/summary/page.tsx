@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Grid from '../../common/Grid';
 import { attack } from '../../public/count-down';
@@ -16,13 +17,14 @@ import styles from './summary.module.scss';
 
 const Summary = () => {
   const isAttacking = useAppSelector(selectIsAttacking);
-
+  const router = useRouter();
+  
   const onClick = () => {
     console.log('Start attack clicked');
   };
-  const onBack = () => {
-    console.log('onBack');
-  };
+
+  const onBack = () => router.back();
+
   const onForward = () => {
     console.log('onForward');
   };

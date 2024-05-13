@@ -1,16 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-interface IAuthState {
+export interface IAuthState {
   isAttacking: boolean;
   placeName: string;
   blur: boolean;
+  firstClick: boolean;
+  pickedCountries: string[];
 }
 
 const initialState: IAuthState = {
   isAttacking: true,
+  firstClick: true,
   placeName: '',
   blur: false,
+  pickedCountries: [],
 };
 
 const generalSlice = createSlice({
@@ -21,7 +25,20 @@ const generalSlice = createSlice({
       state.isAttacking = payload;
     },
     setPlaceName(state, { payload }) {
-      state.placeName = payload;
+      if (payload === state.placeName) {
+        state.firstClick = !state.firstClick;
+      } else {
+        state.firstClick = false;
+        state.placeName = payload;
+      }
+    },
+    addToPickedCountries(state, { payload }) {
+      if (state.pickedCountries.includes(payload)) return;
+      payload && state.pickedCountries.push(payload);
+    },
+    removeFromPickedCountries(state, { payload }) {
+      if (!state.pickedCountries.includes(payload)) return;
+      state.pickedCountries.splice(state.pickedCountries.indexOf(payload), 1);
     },
     setBlur(state, { payload }) {
       state.blur = payload;
@@ -29,11 +46,22 @@ const generalSlice = createSlice({
   },
 });
 
-export const { setIsAttacking, setPlaceName, setBlur } = generalSlice.actions;
+export const {
+  setBlur,
+  setIsAttacking,
+  setPlaceName,
+  addToPickedCountries,
+  removeFromPickedCountries,
+} = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
   state.generalReducer.isAttacking;
 export const selectPlaceName = (state: RootState) =>
   state.generalReducer.placeName;
 export const selectBlur = (state: RootState) => state.generalReducer.blur;
+export const selectPickedCountries = (state: RootState) =>
+  state.generalReducer.pickedCountries;
+export const selectFirstClick = (state: RootState) =>
+  state.generalReducer.firstClick;
+
 export default generalSlice.reducer;

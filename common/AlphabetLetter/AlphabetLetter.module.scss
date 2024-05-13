@@ -1,0 +1,16 @@
+@import '/app/variables.module.scss';
+
+.alphabetLetter {
+  margin-top: 72px;
+  padding: 22px 24px;
+  color: $light-gray;
+  font-variant-numeric: slashed-zero;
+  @include set-font-size-weight(38px, 400);
+  line-height: 120%; /* 45.6px */
+  letter-spacing: 0.38px;
+  text-transform: uppercase;
+}
+
+.alphabetLetter.firstChild {
+  margin-top: 0;
+}

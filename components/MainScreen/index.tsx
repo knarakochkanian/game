@@ -27,15 +27,24 @@ import {
   ProtectSign,
 } from '../../public/main-screen';
 import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
-import Globe from '../Globe';
 import QueueModal from '../QueueModal';
 import queue from '../../data/queue';
 import { useAppSelector } from '../../redux/hooks';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './MainScreen.module.scss';
-import { SphereMap } from '../Map/sphere-map.component';
-import { FlatMap } from '../Map/flat-map.component';
+import dynamic from 'next/dynamic';
+
+const SphereMap = dynamic(
+  () => import('../Map/sphere-map.component').then((mod) => mod.SphereMap),
+  { ssr: false }
+)
+
+const FlatMap = dynamic(
+  () => import('../Map/flat-map.component').then((mod) => mod.FlatMap),
+  { ssr: false }
+)
+
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -108,6 +117,7 @@ const MainScreen = () => {
         imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
         name={ATTACK_OR_PROTECT}
       />
+
       <SphereMap visible={globeActive} />
       <div style={{ position: 'absolute' }}>
         <FlatMap visible={!globeActive} />
@@ -115,8 +125,6 @@ const MainScreen = () => {
 
       <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
-      <h1>{String(isAttacking)}</h1>
-      {String(globeActive)}
       <SelectFromTwo
         setFirstActive={setGlobeActive}
         button_1={GLOBE}
@@ -133,8 +141,6 @@ const MainScreen = () => {
         }
         name="mapOrGlobe"
       />
-
-      {/* <Globe visible={globeActive} /> */}
 
       {false && <QueueModal queue={queue} />}
 
