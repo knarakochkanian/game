@@ -14,15 +14,18 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './count-down.module.scss';
+import { useRouter } from 'next/navigation';
 
 export default function CountDown() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
   const isAttacking = useAppSelector(selectIsAttacking);
+  const router = useRouter();
 
   useEffect(() => {
     const countdown = setInterval(() => {
       if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
         clearInterval(countdown);
+        router.push('/');
       } else if (time.seconds > 0) {
         setTime({ ...time, seconds: time.seconds - 1 });
       } else if (time.minutes > 0) {
@@ -33,7 +36,7 @@ export default function CountDown() {
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, [time]);
+  }, [time, router]);
 
   const cancelCountdown = () => {
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });

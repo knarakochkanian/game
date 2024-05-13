@@ -38,7 +38,7 @@ const Summary = () => {
           height={80}
           priority
         />
-        <ActionDetails action={protectionExample} />
+        <ActionDetails action={attackExample} />
       </div>
 
       <BackAndForwardBtns onBack={onBack} onForward={onForward} />

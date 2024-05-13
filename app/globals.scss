@@ -133,6 +133,14 @@ button {
   }
   color: $attack-green-40;
 }
+.AccordionNested{
+  @include TypoBodyBig;
+  > span > span > button {
+    text-transform: uppercase;
+  }
+  color: $white;
+  opacity: 0.6;
+}
 
 .SecondarySmall {
   border-right: 2px solid #787878;

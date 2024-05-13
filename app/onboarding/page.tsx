@@ -13,6 +13,9 @@ import { regions } from '../../data/attackRegionsData';
 import styles from './onboarding.module.scss';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectBlur, setBlur } from '../../redux/features/generalSlice';
+import { useSelector } from 'react-redux';
 
 export default function Onboarding() {
   const [currentRegionId, setCurrentRegionId] = useState<number | null>(null);
@@ -24,16 +27,25 @@ export default function Onboarding() {
   const [modalOpen6, setModalOpen6] = useState(false);
   const [selectOpen, setSelectOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [removeModal, setRemoveModal] = useState(true);
+  const [modalOpen7, setModalOpen7] = useState(false);
+  const [modalOpen8, setModalOpen8] = useState(false);
+  const [modalOpen9, setModalOpen9] = useState(false);
   const [inputTheGorge, setInputTheGorge] = useState(true);
   const [addConfirm, setAddConfirm] = useState(false);
+  const [blurButtons, setBlurButtons] = useState(false);
+  const [delayed, setDelayed] = useState(false);
+  const [removeModalDate, setRemoveModalDate] = useState(false);
   const [expanded, setExpanded] = useState<boolean | undefined | number>(
     regions[0]?.regions?.[0]?.id
   );
+  const dispatch = useAppDispatch();
+  const blur = useSelector(selectBlur);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const [blur, setBlur] = useState(false);
   const [addColor, setAddColor] = useState(false);
   const [vpkSelected, setVpkSelected] = useState(false);
   const [theGorgeSelected, setTheGorgeSelected] = useState(false);
+
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -46,6 +58,8 @@ export default function Onboarding() {
   };
   // const [input, setInput] = useState("")
   const openModal = () => {
+    dispatch(setBlur(true));
+    setBlurButtons(true);
     setModalOpen(true);
     setModalOpen2(false);
   };
@@ -56,11 +70,15 @@ export default function Onboarding() {
   const closeModal4 = () => setModalOpen4(false);
   const closeModal5 = () => setModalOpen5(false);
   const closeModal6 = () => setModalOpen6(false);
+  const closeModal7 = () => setModalOpen7(false);
+  const closeModal8 = () => setModalOpen8(false);
+  const closeModal9 = () => setModalOpen9(false);
   const handleNext = () => {
     setButtonsDisabled(false);
     setModalOpen2(true);
     setModalOpen(false);
     setSelectOpen(false);
+    setBlurButtons(false);
   };
 
   const handleNext2 = () => {
@@ -68,21 +86,23 @@ export default function Onboarding() {
     setModalOpen2(false);
     setModalOpen3(true);
     handleSelectRegion(1);
+    setBlurButtons(false);
   };
   const handleOpenSidenav = (option: any) => {
     if (option.name === 'США' && modalOpen3) {
       setDrawerOpen(!drawerOpen);
+      dispatch(setBlur(false));
     }
   };
   const handleAddTheGorge = () => {
-    setBlur(false);
+    dispatch(setBlur(false));
     setAddConfirm(true);
     setTheGorgeSelected(true);
   };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
     setCurrentRegionId(2);
-    setBlur(true);
+    dispatch(setBlur(true));
     setModalOpen3(false);
     setModalOpen4(true);
     setExpanded(false);
@@ -91,30 +111,48 @@ export default function Onboarding() {
     setModalOpen4(false);
     setModalOpen5(true);
     setDrawerOpen(true);
-    setBlur(true);
+    dispatch(setBlur(true));
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
-    setBlur(true);
+    dispatch(setBlur(true));
     setModalOpen5(false);
     setModalOpen6(true);
     setInputTheGorge(false);
   };
   const handleNext6 = () => {
-    setBlur(false);
+    dispatch(setBlur(false));
+    setModalOpen6(false);
+    setRemoveModal(false);
+    setModalOpen7(true);
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);
   };
   const handleSelectAllVPK = () => {
-    setBlur(false);
+    dispatch(setBlur(false));
     setAddColor(true);
     setVpkSelected(true);
+  };
+  const handleNext7 = () => {
+    setModalOpen7(false);
+    setModalOpen8(true);
+    setDelayed(true);
+  };
+  const handleNext8 = () => {
+    setModalOpen8(false);
+    setModalOpen9(true);
+  };
+  const handleNext9 = () => {
+    setRemoveModalDate(true);
   };
   return (
     <>
       <div className={styles.onboardingWrapper}>
-        <div className={styles.onboardingButtons}>
+        <div
+          style={{ filter: blurButtons ? 'blur(22px)' : 'none' }}
+          className={styles.onboardingButtons}
+        >
           {regions.map((region) => (
             <BaseButton
               key={region.id}
@@ -143,6 +181,7 @@ export default function Onboarding() {
             </button>
           </div>
         </Modal>
+
         <div
           className={styles.onboardingAccordionWrapper}
           style={{ top: inputTheGorge ? '400px' : '200px' }}
@@ -175,82 +214,84 @@ export default function Onboarding() {
               </div>
             </ModalWithSelect>
           ) : (
-            <div className={styles.onboardingTheGorge}>
-              <h5>уровень ущерба</h5>
-              <div className="TypoBodyBig" style={{ color: '#787878' }}>
-                Для каждой задачи доступен выбор только одного уровня ущерба.
+            <div style={{ display: removeModal ? 'block' : 'none' }}>
+              <div className={styles.onboardingTheGorge}>
+                <h5>уровень ущерба</h5>
+                <div className="TypoBodyBig" style={{ color: '#787878' }}>
+                  Для каждой задачи доступен выбор только одного уровня ущерба.
+                </div>
+                <ul className={styles.onboardingTheGorgeList}>
+                  <li>
+                    <button
+                      className="SecondarySmall"
+                      onClick={handleAddTheGorge}
+                    >
+                      <span>
+                        <div className={styles.onboardingTheGorgeListItem}>
+                          <Image
+                            src={'onboarding/square.svg'}
+                            alt={'square'}
+                            width={40}
+                            height={40}
+                          />
+
+                          <h4>критический</h4>
+                        </div>
+                        <Image
+                          src={'onboarding/info.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
+                      </span>
+                    </button>
+                  </li>
+                  <li>
+                    <button className="SecondarySmall">
+                      <span>
+                        <div className={styles.onboardingTheGorgeListItem}>
+                          <Image
+                            src={'onboarding/squareMid.svg'}
+                            alt={'square'}
+                            width={40}
+                            height={40}
+                          />
+
+                          <h4>минимальный</h4>
+                        </div>
+                        <Image
+                          src={'onboarding/info.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
+                      </span>
+                    </button>
+                  </li>
+                  <li>
+                    <button className="SecondarySmall">
+                      <span>
+                        <div className={styles.onboardingTheGorgeListItem}>
+                          <Image
+                            src={'onboarding/squareLittle.svg'}
+                            alt={'square'}
+                            width={40}
+                            height={40}
+                          />
+
+                          <h4>предупреждение</h4>
+                        </div>
+                        <Image
+                          src={'onboarding/info.svg'}
+                          alt={'square'}
+                          width={40}
+                          height={40}
+                        />
+                      </span>
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <ul className={styles.onboardingTheGorgeList}>
-                <li>
-                  <button
-                    className="SecondarySmall"
-                    onClick={handleAddTheGorge}
-                  >
-                    <span>
-                      <div className={styles.onboardingTheGorgeListItem}>
-                        <Image
-                          src={'onboarding/square.svg'}
-                          alt={'square'}
-                          width={40}
-                          height={40}
-                        />
-
-                        <h4>критический</h4>
-                      </div>
-                      <Image
-                        src={'onboarding/info.svg'}
-                        alt={'square'}
-                        width={40}
-                        height={40}
-                      />
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button className="SecondarySmall">
-                    <span>
-                      <div className={styles.onboardingTheGorgeListItem}>
-                        <Image
-                          src={'onboarding/squareMid.svg'}
-                          alt={'square'}
-                          width={40}
-                          height={40}
-                        />
-
-                        <h4>минимальный</h4>
-                      </div>
-                      <Image
-                        src={'onboarding/info.svg'}
-                        alt={'square'}
-                        width={40}
-                        height={40}
-                      />
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button className="SecondarySmall">
-                    <span>
-                      <div className={styles.onboardingTheGorgeListItem}>
-                        <Image
-                          src={'onboarding/squareLittle.svg'}
-                          alt={'square'}
-                          width={40}
-                          height={40}
-                        />
-
-                        <h4>предупреждение</h4>
-                      </div>
-                      <Image
-                        src={'onboarding/info.svg'}
-                        alt={'square'}
-                        width={40}
-                        height={40}
-                      />
-                    </span>
-                  </button>
-                </li>
-              </ul>
             </div>
           )}
           {currentRegionId &&
@@ -302,7 +343,11 @@ export default function Onboarding() {
                     </button>
                   </div>
                   <AccordionDetails
-                    className={styles.onboardingAccordionDetails}
+                    className={
+                      subRegion.title == 'ВПК'
+                        ? styles.onboardingAccordionDetailsIndustries
+                        : styles.onboardingAccordionDetails
+                    }
                   >
                     {subRegion.options?.map((option) => (
                       <div key={option.id}>
@@ -312,7 +357,7 @@ export default function Onboarding() {
                               ? 'Green'
                               : option.name == 'США'
                                 ? 'SecondarySmallShine'
-                                : 'SecondarySmallDisable'
+                                : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
@@ -379,7 +424,12 @@ export default function Onboarding() {
           <p> Возможен выбор отрасли с помощью быстрых фильтров и поиска.</p>
           <p> Нажмите на “ВПК”, чтобы развернуть список.</p>
           <div className="ModalButtons">
-            <button className="ModalButton1" onClick={handleNext4}>
+            <button
+              className={
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext4}
+            >
               далее
             </button>
             <button className="SecondarySmall" onClick={closeModal4}>
@@ -396,7 +446,12 @@ export default function Onboarding() {
           <p> Возможен выбор как всей отрасли, так и конкретных подотраслей.</p>
           <p> Нажмите на “Выбрать все” чтобы добавить отрасль в задачу.</p>
           <div className="ModalButtons">
-            <button className="ModalButton1" onClick={handleNext5}>
+            <button
+              className={
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext5}
+            >
               далее
             </button>
             <button className="SecondarySmall" onClick={closeModal5}>
@@ -413,10 +468,91 @@ export default function Onboarding() {
           <p> Выберите уровень ущерба.</p>
           <p> Нажмите на “Критический” для добавления в задачу.</p>
           <div className="ModalButtons">
-            <button className="ModalButton1" onClick={handleNext6}>
-              далее
+            <button
+              className={
+                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext6}
+            >
+              <span>далее</span>
             </button>
             <button className="SecondarySmall" onClick={closeModal6}>
+              <span>пропустить</span>
+            </button>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={modalOpen7}
+          onClose={closeModal7}
+          counter={7}
+          sx={{ bottom: '17%', left: '50%', top: 'unset !important' }}
+        >
+          <p>
+            {' '}
+            В данном окне отображаются выбранные вами страны, отрасли и уровень
+            ущерба. Когда все три пункта выбраны, физическая кнопка
+            “ПОДТВЕРДИТЬ” становится активной.
+          </p>
+          <div className="ModalButtons">
+            <button
+              className={
+                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext7}
+            >
+              <span>далее</span>
+            </button>
+            <button className="SecondarySmall" onClick={closeModal7}>
+              <span>пропустить</span>
+            </button>
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={modalOpen8}
+          onClose={closeModal8}
+          counter={8}
+          sx={{ bottom: '14%', left: '51%', top: 'unset !important' }}
+        >
+          <p>
+            {' '}
+            При необходимости запустить задачу в строго определенное время,
+            нажмите на элемент “Отложенный запуск” и установите дату и время.
+          </p>
+          <div className="ModalButtons">
+            <button
+              className={
+                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext8}
+            >
+              <span>далее</span>
+            </button>
+            <button className="SecondarySmall" onClick={closeModal8}>
+              <span>пропустить</span>
+            </button>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={modalOpen9}
+          onClose={closeModal9}
+          counter={9}
+          sx={{ bottom: '14%', left: '51%', top: 'unset !important' }}
+        >
+          <p>
+            После выбора всех пунктов условий нажмите на физическую кнопку
+            “Подвердить” справа  от дисплея, для перехода  к следующему шагу.
+          </p>
+          <div className="ModalButtons">
+            <button
+              className={
+                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+              }
+              onClick={handleNext9}
+            >
+              <span>далее</span>
+            </button>
+            <button className="SecondarySmall" onClick={closeModal9}>
               <span>пропустить</span>
             </button>
           </div>
@@ -446,7 +582,9 @@ export default function Onboarding() {
         onClose={() => setDrawerOpen(false)}
         vpkSelected={vpkSelected}
         addConfirm={addConfirm}
+        delayed={delayed}
         theGorgeSelected={theGorgeSelected}
+        removeModalDate={removeModalDate}
         sx={{ filter: blur ? 'blur(22px)' : 'none' }}
       />
       <Image

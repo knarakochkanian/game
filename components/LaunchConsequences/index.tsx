@@ -19,6 +19,7 @@ import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
 
 import styles from './LaunchConsequences.module.scss';
+import Link from 'next/link';
 
 interface ILaunchConsequencesProps {
   action: IAttack | IProtection;
@@ -76,7 +77,13 @@ const LaunchConsequences = ({
             нанесен выбранным вами регионам, а также о последствиях атаки.
           </p>
           <div className="ModalButtons">
-            <button className="ModalButton1">далее</button>
+            <Link
+              href="/count-down"
+              style={{ color: 'white', padding: '10px' }}
+              className="ModalButton1"
+            >
+              далее
+            </Link>
             <button className="SecondarySmall">
               <span>пропустить</span>
             </button>

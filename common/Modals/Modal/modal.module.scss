@@ -8,6 +8,7 @@
   max-width: 590px;
   width: 100%;
   top: 8%;
+  height: fit-content;
   background-color: $pre-black;
   &Counter {
     @include flex-between;

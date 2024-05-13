@@ -37,8 +37,12 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const modalContent = isOpen ? (
-    <Box onClick={handleOutsideClick} sx={sx}>
-      <div className={`${styles.modal} ${styles[name]}`}>
+    <Box
+      onClick={handleOutsideClick}
+      sx={sx}
+      className={`${styles.modal} ${styles[name]}`}
+    >
+      <div>
         <div className={styles.modalCounter}>
           <Image
             src={'onboarding/Hint_icon.svg'}

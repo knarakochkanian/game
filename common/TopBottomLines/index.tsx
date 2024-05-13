@@ -8,11 +8,13 @@ import {
   bottomLinesAreNarrowPages,
   bottomLinesAreStraightPages,
 } from '../../constants';
-
+import { selectBlur, setBlur } from '../../redux/features/generalSlice';
 import styles from './TopBottomLines.module.scss';
+import { useAppSelector } from '../../redux/hooks';
 
 const TopBottomLines = () => {
   const pathname = usePathname();
+  const blur = useAppSelector(selectBlur);
   const areBottomLinesStraight = bottomLinesAreStraightPages.some((page) =>
     pathname?.split('/').includes(page)
   );
@@ -31,28 +33,35 @@ const TopBottomLines = () => {
         width={2754}
         height={81}
         priority
+        style={{ filter: blur ? 'blur(22px)' : 'none' }}
       />
-      {areBottomLinesStraight ? (
-        <BottomStraightLines />
-      ) : bottomLinesAreNarrow ? (
-        <Image
-          className={styles.bottom}
-          src={bottomNarrowLines}
-          alt="bottom"
-          width={2752}
-          height={81}
-          priority
-        />
-      ) : (
-        <Image
-          className={styles.bottom}
-          src={bottom}
-          alt="bottom"
-          width={2754}
-          height={81}
-          priority
-        />
-      )}
+      {/*{*/}
+      {/*  areBottomLinesStraight ? (*/}
+      {/*    <BottomStraightLines />*/}
+      {/*  ) : bottomLinesAreNarrow ? (*/}
+      {/*    <Image*/}
+      {/*      className={styles.bottom}*/}
+      {/*      src={bottomNarrowLines}*/}
+      {/*      alt="bottom"*/}
+      {/*      width={2752}*/}
+      {/*      height={81}*/}
+      {/*      priority*/}
+      {/*    />*/}
+      {/*  ) : (*/}
+      {/*    ''*/}
+      {/*  )*/}
+      {/*  // (*/}
+      {/*  // <Image*/}
+      {/*  //   className={styles.bottom}*/}
+      {/*  //   src={bottom}*/}
+      {/*  //   alt="bottom"*/}
+      {/*  //   width={2754}*/}
+      {/*  //   height={81}*/}
+      {/*  //   priority*/}
+      {/*  //   style={{ filter: blur ? 'blur(22px)' : 'none' }}*/}
+      {/*  // />*/}
+      {/*  // )*/}
+      {/*}*/}
     </>
   );
 };

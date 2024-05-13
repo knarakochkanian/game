@@ -30,6 +30,21 @@
       gap: 30px;
       padding-left: 20px;
     }
+    &DetailsIndustries{
+      display: flex;
+      padding-bottom: 40px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      align-self: stretch;
+      >div{
+        display: flex;
+        padding: 24px 40px 24px 88px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+      }
+    }
     &Column{
       display: flex;
       flex-direction: column;

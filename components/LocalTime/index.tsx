@@ -5,10 +5,12 @@ import { usePathname } from 'next/navigation';
 import { pagesWithoutLocalTime } from '../../constants';
 
 import styles from './LocalTime.module.scss';
-
+import { selectBlur } from '../../redux/features/generalSlice';
+import { useAppSelector } from '../../redux/hooks';
 const Index: React.FC = () => {
   const [dateTime, setDateTime] = useState<string>('');
   const pathname = usePathname();
+  const blur = useAppSelector(selectBlur);
   const localTimeDisplayNone = pagesWithoutLocalTime.some((page) =>
     pathname?.split('/').includes(page)
   );
@@ -44,6 +46,7 @@ const Index: React.FC = () => {
 
   return (
     <span
+      style={{ filter: blur ? 'blur(22px)' : 'none' }}
       className={`${styles.DateTime} ${
         localTimeDisplayNone ? styles.displayNone : ''
       }`}
