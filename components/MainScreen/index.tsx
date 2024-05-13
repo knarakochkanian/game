@@ -33,8 +33,18 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './MainScreen.module.scss';
-import { SphereMap } from '../Map/sphere-map.component';
-import { FlatMap } from '../Map/flat-map.component';
+import dynamic from 'next/dynamic';
+
+const SphereMap = dynamic(
+  () => import('../Map/sphere-map.component').then((mod) => mod.SphereMap),
+  { ssr: false }
+)
+
+const FlatMap = dynamic(
+  () => import('../Map/flat-map.component').then((mod) => mod.FlatMap),
+  { ssr: false }
+)
+
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
