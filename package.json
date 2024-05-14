@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/animejs": "^3.1.12",
     "@types/node": "^20",
-    "@types/react": "^17.0.80",
+    "@types/react": "^18.3.2",
     "@types/react-dom": "^18",
     "@types/three": "^0.164.0",
     "css-loader": "^7.1.1",

@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 
 export default function Onboarding() {
   const [currentRegionId, setCurrentRegionId] = useState<number | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
   const [modalOpen2, setModalOpen2] = useState(false);
   const [modalOpen3, setModalOpen3] = useState(false);
   const [modalOpen4, setModalOpen4] = useState(false);
@@ -33,6 +33,8 @@ export default function Onboarding() {
   const [modalOpen9, setModalOpen9] = useState(false);
   const [inputTheGorge, setInputTheGorge] = useState(true);
   const [addConfirm, setAddConfirm] = useState(false);
+  const [addUSA, setAddUSA] = useState(false);
+
   const [blurButtons, setBlurButtons] = useState(false);
   const [delayed, setDelayed] = useState(false);
   const [removeModalDate, setRemoveModalDate] = useState(false);
@@ -92,6 +94,7 @@ export default function Onboarding() {
     if (option.name === 'США' && modalOpen3) {
       setDrawerOpen(!drawerOpen);
       dispatch(setBlur(false));
+      setAddUSA(true);
     }
   };
   const handleAddTheGorge = () => {
@@ -407,7 +410,10 @@ export default function Onboarding() {
           </p>
           <p> Нажмите на “США”, чтобы добавить страну в задачу.</p>
           <div className="ModalButtons">
-            <button className="ModalButton1" onClick={handleNext3}>
+            <button
+              className={addUSA ? '  ModalButton1' : 'SecondarySmallDisable'}
+              onClick={handleNext3}
+            >
               далее
             </button>
             <button className="SecondarySmall" onClick={closeModal3}>

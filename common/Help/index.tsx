@@ -2,12 +2,13 @@ import Image from 'next/image';
 import { helpIcon } from '../../public/main-screen';
 
 import styles from './Help.module.scss';
+import Link from 'next/link';
 
 const Help = () => {
   return (
-    <button className={styles.helpIcon}>
+    <Link href={'/onboarding'} className={styles.helpIcon}>
       <Image alt="helpIcon" src={helpIcon} width={88} height={88} priority />
-    </button>
+    </Link>
   );
 };
 

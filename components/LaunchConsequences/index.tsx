@@ -79,7 +79,7 @@ const LaunchConsequences = ({
           <div className="ModalButtons">
             <Link
               href="/count-down"
-              style={{ color: 'white', padding: '10px' }}
+              style={{ color: 'white', padding: '20px' }}
               className="ModalButton1"
             >
               далее

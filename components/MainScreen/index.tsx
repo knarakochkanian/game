@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { io, Socket as IOSocket } from 'socket.io-client';
 import Grid from '../../common/Grid';
 import Sidenav from '../../common/Sidenav';
@@ -39,7 +39,7 @@ import { MapType } from '../Map/map.types';
 const WorldMap = dynamic(
   () => import('../Map/map.component').then((mod) => mod.WorldMap),
   { ssr: false }
-)
+);
 
 const MainScreen = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -47,55 +47,24 @@ const MainScreen = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const isAttacking = useAppSelector(selectIsAttacking);
 
-  useEffect(() => {
-    // Establish WebSocket connection
-    let socket = new WebSocket('ws://britishellie.ru:8888');
-    console.log(socket, '44444');
-    socket.onopen = (ev) => {
-      console.log(ev, 'onopen');
-    };
-
-    socket.onclose = (ev) => {
-      console.log(ev, 'onclose');
-    };
-
-    socket.onerror = (ev) => {
-      console.log(ev, 'onerror');
-    };
-    socket.onmessage = (ev) => {
-      console.log(ev, 'onmessage');
-    };
-
-    // socket?.onmessage((event) => {
-    //   console.log('event', event);
-    // });
-    //   const newSocket = io('ws://britishellie.ru:8888', {
-    //   transports: ['websocket'],
-    // });
-
-    // Log successful connection
-    // newSocket.on('connect', () => {
-    //   console.log('WebSocket connected:', newSocket.id);
-    // });
-    //
-    // // Log messages received from the server
-    // newSocket.on('message', (message) => {
-    //   console.log('Message received:', message);
-    // });
-    //
-    // // Handle any errors
-    // newSocket.on('connect_error', (err) => {
-    //   console.error('Connection Error:', err);
-    // });
-    //
-    // // @ts-ignore
-    // setSocket(newSocket);
-    //
-    // return () => {
-    //   newSocket.close();
-    //   console.log('WebSocket disconnected');
-    // };
-  }, []);
+  // useEffect(() => {
+  //   let socket = new WebSocket('ws://britishellie.ru:8888');
+  //   console.log(socket, 'socket');
+  //   socket.onopen = (ev) => {
+  //     console.log(ev, 'onopen');
+  //   };
+  //
+  //   socket.onclose = (ev) => {
+  //     console.log(ev, 'onclose');
+  //   };
+  //
+  //   socket.onerror = (ev) => {
+  //     console.log(ev, 'onerror');
+  //   };
+  //   socket.onmessage = (ev) => {
+  //     console.log(ev, 'onmessage');
+  //   };
+  // }, []);
 
   return (
     <main className={styles.mainScreen}>
@@ -115,7 +84,6 @@ const MainScreen = () => {
 
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
 
-      <Sidenav isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <Help />
       <SelectFromTwo
         setFirstActive={setGlobeActive}
@@ -136,6 +104,7 @@ const MainScreen = () => {
 
       {false && <QueueModal queue={queue} />}
 
+      <Sidenav isOpen={true} onClose={() => setDrawerOpen(false)} />
       <HistoryAndNewsBtns />
     </main>
   );

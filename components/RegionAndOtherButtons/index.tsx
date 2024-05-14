@@ -191,8 +191,20 @@ const RegionAndOtherButtons = ({
         </div>
       </ModalWithSelect>
 
-      <BaseButton disabled={true}>Отрасль</BaseButton>
-      <BaseButton disabled={true}>Ущерб</BaseButton>
+      <BaseButton
+        protectMode={!isAttacking}
+        active={selectOpen}
+        onClick={handleSelectOpen}
+      >
+        Отрасль
+      </BaseButton>
+      <BaseButton
+        protectMode={!isAttacking}
+        active={selectOpen}
+        onClick={handleSelectOpen}
+      >
+        Ущерб
+      </BaseButton>
 
       {showKeyboard && (
         <dialog>

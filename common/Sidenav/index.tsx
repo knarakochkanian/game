@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import styles from './Sidenav.module.scss';
 import Image from 'next/image';
@@ -10,12 +11,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import Modal from '../Modals/Modal';
-import { setBlur } from '../../redux/features/generalSlice';
+import { setBlur, setIsAttacking } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
+import { useAppDispatch } from '../../redux/hooks';
+import { ATTACK_OR_PROTECT } from '../../constants';
+
 interface SidenavProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   sx?: SxProps<Theme>;
   vpkSelected?: boolean;
   theGorgeSelected?: boolean;
@@ -34,6 +38,16 @@ function Sidenav({
   delayed,
   removeModalDate,
 }: SidenavProps) {
+  const dispatch = useAppDispatch();
+
+  // const handleBtn_1_Click = () => {
+  //   if (name === ATTACK_OR_PROTECT) {
+  //     dispatch(setIsAttacking(true));
+  //   } else {
+  //     (setFirstActive as setFirstActive)(true);
+  //   }
+  // };
+
   return (
     <>
       <Box
@@ -49,8 +63,26 @@ function Sidenav({
             }}
             className={styles.sidenavTitle}
           >
-            <h2>Атака #000-001</h2>
-            <Image src="home/basket.svg" alt="basket" width={48} height={48} />
+            {dispatch(setIsAttacking(true)) ? (
+              <>
+                <h2>Атака #000-001</h2>
+                <Image
+                  src="home/basket.svg"
+                  alt="basket"
+                  width={48}
+                  height={48}
+                />
+              </>
+            ) : (
+              <>
+                <Image
+                  src="history/protectionIcon.svg"
+                  alt="basket"
+                  width={48}
+                  height={48}
+                />
+              </>
+            )}
           </div>
 
           <div className="AccordionsWrap">
@@ -236,62 +268,12 @@ function Sidenav({
                 >
                   ПОДТВЕРДИТЬ
                 </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="48"
-                  viewBox="0 0 26 48"
-                  fill="none"
-                >
-                  <rect
-                    width="3.69231"
-                    height="3.69231"
-                    transform="matrix(-1 0 0 1 25.9229 22.1539)"
-                    fill="white"
-                  />
-                  <rect
-                    width="3.69231"
-                    height="3.69231"
-                    transform="matrix(-1 0 0 1 11.1533 7.38464)"
-                    fill="white"
-                  />
-                  <rect
-                    width="3.69231"
-                    height="3.69231"
-                    transform="matrix(-1 0 0 1 18.5381 14.7692)"
-                    fill="white"
-                  />
-                  <rect
-                    width="3.69231"
-                    height="3.69231"
-                    transform="matrix(-1 0 0 1 3.76855 0)"
-                    fill="white"
-                  />
-                  <rect
-                    x="11.1533"
-                    y="40.6154"
-                    width="3.69231"
-                    height="3.69231"
-                    transform="rotate(180 11.1533 40.6154)"
-                    fill="white"
-                  />
-                  <rect
-                    x="18.5381"
-                    y="33.2308"
-                    width="3.69231"
-                    height="3.69231"
-                    transform="rotate(180 18.5381 33.2308)"
-                    fill="white"
-                  />
-                  <rect
-                    x="3.76855"
-                    y="48"
-                    width="3.69231"
-                    height="3.69231"
-                    transform="rotate(180 3.76855 48)"
-                    fill="white"
-                  />
-                </svg>
+                <Image
+                  src={'onboarding/arrowConfirm.svg'}
+                  alt={'arrow'}
+                  height={48}
+                  width={48}
+                />
               </Link>
             </div>
           )}
@@ -300,5 +282,4 @@ function Sidenav({
     </>
   );
 }
-
 export default Sidenav;
