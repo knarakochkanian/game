@@ -1,0 +1,12 @@
+@import '/app/variables.module.scss';
+
+.searchInput {
+  border: 2px solid $white-40;
+  background: $card;
+  display: flex;
+  margin-bottom: 16px;
+  .closeXButton {
+    @include set-width-height(48px, 48px);
+    padding-top: 5px;
+  }
+}

@@ -1,5 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import {
+  ENERGY,
+  FINANCE,
+  GOV_INFOSTRUCTURES,
+  INDUSTRY,
+  IT_SECTOR,
+  LOG_AND_TRANSPORT,
+  RETAIL,
+  UNIVERSE,
+  VPK,
+} from '../../constants';
 
 export interface IAuthState {
   isAttacking: boolean;
@@ -8,6 +19,10 @@ export interface IAuthState {
   firstClick: boolean;
   pickedCountries: string[];
   damageLevel: string;
+  selectedIndusties: {
+    title: string;
+    options: string[];
+  }[];
 }
 
 const initialState: IAuthState = {
@@ -17,12 +32,63 @@ const initialState: IAuthState = {
   blur: false,
   pickedCountries: [],
   damageLevel: '',
+  selectedIndusties: [
+    {
+      title: VPK,
+      options: [],
+    },
+
+    {
+      title: IT_SECTOR,
+      options: [],
+    },
+    {
+      title: ENERGY,
+      options: [],
+    },
+    {
+      title: FINANCE,
+      options: [],
+    },
+    {
+      title: RETAIL,
+      options: [],
+    },
+    {
+      title: INDUSTRY,
+      options: [],
+    },
+    {
+      title: LOG_AND_TRANSPORT,
+      options: [],
+    },
+    {
+      title: UNIVERSE,
+      options: [],
+    },
+    {
+      title: GOV_INFOSTRUCTURES,
+      options: [],
+    },
+  ],
 };
 
 const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
+    setSelectedIndusties(
+      state,
+      { payload }: { payload: { name: string; parent: string } }
+    ) {
+      const index = state.selectedIndusties.findIndex(
+        (industry) => industry.title === payload.parent
+      );
+      state.selectedIndusties[index].options = [
+        ...state.selectedIndusties[index].options,
+        payload.name,
+      ];
+    },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
     },
@@ -58,6 +124,7 @@ export const {
   addToPickedCountries,
   removeFromPickedCountries,
   setDamageLevel,
+  setSelectedIndusties,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -71,5 +138,7 @@ export const selectFirstClick = (state: RootState) =>
   state.generalReducer.firstClick;
 export const selectDamgeLevel = (state: RootState) =>
   state.generalReducer.damageLevel;
+export const selectSelectedIndustries = (state: RootState) =>
+  state.generalReducer.selectedIndusties;
 
 export default generalSlice.reducer;

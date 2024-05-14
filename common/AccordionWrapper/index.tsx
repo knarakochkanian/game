@@ -8,7 +8,7 @@ type TStyle = {
 };
 
 interface IAccordionWrapperProps {
-  region: RegionCategory;
+  data: RegionCategory;
   children: ReactNode;
   expanded: number;
   styles: TStyle;
@@ -18,14 +18,14 @@ interface IAccordionWrapperProps {
 const AccordionWrapper = ({
   children,
   expanded,
-  region,
+  data,
   handleExpansion,
   styles,
 }: IAccordionWrapperProps) => {
   return (
     <Accordion
-      expanded={expanded === region.id}
-      onChange={handleExpansion(region.id)}
+      expanded={expanded === data.id}
+      onChange={handleExpansion(data.id)}
       sx={{
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#fff',
@@ -41,10 +41,10 @@ const AccordionWrapper = ({
             height={24}
           />
         }
-        aria-controls={`${region.id}-content`}
-        id={`${region.id}-header`}
+        aria-controls={`${data.id}-content`}
+        id={`${data.id}-header`}
       >
-        <h5>{region.title}</h5>
+        <h5>{data.title}</h5>
       </AccordionSummary>
       <AccordionDetails
         style={{
@@ -53,6 +53,7 @@ const AccordionWrapper = ({
           gap: '10px',
           overflow: 'scroll',
           height: styles.accordionDetailsHeight,
+          maxHeight: styles.accordionDetailsMaxHeight
         }}
       >
         {children}

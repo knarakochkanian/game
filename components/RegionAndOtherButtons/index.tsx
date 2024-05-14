@@ -2,13 +2,7 @@
 
 import { ChangeEvent, useRef, useState } from 'react';
 import Image from 'next/image';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  IconButton,
-  InputBase,
-} from '@mui/material';
+import { IconButton, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
@@ -22,14 +16,18 @@ import { search } from '../../helpers';
 import {
   COUNTRIES,
   DAMAGE_LEVEL_MODAL,
+  INDUSTRY_MODAL,
   REGIONS,
   REGION_MODAL,
 } from '../../constants';
 import AccordionWrapper from '../../common/AccordionWrapper';
+import useManageModals from '../../hooks/useManageModals';
+import Select from '../Select';
+import SelectDamageModal from '../SelectDamageModal';
+import IndustrySelection from '../IndustrySelection';
+import SearchInput from '../SearchInput';
 
 import styles from './RegionAndOtherButtons.module.scss';
-import SelectDamage from '../SelectDamage';
-import useManageModals from '../../hooks/useManageModals';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -47,12 +45,19 @@ const RegionAndOtherButtons = ({
   const [openModal, setOpenModal] = useState('');
   const [selectOpen, setSelectOpen] = useState(false);
   const [selectDamageOpen, setSelectDamageOpen] = useState(false);
+  const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
+
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
   } | null>(null);
   const [expanded, setExpanded] = useState(regions[0].id);
 
-  useManageModals(openModal, setSelectOpen, setSelectDamageOpen);
+  useManageModals(
+    openModal,
+    setSelectOpen,
+    setSelectDamageOpen,
+    setSelectIndustryOpen
+  );
 
   const onChangeInput = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -74,6 +79,10 @@ const RegionAndOtherButtons = ({
 
   const handleDamageSelectOpen = () => {
     setOpenModal(DAMAGE_LEVEL_MODAL);
+  };
+
+  const handleIndustrySelectOpen = () => {
+    setOpenModal(INDUSTRY_MODAL);
   };
 
   // @ts-ignore
@@ -98,40 +107,12 @@ const RegionAndOtherButtons = ({
       </BaseButton>
 
       <ModalWithSelect isOpen={selectOpen} onClose={() => {}}>
-        <div className={styles.regionAndOtherButtonsInput}>
-          <InputBase
-            sx={{ ml: 1, flex: 1, color: '#D9D9D9', fontSize: '34px' }}
-            placeholder="Поиск"
-            value={searchInput}
-            onChange={(e) => onChangeInput(e)}
-            onClick={onSearchClick}
-          />
-          <IconButton
-            type="button"
-            sx={{ p: '10px', color: '#D9D9D9' }}
-            aria-label="search"
-          >
-            {searchInput ? (
-              <div
-                role="button"
-                className={styles.closeXButton}
-                onClick={() => setSearchInput('')}
-              >
-                <Image
-                  src={closeXButton}
-                  alt="closeXButton"
-                  width={40}
-                  height={40}
-                  priority
-                />
-              </div>
-            ) : (
-              <SearchIcon
-                sx={{ color: '#D9D9D9', width: '48px', height: '48px' }}
-              />
-            )}
-          </IconButton>
-        </div>
+        <SearchInput
+          onChangeInput={onChangeInput}
+          onSearchClick={onSearchClick}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+        />
 
         {
           <dialog
@@ -166,7 +147,7 @@ const RegionAndOtherButtons = ({
                     styles={{ accordionDetailsHeight: '686px' }}
                     expanded={expanded}
                     handleExpansion={handleExpansion}
-                    region={region}
+                    data={region}
                     key={index}
                   >
                     <Places name={region.title} places={region.options} />
@@ -180,7 +161,7 @@ const RegionAndOtherButtons = ({
                 key={index}
                 expanded={expanded}
                 handleExpansion={handleExpansion}
-                region={region}
+                data={region}
               >
                 {region.options?.map((option) => (
                   <div
@@ -206,18 +187,29 @@ const RegionAndOtherButtons = ({
         </div>
       </ModalWithSelect>
 
-      <BaseButton
-        protectMode={!isAttacking}
-        active={selectOpen}
-        onClick={handleSelectOpen}
+      <Select
+        handleSelectOpen={handleIndustrySelectOpen}
+        selectOpen={selectIndustryOpen}
+        name="Отрасль"
       >
-        Отрасль
-      </BaseButton>
+        <IndustrySelection
+          expanded={expanded}
+          handleExpansion={handleExpansion}
+          showKeyboard={showKeyboard}
+          onChangeInput={onChangeInput}
+          onSearchClick={onSearchClick}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+        />
+      </Select>
 
-      <SelectDamage
-        handleDamageSelectOpen={handleDamageSelectOpen}
-        selectDamageOpen={selectDamageOpen}
-      />
+      <Select
+        handleSelectOpen={handleDamageSelectOpen}
+        selectOpen={selectDamageOpen}
+        name="Ущерб"
+      >
+        <SelectDamageModal />
+      </Select>
 
       {showKeyboard && (
         <dialog>

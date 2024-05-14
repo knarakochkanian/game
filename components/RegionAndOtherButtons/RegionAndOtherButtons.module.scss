@@ -6,13 +6,7 @@
   gap: 24px;
   z-index: 10;
   left: 40px;
-  top: 56px;
-  .regionAndOtherButtonsInput {
-    .closeXButton {
-      @include set-width-height(48px, 48px);
-      padding-top: 5px;
-    }
-  }
+  top: 56px;  
   .searchResult {
     position: relative;
     background-color: $card;
@@ -48,11 +42,5 @@
     width: 100%;
     background: $black;
     padding: 58px 0;
-  }
-  &Input {
-    border: 2px solid var(--grayscale-white-40, rgba(255, 255, 255, 0.4));
-    background: var(--Grayscale-Card, #080808);
-    display: flex;
-    margin-bottom: 16px;
   }
 }

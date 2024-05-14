@@ -33,6 +33,7 @@ export const bottomLinesAreNarrowPages = [ONBOARDING];
 
 export const REGION_MODAL = 'REGION_MODAL';
 export const DAMAGE_LEVEL_MODAL = 'DAMAGE_LEVEL_MODAL';
+export const INDUSTRY_MODAL = 'INDUSTRY_MODAL';
 
 //damage levels
 export const CRITICAL = 'Критический';
@@ -61,3 +62,14 @@ export const stateSystemOn =
   'Система подключена к защищенной сети. Возможно создание и пуск задачи.';
 export const stateSystemOff =
   'Пуск задачи невозможен. Текущая задача будет сохранена и доступна к запуску, когда система подключится к защищенной сети.';
+
+//sector names
+export const IT_SECTOR = 'IT-sector';
+export const ENERGY = 'energy';
+export const FINANCE = 'finance';
+export const RETAIL = 'retail';
+export const INDUSTRY = 'industry';
+export const LOG_AND_TRANSPORT = 'logistics and Transport';
+export const UNIVERSE = 'universe';
+export const GOV_INFOSTRUCTURES = 'gov. infostructuers';
+export const VPK = 'VPK';

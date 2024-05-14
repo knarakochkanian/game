@@ -27,7 +27,7 @@ const SelectFromTwo = ({
 }: ISelectFromTwoProps) => {
   const dispatch = useAppDispatch();
 
-  const handleBtn_1_Click = () => {
+  const handleBtn_1_Click = () => {    
     if (name === ATTACK_OR_PROTECT) {
       dispatch(setIsAttacking(true));
     } else {

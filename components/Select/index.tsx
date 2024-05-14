@@ -1,40 +1,42 @@
+import { ReactNode } from 'react';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
-import SelectDamageModal from '../SelectDamageModal';
 
-import styles from './SelectDamage.module.scss';
-
-interface ISelectDamageProps {
-  handleDamageSelectOpen: () => void;
-  selectDamageOpen: boolean;
+interface ISelectProps {
+  handleSelectOpen: () => void;
+  selectOpen: boolean;
+  children: ReactNode;
+  name: string;
 }
 
-const SelectDamage = ({
-  handleDamageSelectOpen,
-  selectDamageOpen,
-}: ISelectDamageProps) => {
+const Select = ({
+  handleSelectOpen,
+  selectOpen,
+  children,
+  name
+}: ISelectProps) => {
   const isAttacking = useAppSelector(selectIsAttacking);
 
   return (
     <>
       <BaseButton
         protectMode={!isAttacking}
-        onClick={handleDamageSelectOpen}
-        active={selectDamageOpen}
+        onClick={handleSelectOpen}
+        active={selectOpen}
       >
-        Ущерб
+        {name}
       </BaseButton>
 
       <ModalWithSelect
-        isOpen={selectDamageOpen}
+        isOpen={selectOpen}
         onClose={() => {}}
       >
-        <SelectDamageModal />
+        {children}
       </ModalWithSelect>
     </>
   );
 };
 
-export default SelectDamage;
+export default Select;
