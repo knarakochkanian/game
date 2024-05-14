@@ -31,6 +31,9 @@ export const pagesWithoutGrid = [NEWS];
 export const pagesWithoutLocalTime = [COUNT_DOWN];
 export const bottomLinesAreNarrowPages = [ONBOARDING];
 
+export const REGION_MODAL = 'REGION_MODAL';
+export const DAMAGE_LEVEL_MODAL = 'DAMAGE_LEVEL_MODAL';
+
 //damage levels
 export const CRITICAL = 'Критический';
 export const MINIMAL = 'Минимальный';

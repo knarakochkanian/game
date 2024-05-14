@@ -7,6 +7,7 @@ export interface IAuthState {
   blur: boolean;
   firstClick: boolean;
   pickedCountries: string[];
+  damageLevel: string;
 }
 
 const initialState: IAuthState = {
@@ -15,6 +16,7 @@ const initialState: IAuthState = {
   placeName: '',
   blur: false,
   pickedCountries: [],
+  damageLevel: '',
 };
 
 const generalSlice = createSlice({
@@ -23,6 +25,9 @@ const generalSlice = createSlice({
   reducers: {
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
+    },
+    setDamageLevel(state, { payload }) {
+      state.damageLevel = payload;
     },
     setPlaceName(state, { payload }) {
       if (payload === state.placeName) {
@@ -52,6 +57,7 @@ export const {
   setPlaceName,
   addToPickedCountries,
   removeFromPickedCountries,
+  setDamageLevel,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -63,5 +69,7 @@ export const selectPickedCountries = (state: RootState) =>
   state.generalReducer.pickedCountries;
 export const selectFirstClick = (state: RootState) =>
   state.generalReducer.firstClick;
+export const selectDamgeLevel = (state: RootState) =>
+  state.generalReducer.damageLevel;
 
 export default generalSlice.reducer;
