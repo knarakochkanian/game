@@ -19,10 +19,17 @@ import { slashes_90_degree } from '../../public/main-screen';
 import { closeXButton } from '../../public/ui_kit';
 import Places from '../Places';
 import { search } from '../../helpers';
-import { COUNTRIES, REGIONS } from '../../constants';
+import {
+  COUNTRIES,
+  DAMAGE_LEVEL_MODAL,
+  REGIONS,
+  REGION_MODAL,
+} from '../../constants';
 import AccordionWrapper from '../../common/AccordionWrapper';
 
 import styles from './RegionAndOtherButtons.module.scss';
+import SelectDamage from '../SelectDamage';
+import useManageModals from '../../hooks/useManageModals';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -37,11 +44,15 @@ const RegionAndOtherButtons = ({
 }: IRegionAndOtherButtonsProps) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [searchInput, setSearchInput] = useState('');
+  const [openModal, setOpenModal] = useState('');
   const [selectOpen, setSelectOpen] = useState(false);
+  const [selectDamageOpen, setSelectDamageOpen] = useState(false);
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
   } | null>(null);
   const [expanded, setExpanded] = useState(regions[0].id);
+
+  useManageModals(openModal, setSelectOpen, setSelectDamageOpen);
 
   const onChangeInput = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -58,7 +69,11 @@ const RegionAndOtherButtons = ({
   };
 
   const handleSelectOpen = () => {
-    setSelectOpen(true);
+    setOpenModal(REGION_MODAL);
+  };
+
+  const handleDamageSelectOpen = () => {
+    setOpenModal(DAMAGE_LEVEL_MODAL);
   };
 
   // @ts-ignore
@@ -198,13 +213,11 @@ const RegionAndOtherButtons = ({
       >
         Отрасль
       </BaseButton>
-      <BaseButton
-        protectMode={!isAttacking}
-        active={selectOpen}
-        onClick={handleSelectOpen}
-      >
-        Ущерб
-      </BaseButton>
+
+      <SelectDamage
+        handleDamageSelectOpen={handleDamageSelectOpen}
+        selectDamageOpen={selectDamageOpen}
+      />
 
       {showKeyboard && (
         <dialog>

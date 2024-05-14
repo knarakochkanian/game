@@ -1,0 +1,28 @@
+@import '/app/variables.module.scss';
+
+.damageLevel {
+  &TheGorge {
+    padding: 32px;
+    padding-right: 40px;
+    background: $card;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    &List {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      > li > button {
+        width: 100%;  
+      }
+      > li > button > span {
+        width: 100%;
+        @include flex-between;
+      }
+      &Item {
+        @include flex-start;
+        gap: 32px;
+      }
+    }
+  }
+}

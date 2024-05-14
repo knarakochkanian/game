@@ -112,6 +112,16 @@ export const regions: Region[] = [
         title: 'финансы',
         options: [],
       },
+      {
+        id: 15,
+        title: 'энергетика',
+        options: [],
+      },
+      {
+        id: 15,
+        title: 'IT-сектор',
+        options: [],
+      },
     ],
   },
   {

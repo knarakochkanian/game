@@ -16,7 +16,7 @@ function BaseButton({
   disabled,
   onClick,
   protectMode,
-}: BaseButtonProps) {
+}: BaseButtonProps) {  
   const buttonClass = clsx({
     [protectMode ? styles.protectModeActive : styles.buttonActive]: active,
     [styles.buttonBase]: !active,
