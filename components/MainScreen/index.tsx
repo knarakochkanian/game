@@ -104,7 +104,7 @@ const MainScreen = () => {
 
       {false && <QueueModal queue={queue} />}
 
-      <Sidenav isOpen={true} onClose={() => setDrawerOpen(false)} />
+      <Sidenav isOpen={false} onClose={() => setDrawerOpen(false)} />
       <HistoryAndNewsBtns />
     </main>
   );
