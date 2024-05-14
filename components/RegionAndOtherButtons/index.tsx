@@ -157,7 +157,10 @@ const RegionAndOtherButtons = ({
 
             return (
               <AccordionWrapper
-                styles={{ accordionDetailsHeight: 'unset' }}
+                styles={{
+                  accordionDetailsHeight: 'unset',
+                  accordionDetailsHeightMax: '600px',
+                }}
                 key={index}
                 expanded={expanded}
                 handleExpansion={handleExpansion}
@@ -166,7 +169,10 @@ const RegionAndOtherButtons = ({
                 {region.options?.map((option) => (
                   <div
                     key={option.id}
-                    style={{ flexWrap: 'wrap', gap: '10px' }}
+                    style={{
+                      flexWrap: 'wrap',
+                      gap: '10px',
+                    }}
                   >
                     <button
                       className="SecondarySmallDisable"
