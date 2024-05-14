@@ -47,12 +47,12 @@ export const regions: Region[] = [
       },
       {
         id: 4,
-        title: 'политичнские блоки',
+        title: 'политические блоки',
         options: [],
       },
       {
         id: 5,
-        title: 'континеты',
+        title: 'континенты',
         options: [],
       },
       {
