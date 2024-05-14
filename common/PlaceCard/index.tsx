@@ -25,7 +25,9 @@ const PlaceCard = ({
   const dispatch = useAppDispatch();
   return (
     <>
-      {i === 0 && <AlphabetLetter firstChild letter={place.name[0]} />}
+      {i === 0 && isCountry && (
+        <AlphabetLetter firstChild letter={place.name[0]} />
+      )}
 
       <button
         onClick={() => {

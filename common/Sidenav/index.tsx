@@ -11,10 +11,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import Modal from '../Modals/Modal';
-import { setBlur, setIsAttacking } from '../../redux/features/generalSlice';
+import { selectIsAttacking, setBlur, setIsAttacking } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
 
 interface SidenavProps {
@@ -38,8 +38,7 @@ function Sidenav({
   delayed,
   removeModalDate,
 }: SidenavProps) {
-  const dispatch = useAppDispatch();
-
+  const isAttacking = useAppSelector(selectIsAttacking);
   // const handleBtn_1_Click = () => {
   //   if (name === ATTACK_OR_PROTECT) {
   //     dispatch(setIsAttacking(true));
@@ -63,7 +62,7 @@ function Sidenav({
             }}
             className={styles.sidenavTitle}
           >
-            {dispatch(setIsAttacking(true)) ? (
+            {isAttacking ? (
               <>
                 <h2>Атака #000-001</h2>
                 <Image

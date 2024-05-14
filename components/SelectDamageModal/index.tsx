@@ -1,10 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import styles from './SelectDamageModal.module.scss';
 import { useAppDispatch } from '../../redux/hooks';
 import { setDamageLevel } from '../../redux/features/generalSlice';
 import { CRITICAL, MINIMAL, WARNING } from '../../constants';
+
+import styles from './SelectDamageModal.module.scss';
 
 const SelectDamageModal = () => {
   const dispatch = useAppDispatch();

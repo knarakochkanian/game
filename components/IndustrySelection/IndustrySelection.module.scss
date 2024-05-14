@@ -1,0 +1,16 @@
+@import '/app/variables.module.scss';
+
+.hideSelectionPanel {
+  display: none;
+}
+
+.option {
+  display: block;
+  padding: 24px 40px 24px 88px;
+  color: $white;
+  font-variant-numeric: slashed-zero;
+  @include set-font-size-weight(34px, 400);
+  line-height: 120%; /* 40.8px */
+  letter-spacing: 0.34px;
+  text-transform: uppercase;
+}
