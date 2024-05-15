@@ -2,7 +2,8 @@
 
 .option {
   display: block;
-  padding: 24px 40px 24px 88px;
+  padding: 24px;
+  padding-left: 76px;
   color: $white;
   font-variant-numeric: slashed-zero;
   @include set-font-size-weight(34px, 400);

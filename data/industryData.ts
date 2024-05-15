@@ -122,7 +122,7 @@ const industry = {
       ],
     },
     {
-      id: 15,
+      id: 16,
       title: 'IT-сектор',
       options: [
         { parent: IT_SECTOR, id: '01', name: 'Анализ данных' },
@@ -136,5 +136,7 @@ const industry = {
     },
   ],
 };
+
+
 
 export default industry;

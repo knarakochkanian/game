@@ -33,6 +33,9 @@ const AccordionWrapper = ({
       }}
     >
       <AccordionSummary
+        style={{
+          paddingLeft: '40px',
+        }}
         expandIcon={
           <Image
             src={'onboarding/arrow.svg'}
@@ -53,7 +56,7 @@ const AccordionWrapper = ({
           gap: '10px',
           overflow: 'scroll',
           height: styles.accordionDetailsHeight,
-          maxHeight: styles.accordionDetailsMaxHeight
+          maxHeight: styles.accordionDetailsMaxHeight,
         }}
       >
         {children}

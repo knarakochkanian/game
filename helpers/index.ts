@@ -1,4 +1,5 @@
 import countriesWithCodes from '../data/countriesWithCodes';
+import emptySectors from '../data/emptySectors';
 import industry from '../data/industryData';
 
 export function formatNumber(str: string) {
@@ -35,10 +36,35 @@ export const search = (searchText: string) => {
 
 export const searchSectors = (searchText: string) => {
   if (!searchText) return;
+  const emptySectorsCopy = [...emptySectors];
 
-  const foundPlaces = industry.sectors.filter((sector) => {
-    return sector.title.toLowerCase().includes(searchText.toLowerCase());
-  });
+  console.log('emptySectors', emptySectors);
+  
 
-  return foundPlaces;
+  console.log('emptySectorsCopy', emptySectorsCopy);
+
+  // industry.sectors.forEach((sector) => {
+  //   sector.options.forEach((option) => {
+  //     const optionFound = option.name
+  //       .toLowerCase()
+  //       .includes(searchText.toLowerCase());      
+
+  //     if (optionFound) {
+  //       const index = emptySectorsCopy.findIndex(
+  //         (sec) => option.parent === sec.title
+  //       );
+  //       emptySectorsCopy[index]?.options.push(option);
+  //     } else {
+  //       const index = emptySectorsCopy.findIndex(
+  //         (sec) => sector.title === sec.title
+  //       );
+  //       emptySectorsCopy[index].options.push(option);
+  //     }
+  //   });
+  // });
+
+  console.log('emptySectorsCopy', emptySectorsCopy);
+  
+
+  return emptySectorsCopy;
 };

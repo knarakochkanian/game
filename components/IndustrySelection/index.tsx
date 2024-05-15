@@ -1,5 +1,6 @@
 import AccordionWrapper from '../../common/AccordionWrapper';
 import industry from '../../data/industryData';
+import { searchSectors } from '../../helpers';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
 import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
@@ -30,9 +31,17 @@ const IndustrySelection = ({
         setSearchInput={setSearchInput}
       />
 
-      {/* <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
-        <SectorOptions sectorOptions={sector.options} />
-      </SearchResult> */}
+      <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
+        {searchSectors(searchInput)?.map(
+          (sector, i) =>
+            sector.options[0] && (
+              <div key={i}>
+                <h4 className={styles.sectorTitle}>{sector.title}</h4>
+                <SectorOptions sectorOptions={sector.options} />
+              </div>
+            )
+        )}
+      </SearchResult>
 
       <div
         className={showKeyboard || searchInput ? styles.hideSelectionPanel : ''}
