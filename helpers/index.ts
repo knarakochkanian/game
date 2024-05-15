@@ -36,35 +36,25 @@ export const search = (searchText: string) => {
 
 export const searchSectors = (searchText: string) => {
   if (!searchText) return;
-  const emptySectorsCopy = [...emptySectors];
 
-  console.log('emptySectors', emptySectors);
-  
+  const emptySectorsCopy: ISector[] = emptySectors.map((sector) => ({
+    ...sector,
+    options: [],
+  }));
 
-  console.log('emptySectorsCopy', emptySectorsCopy);
 
-  // industry.sectors.forEach((sector) => {
-  //   sector.options.forEach((option) => {
-  //     const optionFound = option.name
-  //       .toLowerCase()
-  //       .includes(searchText.toLowerCase());      
-
-  //     if (optionFound) {
-  //       const index = emptySectorsCopy.findIndex(
-  //         (sec) => option.parent === sec.title
-  //       );
-  //       emptySectorsCopy[index]?.options.push(option);
-  //     } else {
-  //       const index = emptySectorsCopy.findIndex(
-  //         (sec) => sector.title === sec.title
-  //       );
-  //       emptySectorsCopy[index].options.push(option);
-  //     }
-  //   });
-  // });
-
-  console.log('emptySectorsCopy', emptySectorsCopy);
-  
+  industry.sectors.forEach((sector) => {
+    sector.options.forEach((option) => {
+      if (option.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
+        const targetSector = emptySectorsCopy.find(
+          (s) => s.title === sector.title
+        );
+        if (targetSector) {
+          targetSector.options.push(option);
+        }
+      }
+    });
+  });
 
   return emptySectorsCopy;
 };
