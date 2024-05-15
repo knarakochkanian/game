@@ -17,7 +17,7 @@ export default function HistoryAndNewsLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  const onBack = () => router.back();
+  const onBack = () => router.push('/');
 
   return (
     <div>

@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import styles from './SelectFromTwo.module.scss';
 import { useAppDispatch } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
 import { setIsAttacking } from '../../redux/features/generalSlice';
+
+import styles from './SelectFromTwo.module.scss';
+import { useState } from 'react';
 
 type setFirstActive = (bool: boolean) => void;
 
@@ -25,9 +27,11 @@ const SelectFromTwo = ({
   name,
   setFirstActive,
 }: ISelectFromTwoProps) => {
+  const [disabledBtn, setDisabledBtn] = useState(2);
   const dispatch = useAppDispatch();
 
-  const handleBtn_1_Click = () => {    
+  const handleBtn_1_Click = () => {
+    setDisabledBtn(2);
     if (name === ATTACK_OR_PROTECT) {
       dispatch(setIsAttacking(true));
     } else {
@@ -36,6 +40,7 @@ const SelectFromTwo = ({
   };
 
   const handleBtn_2_Click = () => {
+    setDisabledBtn(1);
     if (name === ATTACK_OR_PROTECT) {
       dispatch(setIsAttacking(false));
     } else {
@@ -46,12 +51,38 @@ const SelectFromTwo = ({
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
-        <button onClick={handleBtn_1_Click}>{button_1}</button>
+        <button
+          className={`${styles.button_1} ${
+            disabledBtn === 1 ? styles.disabled : ''
+          }`}
+          onClick={handleBtn_1_Click}
+        >
+          {button_1}
+        </button>
         <div>
-          <Image src={imgSrc_1} alt={'Icon'} width={48} height={48} />
-          <Image src={imgSrc_2} alt={'Icon'} width={48} height={48} />
+          <Image
+            onClick={handleBtn_1_Click}
+            src={imgSrc_1}
+            alt={'Icon'}
+            width={88}
+            height={88}
+          />
+          <Image
+            onClick={handleBtn_2_Click}
+            src={imgSrc_2}
+            alt={'Icon'}
+            width={88}
+            height={88}
+          />
         </div>
-        <button onClick={handleBtn_2_Click}>{button_2}</button>
+        <button
+          className={`${styles.button_2} ${
+            disabledBtn === 2 ? styles.disabled : ''
+          }`}
+          onClick={handleBtn_2_Click}
+        >
+          {button_2}
+        </button>
       </div>
     </div>
   );

@@ -11,11 +11,17 @@
       @include TypoBodyBig;
       text-transform: uppercase;
     }
+    .button_1.disabled,
+    .button_2.disabled {
+      color: $white-40;
+    }
     > div > img:nth-child(1) {
       background-color: $attack-green;
+      cursor: pointer;
     }
     > div > img:nth-child(2) {
       border: 3px solid $mid-dark-gray;
+      cursor: pointer;
     }
   }
 }

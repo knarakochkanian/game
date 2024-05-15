@@ -182,7 +182,7 @@ const RegionAndOtherButtons = ({
                       // }}
                     >
                       <span>
-                        <span>{option.name}</span>
+                        <span className={styles.optionName}>{option.name}</span>
                       </span>
                     </button>
                   </div>
