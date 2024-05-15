@@ -35,7 +35,7 @@ const ModalWithSelect: React.FC<ModalProps> = ({ isOpen, onClose, children }) =>
     };
 
     const modalContent = isOpen ? (
-        <div onClick={handleOutsideClick}>
+        <div className={styles.container} onClick={handleOutsideClick}>
             <div className={styles.modalWithSelect}>
                 <div className={styles.modalMain}>
                     {children}

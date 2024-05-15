@@ -1,0 +1,29 @@
+@import '/app/variables.module.scss';
+
+dialog.searchResult {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: $card;
+  min-height: 292px;
+  max-height: 960px;
+  padding: 32px 0 32px 32px;
+  border: none;
+  @include scrollStyles;
+  .slashes_90_degree {
+    position: absolute;
+    right: 0;
+    top: 113px;
+  }
+  h5 {
+    color: $white;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(34px, 600);
+    line-height: 120%; /* 40.8px */
+    letter-spacing: 1.02px;
+    text-transform: uppercase;
+  }
+}
+.searchResult.displayNone {
+  display: none;
+}

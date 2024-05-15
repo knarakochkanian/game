@@ -1,8 +1,10 @@
 @import '/app/variables.module.scss';
-.modalWithSelect{
+.container {
   position: fixed;
-  top: 15%;
-  left: 36px;
-  width: 760px;
-
+  .modalWithSelect {
+    position: fixed;
+    top: 15%;
+    left: 36px;
+    width: 760px;
+  }
 }

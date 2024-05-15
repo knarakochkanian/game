@@ -1,4 +1,5 @@
 import countriesWithCodes from '../data/countriesWithCodes';
+import industry from '../data/industryData';
 
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
@@ -27,6 +28,16 @@ export const search = (searchText: string) => {
 
   const foundPlaces = countriesWithCodes.filter((country) => {
     return country.name.toLowerCase().includes(searchText.toLowerCase());
+  });
+
+  return foundPlaces;
+};
+
+export const searchSectors = (searchText: string) => {
+  if (!searchText) return;
+
+  const foundPlaces = industry.sectors.filter((sector) => {
+    return sector.title.toLowerCase().includes(searchText.toLowerCase());
   });
 
   return foundPlaces;

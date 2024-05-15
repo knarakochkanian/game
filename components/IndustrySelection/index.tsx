@@ -1,8 +1,8 @@
 import AccordionWrapper from '../../common/AccordionWrapper';
 import industry from '../../data/industryData';
-import { setSelectedIndusties } from '../../redux/features/generalSlice';
-import { useAppDispatch } from '../../redux/hooks';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
+import SearchResult from '../SearchResult';
+import SectorOptions from '../SectorOptions';
 
 import styles from './IndustrySelection.module.scss';
 
@@ -21,12 +21,6 @@ const IndustrySelection = ({
   expanded,
   handleExpansion,
 }: IIndustrySelectionProps) => {
-  const dispatch = useAppDispatch();
-
-  const onClick = (name: string, parent: string) => {
-    dispatch(setSelectedIndusties({ name, parent }));
-  };
-
   return (
     <>
       <SearchInput
@@ -35,6 +29,10 @@ const IndustrySelection = ({
         searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
+
+      {/* <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
+        <SectorOptions sectorOptions={sector.options} />
+      </SearchResult> */}
 
       <div
         className={showKeyboard || searchInput ? styles.hideSelectionPanel : ''}
@@ -51,17 +49,7 @@ const IndustrySelection = ({
               data={sector}
               key={index}
             >
-              <div>
-                {sector.options.map((option, i) => (
-                  <button
-                    onClick={() => onClick(option.name, option.parent)}
-                    className={styles.option}
-                    key={i}
-                  >
-                    {option.name}
-                  </button>
-                ))}
-              </div>
+              <SectorOptions sectorOptions={sector.options} />
             </AccordionWrapper>
           );
         })}

@@ -42,3 +42,15 @@ interface IPlace {
 }
 
 interface IProtection extends IAction {}
+
+interface ISectorOption {
+  parent: string;
+  id: string;
+  name: string;
+}
+
+interface ISector {
+  id: number;
+  title: string;
+  options: ISectorOption[];
+}

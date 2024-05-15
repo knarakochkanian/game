@@ -1,12 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { useAppDispatch } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
 import { setIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
-import { useState } from 'react';
 
 type setFirstActive = (bool: boolean) => void;
 

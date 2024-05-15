@@ -26,6 +26,7 @@ import Select from '../Select';
 import SelectDamageModal from '../SelectDamageModal';
 import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
+import SearchResult from '../SearchResult';
 
 import styles from './RegionAndOtherButtons.module.scss';
 
@@ -114,24 +115,9 @@ const RegionAndOtherButtons = ({
           setSearchInput={setSearchInput}
         />
 
-        {
-          <dialog
-            className={`${styles.searchResult} ${
-              showKeyboard || searchInput ? '' : styles.displayNone
-            }`}
-          >
-            <h5>результаты поиска</h5>
-            <Image
-              className={styles.slashes_90_degree}
-              src={slashes_90_degree}
-              alt="slashes_90_degree"
-              width={24}
-              height={150}
-              priority
-            />
-            <Places places={search(searchInput)} />
-          </dialog>
-        }
+        <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
+          <Places places={search(searchInput)} />
+        </SearchResult>
 
         <div
           className={
@@ -218,7 +204,7 @@ const RegionAndOtherButtons = ({
       </Select>
 
       {showKeyboard && (
-        <dialog>
+        <dialog className={styles.keyboard}>
           <Keyboard setSearchInput={setSearchInput} keyboardRef={keyboardRef} />
         </dialog>
       )}
