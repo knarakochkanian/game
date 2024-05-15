@@ -1,6 +1,8 @@
 import AccordionWrapper from '../../common/AccordionWrapper';
 import industry from '../../data/industryData';
 import { searchSectors } from '../../helpers';
+import { selectSectors } from '../../redux/features/generalSlice';
+import { useAppSelector } from '../../redux/hooks';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
 import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
@@ -22,6 +24,8 @@ const IndustrySelection = ({
   expanded,
   handleExpansion,
 }: IIndustrySelectionProps) => {
+  const industrySectors = useAppSelector(selectSectors);
+
   return (
     <>
       <SearchInput
@@ -32,13 +36,13 @@ const IndustrySelection = ({
       />
 
       <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
-        {searchSectors(searchInput)?.map(
+        {searchSectors(searchInput, industrySectors)?.map(
           (sector, i) =>
             sector.options[0] && (
-              <div key={i}>
+              <>
                 <h4 className={styles.sectorTitle}>{sector.title}</h4>
                 <SectorOptions sectorOptions={sector.options} />
-              </div>
+              </>
             )
         )}
       </SearchResult>
@@ -46,7 +50,7 @@ const IndustrySelection = ({
       <div
         className={showKeyboard || searchInput ? styles.hideSelectionPanel : ''}
       >
-        {industry.sectors.map((sector, index) => {
+        {industrySectors?.map((sector, index) => {
           return (
             <AccordionWrapper
               styles={{

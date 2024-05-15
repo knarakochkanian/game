@@ -1,16 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import {
-  ENERGY,
-  FINANCE,
-  GOV_INFOSTRUCTURES,
-  INDUSTRY,
-  IT_SECTOR,
-  LOG_AND_TRANSPORT,
-  RETAIL,
-  UNIVERSE,
-  VPK,
-} from '../../constants';
+import industry from '../../data/industryData';
+import countriesWithCodes from '../../data/countriesWithCodes';
 
 export interface IAuthState {
   isAttacking: boolean;
@@ -19,10 +10,8 @@ export interface IAuthState {
   firstClick: boolean;
   pickedCountries: string[];
   damageLevel: string;
-  selectedIndusties: {
-    title: string;
-    options: string[];
-  }[];
+  sectors: ISector[];
+  places: IPlace[];
 }
 
 const initialState: IAuthState = {
@@ -32,45 +21,8 @@ const initialState: IAuthState = {
   blur: false,
   pickedCountries: [],
   damageLevel: '',
-  selectedIndusties: [
-    {
-      title: VPK,
-      options: [],
-    },
-
-    {
-      title: IT_SECTOR,
-      options: [],
-    },
-    {
-      title: ENERGY,
-      options: [],
-    },
-    {
-      title: FINANCE,
-      options: [],
-    },
-    {
-      title: RETAIL,
-      options: [],
-    },
-    {
-      title: INDUSTRY,
-      options: [],
-    },
-    {
-      title: LOG_AND_TRANSPORT,
-      options: [],
-    },
-    {
-      title: UNIVERSE,
-      options: [],
-    },
-    {
-      title: GOV_INFOSTRUCTURES,
-      options: [],
-    },
-  ],
+  sectors: industry.sectors,
+  places: countriesWithCodes,
 };
 
 const generalSlice = createSlice({
@@ -81,13 +33,16 @@ const generalSlice = createSlice({
       state,
       { payload }: { payload: { name: string; parent: string } }
     ) {
-      const index = state.selectedIndusties.findIndex(
-        (industry) => industry.title === payload.parent
+      const index = state.sectors.findIndex(
+        (sector) => sector.title === payload.parent
       );
-      state.selectedIndusties[index].options = [
-        ...state.selectedIndusties[index].options,
-        payload.name,
-      ];
+
+      const targetOptionIndex = state.sectors[index]?.options.findIndex(
+        (option) => option.name === payload.name
+      );
+      const targetOption = state.sectors[index].options[targetOptionIndex];
+
+      targetOption.selected = !targetOption.selected;
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
@@ -104,10 +59,24 @@ const generalSlice = createSlice({
       }
     },
     addToPickedCountries(state, { payload }) {
+      const targetPlace = state.places.find((place) => place.name === payload);
+
+      if (targetPlace) {
+        targetPlace.isSelected = true;
+      }
+
       if (state.pickedCountries.includes(payload)) return;
-      payload && state.pickedCountries.push(payload);
+      if (payload) {
+        state.pickedCountries = [...state.pickedCountries, payload];
+      }
     },
     removeFromPickedCountries(state, { payload }) {
+      const targetPlace = state.places.find((place) => place.name === payload);
+
+      if (targetPlace) {
+        targetPlace.isSelected = false;
+      }
+
       if (!state.pickedCountries.includes(payload)) return;
       state.pickedCountries.splice(state.pickedCountries.indexOf(payload), 1);
     },
@@ -138,7 +107,7 @@ export const selectFirstClick = (state: RootState) =>
   state.generalReducer.firstClick;
 export const selectDamgeLevel = (state: RootState) =>
   state.generalReducer.damageLevel;
-export const selectSelectedIndustries = (state: RootState) =>
-  state.generalReducer.selectedIndusties;
+export const selectSectors = (state: RootState) => state.generalReducer.sectors;
+export const selectPlaces = (state: RootState) => state.generalReducer.places;
 
 export default generalSlice.reducer;

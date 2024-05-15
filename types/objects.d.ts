@@ -39,6 +39,7 @@ interface IPlace {
   name: string;
   regions?: IPlace[];
   code?: string;
+  isSelected: boolean;
 }
 
 interface IProtection extends IAction {}
@@ -47,10 +48,17 @@ interface ISectorOption {
   parent: string;
   id: string;
   name: string;
+  selected: boolean;
 }
 
 interface ISector {
   id: number;
   title: string;
   options: ISectorOption[];
+}
+
+interface IIndustry {
+  id: number;
+  nameMain: string;
+  sectors: ISector[];
 }

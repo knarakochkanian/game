@@ -1,6 +1,5 @@
 import countriesWithCodes from '../data/countriesWithCodes';
 import emptySectors from '../data/emptySectors';
-import industry from '../data/industryData';
 
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
@@ -34,7 +33,7 @@ export const search = (searchText: string) => {
   return foundPlaces;
 };
 
-export const searchSectors = (searchText: string) => {
+export const searchSectors = (searchText: string, industrySectors: ISector[]) => {
   if (!searchText) return;
 
   const emptySectorsCopy: ISector[] = emptySectors.map((sector) => ({
@@ -43,7 +42,7 @@ export const searchSectors = (searchText: string) => {
   }));
 
 
-  industry.sectors.forEach((sector) => {
+  industrySectors.forEach((sector) => {
     sector.options.forEach((option) => {
       if (option.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
         const targetSector = emptySectorsCopy.find(

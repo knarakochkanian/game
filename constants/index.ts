@@ -64,12 +64,12 @@ export const stateSystemOff =
   'Пуск задачи невозможен. Текущая задача будет сохранена и доступна к запуску, когда система подключится к защищенной сети.';
 
 //sector names
-export const IT_SECTOR = 'IT-sector';
-export const ENERGY = 'energy';
-export const FINANCE = 'finance';
-export const RETAIL = 'retail';
-export const INDUSTRY = 'industry';
-export const LOG_AND_TRANSPORT = 'logistics and Transport';
-export const UNIVERSE = 'universe';
-export const GOV_INFOSTRUCTURES = 'gov. infostructuers';
-export const VPK = 'VPK';
+export const IT_SECTOR = 'IT-сектор';
+export const ENERGY = 'энергетика';
+export const FINANCE = 'финансы';
+export const RETAIL = 'розничная торговля';
+export const INDUSTRY = 'промышленность';
+export const LOG_AND_TRANSPORT = 'логистика и траспорт';
+export const UNIVERSE = 'космос';
+export const GOV_INFOSTRUCTURES = 'гос. инфраструктура';
+export const VPK = 'ВПК';

@@ -15,11 +15,13 @@ const SectorOptions = ({ sectorOptions }: ISectorOptionsProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {sectorOptions.map((option, i) => (
         <button
           onClick={() => onClick(option.name, option.parent)}
-          className={styles.option}
+          className={`${styles.option} ${
+            option.selected ? styles.selected : ''
+          }`}
           key={i}
         >
           {option.name}

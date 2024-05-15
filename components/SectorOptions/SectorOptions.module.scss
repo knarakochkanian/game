@@ -1,14 +1,23 @@
 @import '/app/variables.module.scss';
 
-.option {
-  opacity: 0.6;
-  display: block;
-  padding: 24px;
-  padding-left: 76px;
-  color: $white;
-  font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(34px, 400);
-  line-height: 120%; /* 40.8px */
-  letter-spacing: 0.34px;
-  text-transform: uppercase;
+.container {
+  width: 100%;
+  .option {
+    width: 100%;
+    opacity: 0.6;
+    display: block;
+    padding: 24px;
+    padding-left: 76px;
+    color: $white;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(34px, 400);
+    line-height: 120%; /* 40.8px */
+    letter-spacing: 0.34px;
+    text-transform: uppercase;
+    text-align: start;
+  }
+  .option.selected {
+    color: $attack-green-40;
+    background-color: $attack-dark-green-select-60;
+  }
 }
