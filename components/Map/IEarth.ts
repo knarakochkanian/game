@@ -35,9 +35,9 @@ export interface IEarth {
    */
   moveCameraToCountry: (name: string, animationDurationMs?: number, extendBbox?: number) => void
 
-  rotateLeft(): void
+  onRotateStart(direction: "left" | "right", speed?: number): void
 
-  rotateRight(): void
+  onRotateEnd(): void
 
   onWindowResize: () => void
 

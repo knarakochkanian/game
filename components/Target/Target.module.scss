@@ -4,11 +4,11 @@
   top: 630px;
   z-index: 1;
   width: 2800px;
-  >div {
+  pointer-events: none;
+  &Wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
   }
   &Text{
     display: inline-flex;
@@ -17,6 +17,7 @@
     align-items: center;
     gap: 8px;
     background-color: $black-60;
+    pointer-events: none;
     >span{
       color: $white;
       font-family: "TT Lakes Neue Trial";

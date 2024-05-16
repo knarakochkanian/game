@@ -15,8 +15,8 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
   const focusOnCountry = useRef<(name: string) => void>()
   const resetColors = useRef<() => void>()
   const resetContours = useRef<() => void>()
-  const rotateLeft = useRef<() => void>()
-  const rotateRight = useRef<() => void>()
+  const onRotateStart = useRef<(direction: "left" | "right", speed?: number) => void>()
+  const onRotateEnd = useRef<() => void>()
 
   useEffect(() => {
     if (ref.current === null) {
@@ -34,8 +34,8 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     focusOnCountry.current = earth.moveCameraToCountry.bind(earth)
     resetColors.current = earth.resetCountryColors.bind(earth)
     resetContours.current = earth.resetContours.bind(earth)
-    rotateLeft.current = earth.rotateLeft.bind(earth)
-    rotateRight.current = earth.rotateRight.bind(earth)
+    onRotateStart.current = earth.onRotateStart.bind(earth)
+    onRotateEnd.current = earth.onRotateEnd.bind(earth)
 
     const onResize = () => {
       earth.onWindowResize()
@@ -50,5 +50,5 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     }
   }, [])
 
-  return { ref, setCountryColor, focusOnCountry, resetColors, setCountryContourVisibility, resetContours, rotateLeft, rotateRight }
+  return { ref, setCountryColor, focusOnCountry, resetColors, setCountryContourVisibility, resetContours, onRotateStart, onRotateEnd }
 }

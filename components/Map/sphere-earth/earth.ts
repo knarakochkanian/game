@@ -15,23 +15,14 @@ import {
 } from '../geodata/countries-names-to-a3-map';
 import bbox from 'geojson-bbox';
 import {
-  MathUtils,
-  Mesh,
-  MeshBasicMaterial,
-  RepeatWrapping,
-  TextureLoader,
   Vector2,
 } from 'three';
 import { getRegionsNamesByCountryName } from '../utils/utils';
 import { complexCountriesNames } from '../geodata/complex-countries';
 import { IEarth } from '../IEarth';
 import {
-  EffectComposer,
-  RenderPass,
   ShaderPass,
-  GammaCorrectionShader,
 } from 'three/examples/jsm/Addons.js';
-import { VignetteShader } from '../utils/VignetteShader';
 
 const MIN_ZOOM_ALTITUDE = 0.5;
 const MAX_ZOOM_ALTITUDE = 1.6;
@@ -175,14 +166,14 @@ export class Earth implements IEarth {
       (boundingBox[1] + boundingBox[3]) / 2,
     ];
 
-    const width = boundingBox[2] - boundingBox[0];
-    const height = boundingBox[3] - boundingBox[1];
-    const zoom = Math.max(width, height);
-    const altitude = MathUtils.clamp(
-      zoom / 10,
-      MIN_ZOOM_ALTITUDE,
-      MAX_ZOOM_ALTITUDE
-    );
+    // const width = boundingBox[2] - boundingBox[0];
+    // const height = boundingBox[3] - boundingBox[1];
+    // const zoom = Math.max(width, height);
+    // const altitude = MathUtils.clamp(
+    //   zoom / 10,
+    //   MIN_ZOOM_ALTITUDE,
+    //   MAX_ZOOM_ALTITUDE
+    // );
 
     // for Russia target coords need do be changed -- because it's in two hemispheres
     if (code === 'RUS') {
@@ -191,7 +182,7 @@ export class Earth implements IEarth {
     }
 
     this.globe?.pointOfView(
-      { lat: center[1], lng: center[0], altitude },
+      { lat: center[1], lng: center[0] },
       animationDurationMs
     );
   }
@@ -237,22 +228,40 @@ export class Earth implements IEarth {
     });
   }
 
-  public rotateLeft(): void {
+  // public rotateLeft(): void {
+  //   if (!this.globe) {
+  //     return;
+  //   }
+
+  //   const pov = this.globe.pointOfView()
+  //   this.globe.pointOfView({ lng: pov.lng - 10 }, 200)
+  // }
+
+  // public rotateRight(): void {
+  //   if (!this.globe) {
+  //     return;
+  //   }
+
+  //   const pov = this.globe.pointOfView()
+  //   this.globe.pointOfView({ lng: pov.lng + 10 }, 200)
+  // }
+
+  public onRotateStart(direction: 'left' | 'right', speed?: number): void {
+    speed = speed ?? 2;
+    speed = direction === "left" ? speed : -speed
+
     if (!this.globe) {
       return;
     }
-
-    const pov = this.globe.pointOfView()
-    this.globe.pointOfView({ lng: pov.lng - 10 }, 200)
+    this.globe.controls().autoRotateSpeed = speed;
+    this.globe.controls().autoRotate = true;
   }
 
-  public rotateRight(): void {
+  public onRotateEnd(): void {
     if (!this.globe) {
       return;
     }
-
-    const pov = this.globe.pointOfView()
-    this.globe.pointOfView({ lng: pov.lng + 10 }, 200)
+    this.globe.controls().autoRotate = false;
   }
 
 
@@ -276,7 +285,7 @@ export class Earth implements IEarth {
 
     //#region post-processing
     // const composer = this.globe.postProcessingComposer();
-    
+
     // const vignette = new ShaderPass(VignetteShader);
     // vignette.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
     // vignette.uniforms["radius"].value = .6;

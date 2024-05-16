@@ -7,9 +7,9 @@ import styles from './Target.module.scss';
 const Target = () => {
   return (
     <section className={styles.target}>
-      <div>
+      <div className={styles.targetWrapper}>
         <Image
-          className={styles.targetSvgMain}
+          className={styles.targetArrows}
           src={'/target/arrowTargetLeft.svg'}
           alt="target"
           width={480}
@@ -29,7 +29,7 @@ const Target = () => {
           <span>восток</span>
         </div>
         <Image
-          className={styles.targetSvgMain}
+          className={styles.targetArrows}
           src={'/target/arrowTargetRight.svg'}
           alt="target"
           width={480}

@@ -14,18 +14,18 @@ export interface MapProps {
 export const WorldMap = ({ mapType }: MapProps) => {
   const dispatch = useAppDispatch();
 
-  const onPolygonClick = (name: string) => {
+  const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
   }
 
   const planeMap = UseMap({
-    onCountryPicked: onPolygonClick,
+    onCountryPicked,
     mapType: MapType.plane,
     isNotInteractive: false,
   });
 
   const sphereMap = UseMap({
-    onCountryPicked: onPolygonClick,
+    onCountryPicked,
     mapType: MapType.sphere,
     isNotInteractive: false,
   });
@@ -45,10 +45,45 @@ export const WorldMap = ({ mapType }: MapProps) => {
     sphereMap.setCountryContourVisibility.current?.(name, visible);
   }, [planeMap.setCountryContourVisibility, sphereMap.setCountryContourVisibility])
 
+  const onRotateStart = useCallback((direction: "left" | "right") => {
+    sphereMap.onRotateStart.current?.(direction);
+  }, [sphereMap.onRotateStart])
+
+  const onRotateEnd = useCallback((ev) => {
+    ev.preventDefault()
+    sphereMap.onRotateEnd.current?.();
+  }, [sphereMap.onRotateEnd])
+
   useManagePlaceClick(setCountryColor, focusOnCountry, setCountryContourVisibility);
 
   return (
     <>
+      <div 
+      id="arrowLeft" 
+      role="button" 
+      onTouchStart={() => onRotateStart("left")}
+      onTouchEnd={onRotateEnd}
+
+      style={{
+        position: 'absolute',
+        width: '480px',
+        height: '100vh',
+        zIndex: 1,
+      }} />
+      <div 
+      id="arrowRight" 
+      role="button" 
+      onTouchStart={() => onRotateStart("right")}
+      onTouchEnd={onRotateEnd}
+
+      style={{
+        position: 'absolute',
+        width: '480px',
+        height: '100vh',
+        zIndex: 1,
+        right: 0,
+      }} />
+
       <div
         id="map-flat"
         ref={planeMap.ref}
