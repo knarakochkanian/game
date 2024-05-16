@@ -11,8 +11,10 @@ import ProtectActive from './ProtectActive.svg';
 import AttackSign from './AttackSign.svg';
 import GlobeUnderProtection from './GlobeUnderProtection.svg';
 import MapActiveUnderProtection from './MapActiveUnderProtection.svg';
+import minusSign from './minusSign.svg';
 
 export {
+  minusSign,
   MapActiveUnderProtection,
   GlobeUnderProtection,
   AttackSign,

@@ -1,6 +1,6 @@
-import DropDown from '../../common/DropDown';
-import TitleAndInfo from '../../common/TitleAndInfo';
-import { pagesWhereDropdownDisabled } from '../../constants';
+import DamageLevelInfo from '../../common/DamageLevelInfo';
+import IndustryAccordion from '../IndustryAccordion';
+import RegionAccordion from '../RegionAccordion';
 
 import styles from './SelectRegionAndIndustry.module.scss';
 
@@ -19,7 +19,17 @@ const SelectRegionAndIndustry = ({
 }: ISelectRegionAndIndustryProps) => {
   return (
     <div className={styles.selectRegionAndIndustry}>
-      <DropDown
+      <RegionAccordion />
+      <IndustryAccordion />
+      <DamageLevelInfo />
+    </div>
+  );
+};
+
+export default SelectRegionAndIndustry;
+
+{
+  /* <DropDown
         disabled={pagesWhereDropdownDisabled.includes(from)}
         title="Регион"
         name="region"
@@ -36,9 +46,5 @@ const SelectRegionAndIndustry = ({
       />
       <div className={styles.damage}>
         <TitleAndInfo info={action?.damage} title="Ущерб" />
-      </div>
-    </div>
-  );
-};
-
-export default SelectRegionAndIndustry;
+      </div> */
+}

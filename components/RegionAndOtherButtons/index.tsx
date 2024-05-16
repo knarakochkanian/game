@@ -1,16 +1,11 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import Image from 'next/image';
-import { IconButton, InputBase } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
 import { regions } from '../../data/attackRegionsData';
 import Keyboard from '../Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
-import { slashes_90_degree } from '../../public/main-screen';
-import { closeXButton } from '../../public/ui_kit';
 import Places from '../Places';
 import { search } from '../../helpers';
 import {
@@ -27,6 +22,9 @@ import SelectDamageModal from '../SelectDamageModal';
 import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
+import { useAppSelector } from '../../redux/hooks';
+import { selectPlaces } from '../../redux/features/generalSlice';
+import { USARegions } from '../../data/countriesWithCodes';
 
 import styles from './RegionAndOtherButtons.module.scss';
 
@@ -47,6 +45,7 @@ const RegionAndOtherButtons = ({
   const [selectOpen, setSelectOpen] = useState(false);
   const [selectDamageOpen, setSelectDamageOpen] = useState(false);
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
+  const countries = useAppSelector(selectPlaces);
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -127,6 +126,18 @@ const RegionAndOtherButtons = ({
           {regions[0].regions?.map((region, index) => {
             switch (region.title) {
               case REGIONS:
+                return (
+                  <AccordionWrapper
+                    styles={{ accordionDetailsHeight: '686px' }}
+                    expanded={expanded}
+                    handleExpansion={handleExpansion}
+                    data={region}
+                    key={index}
+                  >
+                    <Places name={region.title} places={USARegions} />
+                  </AccordionWrapper>
+                );
+                return;
               case COUNTRIES:
                 return (
                   <AccordionWrapper
@@ -136,7 +147,7 @@ const RegionAndOtherButtons = ({
                     data={region}
                     key={index}
                   >
-                    <Places name={region.title} places={region.options} />
+                    <Places name={region.title} places={countries} />
                   </AccordionWrapper>
                 );
             }

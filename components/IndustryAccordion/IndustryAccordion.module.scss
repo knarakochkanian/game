@@ -1,0 +1,8 @@
+@import '/app/variables.module.scss';
+
+.accordionSummary {
+    @include AccordionSummary;
+    h3 {
+      color: $mid-dark-gray;
+    }
+  }

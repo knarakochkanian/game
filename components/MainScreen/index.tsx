@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { io, Socket as IOSocket } from 'socket.io-client';
 import Grid from '../../common/Grid';
-import Sidenav from '../../common/Sidenav';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
 import Help from '../../common/Help';
 import SelectFromTwo from '../SelectFromTwo';
@@ -30,12 +29,13 @@ import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
 import QueueModal from '../QueueModal';
 import queue from '../../data/queue';
 import { useAppSelector } from '../../redux/hooks';
-import { selectIsAttacking } from '../../redux/features/generalSlice';
-
-import styles from './MainScreen.module.scss';
+import { selectIsAttacking, selectSideNavIsOpen } from '../../redux/features/generalSlice';
 import dynamic from 'next/dynamic';
 import { MapType } from '../Map/map.types';
 import Target from '../Target';
+import SidenavInMain from '../../common/SidenavInMain';
+
+import styles from './MainScreen.module.scss';
 
 const WorldMap = dynamic(
   () => import('../Map/map.component').then((mod) => mod.WorldMap),
@@ -43,6 +43,7 @@ const WorldMap = dynamic(
 );
 
 const MainScreen = () => {
+  const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [globeActive, setGlobeActive] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -105,7 +106,7 @@ const MainScreen = () => {
 
       {false && <QueueModal queue={queue} />}
 
-      <Sidenav isOpen={false} onClose={() => setDrawerOpen(false)} />
+      <SidenavInMain isOpen={sideNavIsOpen} onClose={() => setDrawerOpen(false)} />
       <HistoryAndNewsBtns />
     </main>
   );

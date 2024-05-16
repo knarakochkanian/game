@@ -10,9 +10,10 @@ import styles from './Places.module.scss';
 interface IPlacesProps {
   places: (IPlace | Option)[] | undefined;
   name?: string;
+  fromSideNav?: boolean;
 }
 
-const Places = ({ places, name }: IPlacesProps) => {
+const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
   const isCountry = name === COUNTRIES;
 
   if (places === undefined) {
@@ -25,7 +26,7 @@ const Places = ({ places, name }: IPlacesProps) => {
         const placeFirstLetterChanged =
           places[i].name[0] !== places[i + 1]?.name[0];
 
-        if (place.regions) {
+        if (place.regions && !fromSideNav) {
           return (
             <Accordion
               key={i}
@@ -56,7 +57,7 @@ const Places = ({ places, name }: IPlacesProps) => {
                 <div className={styles.placesAccordionSummary}>
                   <PlaceCard isCountry place={place} />
                 </div>
-                {placeFirstLetterChanged && (
+                {placeFirstLetterChanged && !fromSideNav && (
                   <AlphabetLetter letter={places[i + 1]?.name[0]} />
                 )}
               </AccordionSummary>
@@ -71,9 +72,10 @@ const Places = ({ places, name }: IPlacesProps) => {
 
         return (
           <PlaceCard
+            fromSideNav={fromSideNav}
             i={i}
             places={places}
-            placeFirstLetterChanged={placeFirstLetterChanged}
+            placeFirstLetterChanged={placeFirstLetterChanged && !fromSideNav}
             isCountry={isCountry}
             key={i}
             place={place}

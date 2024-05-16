@@ -5,11 +5,11 @@ import styles from './SectorOptions.module.scss';
 
 interface ISectorOptionsProps {
   sectorOptions: ISectorOption[];
+  fromSideNav?: boolean;
 }
 
-const SectorOptions = ({ sectorOptions }: ISectorOptionsProps) => {
+const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
   const dispatch = useAppDispatch();
-
   const onClick = (name: string, parent: string) => {
     dispatch(setSelectedIndusties({ name, parent }));
   };
@@ -18,10 +18,11 @@ const SectorOptions = ({ sectorOptions }: ISectorOptionsProps) => {
     <div className={styles.container}>
       {sectorOptions.map((option, i) => (
         <button
+          disabled={fromSideNav}
           onClick={() => onClick(option.name, option.parent)}
           className={`${styles.option} ${
-            option.selected ? styles.selected : ''
-          }`}
+            option.selected && !fromSideNav ? styles.selected : ''
+          } ${!option.selected && fromSideNav ? styles.displayNone : ''}`}
           key={i}
         >
           {option.name}
