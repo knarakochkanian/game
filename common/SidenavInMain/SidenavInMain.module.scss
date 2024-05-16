@@ -1,0 +1,82 @@
+@import '/app/variables.module';
+
+.sidenav {
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  top: 160px;
+  right: 0;
+  background-color: $black-80;
+  transition: 0.5s;
+  padding-top: 60px;
+  height: 100%;
+  &Title {
+    @include flex-between;
+    padding-left: 24px;
+    .actionSign {
+      position: absolute;
+      top: -100px;
+      left: 40px;
+    }
+  }
+  &AccordionSummary {
+    @include AccordionSummary;
+    h3 {
+      color: $mid-dark-gray;
+    }
+  }
+  &AddConfirm {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: fixed;
+    bottom: 0;
+    background-repeat: no-repeat;
+    height: 218px;
+    width: 100%;
+    z-index: 4;
+    > a {
+      padding: 0 32px;
+      @include flex-between;
+      width: 660px;
+    }
+    > span {
+      padding: 0 32px;
+    }
+    &Image {
+      position: absolute;
+      //backdrop-filter: blur(25px);
+      z-index: -1;
+    }
+  }
+  &Square {
+    @include flex-start;
+    gap: 30px;
+    margin-bottom: 120px;
+  }
+  &DelayedWrraper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    > div > div {
+      width: 679px;
+      @include flex-between;
+    }
+  }
+  &Wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 672px;
+    gap: 48px;
+    max-height: 80vh;
+    @include scrollStyles;
+  }
+}

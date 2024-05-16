@@ -1,5 +1,6 @@
 import countriesWithCodes from '../data/countriesWithCodes';
 import emptySectors from '../data/emptySectors';
+import { IInitialState } from '../redux/features/generalSlice';
 
 export function formatNumber(str: string) {
   let reversed = str.split('').reverse().join('');
@@ -33,7 +34,23 @@ export const search = (searchText: string) => {
   return foundPlaces;
 };
 
-export const searchSectors = (searchText: string, industrySectors: ISector[]) => {
+export function countSelectedOptions(sectors: ISector[], selected: string): number {
+  return sectors.reduce((count, sector) => {
+    // @ts-ignore
+    return count + sector.options.filter(option => option[selected]).length;
+  }, 0);
+}
+
+export const findFirstSectorWithSelectedOption = (sectors: ISector[]): number => {
+  return sectors.findIndex(sector => 
+    sector.options.some(option => option.selected)
+  );
+};
+
+export const searchSectors = (
+  searchText: string,
+  industrySectors: ISector[]
+) => {
   if (!searchText) return;
 
   const emptySectorsCopy: ISector[] = emptySectors.map((sector) => ({
@@ -41,10 +58,11 @@ export const searchSectors = (searchText: string, industrySectors: ISector[]) =>
     options: [],
   }));
 
-
   industrySectors.forEach((sector) => {
     sector.options.forEach((option) => {
-      if (option.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
+      if (
+        option.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+      ) {
         const targetSector = emptySectorsCopy.find(
           (s) => s.title === sector.title
         );
@@ -56,4 +74,49 @@ export const searchSectors = (searchText: string, industrySectors: ISector[]) =>
   });
 
   return emptySectorsCopy;
+};
+
+export const addToPickedCountryObjects = (
+  state: IInitialState,
+  payload: string
+) => {
+  const countryToBeAdded = state.places.find(
+    (country) => country?.name === payload
+  );
+
+  if (!countryToBeAdded) return;
+
+  countryToBeAdded.isSelected = true;
+
+  const index = state.pickedCountriesObjects.findIndex(
+    (country) => country?.name === countryToBeAdded?.name
+  );
+
+  if (index === -1) {
+    state.pickedCountriesObjects = [
+      ...state.pickedCountriesObjects,
+      countryToBeAdded as IPlace,
+    ];
+  }
+};
+
+export const removeFromPickedCountryObjects = (
+  state: IInitialState,
+  payload: string
+) => {
+  const countryToBeRemoved = state.places.find(
+    (country) => country?.name === payload
+  );
+
+  if (!countryToBeRemoved) return;
+
+  countryToBeRemoved.isSelected = false;
+
+  const index = state.pickedCountriesObjects.findIndex(
+    (country) => country?.name === countryToBeRemoved?.name
+  );
+
+  if (index !== -1) {
+    state.pickedCountriesObjects.splice(index, 1);
+  }
 };

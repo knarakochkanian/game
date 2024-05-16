@@ -1,5 +1,4 @@
 import AccordionWrapper from '../../common/AccordionWrapper';
-import industry from '../../data/industryData';
 import { searchSectors } from '../../helpers';
 import { selectSectors } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';

@@ -2,27 +2,35 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import industry from '../../data/industryData';
 import countriesWithCodes from '../../data/countriesWithCodes';
+import {
+  addToPickedCountryObjects,
+  removeFromPickedCountryObjects,
+} from '../../helpers';
 
-export interface IAuthState {
+export interface IInitialState {
   isAttacking: boolean;
   placeName: string;
   blur: boolean;
   firstClick: boolean;
   pickedCountries: string[];
+  pickedCountriesObjects: IPlace[];
   damageLevel: string;
   sectors: ISector[];
   places: IPlace[];
+  sideNavIsOpen: boolean;
 }
 
-const initialState: IAuthState = {
+const initialState: IInitialState = {
   isAttacking: true,
   firstClick: true,
   placeName: '',
   blur: false,
   pickedCountries: [],
+  pickedCountriesObjects: [],
   damageLevel: '',
   sectors: industry.sectors,
   places: countriesWithCodes,
+  sideNavIsOpen: false,
 };
 
 const generalSlice = createSlice({
@@ -37,6 +45,8 @@ const generalSlice = createSlice({
         (sector) => sector.title === payload.parent
       );
 
+      state.sideNavIsOpen = true;
+
       const targetOptionIndex = state.sectors[index]?.options.findIndex(
         (option) => option.name === payload.name
       );
@@ -47,7 +57,11 @@ const generalSlice = createSlice({
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
     },
+    setSideNavIsOpen(state, { payload }) {
+      state.sideNavIsOpen = payload;
+    },
     setDamageLevel(state, { payload }) {
+      state.sideNavIsOpen = true;
       state.damageLevel = payload;
     },
     setPlaceName(state, { payload }) {
@@ -59,11 +73,19 @@ const generalSlice = createSlice({
       }
     },
     addToPickedCountries(state, { payload }) {
-      const targetPlace = state.places.find((place) => place.name === payload);
+      const targetPlace = state.places.find(
+        (place) => place.name === payload.name
+      );
 
       if (targetPlace) {
         targetPlace.isSelected = true;
       }
+
+      if (payload) {
+        state.sideNavIsOpen = true;
+      }
+
+      addToPickedCountryObjects(state, payload);
 
       if (state.pickedCountries.includes(payload)) return;
       if (payload) {
@@ -77,6 +99,10 @@ const generalSlice = createSlice({
         targetPlace.isSelected = false;
       }
 
+      state.sideNavIsOpen = true;
+
+      removeFromPickedCountryObjects(state, payload);
+
       if (!state.pickedCountries.includes(payload)) return;
       state.pickedCountries.splice(state.pickedCountries.indexOf(payload), 1);
     },
@@ -87,6 +113,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setSideNavIsOpen,
   setBlur,
   setIsAttacking,
   setPlaceName,
@@ -103,11 +130,15 @@ export const selectPlaceName = (state: RootState) =>
 export const selectBlur = (state: RootState) => state.generalReducer.blur;
 export const selectPickedCountries = (state: RootState) =>
   state.generalReducer.pickedCountries;
+export const selectPickedCountriesObjects = (state: RootState) =>
+  state.generalReducer.pickedCountriesObjects;
 export const selectFirstClick = (state: RootState) =>
   state.generalReducer.firstClick;
 export const selectDamgeLevel = (state: RootState) =>
   state.generalReducer.damageLevel;
 export const selectSectors = (state: RootState) => state.generalReducer.sectors;
 export const selectPlaces = (state: RootState) => state.generalReducer.places;
+export const selectSideNavIsOpen = (state: RootState) =>
+  state.generalReducer.sideNavIsOpen;
 
 export default generalSlice.reducer;

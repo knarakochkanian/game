@@ -11,13 +11,22 @@ import { attackExample, protectionExample } from '../../data/attacks';
 import ActionDetails from '../../components/ActionDetails';
 import { protectionIcon } from '../../public/history';
 import { useAppSelector } from '../../redux/hooks';
-import { selectIsAttacking } from '../../redux/features/generalSlice';
+import { selectDamgeLevel, selectIsAttacking, selectPickedCountriesObjects, selectSectors } from '../../redux/features/generalSlice';
 
 import styles from './summary.module.scss';
+import { countSelectedOptions } from '../../helpers';
 
 const Summary = () => {
-  const isAttacking = useAppSelector(selectIsAttacking);
   const router = useRouter();
+  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  const damageLevel = useAppSelector(selectDamgeLevel);
+  const isAttacking = useAppSelector(selectIsAttacking);
+  const industrySectors = useAppSelector(selectSectors);
+  const numberOfSelectedSectors =
+    countSelectedOptions(industrySectors, 'selected') !== 0
+      ? countSelectedOptions(industrySectors, 'selected')
+      : null;
+  
   
   const onClick = () => {
     console.log('Start attack clicked');

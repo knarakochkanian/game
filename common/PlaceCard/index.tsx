@@ -13,6 +13,7 @@ interface IPlaceCardProps {
   i?: number;
   isCountry?: boolean;
   placeFirstLetterChanged?: boolean;
+  fromSideNav?: boolean;
 }
 
 const PlaceCard = ({
@@ -21,11 +22,12 @@ const PlaceCard = ({
   placeFirstLetterChanged,
   i,
   places,
+  fromSideNav
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   return (
     <>
-      {i === 0 && isCountry && (
+      {i === 0 && isCountry && !fromSideNav && (
         <AlphabetLetter firstChild letter={place.name[0]} />
       )}
 
@@ -34,9 +36,10 @@ const PlaceCard = ({
           console.log('Button clicked:', place.name);
           dispatch(setPlaceName(place.name));
         }}
+        disabled={fromSideNav}
         className={`${styles.placeCard} ${
           place.regions ? styles.withRegions : ''
-        }`}
+        } ${place.isSelected && !fromSideNav ? styles.selected : ''}`}
       >
         {place.code && (
           <div className={styles.flagContainer}>

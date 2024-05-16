@@ -1,0 +1,25 @@
+@import '/app/variables.module.scss';
+
+.damageLevelInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  align-items: center;
+  .title {
+    color: $mid-dark-gray;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(50px, 400);
+    line-height: 120%; /* 60px */
+  }
+  .info {
+    color: $white;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(40px, 400);
+    line-height: 120%; /* 60px */
+  }
+  .titleAndInfo {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+}
