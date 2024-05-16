@@ -124,6 +124,9 @@ button {
 }
 .ModalButton1 {
   border: 2px solid #fff;
+  @include TypoBodySmall;
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
 }
 .Green {
   @include TypoBodyBig;
@@ -190,6 +193,11 @@ button {
     }
   }
 }
+.SecondarySmallDisableButton{
+  opacity: 0.4;
+  border: 2px solid var(--Grayscale-Light-Gray, #999A9A);
+}
+
 .SecondarySmallDisable {
   @extend .SecondarySmall;
   opacity: 0.4;
@@ -264,6 +272,12 @@ button {
 }
 .TypoBodyBig {
   @include TypoBodyBig;
+}
+.TypoBodyBigLink{
+  @include TypoBodyBig;
+  color: white;
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
 }
 .Lead{
   @include set-font-size-weight(40px, 400);

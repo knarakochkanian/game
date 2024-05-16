@@ -11,7 +11,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import Modal from '../Modals/Modal';
-import { selectIsAttacking, setBlur, setIsAttacking } from '../../redux/features/generalSlice';
+import {
+  selectIsAttacking,
+  setBlur,
+  setIsAttacking,
+} from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
 import { useAppSelector } from '../../redux/hooks';

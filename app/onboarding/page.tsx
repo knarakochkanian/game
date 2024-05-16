@@ -16,6 +16,7 @@ import Sidenav from '../../common/Sidenav';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectBlur, setBlur } from '../../redux/features/generalSlice';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 export default function Onboarding() {
   const [currentRegionId, setCurrentRegionId] = useState<number | null>(null);
@@ -35,7 +36,7 @@ export default function Onboarding() {
   const [addConfirm, setAddConfirm] = useState(false);
   const [addUSA, setAddUSA] = useState(false);
 
-  const [blurButtons, setBlurButtons] = useState(false);
+  const [blurButtons, setBlurButtons] = useState(true);
   const [delayed, setDelayed] = useState(false);
   const [removeModalDate, setRemoveModalDate] = useState(false);
   const [expanded, setExpanded] = useState<boolean | undefined | number>(
@@ -179,9 +180,9 @@ export default function Onboarding() {
             <button className="ModalButton1" onClick={handleNext2}>
               далее
             </button>
-            <button className="SecondarySmall" onClick={closeModal2}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
 
@@ -392,9 +393,9 @@ export default function Onboarding() {
             <button className="ModalButton1" onClick={handleNext}>
               далее
             </button>
-            <button className="SecondarySmall" onClick={closeModal}>
-              пропустить
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -411,14 +412,16 @@ export default function Onboarding() {
           <p> Нажмите на “США”, чтобы добавить страну в задачу.</p>
           <div className="ModalButtons">
             <button
-              className={addUSA ? '  ModalButton1' : 'SecondarySmallDisable'}
+              className={
+                addUSA ? '  ModalButton1' : 'SecondarySmallDisableButton'
+              }
               onClick={handleNext3}
             >
               далее
             </button>
-            <button className="SecondarySmall" onClick={closeModal3}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -432,15 +435,15 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisableButton'
               }
               onClick={handleNext4}
             >
               далее
             </button>
-            <button className="SecondarySmall" onClick={closeModal4}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -454,15 +457,15 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisableButton'
               }
               onClick={handleNext5}
             >
               далее
             </button>
-            <button className="SecondarySmall" onClick={closeModal5}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -476,15 +479,17 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+                theGorgeSelected
+                  ? 'ModalButton1'
+                  : 'SecondarySmallDisableButton'
               }
               onClick={handleNext6}
             >
               <span>далее</span>
             </button>
-            <button className="SecondarySmall" onClick={closeModal6}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -502,15 +507,17 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+                theGorgeSelected
+                  ? 'ModalButton1'
+                  : 'SecondarySmallDisableButton'
               }
               onClick={handleNext7}
             >
               <span>далее</span>
             </button>
-            <button className="SecondarySmall" onClick={closeModal7}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
 
@@ -528,15 +535,17 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+                theGorgeSelected
+                  ? 'ModalButton1'
+                  : 'SecondarySmallDisableButton'
               }
               onClick={handleNext8}
             >
               <span>далее</span>
             </button>
-            <button className="SecondarySmall" onClick={closeModal8}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <Modal
@@ -552,15 +561,17 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                theGorgeSelected ? 'ModalButton1' : 'SecondarySmallDisable'
+                theGorgeSelected
+                  ? 'ModalButton1'
+                  : 'SecondarySmallDisableButton'
               }
               onClick={handleNext9}
             >
               <span>далее</span>
             </button>
-            <button className="SecondarySmall" onClick={closeModal9}>
-              <span>пропустить</span>
-            </button>
+            <Link href={'/'} className="SecondarySmall">
+              <span className="TypoBodyBigLink">пропустить</span>
+            </Link>
           </div>
         </Modal>
         <div className={styles.onboardingAttack}>
@@ -598,7 +609,19 @@ export default function Onboarding() {
         width={1071}
         height={1070}
         alt="Globus"
-        style={{ filter: modalOpen || modalOpen3 ? 'blur(22px)' : 'none' }}
+        style={{
+          filter:
+            modalOpen ||
+            modalOpen3 ||
+            modalOpen4 ||
+            modalOpen5 ||
+            modalOpen6 ||
+            modalOpen7 ||
+            modalOpen8 ||
+            modalOpen9
+              ? 'blur(22px)'
+              : 'none',
+        }}
         className={styles.onboardingGlobus}
       />
     </>

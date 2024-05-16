@@ -35,6 +35,7 @@ import { selectIsAttacking } from '../../redux/features/generalSlice';
 import styles from './MainScreen.module.scss';
 import dynamic from 'next/dynamic';
 import { MapType } from '../Map/map.types';
+import Target from '../Target';
 
 const WorldMap = dynamic(
   () => import('../Map/map.component').then((mod) => mod.WorldMap),
@@ -81,7 +82,7 @@ const MainScreen = () => {
         imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
         name={ATTACK_OR_PROTECT}
       />
-
+      <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
 
       <Help />
