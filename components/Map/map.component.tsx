@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import { useCallback } from "react";
-import useManagePlaceClick from "../../hooks/useManagePlaceClick";
-import { setPlaceName } from "../../redux/features/generalSlice";
-import { useAppDispatch } from "../../redux/hooks";
-import { MapType } from "./map.types";
-import { UseMap } from "./use-map.hook";
+import { useCallback } from 'react';
+import useManagePlaceClick from '../../hooks/useManagePlaceClick';
+import { setPlaceName } from '../../redux/features/generalSlice';
+import { useAppDispatch } from '../../redux/hooks';
+import { MapType } from './map.types';
+import { UseMap } from './use-map.hook';
 
 export interface MapProps {
   mapType: MapType;
@@ -16,7 +16,7 @@ export const WorldMap = ({ mapType }: MapProps) => {
 
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
-  }
+  };
 
   const planeMap = UseMap({
     onCountryPicked,
@@ -30,59 +30,81 @@ export const WorldMap = ({ mapType }: MapProps) => {
     isNotInteractive: false,
   });
 
-  const setCountryColor = useCallback((name: string | string[], color?: string) => {
-    planeMap.setCountryColor.current?.(name, color);
-    sphereMap.setCountryColor.current?.(name, color);
-  }, [planeMap.setCountryColor, sphereMap.setCountryColor])
+  const setCountryColor = useCallback(
+    (name: string | string[], color?: string) => {
+      planeMap.setCountryColor.current?.(name, color);
+      sphereMap.setCountryColor.current?.(name, color);
+    },
+    [planeMap.setCountryColor, sphereMap.setCountryColor]
+  );
 
-  const focusOnCountry = useCallback((name: string) => {
-    planeMap.focusOnCountry.current?.(name);
-    sphereMap.focusOnCountry.current?.(name);
-  }, [planeMap.focusOnCountry, sphereMap.focusOnCountry])
+  const focusOnCountry = useCallback(
+    (name: string) => {
+      planeMap.focusOnCountry.current?.(name);
+      sphereMap.focusOnCountry.current?.(name);
+    },
+    [planeMap.focusOnCountry, sphereMap.focusOnCountry]
+  );
 
-  const setCountryContourVisibility = useCallback((name: string | string[], visible: boolean) => {
-    planeMap.setCountryContourVisibility.current?.(name, visible);
-    sphereMap.setCountryContourVisibility.current?.(name, visible);
-  }, [planeMap.setCountryContourVisibility, sphereMap.setCountryContourVisibility])
+  const setCountryContourVisibility = useCallback(
+    (name: string | string[], visible: boolean) => {
+      planeMap.setCountryContourVisibility.current?.(name, visible);
+      sphereMap.setCountryContourVisibility.current?.(name, visible);
+    },
+    [
+      planeMap.setCountryContourVisibility,
+      sphereMap.setCountryContourVisibility,
+    ]
+  );
 
-  const onRotateStart = useCallback((direction: "left" | "right") => {
-    sphereMap.onRotateStart.current?.(direction);
-  }, [sphereMap.onRotateStart])
+  const onRotateStart = useCallback(
+    (direction: 'left' | 'right') => {
+      sphereMap.onRotateStart.current?.(direction);
+    },
+    [sphereMap.onRotateStart]
+  );
 
-  const onRotateEnd = useCallback((ev) => {
-    ev.preventDefault()
-    sphereMap.onRotateEnd.current?.();
-  }, [sphereMap.onRotateEnd])
+  const onRotateEnd = useCallback(
+    (ev: React.TouchEvent) => {
+      ev.preventDefault();
+      sphereMap.onRotateEnd.current?.();
+    },
+    [sphereMap.onRotateEnd]
+  );
 
-  useManagePlaceClick(setCountryColor, focusOnCountry, setCountryContourVisibility);
+  useManagePlaceClick(
+    setCountryColor,
+    focusOnCountry,
+    setCountryContourVisibility
+  );
 
   return (
     <>
-      <div 
-      id="arrowLeft" 
-      role="button" 
-      onTouchStart={() => onRotateStart("left")}
-      onTouchEnd={onRotateEnd}
-
-      style={{
-        position: 'absolute',
-        width: '480px',
-        height: '100vh',
-        zIndex: 1,
-      }} />
-      <div 
-      id="arrowRight" 
-      role="button" 
-      onTouchStart={() => onRotateStart("right")}
-      onTouchEnd={onRotateEnd}
-
-      style={{
-        position: 'absolute',
-        width: '480px',
-        height: '100vh',
-        zIndex: 1,
-        right: 0,
-      }} />
+      <div
+        id="arrowLeft"
+        role="button"
+        onTouchStart={() => onRotateStart('left')}
+        onTouchEnd={onRotateEnd}
+        style={{
+          position: 'absolute',
+          width: '480px',
+          height: '100vh',
+          zIndex: 1,
+        }}
+      />
+      <div
+        id="arrowRight"
+        role="button"
+        onTouchStart={() => onRotateStart('right')}
+        onTouchEnd={onRotateEnd}
+        style={{
+          position: 'absolute',
+          width: '480px',
+          height: '100vh',
+          zIndex: 1,
+          right: 0,
+        }}
+      />
 
       <div
         id="map-flat"
