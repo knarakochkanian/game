@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../../common/Modals/Modal';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
 import Accordion from '@mui/material/Accordion';
@@ -35,13 +35,13 @@ export default function Onboarding() {
   const [inputTheGorge, setInputTheGorge] = useState(true);
   const [addConfirm, setAddConfirm] = useState(false);
   const [addUSA, setAddUSA] = useState(false);
-
   const [blurButtons, setBlurButtons] = useState(true);
   const [delayed, setDelayed] = useState(false);
   const [removeModalDate, setRemoveModalDate] = useState(false);
   const [expanded, setExpanded] = useState<boolean | undefined | number>(
     regions[0]?.regions?.[0]?.id
   );
+  const [onboardingPassed, setOnboardingPassed] = useState(false);
   const dispatch = useAppDispatch();
   const blur = useSelector(selectBlur);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
@@ -66,7 +66,16 @@ export default function Onboarding() {
     setModalOpen(true);
     setModalOpen2(false);
   };
+  useEffect(() => {
+    const isOnboardingPassed =
+      localStorage.getItem('isOnboardingPassed') === 'true';
+    setOnboardingPassed(isOnboardingPassed);
+  }, []);
 
+  const completeOnboarding = () => {
+    setOnboardingPassed(true);
+    localStorage.setItem('isOnboardingPassed', 'true');
+  };
   const closeModal = () => setModalOpen(false);
   const closeModal2 = () => setModalOpen2(false);
   const closeModal3 = () => setModalOpen3(false);
@@ -173,7 +182,7 @@ export default function Onboarding() {
           isOpen={modalOpen2}
           onClose={closeModal}
           counter={2}
-          sx={{ left: '1%', position: 'absolute' }}
+          sx={{ left: '1%', top: '12%', position: 'absolute' }}
         >
           <p>Выберите регион при помощи карты или списка.</p>
           <div className="ModalButtons">
@@ -181,7 +190,9 @@ export default function Onboarding() {
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -382,7 +393,7 @@ export default function Onboarding() {
           isOpen={modalOpen}
           onClose={closeModal}
           counter={1}
-          sx={{ left: '38%', position: 'absolute' }}
+          sx={{ left: '40%', top: '220px', position: 'absolute' }}
         >
           <p>На выбор вам доступны два режима:</p>
           <ul style={{ gap: '16px' }}>
@@ -394,7 +405,9 @@ export default function Onboarding() {
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -402,7 +415,7 @@ export default function Onboarding() {
           isOpen={modalOpen3}
           onClose={closeModal3}
           counter={3}
-          sx={{ left: '30%', position: 'fixed', zIndex: '7' }}
+          sx={{ left: '33%', position: 'fixed', zIndex: '7' }}
         >
           <p>
             {' '}
@@ -420,7 +433,9 @@ export default function Onboarding() {
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -442,7 +457,9 @@ export default function Onboarding() {
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -464,7 +481,9 @@ export default function Onboarding() {
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -488,7 +507,9 @@ export default function Onboarding() {
               <span>далее</span>
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -516,7 +537,9 @@ export default function Onboarding() {
               <span>далее</span>
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -544,7 +567,9 @@ export default function Onboarding() {
               <span>далее</span>
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>
@@ -570,7 +595,9 @@ export default function Onboarding() {
               <span>далее</span>
             </button>
             <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">пропустить</span>
+              <span className="TypoBodyBigLink">
+                <button onClick={completeOnboarding}>пропустить</button>
+              </span>
             </Link>
           </div>
         </Modal>

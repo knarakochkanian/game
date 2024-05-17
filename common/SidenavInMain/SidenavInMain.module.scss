@@ -4,20 +4,15 @@
   width: 0;
   position: fixed;
   z-index: 10;
-  top: 160px;
   right: 0;
-  background-color: $black-80;
+  background-color: $pre-black;
   transition: 0.5s;
   padding-top: 60px;
   height: 100%;
   &Title {
     @include flex-between;
     padding-left: 24px;
-    .actionSign {
-      position: absolute;
-      top: -100px;
-      left: 40px;
-    }
+
   }
   &AccordionSummary {
     @include AccordionSummary;
@@ -78,5 +73,8 @@
     gap: 48px;
     max-height: 80vh;
     @include scrollStyles;
+    .actionSign {
+      margin-left: 24px;
+    }
   }
 }

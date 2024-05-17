@@ -4,14 +4,15 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Grid from '../../common/Grid';
 import PasswordError from '../../common/PasswordError';
-
+import { useSelector } from 'react-redux';
 import styles from './Password.module.scss';
+
+import MainScreen from '../MainScreen';
 
 export default function Password() {
   const router = useRouter();
   const [password, setPassword] = useState<string>('');
   const [showError, setShowError] = useState(false);
-
   const handleNumberClick = (number: string) => {
     setPassword((prevPassword) =>
       prevPassword.length < 6 ? prevPassword + number : prevPassword
@@ -21,10 +22,23 @@ export default function Password() {
   const handleClear = () => {
     setPassword('');
   };
+  const [onboardingPassed, setOnboardingPassed] = useState(false);
+
+  useEffect(() => {
+    const isOnboardingPassed =
+      localStorage.getItem('isOnboardingPassed') === 'true';
+    setOnboardingPassed(isOnboardingPassed);
+  }, []);
 
   const handleGoToGame = () => {
     if (password === '111285') {
-      router.push('/onboarding');
+      if (onboardingPassed) {
+        localStorage.setItem('isOnboardingPassed', 'true');
+        setOnboardingPassed(true);
+        return <MainScreen />;
+      } else {
+        router.push('/onboarding');
+      }
     } else {
       setShowError(true);
       setTimeout(() => {

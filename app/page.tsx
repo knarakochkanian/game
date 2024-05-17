@@ -9,9 +9,12 @@ import styles from './page.module.css';
 
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
-  const onboardingPassed = true;
+  const [onboardingPassed, setOnboardingPassed] = useState(false);
 
   useEffect(() => {
+    const isOnboardingPassed =
+      localStorage.getItem('isOnboardingPassed') === 'true';
+    setOnboardingPassed(isOnboardingPassed);
     setLoading(false);
   }, []);
 

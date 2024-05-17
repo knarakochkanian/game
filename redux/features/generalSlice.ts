@@ -12,6 +12,7 @@ export interface IInitialState {
   placeName: string;
   blur: boolean;
   firstClick: boolean;
+  isOnboardingPassed: boolean;
   pickedCountries: string[];
   pickedCountriesObjects: IPlace[];
   damageLevel: string;
@@ -23,6 +24,7 @@ export interface IInitialState {
 const initialState: IInitialState = {
   isAttacking: true,
   firstClick: true,
+  isOnboardingPassed: false,
   placeName: '',
   blur: false,
   pickedCountries: [],
@@ -128,6 +130,7 @@ export const selectIsAttacking = (state: RootState) =>
 export const selectPlaceName = (state: RootState) =>
   state.generalReducer.placeName;
 export const selectBlur = (state: RootState) => state.generalReducer.blur;
+
 export const selectPickedCountries = (state: RootState) =>
   state.generalReducer.pickedCountries;
 export const selectPickedCountriesObjects = (state: RootState) =>

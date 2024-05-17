@@ -57,6 +57,13 @@ function SidenavInMain({
         style={{ width: isOpen ? '696px' : '0' }}
       >
         <div className={styles.sidenavWrapper}>
+          <Image
+            src={isAttacking ? attack : protectionIcon}
+            alt="actionSign"
+            className={styles.actionSign}
+            width={80}
+            height={80}
+          />
           <div
             style={{
               display: delayed ? 'none' : 'flex',
@@ -64,14 +71,6 @@ function SidenavInMain({
             className={styles.sidenavTitle}
           >
             <h2>{isAttacking ? A_TTACK : P_ROTECTION} #000-001</h2>
-
-            <Image
-              src={isAttacking ? attack : protectionIcon}
-              alt="actionSign"
-              className={styles.actionSign}
-              width={80}
-              height={80}
-            />
           </div>
 
           <div className="AccordionsWrap">
@@ -87,6 +86,7 @@ function SidenavInMain({
             <h5
               style={{
                 color: delayed ? 'white' : '#787878',
+                paddingLeft: '24px',
               }}
             >
               Отложенный запуск
@@ -143,14 +143,23 @@ function SidenavInMain({
             selectedCountries.length !== 0 && (
               <div className={styles.sidenavAddConfirm}>
                 <Image
-                  src={'/onboarding/backgroundImgGreen.svg'}
+                  src={
+                    isAttacking
+                      ? '/onboarding/backgroundImgGreen.svg'
+                      : '/onboarding/backgroundImgBlue.svg'
+                  }
                   width={692}
                   height={216}
                   alt={'backgr'}
                   className={styles.sidenavAddConfirmImage}
                 />
-                <span className="Lead" style={{ color: '#787878' }}>
-                  Для перехода к запуску <br /> атаки нажмите кнопку
+                <span
+                  className="Lead"
+                  style={{ color: '#787878', paddingTop: '10px' }}
+                >
+                  Для перехода к запуску <br />{' '}
+                  {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
+                  нажмите кнопку
                 </span>
                 <Link href="/summary">
                   <span
