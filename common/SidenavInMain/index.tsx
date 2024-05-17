@@ -9,15 +9,19 @@ import {
   selectIsAttacking,
   selectPickedCountriesObjects,
   selectSectors,
+  setCurrentAction,
 } from '../../redux/features/generalSlice';
-import { useAppSelector } from '../../redux/hooks';
-import { A_TTACK, P_ROTECTION } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { ATTACK, A_TTACK, PROTECTION, P_ROTECTION } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
-import { countSelectedOptions } from '../../helpers';
+import { countSelectedOptions, getNextActionName } from '../../helpers';
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
+import { news_2 } from '../../data/news';
+import launchConsequences from '../../data/launchConsequences';
+import idGenerator from '../../helpers/idGenerator';
 
 import styles from './SidenavInMain.module.scss';
 
@@ -39,6 +43,7 @@ function SidenavInMain({
   delayed,
   removeModalDate,
 }: ISidenavInMainProps) {
+  const dispatch = useAppDispatch();
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -47,6 +52,25 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
+  const lastActonName = localStorage.getItem('lastActonName');
+  const name = lastActonName ? getNextActionName(lastActonName) : '#000-001';
+
+  const onSetCurrentAction = () => {
+    const currentAction: IAction = {
+      actionType: isAttacking ? ATTACK : PROTECTION,
+      news: news_2,
+      launchConsequences,
+      id: idGenerator(),
+      damageLevel,
+      date: '03.02.2024 12:30',
+      industrySectors,
+      isCompleted: null,
+      name,
+      selectedCountries,
+    };
+
+    dispatch(setCurrentAction(currentAction));
+  };
 
   return (
     <>
@@ -70,13 +94,29 @@ function SidenavInMain({
             }}
             className={styles.sidenavTitle}
           >
-            <h2>{isAttacking ? A_TTACK : P_ROTECTION} #000-001</h2>
+            <h2>
+              {isAttacking ? A_TTACK : P_ROTECTION} {name}
+            </h2>
+
+            <Image
+              src={isAttacking ? attack : protectionIcon}
+              alt="actionSign"
+              className={styles.actionSign}
+              width={80}
+              height={80}
+            />
           </div>
 
           <div className="AccordionsWrap">
-            <RegionAccordion delayed={delayed} />
-            <IndustryAccordion delayed={delayed} />
-            <DamageLevelInfo />
+            <RegionAccordion
+              selectedCountries={selectedCountries}
+              delayed={delayed}
+            />
+            <IndustryAccordion
+              industrySectors={industrySectors}
+              delayed={delayed}
+            />
+            <DamageLevelInfo damageLevel={damageLevel} />
           </div>
 
           <div
@@ -161,7 +201,7 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                <Link href="/summary">
+                <Link href="/summary" onClick={onSetCurrentAction}>
                   <span
                     className="Lead"
                     style={{ color: 'white', padding: '10px' }}

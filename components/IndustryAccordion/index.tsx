@@ -2,8 +2,6 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import AccordionWrapper from '../../common/AccordionWrapper';
 import SectorOptions from '../SectorOptions';
-import { useAppSelector } from '../../redux/hooks';
-import { selectSectors } from '../../redux/features/generalSlice';
 import { countSelectedOptions } from '../../helpers';
 import { useState } from 'react';
 import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
@@ -15,11 +13,11 @@ import styles from './IndustryAccordion.module.scss';
 
 interface IIndustryAccordionProps {
     delayed?: boolean | undefined;
+    industrySectors: ISector[];
   }
 
-const IndustryAccordion = ({ delayed }: IIndustryAccordionProps) => {
+const IndustryAccordion = ({ delayed, industrySectors }: IIndustryAccordionProps) => {
   const currentPage = useGetPage();  
-  const industrySectors = useAppSelector(selectSectors);
     const numberOfSelectedSectors =
       countSelectedOptions(industrySectors, 'selected') !== 0
         ? countSelectedOptions(industrySectors, 'selected')

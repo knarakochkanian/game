@@ -6,12 +6,12 @@ import {
 } from './launchHistoryIndustryOptions';
 import { regionOption_1, regionOption_2 } from './launchHistoryRegionOptions';
 
-const queue: (IAttack | IProtection)[] = [
+const queue: IAction[] = [
   {
     actionType: ATTACK,
     launchConsequences: launchConsequences,
     id: '3',
-    damage: CRITICAL,
+    damageLevel: CRITICAL,
     date: '23.02.2024 12:30',
     industry: industryOption_1,
     isCompleted: false,
@@ -22,7 +22,7 @@ const queue: (IAttack | IProtection)[] = [
     actionType: PROTECTION,
     launchConsequences: launchConsequences,
     id: '4',
-    damage: CRITICAL,
+    damageLevel: CRITICAL,
     date: '23.02.2024 12:30',
     industry: industryOption_2,
     isCompleted: false,

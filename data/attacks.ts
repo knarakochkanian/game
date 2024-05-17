@@ -39,7 +39,7 @@ export const protectionExample = {
   region: regionOptionsUSA[0],
 };
 
-const attacks: (IAttack | IProtection)[] = [
+const attacks: IAction[] = [
   {
     actionType: PROTECTION,
     launchConsequences: launchConsequences,

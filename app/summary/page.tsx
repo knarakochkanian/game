@@ -7,29 +7,40 @@ import { attack } from '../../public/count-down';
 import SideLines from '../../common/SideLines';
 import SummaryFooter from '../../components/SummaryFooter';
 import BackAndForwardBtns from '../../common/BackAndForwardBtns';
-import { attackExample, protectionExample } from '../../data/attacks';
 import ActionDetails from '../../components/ActionDetails';
 import { protectionIcon } from '../../public/history';
-import { useAppSelector } from '../../redux/hooks';
-import { selectDamgeLevel, selectIsAttacking, selectPickedCountriesObjects, selectSectors } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectCurrentAction,
+  selectIsAttacking,
+  setCurrentActionDate,
+} from '../../redux/features/generalSlice';
+import { COUNT_DOWN } from '../../constants';
+import { formatDate, getItemFromStorage } from '../../helpers';
 
 import styles from './summary.module.scss';
-import { countSelectedOptions } from '../../helpers';
 
 const Summary = () => {
+  const dispatch = useAppDispatch();
+  const actionsInQueueFromStorage = getItemFromStorage('actionsInQueue');
   const router = useRouter();
-  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
-  const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
-  const industrySectors = useAppSelector(selectSectors);
-  const numberOfSelectedSectors =
-    countSelectedOptions(industrySectors, 'selected') !== 0
-      ? countSelectedOptions(industrySectors, 'selected')
-      : null;
-  
-  
-  const onClick = () => {
-    console.log('Start attack clicked');
+  const currentAction: IAction | null = useAppSelector(selectCurrentAction);
+
+  const onStartAction = () => {
+    
+    switch (currentAction?.isCompleted) {
+      case false:
+        const actionsInQueue = [...actionsInQueueFromStorage, currentAction];
+        localStorage.setItem('actionsInQueue', JSON.stringify(actionsInQueue));
+
+        break;
+      case null:
+        const currentDate = formatDate(new Date());
+        dispatch(setCurrentActionDate(currentDate));
+        router.push(COUNT_DOWN);
+        break;
+    }   
   };
 
   const onBack = () => router.back();
@@ -49,14 +60,14 @@ const Summary = () => {
           height={80}
           priority
         />
-        <ActionDetails action={attackExample} />
+        <ActionDetails action={currentAction as IAction} />
       </div>
 
       <BackAndForwardBtns onBack={onBack} onForward={onForward} />
       <Grid />
       <SideLines />
 
-      <SummaryFooter onClick={onClick} />
+      <SummaryFooter onClick={onStartAction} />
     </main>
   );
 };

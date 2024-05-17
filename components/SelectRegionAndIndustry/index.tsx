@@ -5,46 +5,22 @@ import RegionAccordion from '../RegionAccordion';
 import styles from './SelectRegionAndIndustry.module.scss';
 
 interface ISelectRegionAndIndustryProps {
-  from?: string;
-  regionOptions: IOption[];
-  industryOptions: IOption[];
-  action: IAttack | IProtection;
+  action: IAction;
 }
 
 const SelectRegionAndIndustry = ({
-  from = '',
-  industryOptions,
-  regionOptions,
   action,
 }: ISelectRegionAndIndustryProps) => {
+  if(!action) return;
+  const { selectedCountries, industrySectors, damageLevel } = action;
+
   return (
     <div className={styles.selectRegionAndIndustry}>
-      <RegionAccordion />
-      <IndustryAccordion />
-      <DamageLevelInfo />
+      <RegionAccordion selectedCountries={selectedCountries} />
+      <IndustryAccordion industrySectors={industrySectors} />
+      <DamageLevelInfo damageLevel={damageLevel} />
     </div>
   );
 };
 
 export default SelectRegionAndIndustry;
-
-{
-  /* <DropDown
-        disabled={pagesWhereDropdownDisabled.includes(from)}
-        title="Регион"
-        name="region"
-        options={regionOptions}
-        initiallySelectedOption={action?.region}
-      />
-      <DropDown
-        disabled={pagesWhereDropdownDisabled.includes(from)}
-        optionsTitle="ВПК"
-        title="Отрасль"
-        name="industry"
-        options={industryOptions}
-        initiallySelectedOption={action?.industry}
-      />
-      <div className={styles.damage}>
-        <TitleAndInfo info={action?.damage} title="Ущерб" />
-      </div> */
-}

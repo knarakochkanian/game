@@ -7,8 +7,8 @@ const useDefaultExpandedSector = (
 ) => {
   useEffect(() => {
     const defaultExpanded =
-      findFirstSectorWithSelectedOption(industrySectors) !== -1
-        ? findFirstSectorWithSelectedOption(industrySectors)
+      findFirstSectorWithSelectedOption(industrySectors).sectorIndex !== -1
+        ? findFirstSectorWithSelectedOption(industrySectors).sectorIndex
         : 0;
 
     setExpanded(industrySectors[defaultExpanded].id);

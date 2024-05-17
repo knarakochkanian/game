@@ -10,7 +10,7 @@ import styles from './ActionInDetails.module.scss';
 interface IActionInDetailsProps {
   actionId: string;
   setActionId: TSetString;
-  data: (IAttack | IProtection)[];
+  data: IAction[];
 }
 
 const ActionInDetails = ({
@@ -19,9 +19,9 @@ const ActionInDetails = ({
   data,
 }: IActionInDetailsProps) => {
   const page = useGetPage();
-  let action = getAction(actionId, data as (IAttack | IProtection)[]);
+  let action = getAction(actionId, data as IAction[]);
 
-  if (!action) return <></>;
+  if (!action || !data) return <></>;
 
   return (
     <section
@@ -32,7 +32,7 @@ const ActionInDetails = ({
         from={HISTORY}
         action={action}
       />
-      {page !== QUEUE && <ActionNews news={(action as IAttack).news} />}
+      {page !== QUEUE && <ActionNews news={(action as IAction).news} />}
     </section>
   );
 };

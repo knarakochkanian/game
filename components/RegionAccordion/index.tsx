@@ -1,8 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import Places from '../Places';
-import { useAppSelector } from '../../redux/hooks';
-import { selectPickedCountriesObjects } from '../../redux/features/generalSlice';
 import { pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 
@@ -10,10 +8,10 @@ import styles from './RegionAccordion.module.scss';
 
 interface IRegionAccordionProps {
   delayed?: boolean | undefined;
+  selectedCountries: IPlace[];
 }
 
-const RegionAccordion = ({ delayed }: IRegionAccordionProps) => {
-  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+const RegionAccordion = ({ delayed, selectedCountries }: IRegionAccordionProps) => {
   const currentPage = useGetPage();
   const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||

@@ -9,19 +9,16 @@ interface IOption {
 }
 
 interface IAction {
+  actionType: string;
+  news: INews[];
   launchConsequences: ILaunchConsequences;
   id: string;
-  actionType: string;
-  isCompleted: boolean;
-  name: string;
+  damageLevel: string;
   date: string;
-  region: IOption;
-  industry: IOption;
-  damage: string;
-}
-
-interface IAttack extends IAction {
-  news: INews[];
+  industrySectors: ISector[];
+  isCompleted: boolean | null;
+  name: string;
+  selectedCountries: IPlace[];
 }
 
 interface INews {

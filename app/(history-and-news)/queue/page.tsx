@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import queue from '../../../data/queue';
 import Queue from '../../../components/Queue';
 
 export const metadata: Metadata = {
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const QueuePage = () => {
-  return <Queue queue={queue} />;
+  return <Queue />;
 };
 
 export default QueuePage;

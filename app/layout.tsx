@@ -19,15 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Suspense fallback={<Loading />}>
-        <body>
+      <body>
+        <Suspense fallback={<Loading />}>
           <ReduxProvider>
             <TopBottomLines />
             <LocalTime />
             {children}
           </ReduxProvider>
-        </body>
-      </Suspense>
+        </Suspense>
+      </body>
     </html>
   );
 }

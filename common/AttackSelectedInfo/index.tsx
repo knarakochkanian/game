@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { arrowDown, arrowUp } from '../../public/summary';
 import { slashes } from '../../public/history';
 import { IActionCardProps } from '../../components/ActionCard';
+import { findFirstSectorWithSelectedOption } from '../../helpers';
 
 import styles from './ActionSelectedInfo.module.scss';
 
@@ -23,8 +24,13 @@ const ActionSelectedInfo = ({
         fromDetails ? styles.fromDetails : ''
       }`}
     >
-      <span>{action.region.label}</span>
-      <span>{action.industry.label}</span>
+      <span>{action.selectedCountries[0].name}</span>
+      <span>
+        {
+          findFirstSectorWithSelectedOption(action.industrySectors)
+            .firstSelectedOption?.name
+        }
+      </span>
 
       <button onClick={handleClick}>
         <Image

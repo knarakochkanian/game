@@ -3,27 +3,26 @@
 import { useState } from 'react';
 import Actions from '../Actions';
 import ActionInDetails from '../ActionInDetails';
+import { getItemFromStorage } from '../../helpers';
+import { COMPLETED_ACTIONS } from '../../constants';
 
 import styles from './history.module.scss';
 
-interface IHistoryProps {
-  actions: (IAttack | IProtection)[];
-}
-
-const History = ({ actions }: IHistoryProps) => {
-  const [attackId, setAttackId] = useState('');
+const History = () => {
+  const actions = getItemFromStorage(COMPLETED_ACTIONS);
+  const [actionId, setActionId] = useState('');
 
   return (
     <>
       <h1 className={styles.title}>История запусков</h1>
-      {attackId ? (
+      {actionId ? (
         <ActionInDetails
           data={actions}
-          actionId={attackId}
-          setActionId={setAttackId}
+          actionId={actionId}
+          setActionId={setActionId}
         />
       ) : (
-        <Actions setActionId={setAttackId} actions={actions} />
+        <Actions setActionId={setActionId} actions={actions} />
       )}
     </>
   );

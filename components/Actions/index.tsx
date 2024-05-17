@@ -3,12 +3,14 @@ import ActionInDetails from '../ActionInDetails';
 import styles from './Actions.module.scss';
 
 export interface IActionsProps {
-  actions: (IAttack | IProtection)[];
+  actions: IAction[];
   setActionId: TSetString;
   actionId?: string;
 }
 
 const Actions = ({ actions, setActionId, actionId }: IActionsProps) => {
+  if(!actions) return <></>;
+
   return (
     <div className={styles.actions}>
       {actions.map((action, i) => {
@@ -16,7 +18,7 @@ const Actions = ({ actions, setActionId, actionId }: IActionsProps) => {
           return (
             <ActionInDetails
               key={i}
-              data={actions as (IAttack | IProtection)[]}
+              data={actions as IAction[]}
               actionId={actionId}
               setActionId={setActionId}
             />

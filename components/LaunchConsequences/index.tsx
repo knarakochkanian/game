@@ -2,11 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { noiseMap } from '../../public/summary';
 import ModalData from '../../common/Modals/ModalData';
-import '../../app/globals.scss';
 import CountOnboarding from '../Count-onboarding';
-
 import {
   LAUNCH_CONSEQUENCES,
   PROTECTION,
@@ -19,11 +18,11 @@ import { formatNumber } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
 
+import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
-import Link from 'next/link';
 
 interface ILaunchConsequencesProps {
-  action: IAttack | IProtection;
+  action: IAction;
   from?: string;
 }
 
@@ -39,6 +38,7 @@ const LaunchConsequences = ({
       localStorage.getItem('isOnboardingPassed') === 'true';
     setOnboardingPassed(isOnboardingPassed);
   }, []);
+  if (!action) return;
 
   const completeOnboarding = () => {
     setOnboardingPassed(true);

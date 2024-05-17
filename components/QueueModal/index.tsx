@@ -5,7 +5,7 @@ import { slashes_90_degree } from '../../public/main-screen';
 
 import styles from './QueueModal.module.scss';
 
-const QueueModal = ({ queue }: { queue: (IAttack | IProtection)[] }) => {
+const QueueModal = ({ queue }: { queue: IAction[] }) => {
   return (
     <div className={styles.queueModal}>
       <h5>Очередь задач</h5>

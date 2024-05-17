@@ -25,7 +25,7 @@ export const NEWS = 'news';
 export const COUNT_DOWN = 'count-down';
 export const QUEUE = 'queue';
 
-export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY];
+export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY, QUEUE];
 export const bottomLinesAreStraightPages = [NEWS, HISTORY];
 export const pagesWithoutGrid = [NEWS];
 export const pagesWithoutLocalTime = [COUNT_DOWN];
@@ -39,6 +39,11 @@ export const INDUSTRY_MODAL = 'INDUSTRY_MODAL';
 export const CRITICAL = 'Критический';
 export const MINIMAL = 'Минимальный';
 export const WARNING = 'Предупреждение';
+
+//local storage data
+export const ACTIONS_IN_QUEUE = 'actionsInQueue';
+export const COMPLETED_ACTIONS = 'completedActions';
+export const LAST_ACTION_NAME = 'lastActonName';
 
 //oreders
 export const CANCEL = 'ОТМЕНА';

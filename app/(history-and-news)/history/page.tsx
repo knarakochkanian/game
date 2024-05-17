@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const HistoryPage = () => {
-  return <History actions={attacks} />;
+  return <History />;
 };
 
 export default HistoryPage;

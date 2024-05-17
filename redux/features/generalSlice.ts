@@ -8,6 +8,7 @@ import {
 } from '../../helpers';
 
 export interface IInitialState {
+  currentAction: IAction | null;
   isAttacking: boolean;
   placeName: string;
   blur: boolean;
@@ -22,6 +23,7 @@ export interface IInitialState {
 }
 
 const initialState: IInitialState = {
+  currentAction: null,
   isAttacking: true,
   firstClick: true,
   isOnboardingPassed: false,
@@ -38,7 +40,7 @@ const initialState: IInitialState = {
 const generalSlice = createSlice({
   name: 'general',
   initialState,
-  reducers: {
+  reducers: {    
     setSelectedIndusties(
       state,
       { payload }: { payload: { name: string; parent: string } }
@@ -55,6 +57,18 @@ const generalSlice = createSlice({
       const targetOption = state.sectors[index].options[targetOptionIndex];
 
       targetOption.selected = !targetOption.selected;
+    },
+    resetGeneralState(state) {
+      const initialStateCopy = {...initialState};
+      initialStateCopy.isAttacking = state.isAttacking;
+      
+      return initialStateCopy;
+    },
+    setCurrentActionDate(state, { payload }: {payload: string}) {
+      (state.currentAction as IAction).date = payload;
+    },
+    setCurrentAction(state, { payload }: {payload: IAction}) {
+      state.currentAction = payload;
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
@@ -123,6 +137,9 @@ export const {
   removeFromPickedCountries,
   setDamageLevel,
   setSelectedIndusties,
+  setCurrentAction,
+  setCurrentActionDate,
+  resetGeneralState,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -143,5 +160,7 @@ export const selectSectors = (state: RootState) => state.generalReducer.sectors;
 export const selectPlaces = (state: RootState) => state.generalReducer.places;
 export const selectSideNavIsOpen = (state: RootState) =>
   state.generalReducer.sideNavIsOpen;
+export const selectCurrentAction = (state: RootState) =>
+  state.generalReducer.currentAction;
 
 export default generalSlice.reducer;

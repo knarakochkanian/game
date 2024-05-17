@@ -12,7 +12,7 @@ import styles from './ActionCard.module.scss';
 
 export interface IActionCardProps {
   setActionId?: TSetString;
-  action: IAttack | IProtection;
+  action: IAction;
   fromDetails?: boolean;
 }
 
@@ -31,9 +31,6 @@ const ActionCard = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
       <SelectRegionAndIndustry
         action={action}
-        industryOptions={launchHistoryIndustryOptions}
-        regionOptions={launchHistoryRegionOptions}
-        from={HISTORY}
       />
       <ActionSelectedInfo
         fromDetails={fromDetails}

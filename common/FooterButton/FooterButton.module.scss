@@ -5,6 +5,7 @@
   bottom: 0;
   width: 100%;
   @include flex-center;
+  z-index: 16;
   button {
     padding-top: 64px;
     padding-bottom: 72.5px;

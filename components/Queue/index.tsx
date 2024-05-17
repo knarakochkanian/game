@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import Actions from '../Actions';
+import { getItemFromStorage } from '../../helpers';
+import { ACTIONS_IN_QUEUE } from '../../constants';
 
 import styles from './Queue.module.scss';
 
-const Queue = ({ queue }: { queue: (IAttack | IProtection)[] }) => {
+const Queue = () => {
+  const actionsInQueue = getItemFromStorage(ACTIONS_IN_QUEUE);
   const [actionId, setActionId] = useState('');
 
   return (
@@ -15,7 +18,7 @@ const Queue = ({ queue }: { queue: (IAttack | IProtection)[] }) => {
       <Actions
         actionId={actionId}
         setActionId={setActionId}
-        actions={queue}
+        actions={actionsInQueue}
       />
     </>
   );

@@ -25,7 +25,7 @@ export async function generateMetadata({ params: { attackId } }: Params) {
 }
 
 const SingleAttackNewsPage = ({ params: { attackId } }: Params) => {
-  const attack = getAction(attackId, attacks) as IAttack | undefined;
+  const attack = getAction(attackId, attacks) as IAction | undefined;
 
   if (!attack) notFound();
 
