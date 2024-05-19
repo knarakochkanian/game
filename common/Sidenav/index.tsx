@@ -20,6 +20,8 @@ import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
 import { useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
+import { attack } from '../../public/count-down';
+import { protectionIcon } from '../../public/history';
 
 interface SidenavProps {
   isOpen?: boolean;
@@ -60,6 +62,13 @@ function Sidenav({
         style={{ width: isOpen ? '696px' : '0' }}
       >
         <div className={styles.sidenavWrapper}>
+          <Image
+            src={isAttacking ? attack : protectionIcon}
+            alt="actionSign"
+            className={styles.actionSign}
+            width={80}
+            height={80}
+          />
           <div
             style={{
               display: delayed ? 'none' : 'flex',
@@ -201,6 +210,7 @@ function Sidenav({
             <h5
               style={{
                 color: delayed ? 'white' : '#787878',
+                paddingLeft: '21px',
               }}
             >
               Отложенный запуск

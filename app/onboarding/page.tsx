@@ -13,7 +13,7 @@ import { regions } from '../../data/attackRegionsData';
 import styles from './onboarding.module.scss';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import { selectBlur, setBlur } from '../../redux/features/generalSlice';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -182,7 +182,7 @@ export default function Onboarding() {
           isOpen={modalOpen2}
           onClose={closeModal}
           counter={2}
-          sx={{ left: '1%', top: '12%', position: 'absolute' }}
+          sx={{ left: '1%', top: '12% !important', position: 'absolute' }}
         >
           <p>Выберите регион при помощи карты или списка.</p>
           <div className="ModalButtons">
@@ -415,7 +415,12 @@ export default function Onboarding() {
           isOpen={modalOpen3}
           onClose={closeModal3}
           counter={3}
-          sx={{ left: '33%', position: 'fixed', zIndex: '7' }}
+          sx={{
+            left: '33%',
+            position: 'fixed',
+            zIndex: '7',
+            top: '15% !important',
+          }}
         >
           <p>
             {' '}

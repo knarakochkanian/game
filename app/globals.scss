@@ -17,6 +17,7 @@ body {
   color: #ffffff;
   background-color: $main-dark;
   font-variant-numeric: slashed-zero;
+  font-family: 'TT Lakes Neue Trial', sans-serif;
 }
 
 :root {
@@ -27,6 +28,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'TT Lakes Neue Trial', sans-serif;
 }
 .container {
   display: flex;

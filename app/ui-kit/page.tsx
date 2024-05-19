@@ -15,9 +15,9 @@ import styles from './ui-kit.module.scss';
 export default function Test() {
   return (
     <>
-      <div className={styles.attackCtn}>
-        <AttackDetails from={ONBOARDING} action={attackExample} />
-      </div>
+      {/*<div className={styles.attackCtn}>*/}
+      {/*  <AttackDetails from={ONBOARDING} action={attackExample} />*/}
+      {/*</div>*/}
 
       <Grid />
       <div className={styles.test}>

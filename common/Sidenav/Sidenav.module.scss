@@ -3,13 +3,12 @@
   width: 0;
   position: fixed;
   z-index: 1;
-  top: 160px;
   right: 0;
   background-color: $black-80;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
   height: 100%;
+  top: 55px;
   &Title{
    @include flex-between;
     padding-left: 24px;

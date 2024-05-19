@@ -203,6 +203,7 @@ const countriesWithCodes: IPlace[] = [
   { isSelected: false, id: 167, name: 'Португалия', code: '620' },
   { isSelected: false, id: 168, name: 'Пуэрто-Рико', code: '630' },
   { isSelected: false, id: 169, name: 'Реюньон', code: '638' },
+  { isSelected: false, id: 351, name: 'Росси́йская Федера́ция[', code: '643' },
   { isSelected: false, id: 170, name: 'Рождество (остров)', code: '162' },
   { isSelected: false, id: 171, name: 'Руанда', code: '646' },
   { isSelected: false, id: 172, name: 'Румыния', code: '642' },
@@ -234,7 +235,7 @@ const countriesWithCodes: IPlace[] = [
   {
     isSelected: false,
     id: 193,
-    name: 'Соединённые Штаты Америки',
+    name: 'США',
     code: '840',
     regions: [
       { isSelected: false, id: 301, name: 'Айдахо' },
