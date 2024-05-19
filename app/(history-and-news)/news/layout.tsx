@@ -3,15 +3,17 @@
 import { Suspense } from 'react';
 import Loading from '../../../components/Loading';
 import AttacksWithDates from '../../../components/AttacksWithDates';
-import actions from '../../../data/attacks';
 
 import styles from './layout.module.scss';
+import { getItemFromStorage } from '../../../helpers';
+import { COMPLETED_ACTIONS } from '../../../constants';
 
 export default function NewsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const actions = getItemFromStorage(COMPLETED_ACTIONS);
 
   return (
     <div className={styles.newsLayout}>

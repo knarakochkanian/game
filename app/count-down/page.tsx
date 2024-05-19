@@ -80,9 +80,9 @@ export default function CountDown() {
         false
       );
 
-      localStorage.setItem(LAST_ACTION_NAME, name);
+      // localStorage.setItem(LAST_ACTION_NAME, name);
 
-      localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
+      // localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
     }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };

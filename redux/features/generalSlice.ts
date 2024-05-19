@@ -10,7 +10,7 @@ import {
 export interface IInitialState {
   currentAction: IAction | null;
   isAttacking: boolean;
-  placeName: string;
+  placeName: string | string[];
   blur: boolean;
   firstClick: boolean;
   isOnboardingPassed: boolean;
@@ -20,9 +20,11 @@ export interface IInitialState {
   sectors: ISector[];
   places: IPlace[];
   sideNavIsOpen: boolean;
+  activeBlocks: string[];
 }
 
 const initialState: IInitialState = {
+  activeBlocks: [],
   currentAction: null,
   isAttacking: true,
   firstClick: true,
@@ -40,7 +42,7 @@ const initialState: IInitialState = {
 const generalSlice = createSlice({
   name: 'general',
   initialState,
-  reducers: {    
+  reducers: {
     setSelectedIndusties(
       state,
       { payload }: { payload: { name: string; parent: string } }
@@ -59,16 +61,23 @@ const generalSlice = createSlice({
       targetOption.selected = !targetOption.selected;
     },
     resetGeneralState(state) {
-      const initialStateCopy = {...initialState};
+      const initialStateCopy = { ...initialState };
       initialStateCopy.isAttacking = state.isAttacking;
-      
+
       return initialStateCopy;
     },
-    setCurrentActionDate(state, { payload }: {payload: string}) {
+    setCurrentActionDate(state, { payload }: { payload: string }) {
       (state.currentAction as IAction).date = payload;
     },
-    setCurrentAction(state, { payload }: {payload: IAction}) {
+    setCurrentAction(state, { payload }: { payload: IAction }) {
       state.currentAction = payload;
+    },
+    setActiveBlocks(state, { payload }: { payload: string }) {
+      if (state.activeBlocks.includes(payload)) {
+        state.activeBlocks.splice(state.activeBlocks.indexOf(payload), 1);
+      } else {
+        state.activeBlocks = [...state.activeBlocks, payload];
+      }
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
@@ -81,7 +90,18 @@ const generalSlice = createSlice({
       state.damageLevel = payload;
     },
     setPlaceName(state, { payload }) {
-      if (payload === state.placeName) {
+      let isSameData;
+      switch (typeof payload) {
+        case 'string':
+          isSameData = payload === state.placeName;
+          break;
+        case 'object': //array of strings
+          isSameData =
+            JSON.stringify(payload) === JSON.stringify(state.placeName);
+          break;
+      }
+
+      if (isSameData) {
         state.firstClick = !state.firstClick;
       } else {
         state.firstClick = false;
@@ -89,14 +109,6 @@ const generalSlice = createSlice({
       }
     },
     addToPickedCountries(state, { payload }) {
-      const targetPlace = state.places.find(
-        (place) => place.name === payload.name
-      );
-
-      if (targetPlace) {
-        targetPlace.isSelected = true;
-      }
-
       if (payload) {
         state.sideNavIsOpen = true;
       }
@@ -109,12 +121,6 @@ const generalSlice = createSlice({
       }
     },
     removeFromPickedCountries(state, { payload }) {
-      const targetPlace = state.places.find((place) => place.name === payload);
-
-      if (targetPlace) {
-        targetPlace.isSelected = false;
-      }
-
       state.sideNavIsOpen = true;
 
       removeFromPickedCountryObjects(state, payload);
@@ -140,6 +146,7 @@ export const {
   setCurrentAction,
   setCurrentActionDate,
   resetGeneralState,
+  setActiveBlocks
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -162,5 +169,7 @@ export const selectSideNavIsOpen = (state: RootState) =>
   state.generalReducer.sideNavIsOpen;
 export const selectCurrentAction = (state: RootState) =>
   state.generalReducer.currentAction;
+export const selectActiveBlocks = (state: RootState) =>
+  state.generalReducer.activeBlocks;
 
 export default generalSlice.reducer;

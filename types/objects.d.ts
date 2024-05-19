@@ -12,7 +12,7 @@ interface IAction {
   actionType: string;
   news: INews[];
   launchConsequences: ILaunchConsequences;
-  id: string;
+  id: number;
   damageLevel: string;
   date: string;
   industrySectors: ISector[];

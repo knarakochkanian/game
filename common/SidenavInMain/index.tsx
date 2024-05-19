@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK, A_TTACK, PROTECTION, P_ROTECTION } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
-import { countSelectedOptions, getNextActionName } from '../../helpers';
+import { countSelectedOptions, extractNumber, getNextActionName } from '../../helpers';
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
@@ -60,7 +60,7 @@ function SidenavInMain({
       actionType: isAttacking ? ATTACK : PROTECTION,
       news: news_2,
       launchConsequences,
-      id: idGenerator(),
+      id: extractNumber(name),
       damageLevel,
       date: '03.02.2024 12:30',
       industrySectors,

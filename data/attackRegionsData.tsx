@@ -1,8 +1,10 @@
+import blocks from './blocks';
 import countriesWithCodes, { USARegions } from './countriesWithCodes';
 
 export interface Option {
   id: number | string;
   name: string;
+  members?: string[];
 }
 
 export interface IPlace extends Option {
@@ -22,6 +24,9 @@ export interface Region {
   industry?: RegionCategory[];
   damage?: RegionCategory[];
 }
+
+const { G7, european_union, nato, wholeWorld, USA } = blocks;
+
 export const regions: Region[] = [
   {
     id: 1,
@@ -31,11 +36,11 @@ export const regions: Region[] = [
         id: 1,
         title: 'наиболее вероятный выбор',
         options: [
-          { id: 'G7', name: 'G7' },
-          { id: 'НАТО', name: 'НАТО' },
-          { id: 'США', name: 'США' },
-          { id: 'ЕВРОСОЮЗ', name: 'ЕВРОСОЮЗ' },
-          { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР' },
+          { id: 'G7', name: 'G7', members: G7 },
+          { id: 'НАТО', name: 'НАТО', members: nato },
+          { id: 'США', name: 'США', members: USA },
+          { id: 'ЕВРОСОЮЗ', name: 'ЕВРОСОЮЗ', members: european_union },
+          { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
         ],
       },
       {

@@ -9,7 +9,7 @@ const HistoryAndNewsBtns = () => {
       <Link href={HISTORY}>
         <button>история</button>
       </Link>
-      <Link href={`/${NEWS}/3`}>
+      <Link href={`/${NEWS}/1`}>
         <button>новости</button>
       </Link>
     </div>

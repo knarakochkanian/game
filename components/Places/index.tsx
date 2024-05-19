@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
-import { COUNTRIES } from '../../constants';
+import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
 import AlphabetLetter from '../../common/AlphabetLetter';
 
 import styles from './Places.module.scss';
@@ -14,7 +14,7 @@ interface IPlacesProps {
 }
 
 const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
-  const isCountry = name === COUNTRIES;
+  const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
 
   if (places === undefined) {
     return null;

@@ -12,6 +12,8 @@ import {
   COUNTRIES,
   DAMAGE_LEVEL_MODAL,
   INDUSTRY_MODAL,
+  MOST_LIKELY_CHOICE,
+  NOT_FRIENDLY_COUNTRIES,
   REGIONS,
   REGION_MODAL,
 } from '../../constants';
@@ -22,8 +24,13 @@ import SelectDamageModal from '../SelectDamageModal';
 import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
-import { useAppSelector } from '../../redux/hooks';
-import { selectPlaces } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectActiveBlocks,
+  selectPlaces,
+  setActiveBlocks,
+  setPlaceName,
+} from '../../redux/features/generalSlice';
 import { USARegions } from '../../data/countriesWithCodes';
 
 import styles from './RegionAndOtherButtons.module.scss';
@@ -39,6 +46,8 @@ const RegionAndOtherButtons = ({
   setDrawerOpen,
   isAttacking,
 }: IRegionAndOtherButtonsProps) => {
+  const dispatch = useAppDispatch();
+  const activeBlocks = useAppSelector(selectActiveBlocks);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openModal, setOpenModal] = useState('');
@@ -124,21 +133,30 @@ const RegionAndOtherButtons = ({
           }
         >
           {regions[0].regions?.map((region, index) => {
+            let placesInSwitch;
             switch (region.title) {
               case REGIONS:
-                return (
-                  <AccordionWrapper
-                    styles={{ accordionDetailsHeight: '686px' }}
-                    expanded={expanded}
-                    handleExpansion={handleExpansion}
-                    data={region}
-                    key={index}
-                  >
-                    <Places name={region.title} places={USARegions} />
-                  </AccordionWrapper>
-                );
-                return;
+                placesInSwitch = USARegions;
+
+                break;
               case COUNTRIES:
+                placesInSwitch = countries;
+
+                break;
+              case NOT_FRIENDLY_COUNTRIES:
+                const optionNames = region.options?.map(
+                  (option) => option.name
+                );
+                placesInSwitch = countries.filter((country) =>
+                  optionNames?.includes(country.name)
+                );
+                break;
+            }
+
+            switch (region.title) {
+              case REGIONS:
+              case COUNTRIES:
+              case NOT_FRIENDLY_COUNTRIES:
                 return (
                   <AccordionWrapper
                     styles={{ accordionDetailsHeight: '686px' }}
@@ -147,7 +165,7 @@ const RegionAndOtherButtons = ({
                     data={region}
                     key={index}
                   >
-                    <Places name={region.title} places={countries} />
+                    <Places name={region.title} places={placesInSwitch} />
                   </AccordionWrapper>
                 );
             }
@@ -172,11 +190,15 @@ const RegionAndOtherButtons = ({
                     }}
                   >
                     <button
-                      className="SecondarySmallDisable"
-                      // onClick={() => {
-                      //   console.log('Button clicked:', option.name);
-                      //   onOptionClick(option.name);
-                      // }}
+                      className={`${styles.secondarySmallDisable} ${
+                        activeBlocks.includes(option.name)
+                          ? styles.selected
+                          : ''
+                      }`}
+                      onClick={() => {
+                        dispatch(setPlaceName(option.members));
+                        dispatch(setActiveBlocks(option.name));
+                      }}
                     >
                       <span>
                         <span className={styles.optionName}>{option.name}</span>

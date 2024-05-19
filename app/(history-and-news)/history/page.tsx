@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import attacks from '../../../data/attacks';
 import History from '../../../components/History';
 
 export const metadata: Metadata = {
