@@ -9,6 +9,7 @@ import CountOnboarding from '../Count-onboarding';
 import {
   LAUNCH_CONSEQUENCES,
   PROTECTION,
+  SUMMARY,
   citiesUnderAttack,
   consequencesParagraph,
   populationSuffering,
@@ -17,6 +18,9 @@ import {
 import { formatNumber } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
+import useGetPage from '../../hooks/useGetPage';
+import { UseMap } from '../Map/use-map.hook';
+import { MapType } from '../Map/map.types';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
@@ -30,6 +34,7 @@ const LaunchConsequences = ({
   action,
   from = '',
 }: ILaunchConsequencesProps) => {
+  const currentPage = useGetPage();
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
@@ -47,11 +52,17 @@ const LaunchConsequences = ({
   const headerGoToCountComponent = () => {
     setIsCountDownComponent(true);
   };
+
+  const notInteractiveMap = UseMap({
+    onCountryPicked: () => {},
+    mapType: MapType.plane,
+    isNotInteractive: true,
+  });
+
   return isCountDownComponent ? (
     <CountOnboarding />
   ) : (
     <>
-      {' '}
       <div
         className={`${styles.launchConsequences} ${
           paragraphIsOpen ? styles.paragraphIsOpen : ''
@@ -89,7 +100,11 @@ const LaunchConsequences = ({
           </div>
         </div>
         <div>
-          <Modal name="damageInfo" isOpen={true} counter={10}>
+          <Modal
+            name="damageInfo"
+            isOpen={currentPage === SUMMARY ? false : true}
+            counter={10}
+          >
             <p>
               {' '}
               В данном окне отображается информация об уроне, который будет
@@ -110,13 +125,14 @@ const LaunchConsequences = ({
               </Link>
             </div>
           </Modal>
-          <Image
-            src={noiseMap}
-            alt="noiseMap"
-            width={1048}
-            height={542}
-            priority
-          />
+          <div
+            className={styles.map}
+            // style={{
+            //   width: '1048px',
+            //   height: '542px',
+            // }}
+            // ref={notInteractiveMap.ref}
+          ></div>
         </div>
       </div>
     </>

@@ -1,8 +1,9 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import Places from '../Places';
-import { pagesWhereDropdownDisabled } from '../../constants';
+import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
+import { defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
 
 import styles from './RegionAccordion.module.scss';
 
@@ -11,7 +12,10 @@ interface IRegionAccordionProps {
   selectedCountries: IPlace[];
 }
 
-const RegionAccordion = ({ delayed, selectedCountries }: IRegionAccordionProps) => {
+const RegionAccordion = ({
+  delayed,
+  selectedCountries,
+}: IRegionAccordionProps) => {
   const currentPage = useGetPage();
   const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||
@@ -51,7 +55,9 @@ const RegionAccordion = ({ delayed, selectedCountries }: IRegionAccordionProps) 
           </span>
         </div>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails
+        sx={currentPage === SUMMARY ? detailsStylesInSummery : defaultStyles}
+      >
         <Places fromSideNav name={'страны'} places={selectedCountries} />
       </AccordionDetails>
     </Accordion>

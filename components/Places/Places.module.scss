@@ -2,6 +2,7 @@
 
 .places {
   margin-top: 86px;
+  width: 100%;
   .placesAccordionSummary {
     @include AccordionSummary;
   }

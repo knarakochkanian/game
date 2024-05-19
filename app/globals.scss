@@ -138,7 +138,7 @@ button {
   }
   color: $attack-green-40;
 }
-.AccordionNested{
+.AccordionNested {
   @include TypoBodyBig;
   > span > span > button {
     text-transform: uppercase;
@@ -195,9 +195,9 @@ button {
     }
   }
 }
-.SecondarySmallDisableButton{
+.SecondarySmallDisableButton {
   opacity: 0.4;
-  border: 2px solid var(--Grayscale-Light-Gray, #999A9A);
+  border: 2px solid var(--Grayscale-Light-Gray, #999a9a);
 }
 
 .SecondarySmallDisable {
@@ -275,17 +275,21 @@ button {
 .TypoBodyBig {
   @include TypoBodyBig;
 }
-.TypoBodyBigLink{
+.TypoBodyBigLink {
   @include TypoBodyBig;
   color: white;
   letter-spacing: 0.28px;
   text-transform: uppercase;
 }
-.Lead{
+.Lead {
   @include set-font-size-weight(40px, 400);
   line-height: 120%; /* 43.2px */
 }
 
 a {
   text-decoration: none;
+}
+
+.MuiAccordionSummary-content.Mui-expanded.MuiAccordionSummary-contentGutters.css-eqpfi5-MuiAccordionSummary-content {
+  margin: 12px 0 !important;
 }

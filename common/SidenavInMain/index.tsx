@@ -21,9 +21,9 @@ import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
-import idGenerator from '../../helpers/idGenerator';
 
 import styles from './SidenavInMain.module.scss';
+import { trash } from '../../public/summary';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -99,11 +99,11 @@ function SidenavInMain({
             </h2>
 
             <Image
-              src={isAttacking ? attack : protectionIcon}
+              src={trash}
               alt="actionSign"
               className={styles.actionSign}
-              width={80}
-              height={80}
+              width={48}
+              height={48}
             />
           </div>
 

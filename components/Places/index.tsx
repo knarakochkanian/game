@@ -4,6 +4,8 @@ import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
 import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
 import AlphabetLetter from '../../common/AlphabetLetter';
+import { useAppSelector } from '../../redux/hooks';
+import { selectPickedCountries } from '../../redux/features/generalSlice';
 
 import styles from './Places.module.scss';
 
@@ -15,6 +17,7 @@ interface IPlacesProps {
 
 const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
   const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
+  const pickedCountries = useAppSelector(selectPickedCountries);
 
   if (places === undefined) {
     return null;
@@ -26,7 +29,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         const placeFirstLetterChanged =
           places[i].name[0] !== places[i + 1]?.name[0];
 
-        if (place.regions && !fromSideNav) {
+        if (place.regions) {
           return (
             <Accordion
               key={i}
@@ -51,20 +54,38 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
-                {i === 0 && (
+                {i === 0 && !fromSideNav && (
                   <AlphabetLetter firstChild letter={place.name[0]} />
                 )}
                 <div className={styles.placesAccordionSummary}>
-                  <PlaceCard isCountry place={place} />
+                  <PlaceCard
+                    fromSideNav={fromSideNav}
+                    isCountry
+                    place={place}
+                  />
                 </div>
                 {placeFirstLetterChanged && !fromSideNav && (
                   <AlphabetLetter letter={places[i + 1]?.name[0]} />
                 )}
               </AccordionSummary>
               <AccordionDetails>
-                {place.regions.map((region, i) => (
-                  <PlaceCard key={i} place={region} />
-                ))}
+                {place.regions.map((region, i) =>
+                  fromSideNav ? (
+                    pickedCountries.includes(region.name) && (
+                      <PlaceCard
+                        fromSideNav={fromSideNav}
+                        key={i}
+                        place={region}
+                      />
+                    )
+                  ) : (
+                    <PlaceCard
+                      fromSideNav={fromSideNav}
+                      key={i}
+                      place={region}
+                    />
+                  )
+                )}
               </AccordionDetails>
             </Accordion>
           );

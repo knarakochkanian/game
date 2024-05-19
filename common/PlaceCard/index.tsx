@@ -1,7 +1,10 @@
 'use client';
 import Flag from 'react-world-flags';
-import { useAppDispatch } from '../../redux/hooks';
-import { setPlaceName } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectPickedCountries,
+  setPlaceName,
+} from '../../redux/features/generalSlice';
 import AlphabetLetter from '../AlphabetLetter';
 import { Option } from '../../data/attackRegionsData';
 
@@ -22,9 +25,11 @@ const PlaceCard = ({
   placeFirstLetterChanged,
   i,
   places,
-  fromSideNav
+  fromSideNav,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
+  const pickedCountries = useAppSelector(selectPickedCountries);
+
   return (
     <>
       {i === 0 && isCountry && !fromSideNav && (
@@ -39,7 +44,11 @@ const PlaceCard = ({
         disabled={fromSideNav}
         className={`${styles.placeCard} ${
           place.regions ? styles.withRegions : ''
-        } ${place.isSelected && !fromSideNav ? styles.selected : ''}`}
+        } ${
+          pickedCountries.includes(place.name) && !fromSideNav
+            ? styles.selected
+            : ''
+        }`}
       >
         {place.code && (
           <div className={styles.flagContainer}>

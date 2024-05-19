@@ -11,7 +11,7 @@ export class ComplexCountry {
   private contourMesh: LineSegments | undefined
 
   static fromName(name: string, parentGroup: Group, lineColor: string, shapeColor: string) {
-    if (name !== "Соединённые Штаты Америки") {
+    if (name !== "США") {
       console.error(`Only the US are supported for now`)
       return;
     }

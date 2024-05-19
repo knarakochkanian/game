@@ -22,12 +22,22 @@ const AccordionWrapper = ({
   handleExpansion,
   styles,
 }: IAccordionWrapperProps) => {
+  const {
+    accordionBackground,
+    accordionDetailsHeight,
+    accordionDetailsMaxHeight,
+  } = styles;
+
   return (
     <Accordion
       expanded={expanded === data.id}
       onChange={handleExpansion(data.id)}
       sx={{
-        backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
+        backgroundColor: `${
+          accordionBackground
+            ? accordionBackground
+            : 'rgba(0, 0, 0, 0.87) !important'
+        } `,
         color: '#fff',
         marginBottom: '10px',
       }}
@@ -55,8 +65,8 @@ const AccordionWrapper = ({
           display: 'flex',
           gap: '10px',
           overflow: 'scroll',
-          height: styles.accordionDetailsHeight,
-          maxHeight: styles.accordionDetailsMaxHeight,
+          height: accordionDetailsHeight,
+          maxHeight: accordionDetailsMaxHeight,
         }}
       >
         {children}

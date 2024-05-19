@@ -24,6 +24,7 @@ export const HISTORY = 'history';
 export const NEWS = 'news';
 export const COUNT_DOWN = 'count-down';
 export const QUEUE = 'queue';
+export const SUMMARY = 'summary';
 
 export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY, QUEUE];
 export const bottomLinesAreStraightPages = [NEWS, HISTORY];

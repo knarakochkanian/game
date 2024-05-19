@@ -7,6 +7,7 @@ import {
   selectIsAttacking,
   selectPickedCountries,
   selectPlaceName,
+  setSingleRegionStatus,
 } from '../redux/features/generalSlice';
 import {
   DEFAULT_COLOR,
@@ -66,7 +67,7 @@ const useManagePlaceClick = (
     };
 
     switch (typeof clickedPlaceName) {
-      case 'string':        
+      case 'string':
         if (!regionsNames.includes(clickedPlaceName)) {
           handleTerritoryHighlighing(clickedPlaceName);
         }
@@ -76,17 +77,21 @@ const useManagePlaceClick = (
         if (!parentCountry) {
           return;
         }
+
+        handleTerritoryHighlighing(clickedPlaceName);
+
         // определить, выделена ли сама страна
-        if (pickedCountries.includes(parentCountry)) {
-          // если выделена, то выделить конкретный кликнутый регион
-          handleTerritoryHighlighing(clickedPlaceName);
-        } else {
+        if (!pickedCountries.includes(parentCountry)) {
           // если не выделена, то выделить контуры регионов
           const regions = getRegionsNamesByCountryName(parentCountry);
           setCountryContourVisibility(regions, true);
           dispatch(addToPickedCountries(parentCountry));
         }
+
+        dispatch(setSingleRegionStatus({ parentCountry, region: clickedPlaceName }));
+
         return;
+
       case 'object': //array of strings
         clickedPlaceName.forEach((placeName) => {
           if (!regionsNames.includes(placeName)) {

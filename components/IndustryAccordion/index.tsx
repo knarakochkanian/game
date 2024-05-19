@@ -6,35 +6,39 @@ import { countSelectedOptions } from '../../helpers';
 import { useState } from 'react';
 import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
 import { arrowDown, arrowDownGray } from '../../public/summary';
-import { pagesWhereDropdownDisabled } from '../../constants';
+import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
+import { card, defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
 
 import styles from './IndustryAccordion.module.scss';
 
 interface IIndustryAccordionProps {
-    delayed?: boolean | undefined;
-    industrySectors: ISector[];
-  }
+  delayed?: boolean | undefined;
+  industrySectors: ISector[];
+}
 
-const IndustryAccordion = ({ delayed, industrySectors }: IIndustryAccordionProps) => {
-  const currentPage = useGetPage();  
-    const numberOfSelectedSectors =
-      countSelectedOptions(industrySectors, 'selected') !== 0
-        ? countSelectedOptions(industrySectors, 'selected')
-        : null;
-  
-    const [expanded, setExpanded] = useState(industrySectors[0].id);
-  
-    // @ts-ignore
-    const handleExpansion = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-  
-    const disable =
+const IndustryAccordion = ({
+  delayed,
+  industrySectors,
+}: IIndustryAccordionProps) => {
+  const currentPage = useGetPage();
+  const numberOfSelectedSectors =
+    countSelectedOptions(industrySectors, 'selected') !== 0
+      ? countSelectedOptions(industrySectors, 'selected')
+      : null;
+
+  const [expanded, setExpanded] = useState(industrySectors[0].id);
+
+  // @ts-ignore
+  const handleExpansion = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||
     numberOfSelectedSectors === null;
 
-    useDefaultExpandedSector(industrySectors, setExpanded);
+  useDefaultExpandedSector(industrySectors, setExpanded);
 
   return (
     <Accordion
@@ -66,7 +70,9 @@ const IndustryAccordion = ({ delayed, industrySectors }: IIndustryAccordionProps
           <span>{numberOfSelectedSectors}</span>
         </div>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails
+        sx={currentPage === SUMMARY ? detailsStylesInSummery : defaultStyles}
+      >
         {industrySectors?.map((sector, index) => {
           const selectedOptionsLength = sector.options.filter(
             (option) => option.selected
@@ -79,6 +85,7 @@ const IndustryAccordion = ({ delayed, industrySectors }: IIndustryAccordionProps
               styles={{
                 accordionDetailsHeight: 'unset',
                 accordionDetailsMaxHeight: '532px',
+                accordionBackground: card,
               }}
               expanded={expanded}
               handleExpansion={handleExpansion}

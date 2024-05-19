@@ -1,3 +1,4 @@
+import { complexCountriesNames } from '../components/Map/geodata/complex-countries';
 import {
   getParentCountyNameByRegionName,
   getRegionsNamesByCountryName,
@@ -8,6 +9,8 @@ import { TSetCountryContourVisibility } from '../hooks/useManagePlaceClick';
 import {
   IInitialState,
   addToPickedCountries,
+  removeFromPickedCountries,
+  setRegionsStatus,
 } from '../redux/features/generalSlice';
 
 export function formatNumber(str: string) {
@@ -107,26 +110,40 @@ export const addToPickedCountryObjects = (
   payload: string | string[]
 ) => {
   if (typeof payload === 'string') {
-    const countryToBeAdded = state.places.find(
-      (country) => country?.name === payload
-    );
+    const placeToBeAdded = state.places.find((country) => {
+      return country?.name === payload;
+      if (country.code) {
+        return country?.name === payload;
+      } else {
+        const parentCountry = state.places.find(
+          (place) => place.name === complexCountriesNames[0]
+        );
+        return parentCountry?.regions?.find(
+          (region) => region.name === payload
+        );
+      }
+    });
 
-    if (!countryToBeAdded) return;
+    if (!placeToBeAdded) {
+      return;
+    }
 
-    countryToBeAdded.isSelected = true;
+    placeToBeAdded.isSelected = true;
 
-    const index = state.pickedCountriesObjects.findIndex(
-      (country) => country?.name === countryToBeAdded?.name
-    );
+    if (placeToBeAdded.code) {
+      const index = state.pickedCountriesObjects.findIndex(
+        (country) => country?.name === placeToBeAdded?.name
+      );
 
-    if (index === -1) {
-      state.pickedCountriesObjects = [
-        ...state.pickedCountriesObjects,
-        countryToBeAdded as IPlace,
-      ];
+      if (index === -1) {
+        state.pickedCountriesObjects = [
+          ...state.pickedCountriesObjects,
+          placeToBeAdded as IPlace,
+        ];
+      }
     }
   } else if (typeof payload === 'object') {
-    const contriesToBeAdded = payload.filter(
+    const contriesToBeAdded = (payload as string[]).filter(
       (str) => !state.pickedCountriesObjects.some((obj) => obj.name === str)
     );
 
@@ -224,15 +241,19 @@ export const manageRegionHighlighting = (
   if (!parentCountry) {
     return;
   }
+
+  handleTerritoryHighlighing(clickedPlaceName);
+
   // определить, выделена ли сама страна
-  if (pickedCountries.includes(parentCountry)) {
-    // если выделена, то выделить конкретный кликнутый регион
-    handleTerritoryHighlighing(clickedPlaceName);
-  } else {
-    // если не выделена, то выделить контуры регионов
+  if (!pickedCountries.includes(parentCountry)) {
+    //выделить контуры регионов
     const regions = getRegionsNamesByCountryName(parentCountry);
     setCountryContourVisibility(regions, true);
+    dispatch(setRegionsStatus({ parentCountry, bool: true }));
     dispatch(addToPickedCountries(parentCountry));
+  } else {
+    dispatch(setRegionsStatus({ parentCountry, bool: false }));
+    dispatch(removeFromPickedCountries(parentCountry));
   }
 
   return;

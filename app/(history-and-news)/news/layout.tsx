@@ -3,10 +3,10 @@
 import { Suspense } from 'react';
 import Loading from '../../../components/Loading';
 import AttacksWithDates from '../../../components/AttacksWithDates';
-
-import styles from './layout.module.scss';
 import { getItemFromStorage } from '../../../helpers';
 import { COMPLETED_ACTIONS } from '../../../constants';
+
+import styles from './layout.module.scss';
 
 export default function NewsLayout({
   children,

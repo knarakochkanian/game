@@ -74,6 +74,7 @@ const generalSlice = createSlice({
     },
     setActiveBlocks(state, { payload }: { payload: string }) {
       if (state.activeBlocks.includes(payload)) {
+        
         state.activeBlocks.splice(state.activeBlocks.indexOf(payload), 1);
       } else {
         state.activeBlocks = [...state.activeBlocks, payload];
@@ -88,6 +89,32 @@ const generalSlice = createSlice({
     setDamageLevel(state, { payload }) {
       state.sideNavIsOpen = true;
       state.damageLevel = payload;
+    },
+    setSingleRegionStatus(
+      state,
+      { payload }: { payload: { parentCountry: string; region: string } }
+    ) {
+      const parentCountry = state.pickedCountriesObjects.find(
+        (country) => country.name === payload.parentCountry
+      );
+      if (!parentCountry) return;
+
+      const region = parentCountry.regions?.find((region) => region.name === payload.region);
+      if(!region) return;
+
+      region.isSelected = !region.isSelected;
+    },
+    setRegionsStatus(
+      state,
+      { payload }: { payload: { parentCountry: string; bool: boolean } }
+    ) {
+      const parentCountry = state.places.find(
+        (place) => place.name === payload.parentCountry
+      );
+
+      parentCountry?.regions?.forEach((region) => {
+        region.isSelected = payload.bool;
+      });
     },
     setPlaceName(state, { payload }) {
       let isSameData;
@@ -146,7 +173,9 @@ export const {
   setCurrentAction,
   setCurrentActionDate,
   resetGeneralState,
-  setActiveBlocks
+  setActiveBlocks,
+  setRegionsStatus,
+  setSingleRegionStatus
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
