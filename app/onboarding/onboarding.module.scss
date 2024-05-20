@@ -22,13 +22,14 @@
     &Wrapper{
       position: absolute;
       top: 400px;
-      width: 764px;
+      width: 800px;
     }
     &Details{
       display: flex;
       flex-wrap: wrap;
       gap: 30px;
       padding-left: 20px;
+      align-items: center;
     }
     &DetailsIndustries{
       display: flex;

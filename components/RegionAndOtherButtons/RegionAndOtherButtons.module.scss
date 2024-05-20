@@ -51,7 +51,8 @@
 
 .regionAndOtherButtons {
   position: fixed;
-  display: inline-flex;
+  @include flex-between;
+  width: 800px;
   gap: 24px;
   z-index: 10;
   left: 40px;

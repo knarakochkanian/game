@@ -1,4 +1,5 @@
 import { complexCountriesNames } from '../components/Map/geodata/complex-countries';
+
 import {
   getParentCountyNameByRegionName,
   getRegionsNamesByCountryName,

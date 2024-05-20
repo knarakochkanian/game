@@ -375,8 +375,8 @@ export default function Onboarding() {
                             addColor
                               ? 'Green'
                               : option.name == 'США'
-                              ? 'SecondarySmallShine'
-                              : 'AccordionNested'
+                                ? 'SecondarySmallShine'
+                                : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
@@ -397,7 +397,7 @@ export default function Onboarding() {
           isOpen={modalOpen}
           onClose={closeModal}
           counter={1}
-          sx={{ left: '40%', top: '220px', position: 'absolute' }}
+          sx={{ left: '40%', top: '12% !important', position: 'absolute' }}
         >
           <p>На выбор вам доступны два режима:</p>
           <ul style={{ gap: '16px' }}>
@@ -423,7 +423,7 @@ export default function Onboarding() {
             left: '33%',
             position: 'fixed',
             zIndex: '7',
-            top: '15% !important',
+            top: '13% !important',
           }}
         >
           <p>
@@ -452,7 +452,12 @@ export default function Onboarding() {
           isOpen={modalOpen4}
           onClose={closeModal3}
           counter={4}
-          sx={{ left: '30%', position: 'fixed', zIndex: '7' }}
+          sx={{
+            left: '30%',
+            position: 'fixed',
+            top: '13% !important',
+            zIndex: '7',
+          }}
         >
           <p> Возможен выбор отрасли с помощью быстрых фильтров и поиска.</p>
           <p> Нажмите на “ВПК”, чтобы развернуть список.</p>
@@ -500,7 +505,12 @@ export default function Onboarding() {
           isOpen={modalOpen6}
           onClose={closeModal6}
           counter={6}
-          sx={{ left: '30%', position: 'fixed', zIndex: '7' }}
+          sx={{
+            left: '32%',
+            position: 'fixed',
+            zIndex: '7',
+            top: '12% !important',
+          }}
         >
           <p> Выберите уровень ущерба.</p>
           <p> Нажмите на “Критический” для добавления в задачу.</p>

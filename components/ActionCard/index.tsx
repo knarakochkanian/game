@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ATTACK, HISTORY } from '../../constants';
+import { ATTACK } from '../../constants';
 import launchHistoryIndustryOptions from '../../data/launchHistoryIndustryOptions';
 import launchHistoryRegionOptions from '../../data/launchHistoryRegionOptions';
 import Header from '../Header';
@@ -14,6 +14,7 @@ export interface IActionCardProps {
   setActionId?: TSetString;
   action: IAction;
   fromDetails?: boolean;
+  industrySectors?: any[];
 }
 
 const ActionCard = ({ action, setActionId, fromDetails }: IActionCardProps) => {
@@ -29,9 +30,7 @@ const ActionCard = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         setActionId={setActionId}
       />
 
-      <SelectRegionAndIndustry
-        action={action}
-      />
+      <SelectRegionAndIndustry action={action} />
       <ActionSelectedInfo
         fromDetails={fromDetails}
         setActionId={setActionId}
