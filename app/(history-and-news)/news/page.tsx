@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
-import RedirectHome from '../../../common/RedirectHome';
+import News from '../../../components/News';
 
 export const metadata: Metadata = {
   title: 'Новости',
   description: 'Влияние на мир',
 };
 
-const News = () => {
-  return <RedirectHome />;
+const NewsPage = () => {
+  return <News />;
 };
 
-export default News;
+export default NewsPage;

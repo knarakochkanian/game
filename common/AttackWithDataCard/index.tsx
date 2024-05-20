@@ -29,7 +29,6 @@ const AttackWithDataCard = ({
 
     if (id === '3') {
       onClick();
-      navigate.push('/news/3');
     }
   }, []);
 
@@ -39,12 +38,12 @@ const AttackWithDataCard = ({
         isActive ? styles.isActive : ''
       }`}
     >
-      <Link href={`/news/${id}`} onClick={onClick}>
+      <button onClick={onClick}>
         <p className={styles.attackName}>{name}</p>
         <p className={styles.attackDate}>{date}</p>
         <Arrow open={isActive} name="inAttackWithDataCard" />
         {isActive && <GreenLineBorders />}
-      </Link>
+      </button>
     </div>
   );
 };

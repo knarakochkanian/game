@@ -44,7 +44,7 @@ export const WARNING = 'Предупреждение';
 //local storage data
 export const ACTIONS_IN_QUEUE = 'actionsInQueue';
 export const COMPLETED_ACTIONS = 'completedActions';
-export const LAST_ACTION_NAME = 'lastActonName';
+export const LAST_ACTION_NAME = 'lastActionName';
 
 //oreders
 export const CANCEL = 'ОТМЕНА';

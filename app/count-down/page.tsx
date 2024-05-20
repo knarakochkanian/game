@@ -29,6 +29,7 @@ import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import styles from './count-down.module.scss';
 
 export default function CountDown() {
+  const [lastActionName, setLastActionName] = useState<string | null>();
   const dispatch = useAppDispatch();
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -40,12 +41,25 @@ export default function CountDown() {
     IAction[] | undefined
   >();
 
-  let lastActionName;
-  if (typeof window !== 'undefined') {
-    lastActionName = window.localStorage.getItem('lastActionName');
-  }
-  const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';
+  const [name, setName] = useState('');
+
   const [actionCompleted, setActionCompleted] = useState(false);
+
+  useEffect(() => {
+    const name = lastActionName
+      ? getNextActionName(lastActionName)
+      : '#000-001';
+    setName(name);
+  }, [lastActionName]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const lastActionName = window.localStorage.getItem('lastActionName');
+      console.log('lastActionName', lastActionName);
+      
+      setLastActionName(lastActionName);
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -64,14 +78,11 @@ export default function CountDown() {
       if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
         setActionCompleted(true);
         clearInterval(countdown);
-        let completedActions;
-        if (completedActionsFromStorage) {
-          completedActions = proccessActionsToSave(
-            currentAction,
-            completedActionsFromStorage,
-            true
-          );
-        }
+        const completedActions = proccessActionsToSave(
+          currentAction,
+          completedActionsFromStorage,
+          true
+        );
 
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(LAST_ACTION_NAME, name);

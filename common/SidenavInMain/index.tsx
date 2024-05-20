@@ -28,6 +28,7 @@ import launchConsequences from '../../data/launchConsequences';
 import { trash } from '../../public/summary';
 
 import styles from './SidenavInMain.module.scss';
+import { useEffect, useState } from 'react';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -56,12 +57,22 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
-  let lastActionName;
-  if (typeof window !== 'undefined') {
-    lastActionName = window.localStorage.getItem('lastActionName');
-  }
+  const [lastActionName, setLastActionName] = useState<string | null>();
+  const [name, setName] = useState('');
 
-  const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';
+  useEffect(() => {
+    const name = lastActionName
+      ? getNextActionName(lastActionName)
+      : '#000-001';
+    setName(name);
+  }, [lastActionName]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const lastActionName = window.localStorage.getItem('lastActionName');
+      setLastActionName(lastActionName);
+    }
+  }, []);
 
   const onSetCurrentAction = () => {
     const currentAction: IAction = {

@@ -1,6 +1,6 @@
 const proccessActionsToSave = (
   currentAction: IAction,
-  actionsFromStorage: IAction[],
+  actionsFromStorage: IAction[] | undefined,
   isCompleted: boolean
 ) => {
   const currentActionCopy = { ...currentAction };

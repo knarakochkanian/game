@@ -1,21 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AttackWithDataCard from '../../common/AttackWithDataCard';
-import useGetPage from '../../hooks/useGetPage';
 
 import styles from './AttacksWithDates.module.scss';
 
-const AttacksWithDates = ({ attacks }: { attacks: IAction[] }) => {
-  const attackId = useGetPage();
-
-  const [activeAttackId, setActiveAttackId] = useState<string>(
-    attackId as string
-  );
+const AttacksWithDates = ({
+  attacks,
+  setActionId,
+  actionId
+}: {
+  attacks: IAction[];
+  setActionId: TSetString;
+  actionId: string
+}) => {
 
   useEffect(() => {
-    setActiveAttackId(attackId as string);
-  }, [attackId]);
+    setActionId(actionId as string);
+  }, [actionId]);
 
   if (!attacks) return <></>;
 
@@ -24,9 +26,9 @@ const AttacksWithDates = ({ attacks }: { attacks: IAction[] }) => {
       {attacks.map((attack) => (
         <AttackWithDataCard
           id={String(attack.id)}
-          onClick={() => setActiveAttackId(String(attack.id))}
+          onClick={() => setActionId(String(attack.id))}
           key={attack.name}
-          isActive={String(attack.id) === activeAttackId}
+          isActive={String(attack.id) === actionId}
           date={attack.date}
           name={attack.name}
         />
