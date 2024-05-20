@@ -9,9 +9,6 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
     },
-    images: {
-        unoptimized: true,
-    },
 };
 
 export default nextConfig;
