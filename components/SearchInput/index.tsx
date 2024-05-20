@@ -24,8 +24,14 @@ const SearchInput = ({
   return (
     <div className={styles.searchInput}>
       <InputBase
-        sx={{ ml: 1, flex: 1, color: '#D9D9D9', fontSize: '34px' }}
-        placeholder="Поиск"
+        sx={{
+          ml: 1,
+          flex: 1,
+          color: '#D9D9D9',
+          fontSize: '34px',
+          paddingLeft: '32px',
+        }}
+        placeholder="ПОИСК"
         value={searchInput}
         onChange={(e) => onChangeInput(e)}
         onClick={onSearchClick}

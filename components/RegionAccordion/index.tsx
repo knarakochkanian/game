@@ -24,7 +24,7 @@ const RegionAccordion = ({
   return (
     <Accordion
       style={{ color: delayed ? '#0F0F0F' : 'none' }}
-      defaultExpanded
+      // defaultExpanded
       disabled={disable}
       sx={(theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',

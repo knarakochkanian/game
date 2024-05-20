@@ -26,7 +26,6 @@ const AttackWithDataCard = ({
   const navigate = useRouter();
 
   useEffect(() => {
-
     if (id === '3') {
       onClick();
     }
@@ -39,7 +38,7 @@ const AttackWithDataCard = ({
       }`}
     >
       <button onClick={onClick}>
-        <p className={styles.attackName}>{name}</p>
+        <p className={styles.attackName}>Атака {name}</p>
         <p className={styles.attackDate}>{date}</p>
         <Arrow open={isActive} name="inAttackWithDataCard" />
         {isActive && <GreenLineBorders />}
