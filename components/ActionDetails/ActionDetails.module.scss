@@ -2,4 +2,9 @@
 
 .actionDetails {
   @include attacksCtnStyles;
+  z-index: 18;
+}
+
+.actionDetails.z_11 {
+  z-index: 11;
 }

@@ -259,4 +259,33 @@ const industry: IIndustry = {
   ],
 };
 
+export const defaultSectorsSelection = [
+  {
+    id: 8,
+    title: 'ВПК',
+    options: [
+      { selected: true, parent: VPK, id: '01', name: 'вооруженные силы' },
+      {
+        selected: false,
+        parent: VPK,
+        id: '02',
+        name: 'конструкторсткие бюро',
+      },
+      { selected: false, parent: VPK, id: '03', name: 'НИИ' },
+      {
+        selected: false,
+        parent: VPK,
+        id: '04',
+        name: 'Оборонное производство',
+      },
+      {
+        selected: false,
+        parent: VPK,
+        id: '05',
+        name: 'экспортеры воорудения',
+      },
+    ],
+  },
+];
+
 export default industry;

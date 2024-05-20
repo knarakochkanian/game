@@ -20,6 +20,7 @@ import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   resetGeneralState,
+  selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
 } from '../../redux/features/generalSlice';
@@ -27,8 +28,11 @@ import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 
 import styles from './count-down.module.scss';
+import Modal from '../../common/Modals/Modal';
+import Link from 'next/link';
 
 export default function CountDown() {
+  const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const [lastActionName, setLastActionName] = useState<string | null>();
   const dispatch = useAppDispatch();
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 15 });
@@ -56,7 +60,7 @@ export default function CountDown() {
     if (typeof window !== 'undefined') {
       const lastActionName = window.localStorage.getItem('lastActionName');
       console.log('lastActionName', lastActionName);
-      
+
       setLastActionName(lastActionName);
     }
   }, []);
@@ -74,37 +78,38 @@ export default function CountDown() {
   }, []);
 
   useEffect(() => {
-    const countdown = setInterval(() => {
-      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
-        setActionCompleted(true);
-        clearInterval(countdown);
-        const completedActions = proccessActionsToSave(
-          currentAction,
-          completedActionsFromStorage,
-          true
-        );
-
-        if (typeof window !== 'undefined') {
-          window.localStorage.setItem(LAST_ACTION_NAME, name);
-
-          window.localStorage.setItem(
-            'completedActions',
-            JSON.stringify(completedActions)
+    if (!fromOnboarding) {
+      const countdown = setInterval(() => {
+        if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
+          setActionCompleted(true);
+          clearInterval(countdown);
+          const completedActions = proccessActionsToSave(
+            currentAction,
+            completedActionsFromStorage,
+            true
           );
+
+          if (typeof window !== 'undefined') {
+            window.localStorage.setItem(LAST_ACTION_NAME, name);
+
+            window.localStorage.setItem(
+              'completedActions',
+              JSON.stringify(completedActions)
+            );
+          }
+
+          dispatch(resetGeneralState());
+          router.push('/');
+        } else if (time.seconds > 0) {
+          setTime({ ...time, seconds: time.seconds - 1 });
+        } else if (time.minutes > 0) {
+          setTime({ ...time, minutes: time.minutes - 1, seconds: 59 });
+        } else if (time.hours > 0) {
+          setTime({ ...time, hours: time.hours - 1, minutes: 59, seconds: 59 });
         }
-
-        dispatch(resetGeneralState());
-        router.push('/');
-      } else if (time.seconds > 0) {
-        setTime({ ...time, seconds: time.seconds - 1 });
-      } else if (time.minutes > 0) {
-        setTime({ ...time, minutes: time.minutes - 1, seconds: 59 });
-      } else if (time.hours > 0) {
-        setTime({ ...time, hours: time.hours - 1, minutes: 59, seconds: 59 });
-      }
-    }, 1000);
-
-    return () => clearInterval(countdown);
+      }, 1000);
+      return () => clearInterval(countdown);
+    }
   }, [time, router]);
 
   const cancelCountdown = () => {
@@ -124,13 +129,21 @@ export default function CountDown() {
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
 
+  const onResetGlobalState = () => {
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 2000);
+  };
+
   return (
     <>
       <div className={styles.countdownContainer}>
         <h5>запуск</h5>
 
         <div className={styles.timerAndAttackCtn}>
-          <div className={styles.timer}>
+          <div
+            className={`${styles.timer} ${fromOnboarding ? styles.z_17 : ''}`}
+          >
             <span className={styles.time}>
               {String(time.hours).padStart(2, '0')}
               <span className={styles.hours}>часы</span>
@@ -168,6 +181,26 @@ export default function CountDown() {
       <Slashes />
 
       <Footer cancelCountdown={cancelCountdown} />
+
+      {fromOnboarding && <div className={styles.blur}></div>}
+
+      <Modal name="endingOnboarding" isOpen={fromOnboarding} counter={12}>
+        <p>
+          После нажатия на кнопку “ПУСК” запустится обратный отчет, и у вас
+          будет 15 секунд для отмены. Для отмены необходимо будет нажать
+          физическую кнопку “ОТМЕНА”, расположенную правее от дисплея.
+        </p>
+        <div className="ModalButtons">
+          <Link
+            onClick={onResetGlobalState}
+            href={'/'}
+            style={{ color: 'white', padding: '20px' }}
+            className="ModalButton1"
+          >
+            завершить
+          </Link>
+        </div>
+      </Modal>
     </>
   );
 }

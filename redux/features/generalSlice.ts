@@ -8,6 +8,7 @@ import {
 } from '../../helpers';
 
 export interface IInitialState {
+  comfirmedFromOnboarding: boolean;
   currentAction: IAction | null;
   isAttacking: boolean;
   placeName: string | string[];
@@ -24,6 +25,7 @@ export interface IInitialState {
 }
 
 const initialState: IInitialState = {
+  comfirmedFromOnboarding: false,
   activeBlocks: [],
   currentAction: null,
   isAttacking: true,
@@ -71,6 +73,9 @@ const generalSlice = createSlice({
     },
     setCurrentAction(state, { payload }: { payload: IAction }) {
       state.currentAction = payload;
+    },
+    setComfirmedFromOnboarding(state, { payload }: { payload: boolean }) {
+      state.comfirmedFromOnboarding = payload;
     },
     setActiveBlocks(state, { payload }: { payload: string }) {
       if (state.activeBlocks.includes(payload)) {
@@ -175,7 +180,8 @@ export const {
   resetGeneralState,
   setActiveBlocks,
   setRegionsStatus,
-  setSingleRegionStatus
+  setSingleRegionStatus,
+  setComfirmedFromOnboarding,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -200,5 +206,7 @@ export const selectCurrentAction = (state: RootState) =>
   state.generalReducer.currentAction;
 export const selectActiveBlocks = (state: RootState) =>
   state.generalReducer.activeBlocks;
+export const selectComfirmedFromOnboarding = (state: RootState) =>
+  state.generalReducer.comfirmedFromOnboarding;
 
 export default generalSlice.reducer;

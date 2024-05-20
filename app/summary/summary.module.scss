@@ -1,6 +1,13 @@
 @import '/app/variables.module.scss';
+
 .main {
   display: block;
+  .blur {
+    @include blurDivStyles;
+  }
+  .blur.z_15 {
+    z-index: 15;
+  }
   .imgCtn {
     width: 2072px;
     height: 851px;

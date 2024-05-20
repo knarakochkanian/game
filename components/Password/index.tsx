@@ -4,10 +4,9 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Grid from '../../common/Grid';
 import PasswordError from '../../common/PasswordError';
-import { useSelector } from 'react-redux';
-import styles from './Password.module.scss';
-
 import MainScreen from '../MainScreen';
+
+import styles from './Password.module.scss';
 
 export default function Password() {
   const router = useRouter();

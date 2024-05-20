@@ -4,14 +4,28 @@ import Header from '../Header';
 
 import styles from './ActionDetails.module.scss';
 
-const ActionDetails = ({ action }: { action: IAction }) => {
+interface IActionDetailsProps {
+  action: IAction;
+  learningStart: boolean;
+  setLearningStart: TSetBoolean;
+}
+
+const ActionDetails = ({
+  action,
+  learningStart,
+  setLearningStart,
+}: IActionDetailsProps) => {
   return (
-    <div className={styles.actionDetails}>
+    <div
+      className={`${styles.actionDetails} ${learningStart ? styles.z_11 : ''}`}
+    >
       <Header action={action} />
-      <SelectRegionAndIndustry
+      <SelectRegionAndIndustry action={action} />
+      <LaunchConsequences
+        learningStart={learningStart}
+        setLearningStart={setLearningStart}
         action={action}
       />
-      <LaunchConsequences action={action} />
     </div>
   );
 };
