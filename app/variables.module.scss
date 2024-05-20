@@ -211,3 +211,12 @@ $unvisible: rgba(0, 0, 0, 0);
     -webkit-border-radius: 20px;
   }
 }
+
+@mixin blurDivStyles {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(22px);
+  z-index: 17;
+  top: 0;
+}

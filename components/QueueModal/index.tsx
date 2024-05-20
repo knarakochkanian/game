@@ -2,9 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ACTIONS_IN_QUEUE, ATTACK, PROTECTION, QUEUE } from '../../constants';
 import { slashes_90_degree } from '../../public/main-screen';
+import { getItemFromStorage } from '../../helpers';
 
 import styles from './QueueModal.module.scss';
-import { getItemFromStorage } from '../../helpers';
 
 const QueueModal = () => {
   const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE, window);

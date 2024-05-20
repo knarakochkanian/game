@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { noiseMap } from '../../public/summary';
 import ModalData from '../../common/Modals/ModalData';
 import CountOnboarding from '../Count-onboarding';
 import {
+  COUNT_DOWN,
   LAUNCH_CONSEQUENCES,
   PROTECTION,
   SUMMARY,
@@ -25,17 +24,24 @@ import { MapType } from '../Map/map.types';
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
 import { WorldMap } from '../Map/map.component';
+import { useAppSelector } from '../../redux/hooks';
+import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 
 interface ILaunchConsequencesProps {
   action: IAction;
   from?: string;
+  setLearningStart: TSetBoolean;
+  learningStart: boolean;
 }
 
 const LaunchConsequences = ({
   action,
+  setLearningStart,
+  learningStart,
   from = '',
 }: ILaunchConsequencesProps) => {
   const currentPage = useGetPage();
+  const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
@@ -56,7 +62,8 @@ const LaunchConsequences = ({
     }
   };
   const headerGoToCountComponent = () => {
-    setIsCountDownComponent(true);
+    setLearningStart(true);
+    // setIsCountDownComponent(true);
   };
 
   const notInteractiveMap = UseMap({
@@ -81,7 +88,7 @@ const LaunchConsequences = ({
         >
           <h3 className={styles.title}>Последствия запуска</h3>
           <Paragraph
-            isOpen={paragraphIsOpen}
+            isOpen={fromOnboarding ? false : paragraphIsOpen}
             setIsOpen={setparagraphIsOpen}
             content={consequencesParagraph}
           />
@@ -108,7 +115,15 @@ const LaunchConsequences = ({
         <div>
           <Modal
             name="damageInfo"
-            isOpen={currentPage === SUMMARY ? false : true}
+            isOpen={
+              currentPage === SUMMARY
+                ? fromOnboarding
+                  ? true
+                  : false
+                : learningStart
+                ? false
+                : true
+            }
             counter={10}
           >
             <p>
@@ -131,6 +146,9 @@ const LaunchConsequences = ({
               </Link>
             </div>
           </Modal>
+
+          
+
           <div
             className={styles.map}
             style={{
@@ -142,7 +160,7 @@ const LaunchConsequences = ({
             <WorldMap mapType={MapType.plane} />
           </div>
         </div>
-      </div>
+      </div>      
     </>
   );
 };

@@ -11,6 +11,8 @@ import useGetPage from '../../hooks/useGetPage';
 import { card, defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
 
 import styles from './IndustryAccordion.module.scss';
+import { useAppSelector } from '../../redux/hooks';
+import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;
@@ -22,6 +24,7 @@ const IndustryAccordion = ({
   industrySectors,
 }: IIndustryAccordionProps) => {
   const currentPage = useGetPage();
+  const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
@@ -36,7 +39,7 @@ const IndustryAccordion = ({
 
   const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||
-    numberOfSelectedSectors === null;
+    numberOfSelectedSectors === null || fromOnboarding;
 
   useDefaultExpandedSector(industrySectors, setExpanded);
 

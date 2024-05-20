@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Grid from '../../common/Grid';
@@ -12,21 +13,23 @@ import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
+  selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
   setCurrentActionDate,
 } from '../../redux/features/generalSlice';
-import {
-  ACTIONS_IN_QUEUE,
-  COUNT_DOWN,
-} from '../../constants';
+import { ACTIONS_IN_QUEUE, COUNT_DOWN } from '../../constants';
 import { formatDate, getItemFromStorage } from '../../helpers';
+import Modal from '../../common/Modals/Modal';
 
 import styles from './summary.module.scss';
 
-const ActionDetails = dynamic(() => import('../../components/ActionDetails'), { ssr: false });
+const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
+  ssr: false,
+});
 
 const Summary = () => {
+  const [learningStart, setLearningStart] = useState(false);
   const dispatch = useAppDispatch();
   const [actionsInQueueFromStorage, setActionsInQueueFromStorage] = useState<
     IAction[] | undefined
@@ -34,6 +37,7 @@ const Summary = () => {
   const router = useRouter();
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
+  const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -86,7 +90,11 @@ const Summary = () => {
           height={80}
           priority
         />
-        <ActionDetails action={currentAction as IAction} />
+        <ActionDetails
+          learningStart={learningStart}
+          setLearningStart={setLearningStart}
+          action={currentAction as IAction}
+        />
       </div>
 
       <BackAndForwardBtns onBack={onBack} onForward={onForward} />
@@ -94,6 +102,32 @@ const Summary = () => {
       <SideLines />
 
       <SummaryFooter onClick={onStartAction} />
+      {fromOnboarding && (
+        <div
+          className={`${styles.blur} ${learningStart ? styles.z_15 : ''}`}
+        ></div>
+      )}
+
+      <Modal name="learningStart" isOpen={learningStart} counter={11}>
+        <p>
+          Для запуска задачи нужно нажать физическую кнопку “Пуск”,
+          расположенную правее от дисплея.
+        </p>
+        <div className="ModalButtons">
+          <Link
+            href={COUNT_DOWN}
+            style={{ color: 'white', padding: '20px' }}
+            className="ModalButton1"
+          >
+            далее
+          </Link>
+          <Link href={'/'} className="SecondarySmall">
+            <span className="TypoBodyBigLink">
+              <button onClick={() => {}}>пропустить</button>
+            </span>
+          </Link>
+        </div>
+      </Modal>
     </main>
   );
 };

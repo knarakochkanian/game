@@ -4,6 +4,8 @@ import Places from '../Places';
 import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import { defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
+import { useAppSelector } from '../../redux/hooks';
+import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 
 import styles from './RegionAccordion.module.scss';
 
@@ -17,14 +19,16 @@ const RegionAccordion = ({
   selectedCountries,
 }: IRegionAccordionProps) => {
   const currentPage = useGetPage();
+  const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||
-    selectedCountries.length === 0;
+    selectedCountries.length === 0 ||
+    fromOnboarding;
 
   return (
     <Accordion
       style={{ color: delayed ? '#0F0F0F' : 'none' }}
-      // defaultExpanded
+      defaultExpanded={fromOnboarding ? false : true}
       disabled={disable}
       sx={(theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',

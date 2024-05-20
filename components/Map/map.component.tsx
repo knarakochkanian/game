@@ -14,6 +14,8 @@ export interface MapProps {
 
 export const WorldMap = ({ mapType, isInteractive }: MapProps) => {
   const dispatch = useAppDispatch();
+  
+
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
   };
