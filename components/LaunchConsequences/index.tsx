@@ -24,6 +24,7 @@ import { MapType } from '../Map/map.types';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
+import { WorldMap } from '../Map/map.component';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -38,11 +39,11 @@ const LaunchConsequences = ({
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
-      window.localStorage.getItem('isOnboardingPassed') === 'true';
+        window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -132,12 +133,14 @@ const LaunchConsequences = ({
           </Modal>
           <div
             className={styles.map}
-            // style={{
-            //   width: '1048px',
-            //   height: '542px',
-            // }}
+            style={{
+              width: '1048px !important',
+              height: '542px !important',
+            }}
             // ref={notInteractiveMap.ref}
-          ></div>
+          >
+            <WorldMap mapType={MapType.plane} />
+          </div>
         </div>
       </div>
     </>

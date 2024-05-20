@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import useManagePlaceClick from '../../hooks/useManagePlaceClick';
 import { setPlaceName } from '../../redux/features/generalSlice';
 import { useAppDispatch } from '../../redux/hooks';
@@ -9,11 +9,11 @@ import { UseMap } from './use-map.hook';
 
 export interface MapProps {
   mapType: MapType;
+  isInteractive?: boolean;
 }
 
-export const WorldMap = ({ mapType }: MapProps) => {
+export const WorldMap = ({ mapType, isInteractive }: MapProps) => {
   const dispatch = useAppDispatch();
-
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
   };
@@ -21,7 +21,7 @@ export const WorldMap = ({ mapType }: MapProps) => {
   const planeMap = UseMap({
     onCountryPicked,
     mapType: MapType.plane,
-    isNotInteractive: false,
+    isNotInteractive: isInteractive,
   });
 
   const sphereMap = UseMap({
