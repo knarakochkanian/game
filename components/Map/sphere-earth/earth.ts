@@ -15,6 +15,7 @@ import {
 } from '../geodata/countries-names-to-a3-map';
 import bbox from 'geojson-bbox';
 import {
+  MathUtils,
   Vector2,
 } from 'three';
 import { getRegionsNamesByCountryName } from '../utils/utils';
@@ -148,6 +149,7 @@ export class Earth implements IEarth {
   public moveCameraToCountry(
     name: string,
     animationDurationMs = 500,
+    zoomOnCountry = false,
     _extendBbox?: number
   ) {
     const code = countriesNamesToCode[name];
@@ -166,23 +168,30 @@ export class Earth implements IEarth {
       (boundingBox[1] + boundingBox[3]) / 2,
     ];
 
-    // const width = boundingBox[2] - boundingBox[0];
-    // const height = boundingBox[3] - boundingBox[1];
-    // const zoom = Math.max(width, height);
-    // const altitude = MathUtils.clamp(
-    //   zoom / 10,
-    //   MIN_ZOOM_ALTITUDE,
-    //   MAX_ZOOM_ALTITUDE
-    // );
+    let altitude: number | undefined
+    if (zoomOnCountry) {
+      const width = boundingBox[2] - boundingBox[0];
+      const height = boundingBox[3] - boundingBox[1];
+      const zoom = Math.max(width, height);
+      altitude = MathUtils.clamp(
+        zoom / 10,
+        MIN_ZOOM_ALTITUDE,
+        MAX_ZOOM_ALTITUDE
+      );
+    }
 
     // for Russia target coords need do be changed -- because it's in two hemispheres
     if (code === 'RUS') {
       center[0] = 95.309706;
       center[1] = 67.102754;
     }
+    const pov: { lat?: number, lng?: number, altitude?: number } = { lat: center[1], lng: center[0] }
+    if (altitude) {
+      pov["altitude"] = altitude
+    }
 
     this.globe?.pointOfView(
-      { lat: center[1], lng: center[0] },
+      pov,
       animationDurationMs
     );
   }
@@ -227,24 +236,6 @@ export class Earth implements IEarth {
       }
     });
   }
-
-  // public rotateLeft(): void {
-  //   if (!this.globe) {
-  //     return;
-  //   }
-
-  //   const pov = this.globe.pointOfView()
-  //   this.globe.pointOfView({ lng: pov.lng - 10 }, 200)
-  // }
-
-  // public rotateRight(): void {
-  //   if (!this.globe) {
-  //     return;
-  //   }
-
-  //   const pov = this.globe.pointOfView()
-  //   this.globe.pointOfView({ lng: pov.lng + 10 }, 200)
-  // }
 
   public onRotateStart(direction: 'left' | 'right', speed?: number): void {
     speed = speed ?? 2;

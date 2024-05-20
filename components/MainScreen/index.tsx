@@ -37,7 +37,7 @@ import SidenavInMain from '../../common/SidenavInMain';
 import styles from './MainScreen.module.scss';
 
 const WorldMap = dynamic(
-  () => import('../Map/map.component').then((mod) => mod.WorldMap),
+  () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),
   { ssr: false }
 );
 

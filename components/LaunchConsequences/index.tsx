@@ -24,7 +24,6 @@ import { MapType } from '../Map/map.types';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
-import { WorldMap } from '../Map/map.component';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -139,7 +138,6 @@ const LaunchConsequences = ({
             }}
             // ref={notInteractiveMap.ref}
           >
-            <WorldMap mapType={MapType.plane} />
           </div>
         </div>
       </div>

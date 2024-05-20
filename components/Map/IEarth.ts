@@ -33,7 +33,7 @@ export interface IEarth {
    * @param animationDurationMs literally the amount of time for camera move
    * @param extendBbox the higher, the more distant zoom will be
    */
-  moveCameraToCountry: (name: string, animationDurationMs?: number, extendBbox?: number) => void
+  moveCameraToCountry: (name: string, animationDurationMs?: number, zoomOnCountry?: boolean, extendBbox?: number) => void
 
   onRotateStart(direction: "left" | "right", speed?: number): void
 
