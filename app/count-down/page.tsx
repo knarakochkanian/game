@@ -34,11 +34,11 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
-  const completedActionsFromStorage = getItemFromStorage(COMPLETED_ACTIONS);
-  const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE);
+  const completedActionsFromStorage = getItemFromStorage(COMPLETED_ACTIONS, window);
+  const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE, window);
   let lastActionName;
   if (typeof window !== 'undefined') {
-    lastActionName = localStorage.getItem('lastActionName');
+    lastActionName = window.localStorage.getItem('lastActionName');
   }
   const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';
   const [actionCompleted, setActionCompleted] = useState(false);
@@ -55,9 +55,9 @@ export default function CountDown() {
         );
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_ACTION_NAME, name);
+          window.localStorage.setItem(LAST_ACTION_NAME, name);
 
-          localStorage.setItem(
+          window.localStorage.setItem(
             'completedActions',
             JSON.stringify(completedActions)
           );
@@ -86,9 +86,9 @@ export default function CountDown() {
       );
 
       // if (typeof window !== 'undefined') {
-      //   // localStorage.setItem(LAST_ACTION_NAME, name);
+      //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
 
-      // // localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
+      // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
       // }
       
     }

@@ -22,7 +22,7 @@ import styles from './summary.module.scss';
 
 const Summary = () => {
   const dispatch = useAppDispatch();
-  const actionsInQueueFromStorage = getItemFromStorage('actionsInQueue');
+  const actionsInQueueFromStorage = getItemFromStorage('actionsInQueue', window);
   const router = useRouter();
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
@@ -33,7 +33,7 @@ const Summary = () => {
         const actionsInQueue = [...actionsInQueueFromStorage, currentAction];
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(
+          window.localStorage.setItem(
             'actionsInQueue',
             JSON.stringify(actionsInQueue)
           );

@@ -21,7 +21,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
     if (!setActionId) {
       return;
     }
-    setActionId(fromDetails ? '' : id);
+    setActionId(fromDetails ? '' : String(id));
   };
 
   return (

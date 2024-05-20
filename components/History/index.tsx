@@ -9,7 +9,7 @@ import { COMPLETED_ACTIONS } from '../../constants';
 import styles from './history.module.scss';
 
 const History = () => {
-  const actions = getItemFromStorage(COMPLETED_ACTIONS);
+  const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
   const [actionId, setActionId] = useState('');
 
   return (

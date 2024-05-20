@@ -27,7 +27,6 @@ import {
 } from '../../public/main-screen';
 import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
 import QueueModal from '../QueueModal';
-import queue from '../../data/queue';
 import { useAppSelector } from '../../redux/hooks';
 import { selectIsAttacking, selectSideNavIsOpen } from '../../redux/features/generalSlice';
 import dynamic from 'next/dynamic';
@@ -104,7 +103,7 @@ const MainScreen = () => {
         name="mapOrGlobe"
       />
 
-      {false && <QueueModal queue={queue} />}
+      {false && <QueueModal />}
 
       <SidenavInMain isOpen={sideNavIsOpen} onClose={() => setDrawerOpen(false)} />
       <HistoryAndNewsBtns />

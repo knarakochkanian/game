@@ -8,7 +8,7 @@ import { ACTIONS_IN_QUEUE } from '../../constants';
 import styles from './Queue.module.scss';
 
 const Queue = () => {
-  const actionsInQueue = getItemFromStorage(ACTIONS_IN_QUEUE);
+  const actionsInQueue = getItemFromStorage(ACTIONS_IN_QUEUE, window);
   const [actionId, setActionId] = useState('');
 
   return (

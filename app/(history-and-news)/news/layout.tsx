@@ -13,7 +13,7 @@ export default function NewsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const actions = getItemFromStorage(COMPLETED_ACTIONS);
+  const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
 
   return (
     <div className={styles.newsLayout}>

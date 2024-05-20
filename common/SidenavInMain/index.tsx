@@ -58,7 +58,7 @@ function SidenavInMain({
       : null;
   let lastActionName;
   if (typeof window !== 'undefined') {
-    lastActionName = localStorage.getItem('lastActionName');
+    lastActionName = window.localStorage.getItem('lastActionName');
   }
 
   const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';

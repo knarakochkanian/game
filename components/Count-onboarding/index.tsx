@@ -11,7 +11,7 @@ export default function CountOnboarding() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
-        localStorage.getItem('isOnboardingPassed') === 'true';
+      window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -19,7 +19,7 @@ export default function CountOnboarding() {
   const completeOnboarding = () => {
     if (typeof window !== 'undefined') {
       setOnboardingPassed(true);
-      localStorage.setItem('isOnboardingPassed', 'true');
+      window.localStorage.setItem('isOnboardingPassed', 'true');
     }
   };
   return (

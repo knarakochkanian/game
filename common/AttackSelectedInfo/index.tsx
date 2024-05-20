@@ -15,7 +15,7 @@ const ActionSelectedInfo = ({
     if (!setActionId) {
       return;
     }
-    setActionId(fromDetails ? '' : action.id);
+    setActionId(fromDetails ? '' : String(action.id));
   };
 
   return (

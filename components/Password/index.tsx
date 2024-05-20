@@ -27,7 +27,7 @@ export default function Password() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
     const isOnboardingPassed =
-      localStorage.getItem('isOnboardingPassed') === 'true';
+    window.localStorage.getItem('isOnboardingPassed') === 'true';
     setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -35,7 +35,7 @@ export default function Password() {
   const handleGoToGame = () => {
     if (password === '111285') {
       if (onboardingPassed && typeof window !== 'undefined') {
-        localStorage.setItem('isOnboardingPassed', 'true');
+        window.localStorage.setItem('isOnboardingPassed', 'true');
         setOnboardingPassed(true);
         return <MainScreen />;
       } else {

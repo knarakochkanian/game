@@ -13,7 +13,7 @@ type Params = {
 };
 
 const SingleAttackNewsPage = ({ params: { actionId } }: Params) => {
-  const actions = getItemFromStorage(COMPLETED_ACTIONS);
+  const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
   const action = getAction(actionId, actions) as IAction | undefined;
   
   if (!action) notFound();

@@ -26,7 +26,6 @@ const AttackWithDataCard = ({
   const navigate = useRouter();
 
   useEffect(() => {
-    console.log();
 
     if (id === '3') {
       onClick();

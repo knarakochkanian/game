@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ATTACK, PROTECTION, QUEUE } from '../../constants';
+import { ACTIONS_IN_QUEUE, ATTACK, PROTECTION, QUEUE } from '../../constants';
 import { slashes_90_degree } from '../../public/main-screen';
 
 import styles from './QueueModal.module.scss';
+import { getItemFromStorage } from '../../helpers';
 
-const QueueModal = ({ queue }: { queue: IAction[] }) => {
+const QueueModal = () => {
+  const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE, window);
+  if(!actionsInQueueFromStorage) return <></>;
+  
   return (
     <div className={styles.queueModal}>
       <h5>Очередь задач</h5>
@@ -14,13 +18,13 @@ const QueueModal = ({ queue }: { queue: IAction[] }) => {
           <span
             key={num}
             className={
-              queue[num].actionType === ATTACK
+              actionsInQueueFromStorage[num].actionType === ATTACK
                 ? styles.attack
                 : styles.protection
             }
           >
-            {queue[num].actionType === ATTACK ? ATTACK : PROTECTION}{' '}
-            {queue[num].name}
+            {actionsInQueueFromStorage[num].actionType === ATTACK ? ATTACK : PROTECTION}{' '}
+            {actionsInQueueFromStorage[num].name}
           </span>
         ))}
       </div>

@@ -33,9 +33,6 @@ export const getAction = (
   actionId: string,
   actions: IAction[]
 ): IAction | undefined => {
-  console.log('actionId', actionId);
-  console.log('actions', actions[0].id);
-
   return actions.find((action) => String(action.id) === actionId);
 };
 
@@ -212,12 +209,13 @@ export const getNextActionName = (name: string) => {
   return `#${newLeft}-${newRight}`;
 };
 
-export const getItemFromStorage = (item: string) => {
+export const getItemFromStorage = (item: string, window: Window & typeof globalThis) => {
+  
   if (
-    typeof localStorage.getItem(item) === 'string' &&
-    typeof window !== 'undefined'
+    typeof window !== 'undefined' &&
+    typeof window.localStorage.getItem(item) === 'string'
   ) {
-    return JSON.parse(localStorage.getItem(item) as string);
+    return JSON.parse(window.localStorage.getItem(item) as string);
   }
 };
 

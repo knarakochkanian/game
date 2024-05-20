@@ -69,7 +69,7 @@ export default function Onboarding() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
-        localStorage.getItem('isOnboardingPassed') === 'true';
+      window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -77,7 +77,7 @@ export default function Onboarding() {
   const completeOnboarding = () => {
     setOnboardingPassed(true);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('isOnboardingPassed', 'true');
+      window.localStorage.setItem('isOnboardingPassed', 'true');
     }
   };
   const closeModal = () => setModalOpen(false);

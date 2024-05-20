@@ -14,7 +14,7 @@ const Actions = ({ actions, setActionId, actionId }: IActionsProps) => {
   return (
     <div className={styles.actions}>
       {actions.map((action, i) => {
-        if (action.id === actionId) {
+        if (String(action.id) === actionId) {
           return (
             <ActionInDetails
               key={i}
