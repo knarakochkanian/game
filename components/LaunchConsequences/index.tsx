@@ -38,6 +38,7 @@ const LaunchConsequences = ({
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
+  
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =

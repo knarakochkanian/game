@@ -34,8 +34,12 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
-  const completedActionsFromStorage = getItemFromStorage(COMPLETED_ACTIONS, window);
-  const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE, window);
+  const [completedActionsFromStorage, setCompletedActionsFromStorage] =
+    useState<IAction[] | undefined>();
+  const [actionsInQueueFromStorage, setActionsInQueueFromStorage] = useState<
+    IAction[] | undefined
+  >();
+
   let lastActionName;
   if (typeof window !== 'undefined') {
     lastActionName = window.localStorage.getItem('lastActionName');
@@ -44,15 +48,30 @@ export default function CountDown() {
   const [actionCompleted, setActionCompleted] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const actionsInQueueFromStorage = getItemFromStorage(
+        ACTIONS_IN_QUEUE,
+        window
+      );
+      const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
+      setCompletedActionsFromStorage(actions);
+      setActionsInQueueFromStorage(actionsInQueueFromStorage);
+    }
+  }, []);
+
+  useEffect(() => {
     const countdown = setInterval(() => {
       if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
         setActionCompleted(true);
         clearInterval(countdown);
-        const completedActions = proccessActionsToSave(
-          currentAction,
-          completedActionsFromStorage,
-          true
-        );
+        let completedActions;
+        if (completedActionsFromStorage) {
+          completedActions = proccessActionsToSave(
+            currentAction,
+            completedActionsFromStorage,
+            true
+          );
+        }
 
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(LAST_ACTION_NAME, name);
@@ -78,7 +97,7 @@ export default function CountDown() {
   }, [time, router]);
 
   const cancelCountdown = () => {
-    if (!actionCompleted) {
+    if (!actionCompleted && actionsInQueueFromStorage) {
       const actionsInQueue = proccessActionsToSave(
         currentAction,
         actionsInQueueFromStorage,
@@ -90,7 +109,6 @@ export default function CountDown() {
 
       // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
       // }
-      
     }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };

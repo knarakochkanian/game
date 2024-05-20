@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Loading from '../../../components/Loading';
 import AttacksWithDates from '../../../components/AttacksWithDates';
 import { getItemFromStorage } from '../../../helpers';
@@ -13,7 +13,14 @@ export default function NewsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
+  const [actions, setActions] = useState<IAction[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
+      setActions(storedActions);
+    }
+  }, []);
 
   return (
     <div className={styles.newsLayout}>

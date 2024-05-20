@@ -1,10 +1,14 @@
+import dynamic from 'next/dynamic';
 import { Metadata } from 'next';
-import History from '../../../components/History';
 
 export const metadata: Metadata = {
   title: 'История запусков',
   description: 'История запусков',
 };
+
+const History = dynamic(() => import('../../../components/History'), {
+  ssr: false,
+});
 
 const HistoryPage = () => {
   return <History />;

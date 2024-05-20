@@ -1,13 +1,14 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Grid from '../../common/Grid';
 import { attack } from '../../public/count-down';
 import SideLines from '../../common/SideLines';
 import SummaryFooter from '../../components/SummaryFooter';
 import BackAndForwardBtns from '../../common/BackAndForwardBtns';
-import ActionDetails from '../../components/ActionDetails';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
@@ -15,22 +16,42 @@ import {
   selectIsAttacking,
   setCurrentActionDate,
 } from '../../redux/features/generalSlice';
-import { COUNT_DOWN } from '../../constants';
+import {
+  ACTIONS_IN_QUEUE,
+  COUNT_DOWN,
+} from '../../constants';
 import { formatDate, getItemFromStorage } from '../../helpers';
 
 import styles from './summary.module.scss';
 
+const ActionDetails = dynamic(() => import('../../components/ActionDetails'), { ssr: false });
+
 const Summary = () => {
   const dispatch = useAppDispatch();
-  const actionsInQueueFromStorage = getItemFromStorage('actionsInQueue', window);
+  const [actionsInQueueFromStorage, setActionsInQueueFromStorage] = useState<
+    IAction[] | undefined
+  >();
   const router = useRouter();
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const actionsInQueueFromStorage = getItemFromStorage(
+        ACTIONS_IN_QUEUE,
+        window
+      );
+      setActionsInQueueFromStorage(actionsInQueueFromStorage);
+    }
+  }, []);
+
   const onStartAction = () => {
     switch (currentAction?.isCompleted) {
       case false:
-        const actionsInQueue = [...actionsInQueueFromStorage, currentAction];
+        const actionsInQueue = [
+          ...(actionsInQueueFromStorage as IAction[]),
+          currentAction,
+        ];
 
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(

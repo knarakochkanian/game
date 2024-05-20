@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Actions from '../Actions';
 import ActionInDetails from '../ActionInDetails';
 import { getItemFromStorage } from '../../helpers';
@@ -9,8 +9,15 @@ import { COMPLETED_ACTIONS } from '../../constants';
 import styles from './history.module.scss';
 
 const History = () => {
-  const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
+  const [actions, setActions] = useState([]);
   const [actionId, setActionId] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
+      setActions(storedActions);
+    }
+  }, []);
 
   return (
     <>
