@@ -15,15 +15,19 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK, A_TTACK, PROTECTION, P_ROTECTION } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
-import { countSelectedOptions, extractNumber, getNextActionName } from '../../helpers';
+import {
+  countSelectedOptions,
+  extractNumber,
+  getNextActionName,
+} from '../../helpers';
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
+import { trash } from '../../public/summary';
 
 import styles from './SidenavInMain.module.scss';
-import { trash } from '../../public/summary';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -52,8 +56,12 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
-  const lastActonName = localStorage.getItem('lastActonName');
-  const name = lastActonName ? getNextActionName(lastActonName) : '#000-001';
+  let lastActionName;
+  if (typeof window !== 'undefined') {
+    lastActionName = localStorage.getItem('lastActionName');
+  }
+
+  const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';
 
   const onSetCurrentAction = () => {
     const currentAction: IAction = {

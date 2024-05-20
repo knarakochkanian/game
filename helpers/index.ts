@@ -212,7 +212,10 @@ export const getNextActionName = (name: string) => {
 };
 
 export const getItemFromStorage = (item: string) => {
-  if (typeof localStorage.getItem(item) === 'string') {
+  if (
+    typeof localStorage.getItem(item) === 'string' &&
+    typeof window !== 'undefined'
+  ) {
     return JSON.parse(localStorage.getItem(item) as string);
   }
 };

@@ -12,10 +12,12 @@ export default function Home() {
   const [onboardingPassed, setOnboardingPassed] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     const isOnboardingPassed =
-      localStorage.getItem('isOnboardingPassed') === 'true';
+      window.localStorage.getItem('isOnboardingPassed') === 'true';
     setOnboardingPassed(isOnboardingPassed);
     setLoading(false);
+    }
   }, []);
 
   return onboardingPassed ? (

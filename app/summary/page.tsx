@@ -28,11 +28,16 @@ const Summary = () => {
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
 
   const onStartAction = () => {
-    
     switch (currentAction?.isCompleted) {
       case false:
         const actionsInQueue = [...actionsInQueueFromStorage, currentAction];
-        localStorage.setItem('actionsInQueue', JSON.stringify(actionsInQueue));
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(
+            'actionsInQueue',
+            JSON.stringify(actionsInQueue)
+          );
+        }
 
         break;
       case null:
@@ -40,7 +45,7 @@ const Summary = () => {
         dispatch(setCurrentActionDate(currentDate));
         router.push(COUNT_DOWN);
         break;
-    }   
+    }
   };
 
   const onBack = () => router.back();

@@ -36,8 +36,11 @@ export default function CountDown() {
   const router = useRouter();
   const completedActionsFromStorage = getItemFromStorage(COMPLETED_ACTIONS);
   const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE);
-  const lastActonName = localStorage.getItem('lastActonName');
-  const name = lastActonName ? getNextActionName(lastActonName) : '#000-001';
+  let lastActionName;
+  if (typeof window !== 'undefined') {
+    lastActionName = localStorage.getItem('lastActionName');
+  }
+  const name = lastActionName ? getNextActionName(lastActionName) : '#000-001';
   const [actionCompleted, setActionCompleted] = useState(false);
 
   useEffect(() => {
@@ -51,12 +54,14 @@ export default function CountDown() {
           true
         );
 
-        localStorage.setItem(LAST_ACTION_NAME, name);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_ACTION_NAME, name);
 
-        localStorage.setItem(
-          'completedActions',
-          JSON.stringify(completedActions)
-        );
+          localStorage.setItem(
+            'completedActions',
+            JSON.stringify(completedActions)
+          );
+        }
 
         dispatch(resetGeneralState());
         router.push('/');
@@ -80,9 +85,12 @@ export default function CountDown() {
         false
       );
 
-      // localStorage.setItem(LAST_ACTION_NAME, name);
+      // if (typeof window !== 'undefined') {
+      //   // localStorage.setItem(LAST_ACTION_NAME, name);
 
-      // localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
+      // // localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
+      // }
+      
     }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };

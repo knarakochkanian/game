@@ -39,15 +39,19 @@ const LaunchConsequences = ({
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
   useEffect(() => {
-    const isOnboardingPassed =
-      localStorage.getItem('isOnboardingPassed') === 'true';
-    setOnboardingPassed(isOnboardingPassed);
+    if (typeof window !== 'undefined') {
+      const isOnboardingPassed =
+        localStorage.getItem('isOnboardingPassed') === 'true';
+      setOnboardingPassed(isOnboardingPassed);
+    }
   }, []);
   if (!action) return;
 
   const completeOnboarding = () => {
-    setOnboardingPassed(true);
-    localStorage.setItem('isOnboardingPassed', 'true');
+    if (typeof window !== 'undefined') {
+      setOnboardingPassed(true);
+      localStorage.setItem('isOnboardingPassed', 'true');
+    }
   };
   const headerGoToCountComponent = () => {
     setIsCountDownComponent(true);

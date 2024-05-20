@@ -25,14 +25,16 @@ export default function Password() {
   const [onboardingPassed, setOnboardingPassed] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     const isOnboardingPassed =
       localStorage.getItem('isOnboardingPassed') === 'true';
     setOnboardingPassed(isOnboardingPassed);
+    }
   }, []);
 
   const handleGoToGame = () => {
     if (password === '111285') {
-      if (onboardingPassed) {
+      if (onboardingPassed && typeof window !== 'undefined') {
         localStorage.setItem('isOnboardingPassed', 'true');
         setOnboardingPassed(true);
         return <MainScreen />;

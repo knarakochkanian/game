@@ -67,14 +67,18 @@ export default function Onboarding() {
     setModalOpen2(false);
   };
   useEffect(() => {
-    const isOnboardingPassed =
-      localStorage.getItem('isOnboardingPassed') === 'true';
-    setOnboardingPassed(isOnboardingPassed);
+    if (typeof window !== 'undefined') {
+      const isOnboardingPassed =
+        localStorage.getItem('isOnboardingPassed') === 'true';
+      setOnboardingPassed(isOnboardingPassed);
+    }
   }, []);
 
   const completeOnboarding = () => {
     setOnboardingPassed(true);
-    localStorage.setItem('isOnboardingPassed', 'true');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isOnboardingPassed', 'true');
+    }
   };
   const closeModal = () => setModalOpen(false);
   const closeModal2 = () => setModalOpen2(false);
@@ -371,8 +375,8 @@ export default function Onboarding() {
                             addColor
                               ? 'Green'
                               : option.name == 'США'
-                                ? 'SecondarySmallShine'
-                                : 'AccordionNested'
+                              ? 'SecondarySmallShine'
+                              : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >

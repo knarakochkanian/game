@@ -9,14 +9,18 @@ export default function CountOnboarding() {
   const [onboardingPassed, setOnboardingPassed] = useState(false);
 
   useEffect(() => {
-    const isOnboardingPassed =
-      localStorage.getItem('isOnboardingPassed') === 'true';
-    setOnboardingPassed(isOnboardingPassed);
+    if (typeof window !== 'undefined') {
+      const isOnboardingPassed =
+        localStorage.getItem('isOnboardingPassed') === 'true';
+      setOnboardingPassed(isOnboardingPassed);
+    }
   }, []);
 
   const completeOnboarding = () => {
-    setOnboardingPassed(true);
-    localStorage.setItem('isOnboardingPassed', 'true');
+    if (typeof window !== 'undefined') {
+      setOnboardingPassed(true);
+      localStorage.setItem('isOnboardingPassed', 'true');
+    }
   };
   return (
     <div>
