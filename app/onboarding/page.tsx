@@ -621,14 +621,14 @@ export default function Onboarding() {
             <Image
               src={'onboarding/AttackSign.svg'}
               alt={'attack'}
-              width={48}
-              height={48}
+              width={68}
+              height={68}
             />
             <Image
               src={'onboarding/ProtectSign.svg'}
               alt={'protect'}
-              width={48}
-              height={48}
+              width={68}
+              height={68}
             />
           </div>
           <button>защита</button>

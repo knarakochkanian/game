@@ -58,7 +58,7 @@ export const StaticMap = ({
       <div
         id="static-map-flat"
         ref={map.ref}
-        style={{ position: "static", width: "500px", height: "400px"}}
+        style={{ position: 'static', width: '1000px', height: '600px' }}
       />
     </>
   );

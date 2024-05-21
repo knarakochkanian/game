@@ -52,24 +52,25 @@ const MainScreen = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
-  // useEffect(() => {
-  //   let socket = new WebSocket('ws://britishellie.ru:8888');
-  //   console.log(socket, 'socket');
-  //   socket.onopen = (ev) => {
-  //     console.log(ev, 'onopen');
-  //   };
-  //
-  //   socket.onclose = (ev) => {
-  //     console.log(ev, 'onclose');
-  //   };
-  //
-  //   socket.onerror = (ev) => {
-  //     console.log(ev, 'onerror');
-  //   };
-  //   socket.onmessage = (ev) => {
-  //     console.log(ev, 'onmessage');
-  //   };
-  // }, []);
+
+  useEffect(() => {
+    let socket = new WebSocket('ws://britishellie.ru:8888');
+    console.log(socket, 'socket');
+    socket.onopen = (ev) => {
+      console.log(ev, 'onopen');
+    };
+
+    socket.onclose = (ev) => {
+      console.log(ev, 'onclose');
+    };
+
+    socket.onerror = (ev) => {
+      console.log(ev, 'onerror');
+    };
+    socket.onmessage = (ev) => {
+      console.log(ev, 'onmessage');
+    };
+  }, []);
 
   return (
     <main className={styles.mainScreen}>

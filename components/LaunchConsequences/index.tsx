@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ModalData from '../../common/Modals/ModalData';
 import CountOnboarding from '../Count-onboarding';
+import Image from 'next/image';
 import {
   COUNT_DOWN,
   LAUNCH_CONSEQUENCES,
@@ -53,7 +54,7 @@ const LaunchConsequences = ({
   const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
-
+  const pickedCountries = useAppSelector(selectPickedCountries);
   const totalPopulationRegions = useAppSelector(selectTotalPopulationRegions);
   const totalSettlements = useAppSelector(selectPickedCountriesObjects);
   const formattedFinancialLosses = useAppSelector(
@@ -161,14 +162,29 @@ const LaunchConsequences = ({
             </div>
           </Modal>
 
-          <div
-            className={styles.map}
-            style={{
-              width: '1048px !important',
-              height: '542px !important',
-            }}
-          >
-            <StaticMap pickedCountries={['США', 'Канада']} />
+          <div className={styles.map}>
+            {currentPage === SUMMARY && fromOnboarding ? (
+              <Image
+                src={'onboarding/noise.png'}
+                alt={'img'}
+                width={1048}
+                height={542}
+                style={{
+                  filter: 'blur(22px)',
+                  position: 'absolute',
+                  zIndex: '-1',
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: '1048px !important',
+                  height: '542px !important',
+                }}
+              >
+                <StaticMap pickedCountries={pickedCountries} />
+              </div>
+            )}
           </div>
         </div>
       </div>
