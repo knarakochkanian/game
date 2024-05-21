@@ -5,8 +5,12 @@
   display: flex;
   gap: 44px;
   margin-top: 64px;
+  .imgAndModal {
+    height: 542px;
+    width: 1048px;
+  }
   .info {
-    width: 100%;
+    width: 984px;
     padding: 32px;
     border: 2px solid $attack-green;
     background: $attack-dark-green-select-60;

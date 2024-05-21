@@ -126,7 +126,7 @@ const LaunchConsequences = ({
             />
           </div>
         </div>
-        <div>
+        <div className={styles.imgAndModal}>
           <Modal
             name="damageInfo"
             isOpen={
@@ -169,6 +169,7 @@ const LaunchConsequences = ({
             }}
           >
             <StaticMap pickedCountries={['США', 'Канада']} />
+            {/* <WorldMap mapType={MapType.plane} /> */}
           </div>
         </div>
       </div>
