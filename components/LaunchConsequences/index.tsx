@@ -169,7 +169,6 @@ const LaunchConsequences = ({
             }}
           >
             <StaticMap pickedCountries={['США', 'Канада']} />
-            {/* <WorldMap mapType={MapType.plane} /> */}
           </div>
         </div>
       </div>

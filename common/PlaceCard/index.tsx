@@ -33,30 +33,30 @@ const PlaceCard = ({
   return (
     <>
       {i === 0 && isCountry && !fromSideNav && (
-        <AlphabetLetter firstChild letter={place.name[0]} />
+        <AlphabetLetter firstChild letter={place?.name[0]} />
       )}
 
       <button
         onClick={() => {
-          console.log('Button clicked:', place.name);
-          dispatch(setPlaceName(place.name));
+          console.log('Button clicked:', place?.name);
+          dispatch(setPlaceName(place?.name));
         }}
         disabled={fromSideNav}
         className={`${styles.placeCard} ${
           place?.regions ? styles.withRegions : ''
         } ${
-          pickedCountries.includes(place.name) && !fromSideNav
+          pickedCountries.includes(place?.name) && !fromSideNav
             ? styles.selected
             : ''
         }`}
       >
-        {place.code && (
+        {place?.code && (
           <div className={styles.flagContainer}>
-            <Flag code={place.code} height={40} width={40} />
+            <Flag code={place?.code} height={40} width={40} />
           </div>
         )}
 
-        <h4>{place.name}</h4>
+        <h4>{place?.name}</h4>
       </button>
 
       {isCountry && placeFirstLetterChanged && places && i && (
