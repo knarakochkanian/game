@@ -27,9 +27,9 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
     <div className={styles.places}>
       {(places as IPlace[]).map((place, i) => {
         const placeFirstLetterChanged =
-          places[i].name[0] !== places[i + 1]?.name[0];
+          places[i]?.name[0] !== places[i + 1]?.name[0];
 
-        if (place.regions) {
+        if (place?.regions) {
           return (
             <Accordion
               key={i}
@@ -69,7 +69,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
                 )}
               </AccordionSummary>
               <AccordionDetails>
-                {place.regions.map((region, i) =>
+                {place?.regions?.map((region, i) =>
                   fromSideNav ? (
                     pickedCountries.includes(region.name) && (
                       <PlaceCard

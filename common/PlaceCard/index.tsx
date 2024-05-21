@@ -43,7 +43,7 @@ const PlaceCard = ({
         }}
         disabled={fromSideNav}
         className={`${styles.placeCard} ${
-          place.regions ? styles.withRegions : ''
+          place?.regions ? styles.withRegions : ''
         } ${
           pickedCountries.includes(place.name) && !fromSideNav
             ? styles.selected

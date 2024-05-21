@@ -69,7 +69,7 @@ export default function Onboarding() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
-      window.localStorage.getItem('isOnboardingPassed') === 'true';
+        window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -462,12 +462,7 @@ export default function Onboarding() {
           <p> Возможен выбор отрасли с помощью быстрых фильтров и поиска.</p>
           <p> Нажмите на “ВПК”, чтобы развернуть список.</p>
           <div className="ModalButtons">
-            <button
-              className={
-                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisableButton'
-              }
-              onClick={handleNext4}
-            >
+            <button className={'ModalButton1'} onClick={handleNext4}>
               далее
             </button>
             <Link href={'/'} className="SecondarySmall">

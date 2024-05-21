@@ -1,10 +1,14 @@
-"use client"
+'use client';
 
-import { useCallback, useEffect } from "react";
-import { MapType } from "./map.types";
-import { UseMap } from "./use-map.hook";
+import { useCallback, useEffect } from 'react';
+import { MapType } from './map.types';
+import { UseMap } from './use-map.hook';
 
-export const StaticMap = ({ pickedCountries }: { pickedCountries: string[] }) => {
+export const StaticMap = ({
+  pickedCountries,
+}: {
+  pickedCountries: string[];
+}) => {
   const onCountryPicked = () => {};
 
   const map = UseMap({
@@ -21,8 +25,18 @@ export const StaticMap = ({ pickedCountries }: { pickedCountries: string[] }) =>
   );
 
   const focusOnCountry = useCallback(
-    (name: string, animationDurationMs?: number, zoomOnCountry?: boolean, extendBbox?: number) => {
-      map.focusOnCountry.current?.(name, animationDurationMs, zoomOnCountry, extendBbox);
+    (
+      name: string,
+      animationDurationMs?: number,
+      zoomOnCountry?: boolean,
+      extendBbox?: number
+    ) => {
+      map.focusOnCountry.current?.(
+        name,
+        animationDurationMs,
+        zoomOnCountry,
+        extendBbox
+      );
     },
     [map.focusOnCountry]
   );
@@ -31,15 +45,13 @@ export const StaticMap = ({ pickedCountries }: { pickedCountries: string[] }) =>
     (name: string | string[], visible: boolean) => {
       map.setCountryContourVisibility.current?.(name, visible);
     },
-    [
-      map.setCountryContourVisibility,
-    ]
+    [map.setCountryContourVisibility]
   );
 
   useEffect(() => {
     focusOnCountry(pickedCountries[0], undefined, true);
     setCountryColor(pickedCountries);
-  }, [focusOnCountry, pickedCountries, setCountryColor])
+  }, [focusOnCountry, pickedCountries, setCountryColor]);
 
   return (
     <>
@@ -47,11 +59,11 @@ export const StaticMap = ({ pickedCountries }: { pickedCountries: string[] }) =>
         id="static-map-flat"
         ref={map.ref}
         style={{
-          width: '100%',
-          height: '100%',
+          width: '1058px !important',
+          height: '542px !important ',
           top: '0',
         }}
       />
     </>
-  )
-}
+  );
+};

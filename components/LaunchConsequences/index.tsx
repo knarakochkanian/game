@@ -33,6 +33,7 @@ import {
 import { useAppSelector } from '../../redux/hooks';
 
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
+import { StaticMap } from '../Map/StaticMap.component';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -166,8 +167,9 @@ const LaunchConsequences = ({
               width: '1048px !important',
               height: '542px !important',
             }}
-            // ref={notInteractiveMap.ref}
-          ></div>
+          >
+            <StaticMap pickedCountries={['США', 'Канада']} />
+          </div>
         </div>
       </div>
     </>

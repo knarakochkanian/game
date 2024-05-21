@@ -11,6 +11,7 @@ import {
   setTotalPopulationRegions,
   selectFormattedFinancialLosses,
   setFormattedFinancialLosses,
+  selectIsAttacking,
 } from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
@@ -63,6 +64,7 @@ const SelectFromTwo = ({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
+  const isAttacking = useAppSelector(selectIsAttacking);
   const damageLevelCount = () => {
     switch (damageLevel) {
       case 'Критический':
@@ -101,13 +103,21 @@ const SelectFromTwo = ({
       <div className={styles.selectFromTwoAttack}>
         {selectedCountries.length > 0 && (
           <div className={styles.selectFromTwoModalBottom}>
-            <div>затронет населения</div>
+            {isAttacking ? (
+              <div>затронет населения</div>
+            ) : (
+              <div>защищено населения</div>
+            )}
             <h3>{totalPopulationRegions}</h3>
           </div>
         )}
         {damageLevel && (
           <div className={styles.selectFromTwoModalBottomRight}>
-            <div>финансовые потери</div>
+            {isAttacking ? (
+              <div>финансовые потери</div>
+            ) : (
+              <div>сохранено финансов</div>
+            )}
             <h3>{formattedFinancialLosses}</h3>
           </div>
         )}
