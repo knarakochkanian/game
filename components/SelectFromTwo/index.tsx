@@ -2,9 +2,16 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
-import { setIsAttacking } from '../../redux/features/generalSlice';
+import {
+  selectDamgeLevel,
+  selectPickedCountriesObjects,
+  setIsAttacking,
+  setTotalPopulationRegions,
+  selectFormattedFinancialLosses,
+  setFormattedFinancialLosses,
+} from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
 
@@ -47,10 +54,58 @@ const SelectFromTwo = ({
       (setFirstActive as setFirstActive)(false);
     }
   };
+  const formatNumber = (number: number) => {
+    const billion = 1000000000;
+    return `${(number / billion).toFixed(0)} млрд $`;
+  };
+  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  const damageLevel = useAppSelector(selectDamgeLevel);
+  const formattedFinancialLosses = useAppSelector(
+    selectFormattedFinancialLosses
+  );
+  const damageLevelCount = () => {
+    switch (damageLevel) {
+      case 'Критический':
+        return 0.4;
+      case 'Минимальный':
+        return 0.23;
+      case 'Предупреждение':
+        return 0.08;
+      default:
+        return 0;
+    }
+  };
+  const totalPopulationRegions = selectedCountries.reduce((total, country) => {
+    if (country.regions && country.regions.length > 0) {
+      const regionsPopulation = country.regions.reduce((acc, region) => {
+        return acc + (region.population || 0);
+      }, 0);
+      return total + regionsPopulation;
+    } else {
+      return total + (country.population || 0);
+    }
+  }, 0);
+  dispatch(setTotalPopulationRegions(totalPopulationRegions));
 
+  const financialLosses =
+    3000 *
+    totalPopulationRegions *
+    0.2 *
+    selectedCountries.length *
+    damageLevelCount();
+  // const formattedFinancialLosses = formatNumber(financialLosses);
+  dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
+        <div className={styles.selectFromTwoModalBottom}>
+          <div>затронет населения</div>
+          <h3>{totalPopulationRegions}</h3>
+        </div>
+        <div className={styles.selectFromTwoModalBottomRight}>
+          <div>финансовые потери</div>
+          <h3>{formattedFinancialLosses}</h3>
+        </div>
         <button
           className={`${styles.button_1} ${
             disabledBtn === 1 ? styles.disabled : ''

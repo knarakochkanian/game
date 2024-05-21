@@ -21,6 +21,8 @@ export interface IInitialState {
   places: IPlace[];
   sideNavIsOpen: boolean;
   activeBlocks: string[];
+  totalPopulationRegions: number;
+  formattedFinancialLosses: string;
 }
 
 const initialState: IInitialState = {
@@ -37,6 +39,8 @@ const initialState: IInitialState = {
   sectors: industry.sectors,
   places: countriesWithCodes,
   sideNavIsOpen: false,
+  totalPopulationRegions: 0,
+  formattedFinancialLosses: '',
 };
 
 const generalSlice = createSlice({
@@ -74,7 +78,6 @@ const generalSlice = createSlice({
     },
     setActiveBlocks(state, { payload }: { payload: string }) {
       if (state.activeBlocks.includes(payload)) {
-        
         state.activeBlocks.splice(state.activeBlocks.indexOf(payload), 1);
       } else {
         state.activeBlocks = [...state.activeBlocks, payload];
@@ -99,8 +102,10 @@ const generalSlice = createSlice({
       );
       if (!parentCountry) return;
 
-      const region = parentCountry.regions?.find((region) => region.name === payload.region);
-      if(!region) return;
+      const region = parentCountry.regions?.find(
+        (region) => region.name === payload.region
+      );
+      if (!region) return;
 
       region.isSelected = !region.isSelected;
     },
@@ -134,6 +139,12 @@ const generalSlice = createSlice({
         state.firstClick = false;
         state.placeName = payload;
       }
+    },
+    setTotalPopulationRegions(state, { payload }) {
+      state.totalPopulationRegions = payload;
+    },
+    setFormattedFinancialLosses(state, { payload }) {
+      state.formattedFinancialLosses = payload;
     },
     addToPickedCountries(state, { payload }) {
       if (payload) {
@@ -175,7 +186,9 @@ export const {
   resetGeneralState,
   setActiveBlocks,
   setRegionsStatus,
-  setSingleRegionStatus
+  setSingleRegionStatus,
+  setTotalPopulationRegions,
+  setFormattedFinancialLosses,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -200,5 +213,8 @@ export const selectCurrentAction = (state: RootState) =>
   state.generalReducer.currentAction;
 export const selectActiveBlocks = (state: RootState) =>
   state.generalReducer.activeBlocks;
-
+export const selectTotalPopulationRegions = (state: RootState) =>
+  state.generalReducer.totalPopulationRegions;
+export const selectFormattedFinancialLosses = (state: RootState) =>
+  state.generalReducer.formattedFinancialLosses;
 export default generalSlice.reducer;

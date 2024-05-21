@@ -25,6 +25,13 @@ import { MapType } from '../Map/map.types';
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
 import { WorldMap } from '../Map/map.component';
+import {
+  selectFormattedFinancialLosses,
+  selectPickedCountries,
+  selectPickedCountriesObjects,
+  selectTotalPopulationRegions,
+} from '../../redux/features/generalSlice';
+import { useAppSelector } from '../../redux/hooks';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -40,6 +47,11 @@ const LaunchConsequences = ({
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
 
+  const totalPopulationRegions = useAppSelector(selectTotalPopulationRegions);
+  const totalSettlements = useAppSelector(selectPickedCountriesObjects);
+  const formattedFinancialLosses = useAppSelector(
+    selectFormattedFinancialLosses
+  );
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
@@ -89,19 +101,20 @@ const LaunchConsequences = ({
             <ModalData
               from={LAUNCH_CONSEQUENCES}
               name={citiesUnderAttack}
-              value={String(action.launchConsequences.citiesUnderAttack)}
-            />
-            <ModalData
-              from={LAUNCH_CONSEQUENCES}
-              name={populationSuffering}
-              value={formatNumber(
-                String(action.launchConsequences.populationSuffering)
+              value={totalSettlements.reduce(
+                (total, item) => total + (item.settlements || 0),
+                0
               )}
             />
             <ModalData
               from={LAUNCH_CONSEQUENCES}
+              name={populationSuffering}
+              value={totalPopulationRegions}
+            />
+            <ModalData
+              from={LAUNCH_CONSEQUENCES}
               name={wholeDamage}
-              value={String(action.launchConsequences.wholeDamage) + ' млн $'}
+              value={formattedFinancialLosses}
             />
           </div>
         </div>
@@ -138,9 +151,7 @@ const LaunchConsequences = ({
               height: '542px !important',
             }}
             // ref={notInteractiveMap.ref}
-          >
-            <WorldMap mapType={MapType.plane} />
-          </div>
+          ></div>
         </div>
       </div>
     </>

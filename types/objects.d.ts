@@ -37,6 +37,8 @@ interface IPlace {
   regions?: IPlace[];
   code?: string;
   isSelected: boolean;
+  population?: number;
+  settlements?: number;
 }
 
 interface IProtection extends IAction {}

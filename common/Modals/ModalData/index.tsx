@@ -2,7 +2,7 @@ import styles from './ModalData.module.scss';
 
 interface IModalDataProps {
   name: string;
-  value: string;
+  value?: any;
   from?: string;
 }
 

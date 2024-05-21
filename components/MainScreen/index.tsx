@@ -28,7 +28,11 @@ import {
 import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
 import QueueModal from '../QueueModal';
 import { useAppSelector } from '../../redux/hooks';
-import { selectIsAttacking, selectSideNavIsOpen } from '../../redux/features/generalSlice';
+import {
+  selectIsAttacking,
+  selectPickedCountriesObjects,
+  selectSideNavIsOpen,
+} from '../../redux/features/generalSlice';
 import dynamic from 'next/dynamic';
 import { MapType } from '../Map/map.types';
 import Target from '../Target';
@@ -47,7 +51,7 @@ const MainScreen = () => {
   const [globeActive, setGlobeActive] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const isAttacking = useAppSelector(selectIsAttacking);
-
+  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   // useEffect(() => {
   //   let socket = new WebSocket('ws://britishellie.ru:8888');
   //   console.log(socket, 'socket');
@@ -105,7 +109,10 @@ const MainScreen = () => {
 
       {false && <QueueModal />}
 
-      <SidenavInMain isOpen={sideNavIsOpen} onClose={() => setDrawerOpen(false)} />
+      <SidenavInMain
+        isOpen={sideNavIsOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
       <HistoryAndNewsBtns />
     </main>
   );

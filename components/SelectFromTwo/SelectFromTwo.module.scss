@@ -24,6 +24,35 @@
       cursor: pointer;
     }
   }
+  &ModalBottom{
+    display: flex;
+    width: 409px;
+    left: -214px;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    bottom: 160px;
+    background-color: rgba(1, 2, 2, 0.50);
+    >div{
+      @include TypoBodySmall;
+      text-transform: uppercase;
+    }
+  }
+  &ModalBottomRight{
+    display: flex;
+    width: 409px;
+    right: -250px;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    bottom: 160px;
+    background-color: rgba(1, 2, 2, 0.50);
+    >div{
+      @include TypoBodySmall;
+      text-transform: uppercase;
+
+    }
+  }
 }
 
 .selectFromTwo.mapOrGlobe {
