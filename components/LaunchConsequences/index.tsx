@@ -39,8 +39,8 @@ import { StaticMap } from '../Map/StaticMap.component';
 interface ILaunchConsequencesProps {
   action: IAction;
   from?: string;
-  setLearningStart: TSetBoolean;
-  learningStart: boolean;
+  setLearningStart?: TSetBoolean;
+  learningStart?: boolean;
 }
 
 const LaunchConsequences = ({
@@ -76,7 +76,9 @@ const LaunchConsequences = ({
     }
   };
   const headerGoToCountComponent = () => {
-    setLearningStart(true);
+    if (setLearningStart) {
+      setLearningStart(true);
+    }
     // setIsCountDownComponent(true);
   };
 
@@ -130,15 +132,7 @@ const LaunchConsequences = ({
         <div className={styles.imgAndModal}>
           <Modal
             name="damageInfo"
-            isOpen={
-              currentPage === SUMMARY
-                ? fromOnboarding
-                  ? true
-                  : false
-                : learningStart
-                  ? false
-                  : true
-            }
+            isOpen={currentPage === SUMMARY ? !!fromOnboarding : !learningStart}
             counter={10}
           >
             <p>

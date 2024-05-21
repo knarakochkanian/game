@@ -4,12 +4,14 @@ import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
 import ReduxProvider from '../redux/provider';
-
+// eslint-disable-next-line @next/next/no-document-import-in-page
+import { Head } from 'next/document';
 import './globals.scss';
 
 export const metadata: Metadata = {
   title: 'Game',
   description: 'Game about attacks and protected',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -19,6 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
+        <meta name="theme-color" content="#000" />
+      </Head>
       <body>
         <Suspense fallback={<Loading />}>
           <ReduxProvider>

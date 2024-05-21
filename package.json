@@ -22,6 +22,7 @@
     "globe.gl": "^2.32.4",
     "mercator-projection": "^0.0.2",
     "next": "14.2.1",
+    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.2",

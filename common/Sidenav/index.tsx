@@ -27,7 +27,7 @@ import { protectionIcon } from '../../public/history';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
 import industry, { defaultSectorsSelection } from '../../data/industryData';
-import { USA } from '../../data/countriesWithCodes';
+import USA from '../../data/countriesWithCodes';
 
 interface SidenavProps {
   isOpen?: boolean;
@@ -61,7 +61,6 @@ function Sidenav({
   // };
 
   const onSetCurrentAction = () => {
-
     const currentAction: IAction = {
       actionType: ATTACK,
       news: news_2,
@@ -72,7 +71,7 @@ function Sidenav({
       industrySectors: defaultSectorsSelection,
       isCompleted: false,
       name: '#000-001',
-      selectedCountries: [USA],
+      selectedCountries: USA,
     };
 
     dispatch(setComfirmedFromOnboarding(true));
