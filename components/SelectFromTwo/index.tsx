@@ -93,19 +93,24 @@ const SelectFromTwo = ({
     0.2 *
     selectedCountries.length *
     damageLevelCount();
-  // const formattedFinancialLosses = formatNumber(financialLosses);
+
   dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
+
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
-        <div className={styles.selectFromTwoModalBottom}>
-          <div>затронет населения</div>
-          <h3>{totalPopulationRegions}</h3>
-        </div>
-        <div className={styles.selectFromTwoModalBottomRight}>
-          <div>финансовые потери</div>
-          <h3>{formattedFinancialLosses}</h3>
-        </div>
+        {selectedCountries.length > 0 && (
+          <div className={styles.selectFromTwoModalBottom}>
+            <div>затронет населения</div>
+            <h3>{totalPopulationRegions}</h3>
+          </div>
+        )}
+        {damageLevel && (
+          <div className={styles.selectFromTwoModalBottomRight}>
+            <div>финансовые потери</div>
+            <h3>{formattedFinancialLosses}</h3>
+          </div>
+        )}
         <button
           className={`${styles.button_1} ${
             disabledBtn === 1 ? styles.disabled : ''

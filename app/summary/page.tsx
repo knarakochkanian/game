@@ -96,7 +96,6 @@ const Summary = () => {
           action={currentAction as IAction}
         />
       </div>
-
       <BackAndForwardBtns onBack={onBack} onForward={onForward} />
       <Grid />
       <SideLines />

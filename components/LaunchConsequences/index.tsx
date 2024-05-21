@@ -23,7 +23,7 @@ import { MapType } from '../Map/map.types';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
-import { WorldMap } from '../Map/map.component';
+
 import {
   selectFormattedFinancialLosses,
   selectPickedCountries,
@@ -31,7 +31,7 @@ import {
   selectTotalPopulationRegions,
 } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
-import { useAppSelector } from '../../redux/hooks';
+
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 
 interface ILaunchConsequencesProps {
@@ -134,8 +134,8 @@ const LaunchConsequences = ({
                   ? true
                   : false
                 : learningStart
-                ? false
-                : true
+                  ? false
+                  : true
             }
             counter={10}
           >
@@ -160,8 +160,6 @@ const LaunchConsequences = ({
             </div>
           </Modal>
 
-
-
           <div
             className={styles.map}
             style={{
@@ -169,10 +167,9 @@ const LaunchConsequences = ({
               height: '542px !important',
             }}
             // ref={notInteractiveMap.ref}
-          >
-          </div>
+          ></div>
         </div>
-        </div>
+      </div>
     </>
   );
 };
