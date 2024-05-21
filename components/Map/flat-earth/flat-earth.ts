@@ -59,7 +59,7 @@ export class FlatEarth implements IEarth {
 
 
     const renderer = new WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
     this.renderer = renderer;
 
     if (!this.isNotInteractive) {
@@ -79,7 +79,7 @@ export class FlatEarth implements IEarth {
     this.vignetteShaderPass = vignette
     composer.addPass(vignette);
 
-    const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);  
+    const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
     composer.addPass(gammaCorrectionPass);
 
     const mapGroup = new Group();
@@ -121,7 +121,7 @@ export class FlatEarth implements IEarth {
     }
 
     this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 0)
-    
+
     setTimeout(() => {
       this._render();
     }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
@@ -136,12 +136,21 @@ export class FlatEarth implements IEarth {
   }
 
   public render(parentHtmlElement: HTMLElement) {
-    if (!this.renderer) {
+    if (!this.renderer || !this.camera) {
       return;
     }
 
     this.parentHtmlElement = parentHtmlElement;
     parentHtmlElement.append(this.renderer.domElement)
+// 
+    this.renderer.domElement.style.width = "100%"
+    this.renderer.domElement.style.height = "100%"
+
+    this.renderer.setPixelRatio(parentHtmlElement.clientWidth / parentHtmlElement.clientHeight);
+    this.renderer.setSize(parentHtmlElement.clientWidth, parentHtmlElement.clientHeight, false);
+
+    this.camera.aspect = parentHtmlElement.clientWidth / parentHtmlElement.clientHeight;
+    this.camera.updateProjectionMatrix();
 
     !this.isNotInteractive ? this.runRenderLoop() : this._render();
   }
@@ -151,14 +160,27 @@ export class FlatEarth implements IEarth {
       return;
     }
 
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
+    // this.camera.aspect = this.renderer.domElement.width / this.renderer.domElement.height;
+    // this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.composer?.setSize(window.innerWidth, window.innerHeight);
+    // this.renderer.setSize(this.renderer.domElement.width, this.renderer.domElement.height);
+    // this.composer?.setSize(this.renderer.domElement.width, this.renderer.domElement.height);
+    const parentHtmlElement = this.parentHtmlElement;
+    if (parentHtmlElement) {
+      const height = parentHtmlElement.clientHeight
+      const width = parentHtmlElement.clientWidth
+      const ratio = width / height
 
-    if (this.vignetteShaderPass) {
-      this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+      this.renderer.setPixelRatio(ratio);
+      this.renderer.setSize(width, height);
+
+      this.camera.aspect = ratio;
+      this.camera.updateProjectionMatrix();
+
+      if (this.vignetteShaderPass) {
+        // this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
+      }
+
     }
 
     if (this.isNotInteractive) {
@@ -202,7 +224,7 @@ export class FlatEarth implements IEarth {
         console.error(`no country with name ${name}`)
         return;
       }
-  
+
       country.setColor(color ?? PICKED_COLOR)
     })
 
@@ -281,7 +303,7 @@ export class FlatEarth implements IEarth {
         console.error(`no country with name ${name}`)
         return;
       }
-  
+
       if (country instanceof ComplexCountry) {
         country.setSelfContourVisible(visible)
       } else {
