@@ -14,14 +14,20 @@ import Modal from '../Modals/Modal';
 import {
   selectIsAttacking,
   setBlur,
+  setComfirmedFromOnboarding,
+  setCurrentAction,
   setIsAttacking,
 } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
-import { useAppSelector } from '../../redux/hooks';
-import { ATTACK_OR_PROTECT } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { ATTACK, ATTACK_OR_PROTECT, CRITICAL } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
+import { news_2 } from '../../data/news';
+import launchConsequences from '../../data/launchConsequences';
+import industry, { defaultSectorsSelection } from '../../data/industryData';
+import { USA } from '../../data/countriesWithCodes';
 
 interface SidenavProps {
   isOpen?: boolean;
@@ -44,6 +50,7 @@ function Sidenav({
   delayed,
   removeModalDate,
 }: SidenavProps) {
+  const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
   // const handleBtn_1_Click = () => {
   //   if (name === ATTACK_OR_PROTECT) {
@@ -52,6 +59,25 @@ function Sidenav({
   //     (setFirstActive as setFirstActive)(true);
   //   }
   // };
+
+  const onSetCurrentAction = () => {
+
+    const currentAction: IAction = {
+      actionType: ATTACK,
+      news: news_2,
+      launchConsequences,
+      id: 1,
+      damageLevel: CRITICAL,
+      date: '05.10.2024 12:30',
+      industrySectors: defaultSectorsSelection,
+      isCompleted: false,
+      name: '#000-001',
+      selectedCountries: [USA],
+    };
+
+    dispatch(setComfirmedFromOnboarding(true));
+    dispatch(setCurrentAction(currentAction));
+  };
 
   return (
     <>
@@ -274,7 +300,7 @@ function Sidenav({
               <span className="Lead" style={{ color: '#787878' }}>
                 Для перехода к запуску <br /> атаки нажмите кнопку
               </span>
-              <Link href="/summary">
+              <Link href="/summary" onClick={onSetCurrentAction}>
                 <span
                   className="Lead"
                   style={{ color: 'white', padding: '10px' }}

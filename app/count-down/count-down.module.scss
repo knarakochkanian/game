@@ -1,5 +1,9 @@
 @import '/app/variables.module.scss';
 
+.blur {
+  @include blurDivStyles;
+}
+
 .countdownContainer {
   padding-top: 686px;
   padding-left: 110px;
@@ -44,6 +48,10 @@
           right: 45px;
         }
       }
+    }
+    .timer.z_17 {
+      position: relative;
+      z-index: 18;
     }
     .attack {
       display: flex;

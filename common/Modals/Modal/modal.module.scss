@@ -33,3 +33,20 @@
   top: 0;
   position: absolute;
 }
+
+.modal.learningStart {
+  position: relative;
+  bottom: 100px;
+  right: -1828px;
+  z-index: 16;
+}
+
+.modal.endingOnboarding {
+  position: fixed;
+  top: 593px;
+  right: 605px;
+  z-index: 19;
+  .ModalButtons {
+    justify-content: flex-start;
+  }
+}

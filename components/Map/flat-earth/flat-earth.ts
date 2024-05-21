@@ -1,5 +1,5 @@
 import anime from 'animejs'
-import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry } from "three";
+import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry, LoadingManager } from "three";
 import { EffectComposer, GammaCorrectionShader, MapControls, RenderPass, ShaderPass } from "three/examples/jsm/Addons.js";
 import { State } from "./state";
 import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
@@ -120,7 +120,11 @@ export class FlatEarth implements IEarth {
       renderer.domElement.addEventListener('click', this.onClick.bind(this));
     }
 
-    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, 0)
+    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 0)
+    
+    setTimeout(() => {
+      this._render();
+    }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
   }
 
   public onRotateStart(direction: 'left' | 'right'): void {
@@ -207,7 +211,7 @@ export class FlatEarth implements IEarth {
     }
   }
 
-  public moveCameraToCountry(name: string, animationDurationMs = 500, extendBbox = 50, showBoxHelperDebug?: boolean) {
+  public moveCameraToCountry(name: string, animationDurationMs = 500, zoomOnCountry = true, extendBbox = 50, showBoxHelperDebug?: boolean) {
     if (this.isNotInteractive) {
       animationDurationMs = 0;
     }
@@ -235,7 +239,7 @@ export class FlatEarth implements IEarth {
 
     const zoom = (Math.max(size.x, size.y) + extendBbox) / 2 / Math.tan(Math.PI * FOV / 360);
 
-    this.setCameraPositionOnMap(center, zoom, animationDurationMs)
+    this.setCameraPositionOnMap(center, zoom, zoomOnCountry, animationDurationMs)
 
     if (showBoxHelperDebug) {
       const box = new BoxGeometry(1, 1, 1);
@@ -286,7 +290,7 @@ export class FlatEarth implements IEarth {
     })
   }
 
-  private setCameraPositionOnMap(position: Vector3, zoom: number, animationDurationMs = 500) {
+  private setCameraPositionOnMap(position: Vector3, zoom: number, useZoom = true, animationDurationMs = 500) {
     if (!this.camera) {
       return;
     }
@@ -315,7 +319,7 @@ export class FlatEarth implements IEarth {
       anime({
         targets: this.camera.position,
         x: target.x,
-        // y: MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM), // commented, so zoom doesn't change
+        y: useZoom ? MathUtils.clamp(zoom, MIN_ZOOM, MAX_ZOOM) : undefined,
         z: target.z,
         duration: animationDurationMs,
         easing: "easeInOutQuad"
@@ -349,6 +353,7 @@ export class FlatEarth implements IEarth {
       return;
     }
     this.renderer?.render(this.scene, this.camera);
+    this.composer?.render()
   }
 
   private runRenderLoop() {

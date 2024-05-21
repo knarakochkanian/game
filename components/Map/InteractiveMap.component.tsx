@@ -7,13 +7,15 @@ import { useAppDispatch } from '../../redux/hooks';
 import { MapType } from './map.types';
 import { UseMap } from './use-map.hook';
 
-export interface MapProps {
+export interface InteractiveMapProps {
   mapType: MapType;
-  isInteractive?: boolean;
+  // isInteractive?: boolean;
 }
 
-export const WorldMap = ({ mapType, isInteractive }: MapProps) => {
+export const WorldMap = ({ mapType }: InteractiveMapProps) => {
   const dispatch = useAppDispatch();
+  
+
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
   };
@@ -21,7 +23,7 @@ export const WorldMap = ({ mapType, isInteractive }: MapProps) => {
   const planeMap = UseMap({
     onCountryPicked,
     mapType: MapType.plane,
-    isNotInteractive: isInteractive,
+    isNotInteractive: false,
   });
 
   const sphereMap = UseMap({

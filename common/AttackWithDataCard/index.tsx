@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Arrow from '../Arrow';
 import GreenLineBorders from '../GreenLineBorders';
 import { useEffect } from 'react';
