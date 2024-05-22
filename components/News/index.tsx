@@ -18,7 +18,6 @@ const News = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
-      console.log('actions', actions);
 
       const foundAction = getAction(actionId, actions) as IAction | undefined;
       setActions(storedActions);
@@ -27,6 +26,7 @@ const News = () => {
   }, [JSON.stringify(action), actionId]);
 
   useEffect(() => {
+    if(!actions) return;
     setActionId(String(actions[0]?.id));
   }, [JSON.stringify(actions)]);
 

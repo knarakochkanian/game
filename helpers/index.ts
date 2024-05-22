@@ -33,7 +33,7 @@ export const getAction = (
   actionId: string,
   actions: IAction[]
 ): IAction | undefined => {
-  return actions.find((action) => String(action.id) === actionId);
+  return actions?.find((action) => String(action.id) === actionId);
 };
 
 export const search = (searchText: string) => {
