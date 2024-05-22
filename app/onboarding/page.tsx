@@ -66,13 +66,13 @@ export default function Onboarding() {
     setModalOpen(true);
     setModalOpen2(false);
   };
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isOnboardingPassed =
-        window.localStorage.getItem('isOnboardingPassed') === 'true';
-      setOnboardingPassed(isOnboardingPassed);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const isOnboardingPassed =
+  //       window.localStorage.getItem('isOnboardingPassed') === 'true';
+  //     setOnboardingPassed(isOnboardingPassed);
+  //   }
+  // }, []);
 
   const completeOnboarding = () => {
     setOnboardingPassed(true);
@@ -193,10 +193,12 @@ export default function Onboarding() {
             <button className="ModalButton1" onClick={handleNext2}>
               далее
             </button>
-            <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">
-                <button onClick={completeOnboarding}>пропустить</button>
-              </span>
+            <Link
+              href={'/'}
+              onClick={completeOnboarding}
+              className="SecondarySmall"
+            >
+              <span className="TypoBodyBigLink">пропустить</span>
             </Link>
           </div>
         </Modal>
@@ -408,10 +410,12 @@ export default function Onboarding() {
             <button className="ModalButton1" onClick={handleNext}>
               далее
             </button>
-            <Link href={'/'} className="SecondarySmall">
-              <span className="TypoBodyBigLink">
-                <button onClick={completeOnboarding}>пропустить</button>
-              </span>
+            <Link
+              href={'/'}
+              onClick={completeOnboarding}
+              className="SecondarySmall"
+            >
+              <span className="TypoBodyBigLink">пропустить</span>
             </Link>
           </div>
         </Modal>
