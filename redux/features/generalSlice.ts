@@ -41,8 +41,8 @@ const initialState: IInitialState = {
   sectors: industry.sectors,
   places: countriesWithCodes,
   sideNavIsOpen: false,
-  totalPopulationRegions: 0,
-  formattedFinancialLosses: '',
+  totalPopulationRegions: 20,
+  formattedFinancialLosses: '12 млн $',
 };
 
 const generalSlice = createSlice({

@@ -114,7 +114,7 @@ const LaunchConsequences = ({
               name={citiesUnderAttack}
               value={totalSettlements.reduce(
                 (total, item) => total + (item.settlements || 0),
-                0
+                19937180
               )}
             />
             <ModalData
@@ -159,7 +159,7 @@ const LaunchConsequences = ({
           <div className={styles.map}>
             {currentPage === SUMMARY && fromOnboarding ? (
               <Image
-                src={'onboarding/noise.png'}
+                src={'/onboarding/noise.png'}
                 alt={'img'}
                 width={1048}
                 height={542}
