@@ -67,34 +67,62 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-e43f5367'], (function (workbox) { 'use strict';
+define(['./workbox-60fe7365'], (function (workbox) { 'use strict';
 
-  importScripts();
+  importScripts("/fallback-development.js");
   self.skipWaiting();
   workbox.clientsClaim();
+
+  /**
+   * The precacheAndRoute() method efficiently caches and responds to
+   * requests for URLs in the manifest.
+   * See https://goo.gl/S9QRab
+   */
+  workbox.precacheAndRoute([{
+    "url": "/_next/data/development/fallback.json",
+    "revision": "development"
+  }, {
+    "url": "/fallback-font.woff2",
+    "revision": "development"
+  }, {
+    "url": "/fallback.mp3",
+    "revision": "development"
+  }, {
+    "url": "/fallback.mp4",
+    "revision": "development"
+  }, {
+    "url": "/fallback.webp",
+    "revision": "development"
+  }, {
+    "url": "/~offline",
+    "revision": "development"
+  }], {
+    "ignoreURLParametersMatching": [/^utm_/, /^fbclid$/, /ts/]
+  });
+  workbox.cleanupOutdatedCaches();
   workbox.registerRoute("/", new workbox.NetworkFirst({
     "cacheName": "start-url",
     plugins: [{
       cacheWillUpdate: async ({
-        request,
-        response,
-        event,
-        state
-      }) => {
-        if (response && response.type === 'opaqueredirect') {
-          return new Response(response.body, {
-            status: 200,
-            statusText: 'OK',
-            headers: response.headers
-          });
-        }
-        return response;
-      }
+        response: e
+      }) => e && "opaqueredirect" === e.type ? new Response(e.body, {
+        status: 200,
+        statusText: "OK",
+        headers: e.headers
+      }) : e
+    }, {
+      handlerDidError: async ({
+        request: e
+      }) => "undefined" != typeof self ? self.fallback(e) : Response.error()
     }]
   }), 'GET');
   workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
     "cacheName": "dev",
-    plugins: []
+    plugins: [{
+      handlerDidError: async ({
+        request: e
+      }) => "undefined" != typeof self ? self.fallback(e) : Response.error()
+    }]
   }), 'GET');
 
 }));
