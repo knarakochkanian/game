@@ -135,7 +135,7 @@ export default function CountDown() {
   };
 
   useEffect(() => {
-    const socket = new WebSocket('ws://192.168.100.101:8888');
+    const socket = new WebSocket('wss://192.168.100.101:8888');
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.message === 'cansel pressed') {
