@@ -39,6 +39,11 @@ import Target from '../Target';
 import SidenavInMain from '../../common/SidenavInMain';
 
 import styles from './MainScreen.module.scss';
+import ModalContainer from '../../common/Modals/ModalContainer';
+import SimCards from '../../common/SimCards';
+import { simCards, waves } from '../../data/connectionData';
+import Waves from '../../common/Waves';
+import SystemState from '../../common/SystemState';
 
 const WorldMap = dynamic(
   () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),
@@ -49,28 +54,38 @@ const MainScreen = () => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [globeActive, setGlobeActive] = useState(true);
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleWave, setModalVisibleWave] = useState(false);
+  const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
-  //
-  // useEffect(() => {
-  //   let socket = new WebSocket('ws://britishellie.ru:8888');
-  //   console.log(socket, 'socket');
-  //   socket.onopen = (ev) => {
-  //     console.log(ev, 'onopen');
-  //   };
-  //
-  //   socket.onclose = (ev) => {
-  //     console.log(ev, 'onclose');
-  //   };
-  //
-  //   socket.onerror = (ev) => {
-  //     console.log(ev, 'onerror');
-  //   };
-  //   socket.onmessage = (ev) => {
-  //     console.log(ev, 'onmessage');
-  //   };
-  // }, []);
+
+  useEffect(() => {
+    const socket = new WebSocket('ws://192.168.100.101:8888');
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.message === 'sim pressed') {
+        setModalVisible(true);
+      }
+      if (data.message === 'wave pressed') {
+        setModalVisibleWave(true);
+      }
+      if (data.message === 'ready pressed') {
+        setModalVisibleSystem(true);
+      }
+    };
+
+    setSocket(socket);
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <main className={styles.mainScreen}>
@@ -87,6 +102,22 @@ const MainScreen = () => {
         imgSrc_2={isAttacking ? ProtectSign : ProtectActive}
         name={ATTACK_OR_PROTECT}
       />
+      {modalVisible && (
+        <ModalContainer setModalClose={closeModal}>
+          <SimCards simCards={simCards} />
+        </ModalContainer>
+      )}
+      {modalVisibleWave && (
+        <ModalContainer setModalClose={closeModal}>
+          <Waves waves={waves} />
+        </ModalContainer>
+      )}
+      {modalVisibleSystem && (
+        <ModalContainer setModalClose={closeModal}>
+          <SystemState isOn />
+        </ModalContainer>
+      )}
+
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
 

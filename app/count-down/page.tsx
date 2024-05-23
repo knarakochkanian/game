@@ -23,6 +23,8 @@ import {
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
+  setCurrentAction,
+  setDamageLevel,
 } from '../../redux/features/generalSlice';
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
@@ -39,6 +41,7 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const [completedActionsFromStorage, setCompletedActionsFromStorage] =
     useState<IAction[] | undefined>();
   const [actionsInQueueFromStorage, setActionsInQueueFromStorage] = useState<
@@ -113,22 +116,39 @@ export default function CountDown() {
   }, [time, router]);
 
   const cancelCountdown = () => {
-    if (!actionCompleted && actionsInQueueFromStorage) {
-      const actionsInQueue = proccessActionsToSave(
-        currentAction,
-        actionsInQueueFromStorage,
-        false
-      );
+    dispatch(setDamageLevel(null));
+    return router.push('/');
+    // if (!actionCompleted && actionsInQueueFromStorage) {
+    //   const actionsInQueue = proccessActionsToSave(
+    //     currentAction,
+    //     actionsInQueueFromStorage,
+    //     false
+    //   );
 
-      // if (typeof window !== 'undefined') {
-      //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
+    // if (typeof window !== 'undefined') {
+    //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
 
-      // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
-      // }
-    }
+    // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
+    // }
+    // }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
 
+  useEffect(() => {
+    const socket = new WebSocket('ws://192.168.100.101:8888');
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.message === 'cansel pressed') {
+        cancelCountdown();
+      }
+    };
+
+    setSocket(socket);
+
+    return () => {
+      socket.close();
+    };
+  }, []);
   const onResetGlobalState = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
