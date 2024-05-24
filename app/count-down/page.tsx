@@ -32,6 +32,7 @@ import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import styles from './count-down.module.scss';
 import Modal from '../../common/Modals/Modal';
 import Link from 'next/link';
+import { controllerServerAddress } from '../static_variables';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -135,10 +136,9 @@ export default function CountDown() {
   };
 
   useEffect(() => {
-    const socket = new WebSocket('wss://192.168.100.101:8766');
+    const socket = new WebSocket(controllerServerAddress);
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.message === 'cansel pressed') {
+      if (event.data === 'cancel pressed') {
         cancelCountdown();
       }
     };

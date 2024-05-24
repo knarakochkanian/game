@@ -49,6 +49,7 @@ const WorldMap = dynamic(
   () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),
   { ssr: false }
 );
+import { controllerServerAddress } from '../../app/static_variables';
 
 const MainScreen = () => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
@@ -62,16 +63,15 @@ const MainScreen = () => {
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
   useEffect(() => {
-    const socket = new WebSocket('wss://192.168.100.101:8766');
+    const socket = new WebSocket(controllerServerAddress);
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.message === 'sim pressed') {
+      if (event.data === 'sim pressed') {
         setModalVisible(true);
       }
-      if (data.message === 'wave pressed') {
+      if (event.data === 'wave pressed') {
         setModalVisibleWave(true);
       }
-      if (data.message === 'ready pressed') {
+      if (event.data === 'ready pressed') {
         setModalVisibleSystem(true);
       }
     };
