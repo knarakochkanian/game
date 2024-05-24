@@ -62,7 +62,7 @@ const MainScreen = () => {
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
   useEffect(() => {
-    const socket = new WebSocket('wss://192.168.100.101:8888');
+    const socket = new WebSocket('wss://192.168.100.101:8766');
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.message === 'sim pressed') {
