@@ -1,1 +1,1 @@
-export const controllerServerAddress = "ws://britishellie.ru:8888";
+export const controllerServerAddress = 'britishellie.ru:8888';

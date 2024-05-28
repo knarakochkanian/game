@@ -63,7 +63,8 @@ const MainScreen = () => {
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
   useEffect(() => {
-    const socket = new WebSocket(controllerServerAddress);
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const socket = new WebSocket(`${protocol}://${controllerServerAddress}`);
     socket.onmessage = (event) => {
       if (event.data === 'sim pressed') {
         setModalVisible(true);
