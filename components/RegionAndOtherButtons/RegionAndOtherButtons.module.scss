@@ -52,7 +52,7 @@
 .regionAndOtherButtons {
   position: fixed;
   @include flex-between;
-  width: 800px;
+  width: 400px;
   gap: 24px;
   z-index: 10;
   left: 40px;

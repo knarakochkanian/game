@@ -7,7 +7,7 @@ import Link from 'next/link';
 const Help = () => {
   return (
     <Link href={'/onboarding'} className={styles.helpIcon}>
-      <Image alt="helpIcon" src={helpIcon} width={88} height={88} priority />
+      <Image alt="helpIcon" src={helpIcon} width={48} height={48} priority />
     </Link>
   );
 };

@@ -15,6 +15,7 @@ import {
 } from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
+import { display } from '@mui/system';
 
 type setFirstActive = (bool: boolean) => void;
 
@@ -129,20 +130,20 @@ const SelectFromTwo = ({
         >
           {button_1}
         </button>
-        <div>
+        <div style={{ display: 'flex' }}>
           <Image
             onClick={handleBtn_1_Click}
             src={imgSrc_1}
             alt={'Icon'}
-            width={88}
-            height={88}
+            width={48}
+            height={48}
           />
           <Image
             onClick={handleBtn_2_Click}
             src={imgSrc_2}
             alt={'Icon'}
-            width={88}
-            height={88}
+            width={48}
+            height={48}
           />
         </div>
         <button

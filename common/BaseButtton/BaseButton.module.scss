@@ -1,13 +1,13 @@
 @import '/app/variables.module.scss';
 
 .buttonBase {
-  width: 243px;
-  height: 99px;
+  width: 143px;
+  height: 49px;
   @include TypoBodyBig;
   position: relative;
   color: #fff;
   border: 3px solid $mid-gray-background;
-  padding: 10px 20px;
+  padding: 5px 10px;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -21,12 +21,12 @@
 
 .buttonActive,
 .protectModeActive {
-  width: 243px;
-  height: 99px;
+  width: 143px;
+  height: 49px;
   @include TypoBodyBig;
   border: 3px solid $attack-green;
   position: relative;
-  padding: 10px 20px;
+  padding: 5px 10px;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -63,3 +63,5 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+

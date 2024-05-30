@@ -31,7 +31,7 @@ const TopBottomLines = () => {
         className={styles.top}
         src={top}
         alt="top"
-        width={2754}
+        width={1344}
         height={81}
         priority
         style={{ filter: blur ? 'blur(22px)' : 'none' }}

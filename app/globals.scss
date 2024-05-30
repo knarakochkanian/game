@@ -33,10 +33,10 @@ main {
 }
 .container {
   display: flex;
-  max-width: 2752px;
+  max-width: 1344px;
   padding: 24px;
   width: 100%;
-  max-height: 1704px;
+  max-height: 840px;
   height: 100%;
   justify-content: center;
   background: radial-gradient(
@@ -48,43 +48,43 @@ main {
 .container::after {
   content: '';
   position: absolute;
-  width: 2752px;
+  width: 1344px;
   top: 24px;
   left: 24px;
   /*background-image: url("/public/home/ContainerTop.svg");*/
 }
 
 h1 {
-  font-size: 78px;
+  font-size: 68px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 120%; /* 93.6px */
+  font-weight: 300;
+  line-height: 100%; /* 93.6px */
 }
 h2 {
-  font-size: 56px;
+  font-size: 46px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 120%; /* 67.2px */
+  font-weight: 500;
+  line-height: 100%; /* 67.2px */
 }
 h3 {
-  font-size: 50px;
+  font-size: 40px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
+  font-weight: 300;
+  line-height: 100%;
 }
 h4 {
-  font-size: 38px;
+  font-size: 28px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 120%; /* 45.6px */
+  font-weight: 300;
+  line-height: 100%; /* 45.6px */
   letter-spacing: 0.38px;
   text-transform: uppercase;
 }
 h5 {
-  font-size: 34px;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 120%; /* 40.8px */
+  font-weight: 400;
+  line-height: 100%; /* 40.8px */
   letter-spacing: 1.02px;
   text-transform: uppercase;
 }
@@ -122,7 +122,7 @@ button {
   font-size: 28px;
   font-style: normal;
   font-weight: 400;
-  line-height: 120%; /* 33.6px */
+  line-height: 100%; /* 33.6px */
   letter-spacing: 0.28px;
 }
 .ModalButton1 {
@@ -283,8 +283,8 @@ button {
   text-transform: uppercase;
 }
 .Lead {
-  @include set-font-size-weight(40px, 400);
-  line-height: 120%; /* 43.2px */
+  @include set-font-size-weight(30px, 300);
+  line-height: 100%; /* 43.2px */
 }
 
 a {

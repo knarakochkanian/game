@@ -14,7 +14,6 @@ export interface InteractiveMapProps {
 
 export const WorldMap = ({ mapType }: InteractiveMapProps) => {
   const dispatch = useAppDispatch();
-  
 
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
@@ -89,7 +88,7 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
         onTouchEnd={onRotateEnd}
         style={{
           position: 'absolute',
-          width: '480px',
+          width: '280px',
           height: '100vh',
           zIndex: 1,
         }}
@@ -101,7 +100,7 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
         onTouchEnd={onRotateEnd}
         style={{
           position: 'absolute',
-          width: '480px',
+          width: '280px',
           height: '100vh',
           zIndex: 1,
           right: 0,

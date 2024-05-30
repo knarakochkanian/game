@@ -1,9 +1,9 @@
 @import "/app/variables.module";
 .target{
   position: fixed;
-  top: 630px;
+  top: 230px;
   z-index: 1;
-  width: 2800px;
+  width: 1344px;
   pointer-events: none;
   &Wrapper {
     display: flex;
@@ -21,10 +21,10 @@
     >span{
       color: $white;
       font-family: "TT Lakes Neue Trial";
-      font-size: 22px;
+      font-size: 12px;
       font-style: normal;
-      font-weight: 300;
-      line-height: 120%; /* 26.4px */
+      font-weight: 200;
+      line-height: 100%; /* 26.4px */
       letter-spacing: 1.32px;
       text-transform: uppercase;
     }

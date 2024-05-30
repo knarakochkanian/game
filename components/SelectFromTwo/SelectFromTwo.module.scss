@@ -3,9 +3,9 @@
 .selectFromTwo {
   position: fixed;
   z-index: 9;
-  left: 1130px;
+  left: 530px;
   &Attack {
-    width: 540px;
+    width: 340px;
     @include flex-between;
     > button {
       @include TypoBodyBig;

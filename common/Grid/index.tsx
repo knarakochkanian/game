@@ -23,8 +23,8 @@ const Grid = () => {
           className={styles.gridImg}
           src={grid}
           alt="grid"
-          width={2800}
-          height={1752}
+          width={1344}
+          height={840}
           priority
         />
       </div>
@@ -33,8 +33,8 @@ const Grid = () => {
         className={styles.noiseImg}
         src={noise}
         alt="noise"
-        width={2800}
-        height={1752}
+        width={1344}
+        height={840}
         priority
       />
     </>

@@ -11,7 +11,7 @@ export default function CountOnboarding() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
-      window.localStorage.getItem('isOnboardingPassed') === 'true';
+        window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
@@ -27,8 +27,8 @@ export default function CountOnboarding() {
       <Image
         src={'/onboarding/count-down-onboarding.png'}
         alt="count-down"
-        width={2800}
-        height={1700}
+        width={1344}
+        height={840}
       />
       <Modal name="damageInfo" isOpen={true} counter={12}>
         <p>

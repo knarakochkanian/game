@@ -18,7 +18,7 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
     <div className={styles.loader}>
       <Image
         className={styles.smallCircle}
-        src={isAttacking ? smallCircle : smallCircleBlue }
+        src={isAttacking ? smallCircle : smallCircleBlue}
         alt="smallCircle"
         width={515}
         height={515}
@@ -26,7 +26,7 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
       />
       <Image
         className={styles.mediumCircle}
-        src={isAttacking ? mediumCircle : mediumCircleBlue }
+        src={isAttacking ? mediumCircle : mediumCircleBlue}
         alt="mediumCircle"
         width={791}
         height={791}
@@ -34,7 +34,7 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
       />
       <Image
         className={styles.bigCircle}
-        src={isAttacking ? bigCircle : bigCircleBlue }
+        src={isAttacking ? bigCircle : bigCircleBlue}
         alt="bigCircle"
         width={1015}
         height={1015}
@@ -44,8 +44,8 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         <Image
           src={isAttacking ? greenLight : blueLight}
           alt="light"
-          width={2312}
-          height={1672}
+          width={1344}
+          height={840}
           priority
         />
       </div>
@@ -53,8 +53,8 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         className={styles.target}
         src={target}
         alt="target"
-        width={470}
-        height={450}
+        width={270}
+        height={250}
         priority
       />
     </div>
