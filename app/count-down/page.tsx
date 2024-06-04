@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import Footer from '../../components/Footer';
 import { attack } from '../../public/count-down';
 import Slashes from '../../common/Slashes';
@@ -28,10 +29,9 @@ import {
 } from '../../redux/features/generalSlice';
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
+import Modal from '../../common/Modals/Modal';
 
 import styles from './count-down.module.scss';
-import Modal from '../../common/Modals/Modal';
-import Link from 'next/link';
 import { controllerServerAddress } from '../static_variables';
 
 export default function CountDown() {
@@ -52,6 +52,7 @@ export default function CountDown() {
   const [name, setName] = useState('');
 
   const [actionCompleted, setActionCompleted] = useState(false);
+  const [actionCanceled, setActionCanceled] = useState(false);
 
   useEffect(() => {
     const name = lastActionName
@@ -94,7 +95,10 @@ export default function CountDown() {
           );
 
           if (typeof window !== 'undefined') {
-            window.localStorage.setItem(LAST_ACTION_NAME, name);
+            if(!actionCanceled) {
+              window.localStorage.setItem(LAST_ACTION_NAME, name);
+            }
+            
 
             window.localStorage.setItem(
               'completedActions',
@@ -125,7 +129,6 @@ export default function CountDown() {
     //     actionsInQueueFromStorage,
     //     false
     //   );
-
     // if (typeof window !== 'undefined') {
     //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
 

@@ -33,12 +33,12 @@ const News = () => {
   console.log('action', action);
 
   if (action === undefined) {
-    return null; // Render nothing until action is set
+    return null; 
   }
 
   if (!action) {
     notFound();
-    return null; // This ensures notFound is called
+    return null; 
   }
 
   return (
