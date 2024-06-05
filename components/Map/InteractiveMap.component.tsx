@@ -6,6 +6,7 @@ import { setPlaceName } from '../../redux/features/generalSlice';
 import { useAppDispatch } from '../../redux/hooks';
 import { MapType } from './map.types';
 import { UseMap } from './use-map.hook';
+import useResetMaps from '../../hooks/useResetMaps';
 
 export interface InteractiveMapProps {
   mapType: MapType;
@@ -13,7 +14,7 @@ export interface InteractiveMapProps {
 }
 
 export const WorldMap = ({ mapType }: InteractiveMapProps) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();  
 
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
@@ -30,6 +31,8 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
     mapType: MapType.sphere,
     isNotInteractive: false,
   });
+
+  useResetMaps([sphereMap, planeMap]);
 
   const setCountryColor = useCallback(
     (name: string | string[], color?: string) => {

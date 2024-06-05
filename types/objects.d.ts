@@ -3,6 +3,16 @@ declare module 'socket.io-client';
 declare module 'redux-logger';
 // declare module '@/redux/store';
 
+type TMap = {
+  ref: MutableRefObject<null>;
+  setCountryColor: MutableRefObject<
+    ((name: string | string[], color?: string | undefined) => void) | undefined
+  >;
+  onRotateEnd: MutableRefObject<>;
+  resetColors: MutableRefObject<(() => void) | undefined>;
+  resetContours: MutableRefObject<(() => void) | undefined>;
+};
+
 interface IOption {
   value: string;
   label: string;

@@ -12,10 +12,10 @@ import {
   selectFormattedFinancialLosses,
   setFormattedFinancialLosses,
   selectIsAttacking,
+  resetGeneralState,
 } from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
-import { display } from '@mui/system';
 
 type setFirstActive = (bool: boolean) => void;
 
@@ -38,11 +38,15 @@ const SelectFromTwo = ({
 }: ISelectFromTwoProps) => {
   const [disabledBtn, setDisabledBtn] = useState(2);
   const dispatch = useAppDispatch();
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   const handleBtn_1_Click = () => {
     setDisabledBtn(2);
     if (name === ATTACK_OR_PROTECT) {
-      dispatch(setIsAttacking(true));
+      if (!isAttacking) {
+        dispatch(resetGeneralState());
+        dispatch(setIsAttacking(true));
+      }
     } else {
       (setFirstActive as setFirstActive)(true);
     }
@@ -51,21 +55,26 @@ const SelectFromTwo = ({
   const handleBtn_2_Click = () => {
     setDisabledBtn(1);
     if (name === ATTACK_OR_PROTECT) {
-      dispatch(setIsAttacking(false));
+      if (isAttacking) {
+        dispatch(resetGeneralState());
+        dispatch(setIsAttacking(false));
+      }
     } else {
       (setFirstActive as setFirstActive)(false);
     }
   };
+
   const formatNumber = (number: number) => {
     const billion = 1000000000;
     return `${(number / billion).toFixed(0)} млрд $`;
   };
+
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
-  const isAttacking = useAppSelector(selectIsAttacking);
+
   const damageLevelCount = () => {
     switch (damageLevel) {
       case 'Критический':
@@ -78,6 +87,7 @@ const SelectFromTwo = ({
         return 0;
     }
   };
+
   const totalPopulationRegions = selectedCountries.reduce((total, country) => {
     if (country.regions && country.regions.length > 0) {
       const regionsPopulation = country.regions.reduce((acc, region) => {

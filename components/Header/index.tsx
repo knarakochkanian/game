@@ -9,11 +9,32 @@ import {
   trash,
 } from '../../public/summary';
 import { IActionCardProps } from '../ActionCard';
-import { ATTACK, PROTECTION } from '../../constants';
+import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
 
 import styles from './Header.module.scss';
+import useGetPage from '../../hooks/useGetPage';
+import { useAppDispatch } from '../../redux/hooks';
+import { resetGeneralState } from '../../redux/features/generalSlice';
+import { useRouter } from 'next/navigation';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
+  const page = useGetPage();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  let trashCallBack = () => {};
+
+  switch (page) {
+    case SUMMARY:
+       trashCallBack = () => {
+        setTimeout(() => {
+          dispatch(resetGeneralState());
+        }, 10);
+    
+        router.back();
+       }
+      break;
+  }
+
   if (!action) return;
   const { actionType, name, isCompleted, date, id } = action;
 
@@ -21,6 +42,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
     if (!setActionId) {
       return;
     }
+
     setActionId(fromDetails ? '' : String(id));
   };
 
@@ -93,7 +115,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         )}
 
         {!isCompleted && (
-          <button>
+          <button onClick={trashCallBack}>
             <Image
               src={actionType === PROTECTION ? protectBlueTrash : trash}
               alt="trash"

@@ -6,9 +6,34 @@ interface IBlockes {
   european_union: string[];
   wholeWorld: string[];
   USA: string[];
+  Russia: string[];
+  Belarus: string[];
+  SNG: string[];
+  ODKB: string[];
 }
 
 const blocks: IBlockes = {
+  ODKB: [
+    'Армения',
+    'Беларусь',
+    'Казахстан',
+    'Кыргызстан',
+    'Россия',
+    'Таджикистан',
+  ],
+  SNG: [
+    'Армения',
+    'Казахстан',
+    'Беларусь',
+    'Россия',
+    'Молдова',
+    'Таджикистан',
+    'Узбекистан',
+    'Азербайджан',
+    'Киргизия',
+  ],
+  Russia: ['Россия'],
+  Belarus: ['Беларусь'],
   USA: USARegions.map((r) => r.name),
   wholeWorld: countriesWithCodes.map((c) => c.name),
   nato: [

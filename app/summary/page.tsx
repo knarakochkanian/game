@@ -13,6 +13,7 @@ import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
+  resetGeneralState,
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
@@ -73,7 +74,13 @@ const Summary = () => {
     }
   };
 
-  const onBack = () => router.back();
+  const onBack = () => {
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 10);
+
+    router.back();
+  };
 
   const onForward = () => {
     console.log('onForward');

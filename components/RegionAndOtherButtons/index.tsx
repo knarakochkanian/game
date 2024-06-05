@@ -12,6 +12,7 @@ import {
   COUNTRIES,
   DAMAGE_LEVEL_MODAL,
   INDUSTRY_MODAL,
+  MOST_LIKELY_CHOICE,
   NOT_FRIENDLY_COUNTRIES,
   REGIONS,
   REGION_MODAL,
@@ -133,6 +134,7 @@ const RegionAndOtherButtons = ({
         >
           {regions[0].regions?.map((region, index) => {
             let placesInSwitch;
+
             switch (region.title) {
               case REGIONS:
                 placesInSwitch = USARegions;
@@ -155,7 +157,6 @@ const RegionAndOtherButtons = ({
             switch (region.title) {
               case REGIONS:
               case COUNTRIES:
-              case NOT_FRIENDLY_COUNTRIES:
                 return (
                   <AccordionWrapper
                     styles={{ accordionDetailsHeight: '686px' }}
@@ -166,6 +167,21 @@ const RegionAndOtherButtons = ({
                   >
                     <Places name={region.title} places={placesInSwitch} />
                   </AccordionWrapper>
+                );
+
+              case NOT_FRIENDLY_COUNTRIES:
+                return (
+                  isAttacking && (
+                    <AccordionWrapper
+                      styles={{ accordionDetailsHeight: '686px' }}
+                      expanded={expanded}
+                      handleExpansion={handleExpansion}
+                      data={region}
+                      key={index}
+                    >
+                      <Places name={region.title} places={placesInSwitch} />
+                    </AccordionWrapper>
+                  )
                 );
             }
 
@@ -180,7 +196,10 @@ const RegionAndOtherButtons = ({
                 handleExpansion={handleExpansion}
                 data={region}
               >
-                {region.options?.map((option) => (
+                {(!isAttacking && region.title === MOST_LIKELY_CHOICE
+                  ? region.optionsForProtection 
+                  : region.options
+                )?.map((option) => (
                   <div
                     key={option.id}
                     style={{

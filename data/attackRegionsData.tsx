@@ -11,10 +11,11 @@ export interface IPlace extends Option {
   members?: string[];
 }
 
-export interface RegionCategory {
+export interface RegionCategory {  
   id: number;
   title?: string;
   options?: (Option | IPlace)[];
+  optionsForProtection?: (Option | IPlace)[];
 }
 
 export interface Region {
@@ -25,7 +26,17 @@ export interface Region {
   damage?: RegionCategory[];
 }
 
-const { G7, european_union, nato, wholeWorld, USA } = blocks;
+const {
+  G7,
+  european_union,
+  nato,
+  wholeWorld,
+  USA,
+  Belarus,
+  ODKB,
+  Russia,
+  SNG,
+} = blocks;
 
 export const regions: Region[] = [
   {
@@ -40,6 +51,13 @@ export const regions: Region[] = [
           { id: 'НАТО', name: 'НАТО', members: nato },
           { id: 'США', name: 'США', members: USA },
           { id: 'ЕВРОСОЮЗ', name: 'ЕВРОСОЮЗ', members: european_union },
+          { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
+        ],
+        optionsForProtection: [
+          { id: 'РОССИЯ', name: 'РОССИЯ', members: Russia },
+          { id: 'БЕЛОРУССИЯ', name: 'БЕЛОРУССИЯ', members: Belarus },
+          { id: 'СНГ', name: 'СНГ', members: SNG },
+          { id: 'ОДКБ', name: 'ОДКБ', members: ODKB },
           { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
         ],
       },

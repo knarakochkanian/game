@@ -164,8 +164,6 @@ const generalSlice = createSlice({
       }
     },
     removeFromPickedCountries(state, { payload }) {
-      state.sideNavIsOpen = true;
-
       removeFromPickedCountryObjects(state, payload);
 
       if (!state.pickedCountries.includes(payload)) return;
