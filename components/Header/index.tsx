@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import {
   leftSquareBracket,
   leftSquareBracketBlue,
@@ -10,28 +12,34 @@ import {
 } from '../../public/summary';
 import { IActionCardProps } from '../ActionCard';
 import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
-
-import styles from './Header.module.scss';
 import useGetPage from '../../hooks/useGetPage';
 import { useAppDispatch } from '../../redux/hooks';
 import { resetGeneralState } from '../../redux/features/generalSlice';
-import { useRouter } from 'next/navigation';
+import TrashModal from '../../common/TrashModal';
+import useCloseModal from '../../hooks/useCloseModal';
+
+import styles from './Header.module.scss';
+import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const page = useGetPage();
   const router = useRouter();
   const dispatch = useAppDispatch();
   let trashCallBack = () => {};
+  const [trashModalOpen, setTrashModalOpen] = useState(false);
+  const closeModal = () => setTrashModalOpen(false);
+  useCloseModal(trashModalOpen, setTrashModalOpen);
 
   switch (page) {
     case SUMMARY:
-       trashCallBack = () => {
+      trashCallBack = () => {
+        dispatch(setResetMapIfChanged());
         setTimeout(() => {
           dispatch(resetGeneralState());
         }, 10);
-    
+        
         router.back();
-       }
+      };
       break;
   }
 
@@ -45,7 +53,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
     setActionId(fromDetails ? '' : String(id));
   };
-
+  
   return (
     <header
       className={`${styles.header} ${setActionId ? styles.cursorPointer : ''}`}
@@ -115,7 +123,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         )}
 
         {!isCompleted && (
-          <button onClick={trashCallBack}>
+          <button onClick={() => setTrashModalOpen(true)}>
             <Image
               src={actionType === PROTECTION ? protectBlueTrash : trash}
               alt="trash"
@@ -126,6 +134,15 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
           </button>
         )}
       </div>
+
+      {trashModalOpen && (
+        <TrashModal
+          closeModal={closeModal}
+          name="trashInSummary"
+          trashCallBack={trashCallBack}
+          trashModalOpen={trashModalOpen}
+        />
+      )}
     </header>
   );
 };

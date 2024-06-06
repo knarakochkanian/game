@@ -50,3 +50,34 @@
     justify-content: flex-start;
   }
 }
+
+.modal.trashInSummary, .modal.trashInSidnav {
+  max-width: 632px;
+  top: -7% !important;
+  right: -42%;
+  left: unset;
+  z-index: 1;
+  .modalCounter {
+    justify-content: center;
+  }
+  .modalMain {
+    p {
+      text-align: center;
+      width: 493px;
+      font-size: 36px;
+    }
+  }
+  div {
+    button:nth-child(1) {
+      width: 220px;
+    }
+    button:nth-child(2) {
+      width: 242px !important;
+    }
+  }
+}
+
+.modal.trashInSidnav {
+  top: -1% !important;
+  right: 6%;
+}

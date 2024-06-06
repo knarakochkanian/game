@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import { ATTACK } from '../../constants';
-import launchHistoryIndustryOptions from '../../data/launchHistoryIndustryOptions';
-import launchHistoryRegionOptions from '../../data/launchHistoryRegionOptions';
 import Header from '../Header';
 import SelectRegionAndIndustry from '../SelectRegionAndIndustry';
 import ActionSelectedInfo from '../../common/AttackSelectedInfo';

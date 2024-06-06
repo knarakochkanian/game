@@ -1,10 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import {
+  resetGeneralState,
   selectDamgeLevel,
   selectIsAttacking,
   selectPickedCountriesObjects,
@@ -26,9 +28,11 @@ import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
 import { trash } from '../../public/summary';
+import TrashModal from '../TrashModal';
+import useCloseModal from '../../hooks/useCloseModal';
 
 import styles from './SidenavInMain.module.scss';
-import { useEffect, useState } from 'react';
+import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -48,7 +52,16 @@ function SidenavInMain({
   delayed,
   removeModalDate,
 }: ISidenavInMainProps) {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();  
+  const [trashModalOpen, setTrashModalOpen] = useState(false);
+  const closeModal = () => setTrashModalOpen(false);
+  useCloseModal(trashModalOpen, setTrashModalOpen);
+  let trashCallBack = () => {
+    dispatch(setResetMapIfChanged());
+    dispatch(resetGeneralState());
+    closeModal();
+  };
+
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -99,6 +112,15 @@ function SidenavInMain({
         className={styles.sidenav}
         style={{ width: isOpen ? '696px' : '0' }}
       >
+        {trashModalOpen && (
+          <TrashModal
+            closeModal={closeModal}
+            name="trashInSidnav"
+            trashCallBack={trashCallBack}
+            trashModalOpen={trashModalOpen}
+          />
+        )}
+
         <div className={styles.sidenavWrapper}>
           <Image
             src={isAttacking ? attack : protectionIcon}
@@ -117,13 +139,15 @@ function SidenavInMain({
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
 
-            <Image
-              src={trash}
-              alt="actionSign"
-              className={styles.actionSign}
-              width={48}
-              height={48}
-            />
+            <button onClick={() => setTrashModalOpen(true)}>
+              <Image
+                src={trash}
+                alt="trash"
+                className={styles.trash}
+                width={48}
+                height={48}
+              />
+            </button>
           </div>
 
           <div className="AccordionsWrap">

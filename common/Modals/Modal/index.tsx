@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { SxProps, Theme } from '@mui/system';
 import Box from '@mui/material/Box';
+import { trashHintIcon } from '../../../public/ui_kit';
 
 import styles from './modal.module.scss';
 
@@ -22,6 +23,7 @@ const Modal: React.FC<ModalProps> = ({
   counter,
   children,
 }) => {
+  const isTrashModal = name.includes('trash');
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
@@ -37,24 +39,28 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const modalContent = isOpen ? (
-    <Box
-      onClick={handleOutsideClick}
-      sx={sx}
-      className={`${styles.modal} ${styles[name]}`}
-    >
-      <div>
-        <div className={styles.modalCounter}>
-          <Image
-            src={'onboarding/Hint_icon.svg'}
-            alt={'icon'}
-            width={128}
-            height={96}
-          />
-          <span className={styles.modalCounter_number}>{counter}/12</span>
+    <aside>
+      <Box
+        onClick={handleOutsideClick}
+        sx={sx}
+        className={`${styles.modal} ${styles[name]}`}
+      >
+        <div>
+          <div className={styles.modalCounter}>
+            <Image
+              src={isTrashModal ? trashHintIcon : 'onboarding/Hint_icon.svg'}
+              alt={'icon'}
+              width={128}
+              height={96}
+            />
+            {!isTrashModal && (
+              <span className={styles.modalCounter_number}>{counter}/12</span>
+            )}
+          </div>
+          <div className={styles.modalMain}>{children}</div>
         </div>
-        <div className={styles.modalMain}>{children}</div>
-      </div>
-    </Box>
+      </Box>
+    </aside>
   ) : null;
 
   if (!isBrowser) {

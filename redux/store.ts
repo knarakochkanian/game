@@ -1,6 +1,7 @@
 'use client';
 import { configureStore } from '@reduxjs/toolkit';
 import generalReducer from './features/generalSlice';
+import helpersReducer from './features/helpersSlice';
 
 import logger from 'redux-logger';
 
@@ -8,6 +9,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       generalReducer,
+      helpersReducer,
     },
     middleware: (getDefaultMiddleware) =>
       process.env.NODE_ENV === 'development'
