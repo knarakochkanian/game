@@ -17,9 +17,9 @@ import { useAppDispatch } from '../../redux/hooks';
 import { resetGeneralState } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
+import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 import styles from './Header.module.scss';
-import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const page = useGetPage();

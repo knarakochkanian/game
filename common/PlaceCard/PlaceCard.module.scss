@@ -32,3 +32,10 @@
   }
   background-color: $attack-dark-green-select-60;
 }
+
+.placeCard.selected.isProtecting {
+  h4 {
+    color: $protect-blue;
+  }
+  background-color: $protect-dark-blue-select;
+}

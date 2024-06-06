@@ -2,6 +2,7 @@
 import Flag from 'react-world-flags';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
+  selectIsAttacking,
   selectPickedCountries,
   setPlaceName,
 } from '../../redux/features/generalSlice';
@@ -29,6 +30,7 @@ const PlaceCard = ({
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   return (
     <>
@@ -48,7 +50,7 @@ const PlaceCard = ({
           pickedCountries.includes(place?.name) && !fromSideNav
             ? styles.selected
             : ''
-        }`}
+        } ${!isAttacking ? styles.isProtecting : ''}`}
       >
         {place?.code && (
           <div className={styles.flagContainer}>

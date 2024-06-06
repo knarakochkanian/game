@@ -67,6 +67,12 @@
       color: $attack-green-40;
     }    
   }
+  .secondarySmallDisable.selected.isProtecting {
+    .optionName {
+      color: $protect-blue;
+    }
+    background-color: $protect-dark-blue-select;
+  }
   .searchResult {
     position: relative;
     background-color: $card;

@@ -15,6 +15,14 @@
       > li > button {
         width: 100%;  
       }
+      > li.selected > button {
+        color: $attack-green-40 !important;
+        background-color: $attack-dark-green-select-60 !important;
+      }
+      > li.selected.isProtecting > button {
+        color: $protect-blue !important;
+        background-color: $protect-dark-blue-select !important;
+      }
       > li > button > span {
         width: 100%;
         @include flex-between;

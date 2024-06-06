@@ -37,13 +37,13 @@ import dynamic from 'next/dynamic';
 import { MapType } from '../Map/map.types';
 import Target from '../Target';
 import SidenavInMain from '../../common/SidenavInMain';
-
-import styles from './MainScreen.module.scss';
 import ModalContainer from '../../common/Modals/ModalContainer';
 import SimCards from '../../common/SimCards';
 import { simCards, waves } from '../../data/connectionData';
 import Waves from '../../common/Waves';
 import SystemState from '../../common/SystemState';
+
+import styles from './MainScreen.module.scss';
 
 const WorldMap = dynamic(
   () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),

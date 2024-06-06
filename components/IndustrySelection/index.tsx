@@ -1,7 +1,11 @@
 import AccordionWrapper from '../../common/AccordionWrapper';
 import { searchSectors } from '../../helpers';
 import { selectSectors } from '../../redux/features/generalSlice';
-import { useAppSelector } from '../../redux/hooks';
+import {
+  selectAllSectorsSelected,
+  setAllSectorsSelected,
+} from '../../redux/features/helpersSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
 import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
@@ -23,7 +27,15 @@ const IndustrySelection = ({
   expanded,
   handleExpansion,
 }: IIndustrySelectionProps) => {
+  const dispatch = useAppDispatch();
   const industrySectors = useAppSelector(selectSectors);
+  const allSectorsSelected = useAppSelector(selectAllSectorsSelected);
+
+  const onSelectAll = () => {
+    dispatch(setAllSectorsSelected());
+  };
+
+  const onSelectGroup = () => {};
 
   return (
     <>
@@ -47,8 +59,17 @@ const IndustrySelection = ({
       </SearchResult>
 
       <div
-        className={showKeyboard || searchInput ? styles.hideSelectionPanel : ''}
+        className={`${styles.sectorsCtn} ${
+          showKeyboard || searchInput ? styles.hideSelectionPanel : ''
+        }`}
       >
+        <header className={styles.industryHeader}>
+          <h2>отрасли</h2>
+          <button onClick={onSelectAll}>
+            {allSectorsSelected ? 'сбросить все' : 'выбрать все'}
+          </button>
+        </header>
+
         {industrySectors?.map((sector, index) => {
           return (
             <AccordionWrapper

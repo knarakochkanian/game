@@ -1,14 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import { useAppDispatch } from '../../redux/hooks';
-import { setDamageLevel } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectDamgeLevel,
+  selectIsAttacking,
+  setDamageLevel,
+} from '../../redux/features/generalSlice';
 import { CRITICAL, MINIMAL, WARNING } from '../../constants';
+import { getLiClassnames } from '../../helpers/helpers_1';
 
 import styles from './SelectDamageModal.module.scss';
 
 const SelectDamageModal = () => {
   const dispatch = useAppDispatch();
+  const damageLevel = useAppSelector(selectDamgeLevel);
+  const isAttacking = useAppSelector(selectIsAttacking);
+  const liClassnames = {
+    critical: getLiClassnames(damageLevel, isAttacking, CRITICAL, styles),
+    minimal: getLiClassnames(damageLevel, isAttacking, MINIMAL, styles),
+    warning: getLiClassnames(damageLevel, isAttacking, WARNING, styles),
+  }
 
   const handleLevelClick = (level: string) => {
     dispatch(setDamageLevel(level));
@@ -21,7 +33,9 @@ const SelectDamageModal = () => {
         Для каждой задачи доступен выбор только одного уровня ущерба.
       </div>
       <ul className={styles.damageLevelTheGorgeList}>
-        <li>
+        <li
+          className={liClassnames.critical}
+        >
           <button
             className="SecondarySmall"
             onClick={() => handleLevelClick(CRITICAL)}
@@ -46,7 +60,7 @@ const SelectDamageModal = () => {
             </span>
           </button>
         </li>
-        <li>
+        <li className={liClassnames.minimal}>
           <button
             className="SecondarySmall"
             onClick={() => handleLevelClick(MINIMAL)}
@@ -71,7 +85,7 @@ const SelectDamageModal = () => {
             </span>
           </button>
         </li>
-        <li>
+        <li className={liClassnames.warning}>
           <button
             className="SecondarySmall"
             onClick={() => handleLevelClick(WARNING)}

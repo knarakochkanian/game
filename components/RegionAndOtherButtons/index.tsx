@@ -197,7 +197,7 @@ const RegionAndOtherButtons = ({
                 data={region}
               >
                 {(!isAttacking && region.title === MOST_LIKELY_CHOICE
-                  ? region.optionsForProtection 
+                  ? region.optionsForProtection
                   : region.options
                 )?.map((option) => (
                   <div
@@ -212,7 +212,7 @@ const RegionAndOtherButtons = ({
                         activeBlocks.includes(option.name)
                           ? styles.selected
                           : ''
-                      }`}
+                      } ${!isAttacking ? styles.isProtecting : ''}`}
                       onClick={() => {
                         dispatch(setPlaceName(option.members));
                         dispatch(setActiveBlocks(option.name));

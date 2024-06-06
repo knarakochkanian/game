@@ -13,3 +13,28 @@
   letter-spacing: 0.38px;
   text-transform: uppercase;
 }
+
+.sectorsCtn {
+  background: $card;
+  .industryHeader {
+    padding: 32px 0 0 32px;
+    h2,
+    button {
+      color: $white;
+      font-variant-numeric: slashed-zero;
+      text-transform: uppercase;
+    }
+    h2 {
+      @include set-font-size-weight(34px, 600);
+      line-height: 120%; /* 40.8px */
+      letter-spacing: 1.02px;
+    }
+    button {
+      margin-top: 32px;
+      @include TypoBodySmall;
+      padding: 16px 24px;
+      border: 2px solid $white;
+      font-size: 28px;
+    }
+  }
+}
