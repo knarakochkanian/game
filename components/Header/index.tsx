@@ -32,9 +32,9 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
   switch (page) {
     case SUMMARY:
-      trashCallBack = () => {
-        dispatch(setResetMapIfChanged());
+      trashCallBack = () => {        
         setTimeout(() => {
+          dispatch(setResetMapIfChanged());
           dispatch(resetGeneralState());
         }, 10);
         
