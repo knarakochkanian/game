@@ -143,18 +143,6 @@ export default function Onboarding() {
     setRemoveModal(false);
     setModalOpen7(true);
   };
-  const handleNext4 = () => {
-    setModalOpen4(false);
-    setModalOpen5(true);
-    setBlur(true);
-  };
-  const handleNext5 = () => {
-    setCurrentRegionId(3);
-    setBlur(false);
-    setModalOpen5(false);
-    setModalOpen6(true);
-  };
-  const handleNext6 = () => {};
   const handleSelectOpen = () => {
     setSelectOpen(true);
   };

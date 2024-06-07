@@ -5,13 +5,13 @@ import { useState } from 'react';
 import useCloseModal from '../../hooks/useCloseModal';
 import TitleAndInfo from '../TitleAndInfo';
 import { arrowDown, arrowUp } from '../../public/summary';
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 
 import styles from './DropDown.module.scss';
 import DropdownArrow from '../Arrow';
-import {SxProps, Theme} from "@mui/system";
+import { SxProps, Theme } from '@mui/system';
 
-interface IDropDownOption {
+export interface IDropDownOption {
   value: string;
   label: string;
 }
@@ -37,7 +37,7 @@ const DropDown = ({
   disabled,
   optionsTitle,
   from,
-  sx
+  sx,
 }: IDropDownProps) => {
   let defaultOpen = false;
   if (from && from === 'onboarding') {

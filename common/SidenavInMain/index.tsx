@@ -1,18 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import {
-  resetGeneralState,
   selectDamgeLevel,
   selectIsAttacking,
   selectPickedCountriesObjects,
   selectSectors,
   setCurrentAction,
 } from '../../redux/features/generalSlice';
+import Switch from '../Switch/index';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK, A_TTACK, PROTECTION, P_ROTECTION } from '../../constants';
 import { attack } from '../../public/count-down';
@@ -27,12 +26,14 @@ import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
-import { protectBlueTrash, trash } from '../../public/summary';
-import TrashModal from '../TrashModal';
-import useCloseModal from '../../hooks/useCloseModal';
-import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
+import { trash } from '../../public/summary';
 
 import styles from './SidenavInMain.module.scss';
+import { ChangeEvent, useEffect, useState } from 'react';
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -52,16 +53,7 @@ function SidenavInMain({
   delayed,
   removeModalDate,
 }: ISidenavInMainProps) {
-  const dispatch = useAppDispatch();  
-  const [trashModalOpen, setTrashModalOpen] = useState(false);
-  const closeModal = () => setTrashModalOpen(false);
-  useCloseModal(trashModalOpen, setTrashModalOpen);
-  let trashCallBack = () => {
-    dispatch(setResetMapIfChanged());
-    dispatch(resetGeneralState());
-    closeModal();
-  };
-
+  const dispatch = useAppDispatch();
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -70,25 +62,30 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
-  const [lastActionName, setLastActionName] = useState<string | null>();
+  const [lastActionName, setLastActionName] = useState<string | null>(null);
   const [name, setName] = useState('');
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+  const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsSwitchOn(event.target.checked);
+  };
 
   useEffect(() => {
-    const name = lastActionName
+    const actionName = lastActionName
       ? getNextActionName(lastActionName)
       : '#000-001';
-    setName(name);
+    setName(actionName);
   }, [lastActionName]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const lastActionName = window.localStorage.getItem('lastActionName');
-      setLastActionName(lastActionName);
+      const actionName = window.localStorage.getItem('lastActionName');
+      setLastActionName(actionName);
     }
   }, []);
 
   const onSetCurrentAction = () => {
-    const currentAction: IAction = {
+    const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
       news: news_2,
       launchConsequences,
@@ -112,15 +109,6 @@ function SidenavInMain({
         className={styles.sidenav}
         style={{ width: isOpen ? '696px' : '0' }}
       >
-        {trashModalOpen && (
-          <TrashModal
-            closeModal={closeModal}
-            name="trashInSidnav"
-            trashCallBack={trashCallBack}
-            trashModalOpen={trashModalOpen}
-          />
-        )}
-
         <div className={styles.sidenavWrapper}>
           <Image
             src={isAttacking ? attack : protectionIcon}
@@ -139,15 +127,13 @@ function SidenavInMain({
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
 
-            <button onClick={() => setTrashModalOpen(true)}>
-              <Image
-                src={isAttacking ? trash : protectBlueTrash}
-                alt="trash"
-                className={styles.trash}
-                width={48}
-                height={48}
-              />
-            </button>
+            <Image
+              src={trash}
+              alt="actionSign"
+              className={styles.actionSign}
+              width={48}
+              height={48}
+            />
           </div>
 
           <div className="AccordionsWrap">
@@ -174,21 +160,17 @@ function SidenavInMain({
             >
               Отложенный запуск
             </h5>
-            {delayed ? (
-              <Image
-                src={'/onboarding/Toggle.svg'}
-                alt={'img'}
-                width={131}
-                height={45}
+            <Switch isOn={isSwitchOn} handleSwitchChange={handleSwitchChange} />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                label="Without view renderers"
+                viewRenderers={{
+                  hours: null,
+                  minutes: null,
+                  seconds: null,
+                }}
               />
-            ) : (
-              <Image
-                src={'/home/square.svg'}
-                alt={'img'}
-                width={131}
-                height={45}
-              />
-            )}
+            </LocalizationProvider>
           </div>
           {delayed && (
             <div
@@ -252,7 +234,7 @@ function SidenavInMain({
                     ПОДТВЕРДИТЬ
                   </span>
                   <Image
-                    src={'onboarding/arrowConfirm.svg'}
+                    src={'/onboarding/arrowConfirm.svg'}
                     alt={'arrow'}
                     height={48}
                     width={48}

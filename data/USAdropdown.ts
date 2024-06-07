@@ -1,21 +1,18 @@
-interface IStepOption {
-  label?: string;
-  value?: string;
-}
+import { IDropDownOption } from '../common/DropDown';
 
-export const regionOptionsUSA: IStepOption[] = [
+export const regionOptionsUSA: IDropDownOption[] = [
   {
     label: 'США',
     value: 'США',
   },
 ];
-export const regionOptionsVPK: IStepOption[] = [
+export const regionOptionsVPK: IDropDownOption[] = [
   {
     label: 'ВПК',
     value: 'ВПК',
   },
 ];
-export const regionOptionsCritical: IStepOption[] = [
+export const regionOptionsCritical: IDropDownOption[] = [
   {
     label: 'Критический',
     value: 'Критический',
