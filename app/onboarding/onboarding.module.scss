@@ -1,7 +1,9 @@
 @import "/app/variables.module";
 .onboarding{
   position: fixed;
+  z-index: 10;
   left: 1130px;
+
   &Wrapper{
     display: flex;
     padding: 51px 0 0 51px;
