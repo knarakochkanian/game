@@ -29,6 +29,10 @@ import launchConsequences from '../../data/launchConsequences';
 import industry, { defaultSectorsSelection } from '../../data/industryData';
 import USA from '../../data/countriesWithCodes';
 
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Box from '@mui/material/Box';
+import { SxProps, Theme } from '@mui/system';
 interface SidenavProps {
   isOpen?: boolean;
   onClose?: () => void;

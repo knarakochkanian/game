@@ -234,3 +234,17 @@ $unvisible: rgba(0, 0, 0, 0);
 
   }
 }
+@mixin AccordionSummary{
+  @include flex-center;
+
+  >span{
+    color: $white;
+    text-align: center;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    margin-left: 24px;
+
+  }
+}

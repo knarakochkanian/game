@@ -5,6 +5,9 @@ import Link from 'next/link';
 import ModalData from '../../common/Modals/ModalData';
 import CountOnboarding from '../Count-onboarding';
 import Image from 'next/image';
+import { noiseMap } from '../../public/summary';
+import '../../app/globals.scss';
+
 import {
   COUNT_DOWN,
   LAUNCH_CONSEQUENCES,
