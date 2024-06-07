@@ -3,6 +3,8 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import { RegionCategory } from '../../data/attackRegionsData';
 
+import './AccordionWrapper.scss';
+
 type TStyle = {
   [key: string]: string;
 };
@@ -48,10 +50,11 @@ const AccordionWrapper = ({
         }}
         expandIcon={
           <Image
+            className={styles.expandedIcon}
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
-            width={24}
-            height={24}
+            width={12}
+            height={12}
           />
         }
         aria-controls={`${data.id}-content`}
