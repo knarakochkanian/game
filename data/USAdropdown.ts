@@ -1,9 +1,23 @@
-const regionOptionsUSA: IOption[] = [
-    {
-        label: 'США',
-        value: 'США',
-    },
+interface IStepOption {
+  label?: string;
+  value?: string;
+}
 
+export const regionOptionsUSA: IStepOption[] = [
+  {
+    label: 'США',
+    value: 'США',
+  },
 ];
-
-export default regionOptionsUSA;
+export const regionOptionsVPK: IStepOption[] = [
+  {
+    label: 'ВПК',
+    value: 'ВПК',
+  },
+];
+export const regionOptionsCritical: IStepOption[] = [
+  {
+    label: 'Критический',
+    value: 'Критический',
+  },
+];

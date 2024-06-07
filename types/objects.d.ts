@@ -58,6 +58,7 @@ interface ISectorOption {
   id: string;
   name: string;
   selected: boolean;
+  src?: string;
 }
 
 interface ISector {

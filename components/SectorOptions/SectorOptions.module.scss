@@ -27,6 +27,12 @@
   .option.displayNone {
     display: none;
   }
+  .option.hasImage{
+    opacity: 1;
+    display: flex;
+    padding-left: 20px;
+    gap: 10px;
+  }
 }
 
 .container.displayNone {
