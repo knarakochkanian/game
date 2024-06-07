@@ -17,6 +17,7 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
   const resetContours = useRef<() => void>()
   const onRotateStart = useRef<(direction: "left" | "right", speed?: number) => void>()
   const onRotateEnd = useRef<() => void>()
+  const onWindowResize = useRef<() => void>()
 
   useEffect(() => {
     if (ref.current === null) {
@@ -36,11 +37,11 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     resetContours.current = earth.resetContours.bind(earth)
     onRotateStart.current = earth.onRotateStart.bind(earth)
     onRotateEnd.current = earth.onRotateEnd.bind(earth)
+    onWindowResize.current = earth.onWindowResize.bind(earth)
 
     const onResize = () => {
       earth.onWindowResize()
     }
-
 
     window.addEventListener("resize", onResize);
 
@@ -50,5 +51,5 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     }
   }, [])
 
-  return { ref, setCountryColor, focusOnCountry, resetColors, setCountryContourVisibility, resetContours, onRotateStart, onRotateEnd }
+  return { ref, setCountryColor, focusOnCountry, resetColors, setCountryContourVisibility, resetContours, onRotateStart, onRotateEnd, onWindowResize }
 }

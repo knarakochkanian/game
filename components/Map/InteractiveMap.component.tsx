@@ -82,6 +82,16 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
     setCountryContourVisibility
   );
 
+  // update sizes on maptype change
+  useEffect(() => {
+    switch (mapType) {
+      case MapType.plane:
+        planeMap.onWindowResize.current ? planeMap.onWindowResize.current() : null
+      case MapType.sphere:
+        sphereMap.onWindowResize.current ? sphereMap.onWindowResize.current() : null
+    }
+  }, [mapType, planeMap.onWindowResize, sphereMap.onWindowResize])
+
   return (
     <>
       <div
