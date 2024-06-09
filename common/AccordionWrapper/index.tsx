@@ -67,7 +67,6 @@ const AccordionWrapper = ({
           flexWrap: 'wrap',
           display: 'flex',
           gap: '10px',
-          overflow: 'scroll',
           height: accordionDetailsHeight,
           maxHeight: accordionDetailsMaxHeight,
         }}

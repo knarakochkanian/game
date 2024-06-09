@@ -1,0 +1,38 @@
+@import '/app/variables.module.scss';
+
+/* components/AlphabetNav.module.scss */
+.alphabetNav {
+  position: absolute;
+  height: 632px;
+  right: 0;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include hideScrollBar;
+}
+
+.alphabetNav::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.letter {
+  position: relative;
+  min-height: 70px;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: $mid-dark-gray;
+  span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: $mid-dark-gray;
+    top: 50px;
+    left: 9px;
+  }
+}
+
+.letter.active {
+  color: $white;
+}

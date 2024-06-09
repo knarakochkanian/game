@@ -1,9 +1,21 @@
 @import '/app/variables.module.scss';
 
-.places {
-  margin-top: 86px;
-  width: 100%;
-  .placesAccordionSummary {
-    @include AccordionSummary;
+.container {
+  display: flex;
+  height: 100vh;
+  .two_lines {
+    position: absolute;
+    right: 0;
+    top: 65px;
+  }
+  .places {
+    max-height: 584px;
+    max-width: 403px;
+    margin-top: 86px;
+    padding-right: 35px;    
+    @include hideScrollBar;    
+  }
+  .places::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }

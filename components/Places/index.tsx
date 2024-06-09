@@ -1,11 +1,12 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
 import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
-import AlphabetLetter from '../../common/AlphabetLetter';
-import { useAppSelector } from '../../redux/hooks';
-import { selectPickedCountries } from '../../redux/features/generalSlice';
+import AlphabetNav from '../AlphabetNav';
+import { useRef, useState } from 'react';
+import { two_lines } from '../../public/ui_kit';
+import useHighlightCurrentLetter from '../../hooks/useHighlightCurrentLetter';
+import CountryWithRegions from '../CountryWithRegions';
 
 import styles from './Places.module.scss';
 
@@ -16,93 +17,113 @@ interface IPlacesProps {
 }
 
 const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
+  const letters = Array.from(
+    new Set(places?.map((place) => place.name[0].toUpperCase()))
+  ).sort();
   const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
-  const pickedCountries = useAppSelector(selectPickedCountries);
+  const [currentLetter, setCurrentLetter] = useState<string>(letters[0]);
+  const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const containerRef = useRef<HTMLDivElement>(null); // Ref for the scrollable container
+  const [clickedOnLetter, setClickedOnLetter] = useState(false);
+
+  useHighlightCurrentLetter(
+    isCountry,
+    letters,
+    currentLetter,
+    setCurrentLetter,
+    containerRef,
+    countryRefs
+  );
+
+  const handleLetterClick = (letter: string) => {
+    setClickedOnLetter(true);
+    setTimeout(() => {
+      setClickedOnLetter(false);
+    }, 500);
+
+    const element = countryRefs.current[letter];
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setCurrentLetter(letter);
+    }
+  };
 
   if (places === undefined) {
     return null;
   }
 
   return (
-    <div className={styles.places}>
-      {(places as IPlace[]).map((place, i) => {
-        const placeFirstLetterChanged =
-          places[i]?.name[0] !== places[i + 1]?.name[0];
+    <div className={styles.container}>
+      {isCountry && (
+        <Image
+          className={styles.two_lines}
+          src={two_lines}
+          alt="two_lines"
+          width={12}
+          height={75}
+          priority
+        />
+      )}
 
-        if (place?.regions) {
+      <div className={styles.places} ref={containerRef}>
+        {(places as IPlace[]).map((place, i) => {
+          const placeFirstLetterChanged =
+            places[i]?.name[0] !== places[i + 1]?.name[0];
+          const firstLetter = place.name[0].toUpperCase();
+
+          if (!countryRefs.current[firstLetter]) {
+            countryRefs.current[firstLetter] = null;
+          }
+
           return (
-            <Accordion
-              key={i}
-              sx={() => ({
-                backgroundColor: '#080808 !important',
-                color: '#FFF',
-                marginBottom: '10px',
-              })}
-            >
-              <AccordionSummary
-                key={place.code}
-                aria-expanded
-                expandIcon={
-                  <Image
-                    src={'onboarding/arrow.svg'}
-                    alt={'arrow'}
-                    width={24}
-                    height={24}
-                  />
+            <div
+              key={place.id}
+              ref={(el) => {
+                if (!countryRefs.current[firstLetter]) {
+                  countryRefs.current[firstLetter] = el;
                 }
-                sx={{ maxWidth: '566px' }}
-                aria-controls="panel2-content"
-                id="panel2-header"
-              >
-                {i === 0 && !fromSideNav && (
-                  <AlphabetLetter firstChild letter={place.name[0]} />
-                )}
-                <div className={styles.placesAccordionSummary}>
+              }}
+            >
+              {place?.regions ? (
+                <>
+                  {i === 0 && <div id={firstLetter} />}
+                  <CountryWithRegions
+                    fromSideNav={fromSideNav}
+                    i={i}
+                    place={place}
+                    placeFirstLetterChanged={placeFirstLetterChanged}
+                    places={places}
+                  />
+                </>
+              ) : (
+                <>
+                  {i === 0 && <div id={firstLetter} />}
                   <PlaceCard
                     fromSideNav={fromSideNav}
-                    isCountry
+                    i={i}
+                    places={places}
+                    placeFirstLetterChanged={
+                      placeFirstLetterChanged && !fromSideNav
+                    }
+                    isCountry={isCountry}
+                    key={i}
                     place={place}
                   />
-                </div>
-                {placeFirstLetterChanged && !fromSideNav && (
-                  <AlphabetLetter letter={places[i + 1]?.name[0]} />
-                )}
-              </AccordionSummary>
-              <AccordionDetails>
-                {place?.regions?.map((region, i) =>
-                  fromSideNav ? (
-                    pickedCountries.includes(region.name) && (
-                      <PlaceCard
-                        fromSideNav={fromSideNav}
-                        key={i}
-                        place={region}
-                      />
-                    )
-                  ) : (
-                    <PlaceCard
-                      fromSideNav={fromSideNav}
-                      key={i}
-                      place={region}
-                    />
-                  )
-                )}
-              </AccordionDetails>
-            </Accordion>
+                </>
+              )}
+            </div>
           );
-        }
+        })}
+      </div>
 
-        return (
-          <PlaceCard
-            fromSideNav={fromSideNav}
-            i={i}
-            places={places}
-            placeFirstLetterChanged={placeFirstLetterChanged && !fromSideNav}
-            isCountry={isCountry}
-            key={i}
-            place={place}
-          />
-        );
-      })}
+      {isCountry && (
+        <AlphabetNav
+          clickedOnLetter={clickedOnLetter}
+          letters={letters}
+          onLetterClick={handleLetterClick}
+          currentLetter={currentLetter}
+        />
+      )}
     </div>
   );
 };

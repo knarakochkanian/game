@@ -1366,15 +1366,7 @@ const countriesWithCodes: IPlace[] = [
     code: '408',
     population: 25000000,
     settlements: 11,
-  },
-  {
-    isSelected: false,
-    id: 247,
-    name: 'Южный Судан',
-    code: '247',
-    population: 11088796,
-    settlements: 27,
-  },
+  },  
   {
     isSelected: false,
     id: 180,
@@ -1815,7 +1807,7 @@ const countriesWithCodes: IPlace[] = [
         name: 'Флорида',
         population: 25145561,
         settlements: 345,
-      },
+      },      
       {
         isSelected: false,
         id: 348,
@@ -1829,6 +1821,14 @@ const countriesWithCodes: IPlace[] = [
         name: 'Южная Каролина',
         population: 814180,
         settlements: 70,
+      },
+      {
+        isSelected: false,
+        id: 247,
+        name: 'Южный Судан',
+        code: '247',
+        population: 11088796,
+        settlements: 27,
       },
       {
         isSelected: false,

@@ -1,0 +1,5 @@
+@import '/app/variables.module.scss';
+
+.placesAccordionSummary {
+    @include AccordionSummary;
+  }
