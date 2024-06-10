@@ -1,5 +1,9 @@
 @import '/app/variables.module.scss';
 
+dialog.searchResult::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 dialog.searchResult {
   display: block;
   width: 100%;
@@ -10,6 +14,7 @@ dialog.searchResult {
   padding: 32px 0 32px 32px;
   border: none;
   @include scrollStyles;
+  @include hideScrollBar;
   .slashes_90_degree {
     position: absolute;
     right: 0;
