@@ -1,0 +1,60 @@
+@import '/app/variables.module.scss';
+
+.layout {
+  align-items: center;
+  @include flex-column(12px);
+  .row {
+    display: flex;
+    gap: 12px;
+    button {
+      @include keyboardBtnStyles;
+    }
+    .backspace,
+    .enterKey,
+    .shift,
+    .emogiIcon,
+    .switchToDigitsBtn,
+    .changeLanguageBtn,
+    .point,
+    .keyboardIcon {
+      opacity: 0.5;
+    }
+    button.switchToDigitsBtn {
+      font-size: 18px;
+    }
+    button.enterKey {
+      width: 117px;
+      opacity: unset;
+      border: 0.943px solid $attack-green;
+    }
+    button.space {
+      width: 511px;
+    }
+    button.shift.isOn {
+      background: $attack-green;
+      color: $black;
+      opacity: unset !important;
+    }
+  }
+}
+
+.layout.english {
+  align-items: flex-end;
+}
+
+.layout.digits {
+  .row.second {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+    .enterKey {
+      grid-row: span 2;
+      width: 75px;
+      height: 157px;
+    }
+  }
+  .switchToLetterssBtn {
+    opacity: 0.5;
+  }
+}

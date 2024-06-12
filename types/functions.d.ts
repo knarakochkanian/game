@@ -10,3 +10,6 @@ type TDispatch = ThunkDispatch<
   UnknownAction
 > &
   Dispatch<UnknownAction>;
+  type TKeyboardRefFunc = (
+    r: MutableRefObject<{ setSearchInput: (input: string) => void } | null>
+  ) => MutableRefObject<{ setSearchInput: (input: string) => void } | null>;

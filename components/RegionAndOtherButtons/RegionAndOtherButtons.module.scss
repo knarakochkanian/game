@@ -100,13 +100,14 @@
   .hideSelectionPanel {
     display: none;
   }
-  dialog.keyboard  {
+  dialog.keyboard {
     display: block;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     background: $black;
-    padding: 58px 0;
+    padding: 27px 0;
+    border: none;
   }
 }
