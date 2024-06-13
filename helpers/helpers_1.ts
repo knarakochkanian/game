@@ -1,6 +1,14 @@
-import { BACKSPACE_NAME, ENGLISH, RUSSIAN, SHIFT_NAME, SPACE_NAME } from '../constants';
+import dayjs from 'dayjs';
+import {
+  BACKSPACE_NAME,
+  ENGLISH,
+  RUSSIAN,
+  SHIFT_NAME,
+  SPACE_NAME,
+} from '../constants';
 import englishLayout from '../data/keyboardData/englishLayout';
 import russianLayout from '../data/keyboardData/russianLayout';
+import { formatDate } from '.';
 
 export const getLiClassnames = (
   damageLevel: string,
@@ -28,12 +36,18 @@ export const getLanguageLayout = (language: string) => {
   }
 };
 
-export const proccessNewInput = (button: string, input: string, cursorPosition: number) => {
+export const proccessNewInput = (
+  button: string,
+  input: string,
+  cursorPosition: number
+) => {
   let newInput = input;
   switch (button) {
     case BACKSPACE_NAME:
       if (cursorPosition > 0) {
-        newInput = newInput.slice(0, cursorPosition - 1) + newInput.slice(cursorPosition);
+        newInput =
+          newInput.slice(0, cursorPosition - 1) +
+          newInput.slice(cursorPosition);
       }
       break;
 
@@ -41,13 +55,30 @@ export const proccessNewInput = (button: string, input: string, cursorPosition: 
       break;
 
     case SPACE_NAME:
-      newInput = newInput.slice(0, cursorPosition) + ' ' + newInput.slice(cursorPosition);
+      newInput =
+        newInput.slice(0, cursorPosition) +
+        ' ' +
+        newInput.slice(cursorPosition);
       break;
 
     default:
-      newInput = newInput.slice(0, cursorPosition) + button + newInput.slice(cursorPosition);
+      newInput =
+        newInput.slice(0, cursorPosition) +
+        button +
+        newInput.slice(cursorPosition);
       break;
   }
   return newInput;
 };
 
+export const getDelayedDateWithTime = (
+  delayedDate: dayjs.Dayjs | null,
+  delayedTime: string | null
+) => {
+  let delayedDateProccessed = null;
+  if (delayedDate) {
+    delayedDateProccessed = formatDate(delayedDate?.toDate());
+  }
+
+  return `${delayedDateProccessed?.split(' ')[0]} ${delayedTime || '00:00'}`;
+};

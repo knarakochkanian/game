@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import {
   backspace,
@@ -27,9 +27,9 @@ import {
   setKeyboardInput,
 } from '../../../redux/features/helpersSlice';
 import KeyboardLetters from '../../../common/KeyboardLetters';
+import useKeyboardLayoutEffects from '../../../hooks/useKeyboardLayoutEffects';
 
 import styles from './Layout.module.scss';
-import useKeyboardLayoutEffects from '../../../hooks/useKeyboardLayoutEffects';
 
 interface ILayoutProps extends TIsDigitLayoutState, IKeyboardManagementProps {
   setIsDigitLayout: TSetBoolean;

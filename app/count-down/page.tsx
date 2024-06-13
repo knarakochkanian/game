@@ -101,7 +101,7 @@ export default function CountDown() {
             
 
             window.localStorage.setItem(
-              'completedActions',
+              COMPLETED_ACTIONS,
               JSON.stringify(completedActions)
             );
           }

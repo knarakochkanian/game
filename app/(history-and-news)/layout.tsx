@@ -10,14 +10,24 @@ import Image from 'next/image';
 import { darkerGradient } from '../../public/history';
 
 import styles from './layout.module.scss';
+import { useAppDispatch } from '../../redux/hooks';
+import { resetGeneralState } from '../../redux/features/generalSlice';
 
 export default function HistoryAndNewsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const onBack = () => router.push('/');
+  
+  const onBack = () => {
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 10);
+
+    router.back();
+  };
 
   return (
     <div>
