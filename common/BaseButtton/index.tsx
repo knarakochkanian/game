@@ -8,6 +8,7 @@ interface BaseButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   protectMode?: boolean;
+  styleBlur?:boolean;
 }
 
 function BaseButton({
@@ -16,6 +17,7 @@ function BaseButton({
   disabled,
   onClick,
   protectMode,
+  styleBlur,
 }: BaseButtonProps) {
   const buttonClass = clsx({
     [protectMode ? styles.protectModeActive : styles.buttonActive]: active,
@@ -24,7 +26,7 @@ function BaseButton({
   });
 
   return (
-    <button className={buttonClass} onClick={onClick} disabled={disabled}>
+    <button style={{filter: styleBlur === true ? 'blur(22px)' : 'none'}} className={buttonClass} onClick={onClick} disabled={disabled}>
       <span
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,

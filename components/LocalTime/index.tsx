@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { pagesWithoutLocalTime } from '../../constants';
 
 import styles from './LocalTime.module.scss';
-import { selectBlur, selectOnboardingBlur } from '../../redux/features/generalSlice';
+import { selectBlur, selectLocalTimeBlur, selectOnboardingBlur } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
 import useGetPage from '../../hooks/useGetPage';
 import { useSelector } from 'react-redux';
@@ -18,20 +18,15 @@ const Index: React.FC = () => {
     pathname?.split('/').includes(page)
   );
   const onBoardingBlur = useSelector(selectOnboardingBlur);
+  const localTimeBlur = useSelector(selectLocalTimeBlur);
   useEffect(() => {
-    let onBoardingBlurCount = 0;
-    Object.values(onBoardingBlur).forEach(elem => {
-      if (elem === true) {
-        onBoardingBlurCount++;
-      }
-    })
-    if (onBoardingBlurCount !== 0) {
-      setTimeBlur('blur(22px)');
+    if (localTimeBlur === true) {
+      setTimeBlur('blur(22px)')
     }
     else {
       setTimeBlur('none')
     }
-  }, [onBoardingBlur])
+  }, [localTimeBlur])
   
   useEffect(() => {
     const updateDateTime = () => {

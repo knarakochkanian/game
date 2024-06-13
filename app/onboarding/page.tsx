@@ -14,7 +14,7 @@ import styles from './onboarding.module.scss';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectBlur, selectOnboardingBlur, setBlur, setOnBoardingBlur } from '../../redux/features/generalSlice';
+import { selectBlur, selectOnboardingBlur, setBlur, setLocalTimeBlur, setOnBoardingBlur } from '../../redux/features/generalSlice';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -51,7 +51,12 @@ export default function Onboarding() {
 
   const [currentModal, setCurrentModal] = useState(1);
 
-  const [attackBlur, setAttaclBlur] = useState('none;');  
+  const [step2Blur, setStep2Blur] = useState({
+    first: false,
+    second: true,
+    third: true,
+  });
+  const [attackButtonsBlur, setAttackButtonsBlur] = useState('none');
 
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
@@ -98,7 +103,6 @@ export default function Onboarding() {
         ));
         break;
       case 2:
-        setAttaclBlur('blur(22px)');
         dispatch(setOnBoardingBlur(
           {
             1: false,
@@ -115,6 +119,7 @@ export default function Onboarding() {
             12: false,
           }
         ));
+        setAttackButtonsBlur('blur(22px)');
         break;
       case 3:
         dispatch(setOnBoardingBlur(
@@ -295,6 +300,7 @@ export default function Onboarding() {
             12: true,
           }
         ));
+        setAttackButtonsBlur('none');
         break;
       default:
         break;
@@ -348,18 +354,25 @@ export default function Onboarding() {
     handleSelectRegion(1);
     setBlurButtons(false);
     setCurrentModal(3);
+    // setStep2Blur({
+    //   first: true,
+    //   second: false,
+    //   third: true
+    // })
   };
   const handleOpenSidenav = (option: any) => {
     if (option.name === 'США' && modalOpen3) {
       setDrawerOpen(!drawerOpen);
       dispatch(setBlur(false));
       setAddUSA(true);
+      dispatch(setLocalTimeBlur(false));
     }
   };
   const handleAddTheGorge = () => {
     dispatch(setBlur(false));
     setAddConfirm(true);
     setTheGorgeSelected(true);
+    dispatch(setLocalTimeBlur(false));
   };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
@@ -369,6 +382,12 @@ export default function Onboarding() {
     setModalOpen4(true);
     setExpanded(false);
     setCurrentModal(4);
+    setStep2Blur({
+      first: true,
+      second: false,
+      third: true,
+    });
+    dispatch(setLocalTimeBlur(true));
   };
   const handleNext4 = () => {
     setModalOpen4(false);
@@ -384,6 +403,12 @@ export default function Onboarding() {
     setModalOpen6(true);
     setInputTheGorge(false);
     setCurrentModal(6);
+    setStep2Blur({
+      first: true,
+      second: true,
+      third: false,
+    });
+    dispatch(setLocalTimeBlur(true));
   };
   const handleNext6 = () => {
     dispatch(setBlur(false));
@@ -391,6 +416,11 @@ export default function Onboarding() {
     setRemoveModal(false);
     setModalOpen7(true);
     setCurrentModal(7);
+    setStep2Blur({
+      first: true,
+      second: true,
+      third: true,
+    })
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);
@@ -399,6 +429,7 @@ export default function Onboarding() {
     dispatch(setBlur(false));
     setAddColor(true);
     setVpkSelected(true);
+    dispatch(setLocalTimeBlur(false))
   };
   const handleNext7 = () => {
     setModalOpen7(false);
@@ -422,8 +453,9 @@ export default function Onboarding() {
           style={{ filter: blurButtons ? 'blur(22px)' : 'none' }}
           className={styles.onboardingButtons}
         >
-          {regions.map((region) => (
+          {regions.map((region, index) => (
             <BaseButton
+              styleBlur={index === 0 ? step2Blur['first'] : index === 1 ? step2Blur['second'] : step2Blur['third']}
               key={region.id}
               active={currentRegionId === region.id}
               // disabled={ buttonsDisabled ||  region.id == 2 || region.id == 3}
@@ -871,7 +903,7 @@ export default function Onboarding() {
             </Link>
           </div>
         </Modal>
-        <div style={{filter: attackBlur}} className={styles.onboardingAttack}>
+        <div style={{ filter: attackButtonsBlur }} className={styles.onboardingAttack}>
           <button onClick={openModal}>атака</button>
           <div>
             <Image
