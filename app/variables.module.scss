@@ -190,7 +190,7 @@ $unvisible: rgba(0, 0, 0, 0);
   display: block;
   -webkit-line-clamp: unset;
   -webkit-box-orient: unset;
-  overflow: scroll;
+  overflow-y: scroll;
   text-overflow: unset;
   max-width: none;
 }

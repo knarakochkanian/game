@@ -40,13 +40,21 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
     setTimeout(() => {
       setClickedOnLetter(false);
     }, 500);
-
+  
     const element = countryRefs.current[letter];
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const container = containerRef.current;
+    const offset = 60; 
+  
+    if (element && container) {
+      const elementPosition = element.getBoundingClientRect().top;
+      const containerPosition = container.getBoundingClientRect().top;
+      const scrollPosition = container.scrollTop + (elementPosition - containerPosition) - offset;
+  
+      container.scrollTo({ top: scrollPosition, behavior: 'smooth' });
       setCurrentLetter(letter);
     }
   };
+  
 
   if (places === undefined) {
     return null;

@@ -63,9 +63,10 @@ const Layout = ({
     onChange(newInput);
     onKeyPress(button);
     if (button === SHIFT_NAME) return;
+    const cursorChangeSize = button === ':)' ? 2 : 1
 
     setCursorPosition((prevPos) =>
-      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + 1
+      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + cursorChangeSize
     );
   };
 
@@ -163,7 +164,7 @@ const Layout = ({
 
           <div className={styles.row}>
             <button
-              onClick={() => handleButtonClick(')')}
+              onClick={() => handleButtonClick(':)')}
               className={styles.emogiIcon}
             >
               <Image
