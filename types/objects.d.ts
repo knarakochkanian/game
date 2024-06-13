@@ -87,6 +87,7 @@ type TRef = MutableRefObject<{
 } | null>
 
 interface IKeyboardManagementProps {
+  searchInputRef: RefObject<HTMLInputElement>;
   setLayoutName: TSetString;
   keyboardRef: TKeyboardRefFunc;
   layoutName: string;

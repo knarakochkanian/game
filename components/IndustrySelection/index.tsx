@@ -26,6 +26,7 @@ const IndustrySelection = ({
   showKeyboard,
   expanded,
   handleExpansion,
+  searchInputRef,
 }: IIndustrySelectionProps) => {
   const dispatch = useAppDispatch();
   const industrySectors = useAppSelector(selectSectors);
@@ -40,6 +41,7 @@ const IndustrySelection = ({
   return (
     <>
       <SearchInput
+        searchInputRef={searchInputRef}
         onChangeInput={onChangeInput}
         onSearchClick={onSearchClick}
         searchInput={searchInput}

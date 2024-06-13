@@ -55,6 +55,7 @@ const RegionAndOtherButtons = ({
   const [selectDamageOpen, setSelectDamageOpen] = useState(false);
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
   const countries = useAppSelector(selectPlaces);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -113,6 +114,7 @@ const RegionAndOtherButtons = ({
 
       <ModalWithSelect isOpen={selectOpen} onClose={() => {}}>
         <SearchInput
+          searchInputRef={searchInputRef}
           onChangeInput={onChangeInput}
           onSearchClick={onSearchClick}
           searchInput={searchInput}
@@ -232,6 +234,7 @@ const RegionAndOtherButtons = ({
         name="Отрасль"
       >
         <IndustrySelection
+          searchInputRef={searchInputRef}
           expanded={expanded}
           handleExpansion={handleExpansion}
           showKeyboard={showKeyboard}
@@ -252,7 +255,12 @@ const RegionAndOtherButtons = ({
 
       {showKeyboard && (
         <dialog className={styles.keyboard}>
-          <Keyboard setShowKeyboard={setShowKeyboard} setSearchInput={setSearchInput} keyboardRef={keyboardRef} />
+          <Keyboard
+            searchInputRef={searchInputRef}
+            setShowKeyboard={setShowKeyboard}
+            setSearchInput={setSearchInput}
+            keyboardRef={keyboardRef}
+          />
         </dialog>
       )}
     </div>

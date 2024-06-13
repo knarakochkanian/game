@@ -28,21 +28,26 @@ export const getLanguageLayout = (language: string) => {
   }
 };
 
-export const proccessNewInput = (button: string, newInput: string) => {
+export const proccessNewInput = (button: string, input: string, cursorPosition: number) => {
+  let newInput = input;
   switch (button) {
     case BACKSPACE_NAME:
-      newInput = newInput.slice(0, -1);
-      return newInput;
+      if (cursorPosition > 0) {
+        newInput = newInput.slice(0, cursorPosition - 1) + newInput.slice(cursorPosition);
+      }
+      break;
 
     case SHIFT_NAME:
-      return newInput;
+      break;
 
     case SPACE_NAME:
-      newInput += ' ';
-      return newInput;
+      newInput = newInput.slice(0, cursorPosition) + ' ' + newInput.slice(cursorPosition);
+      break;
 
     default:
-      newInput += button;
-      return newInput;
+      newInput = newInput.slice(0, cursorPosition) + button + newInput.slice(cursorPosition);
+      break;
   }
+  return newInput;
 };
+

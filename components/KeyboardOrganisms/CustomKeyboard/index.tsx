@@ -18,6 +18,7 @@ const CustomKeyboard = ({
   onToggleLanguage,
   setShowKeyboard,
   setLayoutName,
+  searchInputRef,
 }: ICustomKeyboardProps) => {
   const [isDigitLayout, setIsDigitLayout] = useState(false);
 
@@ -28,6 +29,7 @@ const CustomKeyboard = ({
       }`}
     >
       <Layout
+        searchInputRef={searchInputRef}
         setLayoutName={setLayoutName}
         setShowKeyboard={setShowKeyboard}
         onToggleLanguage={onToggleLanguage}

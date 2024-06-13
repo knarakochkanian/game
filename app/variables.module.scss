@@ -163,10 +163,17 @@ $unvisible: rgba(0, 0, 0, 0);
 }
 
 @mixin keyboardLetterStyles($fontSize) {
+  position: relative;
   color: $white;
   text-align: center;
   font-family: 'Roboto';
   @include set-font-size-weight($fontSize, 400);
+  span {
+    position: absolute;
+    font-size: 14px;
+    top: 6px;
+    right: 4px;
+  }
 }
 
 //other

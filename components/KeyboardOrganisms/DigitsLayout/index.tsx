@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { backspace, enterKey, keyboardIcon } from '../../../public/keyboard';
 import { BACKSPACE_NAME } from '../../../constants';
+import KeyboardNumbers from '../../../common/KeyboardNumbers';
 
 import styles from '../Layout/Layout.module.scss';
 
@@ -16,14 +17,10 @@ const DigitsLayout = ({
   return (
     <div className={`${styles.layout} ${styles.digits}`}>
       <div className={styles.row}>
-        {[1, 2, 3].map((number) => (
-          <button
-            onClick={() => handleButtonClick(String(number))}
-            key={number}
-          >
-            {number}
-          </button>
-        ))}
+        <KeyboardNumbers
+          handleButtonClick={handleButtonClick}
+          numbers={[1, 2, 3]}
+        />
         <button
           onClick={() => handleButtonClick(BACKSPACE_NAME)}
           className={styles.backspace}
@@ -39,14 +36,10 @@ const DigitsLayout = ({
       </div>
 
       <div className={`${styles.row} ${styles.second}`}>
-        {[4, 5, 6].map((number) => (
-          <button
-            onClick={() => handleButtonClick(String(number))}
-            key={number}
-          >
-            {number}
-          </button>
-        ))}
+        <KeyboardNumbers
+          handleButtonClick={handleButtonClick}
+          numbers={[4, 5, 6]}
+        />
         <button
           onClick={() => setShowKeyboard(false)}
           className={styles.enterKey}
@@ -59,14 +52,10 @@ const DigitsLayout = ({
             height={26}
           />
         </button>
-        {[7, 8, 9].map((number) => (
-          <button
-            onClick={() => handleButtonClick(String(number))}
-            key={number}
-          >
-            {number}
-          </button>
-        ))}
+        <KeyboardNumbers
+          handleButtonClick={handleButtonClick}
+          numbers={[7, 8, 9]}
+        />
       </div>
 
       <div className={styles.row}>

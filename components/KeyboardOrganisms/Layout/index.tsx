@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
   backspace,
   emogiIcon,
@@ -8,17 +8,28 @@ import {
   keyboardIcon,
   shift,
 } from '../../../public/keyboard';
-import KeyBoardRow_1 from '../../../common/KeyBoardRow_1';
-import KeyBoardRow_2 from '../../../common/KeyBoardRow_2';
-import KeyBoardRow_3 from '../../../common/KeyBoardRow_3';
 import {
   getLanguageLayout,
   proccessNewInput,
 } from '../../../helpers/helpers_1';
-import { BACKSPACE_NAME, DEFAULT, ENGLISH, SHIFT, SHIFT_NAME, SPACE_NAME } from '../../../constants';
+import {
+  BACKSPACE_NAME,
+  DEFAULT,
+  ENGLISH,
+  SHIFT,
+  SHIFT_NAME,
+  SPACE_NAME,
+} from '../../../constants';
 import DigitsLayout from '../DigitsLayout';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import {
+  selectKeyboardInput,
+  setKeyboardInput,
+} from '../../../redux/features/helpersSlice';
+import KeyboardLetters from '../../../common/KeyboardLetters';
 
 import styles from './Layout.module.scss';
+import useKeyboardLayoutEffects from '../../../hooks/useKeyboardLayoutEffects';
 
 interface ILayoutProps extends TIsDigitLayoutState, IKeyboardManagementProps {
   setIsDigitLayout: TSetBoolean;
@@ -37,34 +48,44 @@ const Layout = ({
   onKeyPress,
   setShowKeyboard,
   setLayoutName,
+  searchInputRef,
 }: ILayoutProps) => {
-  const [input, setInput] = useState('');
+  const dispatch = useAppDispatch();
+  const defaultInputValue = useAppSelector(selectKeyboardInput);
+  const [input, setInput] = useState(defaultInputValue || '');
+  const [cursorPosition, setCursorPosition] = useState(0);
   const isUppercase = layoutName === SHIFT;
-  const handleButtonClick = (button: string) => {
-    let newInput = input;
-    newInput = proccessNewInput(button, newInput);
 
+  const handleButtonClick = (button: string) => {
+    const newInput = proccessNewInput(button, input, cursorPosition);
+    dispatch(setKeyboardInput(newInput));
     setInput(newInput);
     onChange(newInput);
     onKeyPress(button);
+    if (button === SHIFT_NAME) return;
+
+    setCursorPosition((prevPos) =>
+      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + 1
+    );
   };
 
   const onLetterClick = (letter: string) => {
-    handleButtonClick(letter);
     if (layoutName === SHIFT) {
       setLayoutName(DEFAULT);
+      handleButtonClick(letter.toUpperCase());
+    } else {
+      handleButtonClick(letter);
     }
   };
 
-  useEffect(() => {
-    if (keyboardRef) {
-      keyboardRef({
-        setSearchInput: (input: string) => {
-          setInput(input);
-        },
-      });
-    }
-  }, [keyboardRef]);
+  useKeyboardLayoutEffects(
+    searchInputRef,
+    cursorPosition,
+    setCursorPosition,
+    input,
+    setInput,
+    keyboardRef
+  );
 
   return (
     <>
@@ -81,11 +102,10 @@ const Layout = ({
           }`}
         >
           <div className={styles.row}>
-            <KeyBoardRow_1
-              setLayoutName={setLayoutName}
+            <KeyboardLetters
               isUppercase={isUppercase}
+              letters={getLanguageLayout(language).firstRow}
               onLetterClick={onLetterClick}
-              layout={getLanguageLayout(language)}
             />
             <button
               onClick={() => handleButtonClick(BACKSPACE_NAME)}
@@ -102,11 +122,10 @@ const Layout = ({
           </div>
 
           <div className={styles.row}>
-            <KeyBoardRow_2
-              setLayoutName={setLayoutName}
+            <KeyboardLetters
               isUppercase={isUppercase}
+              letters={getLanguageLayout(language).secondRow}
               onLetterClick={onLetterClick}
-              layout={getLanguageLayout(language)}
             />
             <button
               onClick={() => setShowKeyboard(false)}
@@ -129,11 +148,10 @@ const Layout = ({
             >
               <Image priority src={shift} alt="shift" width={26} height={26} />
             </button>
-            <KeyBoardRow_3
-              setLayoutName={setLayoutName}
+            <KeyboardLetters
               isUppercase={isUppercase}
+              letters={getLanguageLayout(language).thirdRow}
               onLetterClick={onLetterClick}
-              layout={getLanguageLayout(language)}
             />
             <button
               onClick={() => handleButtonClick(SHIFT_NAME)}
@@ -145,7 +163,7 @@ const Layout = ({
 
           <div className={styles.row}>
             <button
-              onClick={() => handleButtonClick(':)')}
+              onClick={() => handleButtonClick(')')}
               className={styles.emogiIcon}
             >
               <Image

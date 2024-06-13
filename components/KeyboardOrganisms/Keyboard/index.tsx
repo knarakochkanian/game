@@ -1,7 +1,13 @@
 'use client';
 
-import { MutableRefObject, useState } from 'react';
-import { DEFAULT, ENGLISH, RUSSIAN, SHIFT, SHIFT_NAME } from '../../../constants';
+import { MutableRefObject, RefObject, useState } from 'react';
+import {
+  DEFAULT,
+  ENGLISH,
+  RUSSIAN,
+  SHIFT,
+  SHIFT_NAME,
+} from '../../../constants';
 import CustomKeyboard from '../CustomKeyboard';
 
 interface IKeyBoardProps {
@@ -10,12 +16,14 @@ interface IKeyBoardProps {
   keyboardRef: MutableRefObject<{
     setSearchInput: (input: string) => void;
   } | null>;
+  searchInputRef: RefObject<HTMLInputElement>;
 }
 
 const Keyboard = ({
   setSearchInput,
   keyboardRef,
   setShowKeyboard,
+  searchInputRef,
 }: IKeyBoardProps) => {
   const [layoutName, setLayoutName] = useState(DEFAULT);
   const [language, setLanguage] = useState(RUSSIAN);
@@ -41,6 +49,7 @@ const Keyboard = ({
   return (
     <>
       <CustomKeyboard
+        searchInputRef={searchInputRef}
         setLayoutName={setLayoutName}
         setShowKeyboard={setShowKeyboard}
         onToggleLanguage={toggleLanguage}

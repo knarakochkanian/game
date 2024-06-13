@@ -8,9 +8,8 @@ type TIsDigitLayoutState = {
   setIsDigitLayout: TSetBoolean;
 }
 
-type TKeyboardRowProps = {
-  setLayoutName: TSetString;
+type TKeyboardLettersProps = {
+  letters: string[];
   isUppercase: boolean;
-  layout: TLayout;
   onLetterClick: (letter: string) => void
 }
