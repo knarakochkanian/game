@@ -23,7 +23,7 @@ export interface IInitialState {
   sideNavIsOpen: boolean;
   activeBlocks: string[];
   totalPopulationRegions: number;
-  formattedFinancialLosses: string;
+  formattedFinancialLosses: string;  
 }
 
 const initialState: IInitialState = {

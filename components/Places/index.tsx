@@ -19,7 +19,8 @@ interface IPlacesProps {
 const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
   const letters = Array.from(
     new Set(places?.map((place) => place.name[0].toUpperCase()))
-  ).sort();
+  );
+  
   const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
   const [currentLetter, setCurrentLetter] = useState<string>(letters[0]);
   const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});

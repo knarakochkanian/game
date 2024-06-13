@@ -48,7 +48,7 @@ import type { DateTimePickerProps } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker, MultiSectionDigitalClock } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
-import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
+import { setCloseSelectionIfChanged, setResetMapIfChanged } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 interface ISidenavInMainProps {
@@ -74,6 +74,8 @@ function SidenavInMain({
   let trashCallBack = () => {
     dispatch(setResetMapIfChanged());
     dispatch(resetGeneralState());
+    dispatch(setCloseSelectionIfChanged());
+
     closeModal();
   };
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
