@@ -8,14 +8,18 @@ import {
   bottomLinesAreNarrowPages,
   bottomLinesAreStraightPages,
 } from '../../constants';
-import { selectBlur, setBlur } from '../../redux/features/generalSlice';
+import { selectBlur, selectOnboardingBlur, setBlur } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
 
 import styles from './TopBottomLines.module.scss';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const TopBottomLines = () => {
   const pathname = usePathname();
   const blur = useAppSelector(selectBlur);
+  const onBoardingBlur = useSelector(selectOnboardingBlur);
+  const [lineBlur, setLineBlur] = useState('blur(22px)');
   const areBottomLinesStraight = bottomLinesAreStraightPages.some((page) =>
     pathname?.split('/').includes(page)
   );
@@ -24,7 +28,20 @@ const TopBottomLines = () => {
     bottomLinesAreNarrowPages.some((page) =>
       pathname?.split('/').includes(page)
     ) || pathname === '/';
-
+    useEffect (() => {
+      let onBoardingBlurCount = 0;
+      Object.values(onBoardingBlur).forEach(elem => {
+        if (elem === true) {
+          onBoardingBlurCount++;
+        }
+      })
+      if (onBoardingBlurCount !== 0) {
+        setLineBlur('blur(22px)');
+      }
+      else {
+        setLineBlur('none')
+      }
+    }, [onBoardingBlur])
   return (
     <>
       <Image
@@ -34,7 +51,7 @@ const TopBottomLines = () => {
         width={1344}
         height={81}
         priority
-        style={{ filter: blur ? 'none' : 'blur(22px)' }}
+        style={{ filter: lineBlur }}
       />
       {areBottomLinesStraight ? (
         <BottomStraightLines />

@@ -13,8 +13,8 @@ import { regions } from '../../data/attackRegionsData';
 import styles from './onboarding.module.scss';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
-import { useAppDispatch } from '../../redux/hooks';
-import { selectBlur, setBlur } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectBlur, selectOnboardingBlur, setBlur, setOnBoardingBlur } from '../../redux/features/generalSlice';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -49,6 +49,10 @@ export default function Onboarding() {
   const [vpkSelected, setVpkSelected] = useState(false);
   const [theGorgeSelected, setTheGorgeSelected] = useState(false);
 
+  const [currentModal, setCurrentModal] = useState(1);
+
+  const [attackBlur, setAttaclBlur] = useState('none;');  
+
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -73,12 +77,251 @@ export default function Onboarding() {
   //     setOnboardingPassed(isOnboardingPassed);
   //   }
   // }, []);
+  useEffect(() => {
+    switch(currentModal) {
+      case 1:
+        dispatch(setOnBoardingBlur(
+          {
+            1: true,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+      case 2:
+        setAttaclBlur('blur(22px)');
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: true,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+      case 3:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: true,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+      case 4:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: true,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 5:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: true,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 6:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: true,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 7:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: true,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 8:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: true,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 9:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: true,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 10:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: true,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 11:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: true,
+            12: false,
+          }
+        ));
+        break;
+        case 12:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: true,
+          }
+        ));
+        break;
+      default:
+        break;
+    }
+  }, [currentModal])
 
   const completeOnboarding = () => {
     setOnboardingPassed(true);
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('isOnboardingPassed', 'true');
     }
+    dispatch(setOnBoardingBlur(
+      {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+        10: false,
+        11: false,
+        12: false,
+      }
+    ));
   };
   const closeModal = () => setModalOpen(false);
   const closeModal2 = () => setModalOpen2(false);
@@ -95,6 +338,7 @@ export default function Onboarding() {
     setModalOpen(false);
     setSelectOpen(false);
     setBlurButtons(false);
+    setCurrentModal(2);
   };
 
   const handleNext2 = () => {
@@ -103,6 +347,7 @@ export default function Onboarding() {
     setModalOpen3(true);
     handleSelectRegion(1);
     setBlurButtons(false);
+    setCurrentModal(3);
   };
   const handleOpenSidenav = (option: any) => {
     if (option.name === 'США' && modalOpen3) {
@@ -123,12 +368,14 @@ export default function Onboarding() {
     setModalOpen3(false);
     setModalOpen4(true);
     setExpanded(false);
+    setCurrentModal(4);
   };
   const handleNext4 = () => {
     setModalOpen4(false);
     setModalOpen5(true);
     setDrawerOpen(true);
     dispatch(setBlur(true));
+    setCurrentModal(5);
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
@@ -136,12 +383,14 @@ export default function Onboarding() {
     setModalOpen5(false);
     setModalOpen6(true);
     setInputTheGorge(false);
+    setCurrentModal(6);
   };
   const handleNext6 = () => {
     dispatch(setBlur(false));
     setModalOpen6(false);
     setRemoveModal(false);
     setModalOpen7(true);
+    setCurrentModal(7);
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);
@@ -155,13 +404,16 @@ export default function Onboarding() {
     setModalOpen7(false);
     setModalOpen8(true);
     setDelayed(true);
+    setCurrentModal(8);
   };
   const handleNext8 = () => {
     setModalOpen8(false);
     setModalOpen9(true);
+    setCurrentModal(9);
   };
   const handleNext9 = () => {
     setRemoveModalDate(true);
+    setCurrentModal(10);
   };
   return (
     <>
@@ -619,7 +871,7 @@ export default function Onboarding() {
             </Link>
           </div>
         </Modal>
-        <div className={styles.onboardingAttack}>
+        <div style={{filter: attackBlur}} className={styles.onboardingAttack}>
           <button onClick={openModal}>атака</button>
           <div>
             <Image

@@ -68,12 +68,6 @@ const LaunchConsequences = ({
       const isOnboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
-      if (isOnboardingPassed) {
-        setBlur(false);
-      }
-      else {
-        setBlur(true);
-      }
     }
   }, []);
   if (!action) return;
@@ -82,7 +76,6 @@ const LaunchConsequences = ({
     if (typeof window !== 'undefined') {
       setOnboardingPassed(true);
       window.localStorage.setItem('isOnboardingPassed', 'true');
-      setBlur(false);
     }
   };
   const headerGoToCountComponent = () => {

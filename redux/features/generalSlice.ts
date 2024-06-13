@@ -24,6 +24,7 @@ export interface IInitialState {
   activeBlocks: string[];
   totalPopulationRegions: number;
   formattedFinancialLosses: string;
+  onBoardingBlur: any;
 }
 
 const initialState: IInitialState = {
@@ -43,6 +44,20 @@ const initialState: IInitialState = {
   sideNavIsOpen: false,
   totalPopulationRegions: 20,
   formattedFinancialLosses: '12 млн $',
+  onBoardingBlur: {
+    1: true,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+    8: false,
+    9: false,
+    10: false,
+    11: false,
+    12: false,
+  },
 };
 
 const generalSlice = createSlice({
@@ -170,9 +185,11 @@ const generalSlice = createSlice({
       state.pickedCountries.splice(state.pickedCountries.indexOf(payload), 1);
     },
     setBlur(state, { payload }) {
-      console.log('setBlur')
       state.blur = payload;
     },
+    setOnBoardingBlur(state, { payload }) {
+      state.onBoardingBlur = payload;
+    }
   },
 });
 
@@ -194,6 +211,7 @@ export const {
   setTotalPopulationRegions,
   setFormattedFinancialLosses,
   setComfirmedFromOnboarding,
+  setOnBoardingBlur
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -201,7 +219,6 @@ export const selectIsAttacking = (state: RootState) =>
 export const selectPlaceName = (state: RootState) =>
   state.generalReducer.placeName;
 export const selectBlur = (state: RootState) => state.generalReducer.blur;
-
 export const selectPickedCountries = (state: RootState) =>
   state.generalReducer.pickedCountries;
 export const selectPickedCountriesObjects = (state: RootState) =>
@@ -224,5 +241,6 @@ export const selectFormattedFinancialLosses = (state: RootState) =>
   state.generalReducer.formattedFinancialLosses;
 export const selectComfirmedFromOnboarding = (state: RootState) =>
   state.generalReducer.comfirmedFromOnboarding;
+export const selectOnboardingBlur = (state: RootState) => state.generalReducer.onBoardingBlur;
 
 export default generalSlice.reducer;
