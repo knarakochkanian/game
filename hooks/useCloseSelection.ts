@@ -5,7 +5,8 @@ import { selectCloseSelectionIfChanged } from '../redux/features/helpersSlice';
 const useCloseSelection = (
   setSelectOpen: TSetBoolean,
   setSelectDamageOpen: TSetBoolean,
-  setSelectIndustryOpen: TSetBoolean
+  setSelectIndustryOpen: TSetBoolean,
+  setOpenModal: TSetString,
 ) => {
   const closeSelectionIfChanged = useAppSelector(selectCloseSelectionIfChanged);
 
@@ -13,6 +14,7 @@ const useCloseSelection = (
     setSelectOpen(false);
     setSelectDamageOpen(false);
     setSelectIndustryOpen(false);
+    setOpenModal('');
   }, [closeSelectionIfChanged]);
 };
 

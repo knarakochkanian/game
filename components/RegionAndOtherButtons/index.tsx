@@ -55,7 +55,7 @@ const RegionAndOtherButtons = ({
   const [selectOpen, setSelectOpen] = useState(false);
   const [selectDamageOpen, setSelectDamageOpen] = useState(false);
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
-  const countries = useAppSelector(selectPlaces);  
+  const countries = useAppSelector(selectPlaces);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const keyboardRef = useRef<{
@@ -70,7 +70,12 @@ const RegionAndOtherButtons = ({
     setSelectIndustryOpen
   );
 
-  useCloseSelection(setSelectOpen, setSelectDamageOpen, setSelectIndustryOpen);
+  useCloseSelection(
+    setSelectOpen,
+    setSelectDamageOpen,
+    setSelectIndustryOpen,
+    setOpenModal
+  );
 
   const onChangeInput = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
