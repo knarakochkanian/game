@@ -170,6 +170,7 @@ const generalSlice = createSlice({
       state.pickedCountries.splice(state.pickedCountries.indexOf(payload), 1);
     },
     setBlur(state, { payload }) {
+      console.log('setBlur')
       state.blur = payload;
     },
   },

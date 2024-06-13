@@ -33,6 +33,7 @@ import {
   selectPickedCountries,
   selectPickedCountriesObjects,
   selectTotalPopulationRegions,
+  setBlur,
 } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
 
@@ -68,6 +69,12 @@ const LaunchConsequences = ({
       const isOnboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
       setOnboardingPassed(isOnboardingPassed);
+      if (isOnboardingPassed) {
+        setBlur(false);
+      }
+      else {
+        setBlur(true);
+      }
     }
   }, []);
   if (!action) return;
@@ -76,6 +83,7 @@ const LaunchConsequences = ({
     if (typeof window !== 'undefined') {
       setOnboardingPassed(true);
       window.localStorage.setItem('isOnboardingPassed', 'true');
+      setBlur(false);
     }
   };
   const headerGoToCountComponent = () => {
@@ -153,7 +161,7 @@ const LaunchConsequences = ({
               </button>
               <Link href={'/'} className="SecondarySmall">
                 <span className="TypoBodyBigLink">
-                  <button onClick={completeOnboarding}>пропустить</button>
+                  <button onClick={completeOnboarding}>пропус</button>
                 </span>
               </Link>
             </div>

@@ -34,7 +34,7 @@ const TopBottomLines = () => {
         width={1344}
         height={81}
         priority
-        style={{ filter: blur ? 'blur(22px)' : 'none' }}
+        style={{ filter: blur ? 'none' : 'blur(22px)' }}
       />
       {areBottomLinesStraight ? (
         <BottomStraightLines />
@@ -55,7 +55,7 @@ const TopBottomLines = () => {
           width={2754}
           height={81}
           priority
-          style={{ filter: blur ? 'blur(22px)' : 'none' }}
+          style={{ filter: blur ? 'none' : 'blur(22px)' }}
         />
       )}
     </>

@@ -46,7 +46,7 @@ const Index: React.FC = () => {
 
   return (
     <span
-      style={{ filter: blur ? 'blur(22px)' : 'none' }}
+      style={{ filter: blur ? 'none' : 'blur(22px)' }}
       className={`${styles.DateTime} ${
         localTimeDisplayNone ? styles.displayNone : ''
       }`}
