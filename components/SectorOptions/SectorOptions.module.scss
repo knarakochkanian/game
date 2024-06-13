@@ -7,7 +7,6 @@
     opacity: 0.6;
     display: block;
     padding: 24px;
-    padding-left: 76px;
     color: $white;
     font-variant-numeric: slashed-zero;
     @include set-font-size-weight(34px, 400);
@@ -27,14 +26,13 @@
   .option.displayNone {
     display: none;
   }
-  .option.hasImage{
-    opacity: 1;
-    display: flex;
-    padding-left: 20px;
-    gap: 10px;
-  }
-}
 
+}
+.hasImage{
+  opacity: 1;
+  display: flex;
+  gap: 10px;
+}
 .container.displayNone {
   display: none;
 }
