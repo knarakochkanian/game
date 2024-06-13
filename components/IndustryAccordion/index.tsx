@@ -8,7 +8,11 @@ import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
 import { arrowDown, arrowDownGray } from '../../public/summary';
 import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
-import { card, defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
+import {
+  card,
+  defaultStyles,
+  detailsStylesInSummery,
+} from '../../data/styleObjects';
 
 import styles from './IndustryAccordion.module.scss';
 import { useAppSelector } from '../../redux/hooks';
@@ -39,7 +43,8 @@ const IndustryAccordion = ({
 
   const disable =
     pagesWhereDropdownDisabled.includes(String(currentPage)) ||
-    numberOfSelectedSectors === null || fromOnboarding;
+    numberOfSelectedSectors === null ||
+    fromOnboarding;
 
   useDefaultExpandedSector(industrySectors, setExpanded);
 

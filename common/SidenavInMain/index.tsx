@@ -13,7 +13,13 @@ import {
 } from '../../redux/features/generalSlice';
 import Switch from '../Switch/index';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { ATTACK, A_TTACK, PROTECTION, P_ROTECTION } from '../../constants';
+import {
+  ATTACK,
+  A_TTACK,
+  PROTECTION,
+  P_ROTECTION,
+  ACTIONS_IN_QUEUE,
+} from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
 import {
@@ -30,11 +36,16 @@ import { trash } from '../../public/summary';
 
 import styles from './SidenavInMain.module.scss';
 import { ChangeEvent, useEffect, useState } from 'react';
-
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import {
+  DateTimePicker,
+  DateTimePickerProps,
+} from '@mui/x-date-pickers/DateTimePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker, MultiSectionDigitalClock } from '@mui/x-date-pickers';
 interface ISidenavInMainProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -42,7 +53,6 @@ interface ISidenavInMainProps {
   vpkSelected?: boolean;
   theGorgeSelected?: boolean;
   addConfirm?: boolean;
-  delayed?: boolean;
   removeModalDate?: boolean;
 }
 
@@ -50,7 +60,6 @@ function SidenavInMain({
   isOpen,
   onClose,
   sx,
-  delayed,
   removeModalDate,
 }: ISidenavInMainProps) {
   const dispatch = useAppDispatch();
@@ -65,9 +74,31 @@ function SidenavInMain({
   const [lastActionName, setLastActionName] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [delayed, setDelayed] = useState(false);
+  const [time, setTime] = useState(false);
+  const [day, setDay] = useState(false);
+  const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
+  const [delayedTime, setDelayedTime] = useState<string | null>(null);
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsSwitchOn(event.target.checked);
+    const checked = event.target.checked;
+
+    setIsSwitchOn(checked);
+    setDelayed(checked);
+  };
+  const handelOnDatePikerOpen = () => {
+    setDay(true);
+  };
+  const handleDateChange: DateTimePickerProps<Dayjs>['onChange'] = (
+    newValue
+  ) => {
+    setDelayedDate(newValue);
+  };
+
+  const handleTimeChange = (newValue: Dayjs | null) => {
+    if (newValue) {
+      setDelayedTime(newValue.format('HH:mm'));
+    }
   };
 
   useEffect(() => {
@@ -91,13 +122,24 @@ function SidenavInMain({
       launchConsequences,
       id: extractNumber(name),
       damageLevel,
-      date: '03.02.2024 12:30',
+      date: delayedDate
+        ? delayedDate.format('DD.MM.YYYY HH:mm')
+        : '03.02.2024 12:30',
       industrySectors,
       isCompleted: null,
       name,
       selectedCountries,
     };
-
+    if (delayedDate && delayedTime) {
+      const actionsInQueue = JSON.parse(
+        window.localStorage.getItem(ACTIONS_IN_QUEUE) || '[]'
+      );
+      actionsInQueue.push(currentAction);
+      window.localStorage.setItem(
+        ACTIONS_IN_QUEUE,
+        JSON.stringify(actionsInQueue)
+      );
+    }
     dispatch(setCurrentAction(currentAction));
   };
 
@@ -117,12 +159,7 @@ function SidenavInMain({
             width={80}
             height={80}
           />
-          <div
-            style={{
-              display: delayed ? 'none' : 'flex',
-            }}
-            className={styles.sidenavTitle}
-          >
+          <div className={styles.sidenavTitle}>
             <h2>
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
@@ -137,14 +174,8 @@ function SidenavInMain({
           </div>
 
           <div className="AccordionsWrap">
-            <RegionAccordion
-              selectedCountries={selectedCountries}
-              delayed={delayed}
-            />
-            <IndustryAccordion
-              industrySectors={industrySectors}
-              delayed={delayed}
-            />
+            <RegionAccordion selectedCountries={selectedCountries} />
+            <IndustryAccordion industrySectors={industrySectors} />
             <DamageLevelInfo damageLevel={damageLevel} />
           </div>
 
@@ -152,57 +183,63 @@ function SidenavInMain({
             className={styles.sidenavSquare}
             style={{ display: removeModalDate ? 'none' : 'flex', zIndex: 10 }}
           >
-            <h5
-              style={{
-                color: delayed ? 'white' : '#787878',
-                paddingLeft: '24px',
-              }}
-            >
-              Отложенный запуск
-            </h5>
+            <h5 style={{ paddingLeft: '24px' }}>Отложенный запуск</h5>
             <Switch isOn={isSwitchOn} handleSwitchChange={handleSwitchChange} />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                label="Without view renderers"
-                viewRenderers={{
-                  hours: null,
-                  minutes: null,
-                  seconds: null,
-                }}
-              />
-            </LocalizationProvider>
           </div>
-          {delayed && (
-            <div
-              className={styles.sidenavDelayedWrraper}
-              style={{ display: removeModalDate ? 'none' : 'block' }}
-            >
-              <div>
-                <h3 style={{ color: '#525252' }}>Дата</h3>
-                <div>
-                  <div className="Lead">03.02.2024</div>
-                  <Image
-                    src={'/onboarding/ToggleHorisontal.svg'}
-                    alt={'img'}
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </div>
-              <div>
-                <h3 style={{ color: '#525252' }}>Время</h3>
-                <div>
-                  <div className="Lead">20:13</div>
-                  <Image
-                    src={'/onboarding/ToggleHorisontal.svg'}
-                    alt={'img'}
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </div>
+          <div
+            className={styles.sidenavDelayedWrraper}
+            style={{ display: delayed ? 'block' : 'none' }}
+          >
+            <div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <button>
+                  <h3 style={{ color: '#525252' }}>Дата</h3>
+                </button>
+                <DatePicker
+                  label="Controlled picker"
+                  value={delayedDate}
+                  className={styles.sidenavDelayedDate}
+                  onChange={handleDateChange}
+                />
+              </LocalizationProvider>
+              <div className="Lead">{delayedDate?.format('DD.MM.YYYY')}</div>
+              <Image
+                src={'/onboarding/ToggleHorisontal.svg'}
+                alt={'img'}
+                width={40}
+                height={40}
+              />
             </div>
-          )}
+            <div>
+              <button onClick={() => setTime(true)}>
+                <h3 style={{ color: '#525252' }}>Время</h3>
+              </button>
+              {time && (
+                <div>
+                  <div className={styles.sidenavTimePiker}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['TimePicker']}>
+                        <DemoItem label="Multi section digital clock">
+                          <MultiSectionDigitalClock
+                            onChange={handleTimeChange}
+                          />
+                        </DemoItem>
+                      </DemoContainer>
+                      <button onClick={() => setTime(false)}>OK</button>
+                    </LocalizationProvider>
+                  </div>
+
+                  <Image
+                    src={'/onboarding/ToggleHorisontal.svg'}
+                    alt={'img'}
+                    width={40}
+                    height={40}
+                  />
+                </div>
+              )}
+              <div className="Lead">{delayedTime}</div>
+            </div>
+          </div>
           {numberOfSelectedSectors !== null &&
             damageLevel &&
             selectedCountries.length !== 0 && (
@@ -226,7 +263,10 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                <Link href="/summary" onClick={onSetCurrentAction}>
+                <Link
+                  href={delayedTime && delayedDate ? '/queue' : '/summary'}
+                  onClick={onSetCurrentAction}
+                >
                   <span
                     className="Lead"
                     style={{ color: 'white', padding: '10px' }}
@@ -247,4 +287,5 @@ function SidenavInMain({
     </>
   );
 }
+
 export default SidenavInMain;

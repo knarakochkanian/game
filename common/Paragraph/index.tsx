@@ -5,7 +5,7 @@ import Arrow from '../Arrow';
 import styles from './Paragraph.module.scss';
 
 interface IParagraphProps {
-  content: string;
+  content: any;
   isOpen: boolean;
   setIsOpen: TSetBoolean;
 }

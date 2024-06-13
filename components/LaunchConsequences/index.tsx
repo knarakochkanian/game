@@ -7,14 +7,13 @@ import CountOnboarding from '../Count-onboarding';
 import Image from 'next/image';
 import { noiseMap } from '../../public/summary';
 import '../../app/globals.scss';
-
+import { consequencesParagraph as consequencesData } from '../../data/consequencesParagraph';
 import {
   COUNT_DOWN,
   LAUNCH_CONSEQUENCES,
   PROTECTION,
   SUMMARY,
   citiesUnderAttack,
-  consequencesParagraph,
   populationSuffering,
   wholeDamage,
 } from '../../constants';
@@ -84,7 +83,15 @@ const LaunchConsequences = ({
     }
     // setIsCountDownComponent(true);
   };
-
+  const renderConsequences = (consequences: any) => {
+    return Object.keys(consequences).map((key) => (
+      <div key={key}>
+        <p>Критический: {consequences[key].критический}</p>
+        <p>Минимальный: {consequences[key].минимальный}</p>
+        <p>Предупреждение: {consequences[key].предупреждение}</p>
+      </div>
+    ));
+  };
   const notInteractiveMap = UseMap({
     onCountryPicked: () => {},
     mapType: MapType.plane,
@@ -109,7 +116,7 @@ const LaunchConsequences = ({
           <Paragraph
             isOpen={fromOnboarding ? false : paragraphIsOpen}
             setIsOpen={setparagraphIsOpen}
-            content={consequencesParagraph}
+            content={renderConsequences(consequencesData)}
           />
           <div className={styles.dataContainer}>
             <ModalData

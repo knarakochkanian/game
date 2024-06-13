@@ -53,7 +53,7 @@ export const START = 'ПУСК';
 ////regions options
 export const REGIONS = 'регионы';
 export const COUNTRIES = 'страны';
-export const MOST_LIKELY_CHOICE  = 'наиболее вероятный выбор';
+export const MOST_LIKELY_CHOICE = 'наиболее вероятный выбор';
 export const NOT_FRIENDLY_COUNTRIES = 'недружественные страны';
 
 export const cancelAttackTitle = 'Для отмены атаки нажмите кнопку';

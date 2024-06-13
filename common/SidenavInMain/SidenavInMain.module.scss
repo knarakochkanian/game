@@ -49,7 +49,6 @@
   &Square {
     @include flex-start;
     gap: 30px;
-    margin-bottom: 120px;
   }
   &DelayedWrraper {
     display: flex;
@@ -61,10 +60,6 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 24px;
-    }
-    > div > div {
-      width: 679px;
-      @include flex-between;
     }
   }
   &Wrapper {
@@ -79,5 +74,14 @@
       position: absolute;
       top: -128px;
     }
+  }
+  &TimePiker{
+    position: absolute;
+    left: -200px;
+    background-color: $black-60;
+  }
+  &DelayedDate{
+    position: absolute !important;
+    border: none !important;
   }
 }

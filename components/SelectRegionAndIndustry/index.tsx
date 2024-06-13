@@ -8,10 +8,8 @@ interface ISelectRegionAndIndustryProps {
   action: IAction;
 }
 
-const SelectRegionAndIndustry = ({
-  action,
-}: ISelectRegionAndIndustryProps) => {
-  if(!action) return;
+const SelectRegionAndIndustry = ({ action }: ISelectRegionAndIndustryProps) => {
+  if (!action) return;
   const { selectedCountries, industrySectors, damageLevel } = action;
 
   return (
