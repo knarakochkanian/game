@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import {
+  resetGeneralState,
   selectDamgeLevel,
   selectIsAttacking,
   selectPickedCountriesObjects,
@@ -19,12 +20,14 @@ import {
   PROTECTION,
   P_ROTECTION,
   ACTIONS_IN_QUEUE,
+  LAST_ACTION_NAME,
 } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
 import {
   countSelectedOptions,
   extractNumber,
+  formatDate,
   getNextActionName,
 } from '../../helpers';
 import DamageLevelInfo from '../DamageLevelInfo';
@@ -40,12 +43,14 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import {
-  DateTimePicker,
-  DateTimePickerProps,
-} from '@mui/x-date-pickers/DateTimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import type { DateTimePickerProps } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker, MultiSectionDigitalClock } from '@mui/x-date-pickers';
+import useCloseModal from '../../hooks/useCloseModal';
+import { setCloseSelectionIfChanged, setResetMapIfChanged } from '../../redux/features/helpersSlice';
+import TrashModal from '../TrashModal';
+import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 interface ISidenavInMainProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -63,6 +68,16 @@ function SidenavInMain({
   removeModalDate,
 }: ISidenavInMainProps) {
   const dispatch = useAppDispatch();
+  const [trashModalOpen, setTrashModalOpen] = useState(false);
+  const closeModal = () => setTrashModalOpen(false);
+  useCloseModal(trashModalOpen, setTrashModalOpen);
+  let trashCallBack = () => {
+    dispatch(setResetMapIfChanged());
+    dispatch(resetGeneralState());
+    dispatch(setCloseSelectionIfChanged());
+
+    closeModal();
+  };
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -116,17 +131,20 @@ function SidenavInMain({
   }, []);
 
   const onSetCurrentAction = () => {
+    const delayedDateWithTime = getDelayedDateWithTime(
+      delayedDate,
+      delayedTime
+    );
+
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
       news: news_2,
       launchConsequences,
       id: extractNumber(name),
       damageLevel,
-      date: delayedDate
-        ? delayedDate.format('DD.MM.YYYY HH:mm')
-        : '03.02.2024 12:30',
+      date: delayedDate ? delayedDateWithTime : '03.02.2024 12:30',
       industrySectors,
-      isCompleted: null,
+      isCompleted: delayedDate && delayedTime ? false : null,
       name,
       selectedCountries,
     };
@@ -139,6 +157,7 @@ function SidenavInMain({
         ACTIONS_IN_QUEUE,
         JSON.stringify(actionsInQueue)
       );
+      window.localStorage.setItem(LAST_ACTION_NAME, name);
     }
     dispatch(setCurrentAction(currentAction));
   };
@@ -151,6 +170,15 @@ function SidenavInMain({
         className={styles.sidenav}
         style={{ width: isOpen ? '696px' : '0' }}
       >
+        {trashModalOpen && (
+          <TrashModal
+            closeModal={closeModal}
+            name="trashInSidnav"
+            trashCallBack={trashCallBack}
+            trashModalOpen={trashModalOpen}
+          />
+        )}
+
         <div className={styles.sidenavWrapper}>
           <Image
             src={isAttacking ? attack : protectionIcon}
@@ -164,13 +192,15 @@ function SidenavInMain({
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
 
-            <Image
-              src={trash}
-              alt="actionSign"
-              className={styles.actionSign}
-              width={48}
-              height={48}
-            />
+            <button onClick={() => setTrashModalOpen(true)}>
+              <Image
+                src={trash}
+                alt="trash"
+                className={styles.trash}
+                width={48}
+                height={48}
+              />
+            </button>
           </div>
 
           <div className="AccordionsWrap">

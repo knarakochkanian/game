@@ -49,6 +49,7 @@
   .infoCtn {
     p {
       @include unsetEllipsisInTheEnd;
+      @include scrollStyles;
       max-height: 910px;
     }
   }

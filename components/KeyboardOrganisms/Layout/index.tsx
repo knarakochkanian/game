@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import {
   backspace,
@@ -27,9 +27,9 @@ import {
   setKeyboardInput,
 } from '../../../redux/features/helpersSlice';
 import KeyboardLetters from '../../../common/KeyboardLetters';
+import useKeyboardLayoutEffects from '../../../hooks/useKeyboardLayoutEffects';
 
 import styles from './Layout.module.scss';
-import useKeyboardLayoutEffects from '../../../hooks/useKeyboardLayoutEffects';
 
 interface ILayoutProps extends TIsDigitLayoutState, IKeyboardManagementProps {
   setIsDigitLayout: TSetBoolean;
@@ -63,9 +63,10 @@ const Layout = ({
     onChange(newInput);
     onKeyPress(button);
     if (button === SHIFT_NAME) return;
+    const cursorChangeSize = button === ':)' ? 2 : 1
 
     setCursorPosition((prevPos) =>
-      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + 1
+      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + cursorChangeSize
     );
   };
 
@@ -163,7 +164,7 @@ const Layout = ({
 
           <div className={styles.row}>
             <button
-              onClick={() => handleButtonClick(')')}
+              onClick={() => handleButtonClick(':)')}
               className={styles.emogiIcon}
             >
               <Image

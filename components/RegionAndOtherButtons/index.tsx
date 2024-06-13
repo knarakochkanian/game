@@ -34,6 +34,7 @@ import {
 import { USARegions } from '../../data/countriesWithCodes';
 
 import styles from './RegionAndOtherButtons.module.scss';
+import useCloseSelection from '../../hooks/useCloseSelection';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -67,6 +68,13 @@ const RegionAndOtherButtons = ({
     setSelectOpen,
     setSelectDamageOpen,
     setSelectIndustryOpen
+  );
+
+  useCloseSelection(
+    setSelectOpen,
+    setSelectDamageOpen,
+    setSelectIndustryOpen,
+    setOpenModal
   );
 
   const onChangeInput = (

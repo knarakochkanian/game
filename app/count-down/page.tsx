@@ -101,7 +101,7 @@ export default function CountDown() {
             
 
             window.localStorage.setItem(
-              'completedActions',
+              COMPLETED_ACTIONS,
               JSON.stringify(completedActions)
             );
           }
@@ -121,6 +121,9 @@ export default function CountDown() {
   }, [time, router]);
 
   const cancelCountdown = () => {
+      setTimeout(() => {
+        dispatch(resetGeneralState());
+      }, 10);
     dispatch(setDamageLevel(null));
     return router.push('/');
     // if (!actionCompleted && actionsInQueueFromStorage) {
@@ -138,20 +141,20 @@ export default function CountDown() {
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
 
-  useEffect(() => {
-    const socket = new WebSocket(controllerServerAddress);
-    socket.onmessage = (event) => {
-      if (event.data === 'cancel pressed') {
-        cancelCountdown();
-      }
-    };
+  // useEffect(() => {
+  //   const socket = new WebSocket(controllerServerAddress);
+  //   socket.onmessage = (event) => {
+  //     if (event.data === 'cancel pressed') {
+  //       cancelCountdown();
+  //     }
+  //   };
 
-    setSocket(socket);
+  //   setSocket(socket);
 
-    return () => {
-      socket.close();
-    };
-  }, []);
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
   const onResetGlobalState = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
