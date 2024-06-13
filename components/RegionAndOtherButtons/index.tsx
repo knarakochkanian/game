@@ -4,7 +4,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
 import { regions } from '../../data/attackRegionsData';
-import Keyboard from '../Keyboard';
+import Keyboard from '../KeyboardOrganisms/Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
 import Places from '../Places';
 import { search } from '../../helpers';
@@ -55,6 +55,7 @@ const RegionAndOtherButtons = ({
   const [selectDamageOpen, setSelectDamageOpen] = useState(false);
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
   const countries = useAppSelector(selectPlaces);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -76,10 +77,6 @@ const RegionAndOtherButtons = ({
     if (keyboardRef.current && keyboardRef.current.setSearchInput) {
       keyboardRef.current.setSearchInput(newInput);
     }
-  };
-  const handleNext3 = () => {
-    setDrawerOpen(!drawerOpen);
-    console.log();
   };
 
   const handleSelectOpen = () => {
@@ -117,6 +114,7 @@ const RegionAndOtherButtons = ({
 
       <ModalWithSelect isOpen={selectOpen} onClose={() => {}}>
         <SearchInput
+          searchInputRef={searchInputRef}
           onChangeInput={onChangeInput}
           onSearchClick={onSearchClick}
           searchInput={searchInput}
@@ -236,6 +234,7 @@ const RegionAndOtherButtons = ({
         name="Отрасль"
       >
         <IndustrySelection
+          searchInputRef={searchInputRef}
           expanded={expanded}
           handleExpansion={handleExpansion}
           showKeyboard={showKeyboard}
@@ -256,7 +255,12 @@ const RegionAndOtherButtons = ({
 
       {showKeyboard && (
         <dialog className={styles.keyboard}>
-          <Keyboard setSearchInput={setSearchInput} keyboardRef={keyboardRef} />
+          <Keyboard
+            searchInputRef={searchInputRef}
+            setShowKeyboard={setShowKeyboard}
+            setSearchInput={setSearchInput}
+            keyboardRef={keyboardRef}
+          />
         </dialog>
       )}
     </div>

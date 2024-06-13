@@ -1,11 +1,15 @@
-import { selectIsAttacking, setSelectedIndusties } from '../../redux/features/generalSlice';
+import {
+  selectIsAttacking,
+  setSelectedIndusties,
+} from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-
+import Image from 'next/image';
 import styles from './SectorOptions.module.scss';
 
 interface ISectorOptionsProps {
   sectorOptions: ISectorOption[];
   fromSideNav?: boolean;
+  src?: string;
 }
 
 const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
@@ -25,9 +29,13 @@ const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
             option.selected && !fromSideNav ? styles.selected : ''
           } ${!option.selected && fromSideNav ? styles.displayNone : ''}
           ${!isAttacking ? styles.isProtecting : ''}
+          ${option.src ? styles.hasImage : ''}\`}
           `}
           key={i}
         >
+          {option.src && (
+            <Image src={option.src} alt="img" width={48} height={48} />
+          )}
           {option.name}
         </button>
       ))}

@@ -53,7 +53,7 @@ export const START = 'ПУСК';
 ////regions options
 export const REGIONS = 'регионы';
 export const COUNTRIES = 'страны';
-export const MOST_LIKELY_CHOICE  = 'наиболее вероятный выбор';
+export const MOST_LIKELY_CHOICE = 'наиболее вероятный выбор';
 export const NOT_FRIENDLY_COUNTRIES = 'недружественные страны';
 
 export const cancelAttackTitle = 'Для отмены атаки нажмите кнопку';
@@ -82,3 +82,13 @@ export const LOG_AND_TRANSPORT = 'логистика и траспорт';
 export const UNIVERSE = 'космос';
 export const GOV_INFOSTRUCTURES = 'гос. инфраструктура';
 export const VPK = 'ВПК';
+
+//keyboard state
+export const SHIFT = 'SHIFT';
+export const DEFAULT = 'DEFAULT';
+
+//keyboard button names
+export const SHIFT_NAME = '{shift}';
+export const BACKSPACE_NAME = '{bksp}';
+export const SPACE_NAME = '{space}';
+

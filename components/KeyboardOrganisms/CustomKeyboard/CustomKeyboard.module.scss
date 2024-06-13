@@ -1,0 +1,15 @@
+@import '/app/variables.module.scss';
+
+.keyboard {
+  width: 1200px;
+  margin: auto;
+  button:active {
+    background: $attack-green;
+    color: $black;
+    opacity: unset !important;
+  }
+}
+
+.keyboard.english {
+  width: 950px;
+}

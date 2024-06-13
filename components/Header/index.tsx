@@ -32,12 +32,12 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
   switch (page) {
     case SUMMARY:
-      trashCallBack = () => {        
+      trashCallBack = () => {
         setTimeout(() => {
           dispatch(setResetMapIfChanged());
           dispatch(resetGeneralState());
         }, 10);
-        
+
         router.back();
       };
       break;
@@ -53,7 +53,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
     setActionId(fromDetails ? '' : String(id));
   };
-  
+
   return (
     <header
       className={`${styles.header} ${setActionId ? styles.cursorPointer : ''}`}
@@ -123,7 +123,10 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         )}
 
         {!isCompleted && (
-          <button onClick={() => setTrashModalOpen(true)}>
+          <button
+            onClick={() => setTrashModalOpen(true)}
+            className={trashModalOpen ? styles.trashBtn : ''}
+          >
             <Image
               src={actionType === PROTECTION ? protectBlueTrash : trash}
               alt="trash"

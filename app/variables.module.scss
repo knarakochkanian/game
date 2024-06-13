@@ -162,6 +162,20 @@ $unvisible: rgba(0, 0, 0, 0);
   text-transform: uppercase;
 }
 
+@mixin keyboardLetterStyles($fontSize) {
+  position: relative;
+  color: $white;
+  text-align: center;
+  font-family: 'Roboto';
+  @include set-font-size-weight($fontSize, 400);
+  span {
+    position: absolute;
+    font-size: 14px;
+    top: 6px;
+    right: 4px;
+  }
+}
+
 //other
 @mixin showEllipsisInTheEnd($numOfLines, $maxWidth) {
   display: -webkit-box;
@@ -211,10 +225,10 @@ $unvisible: rgba(0, 0, 0, 0);
   top: 0;
 }
 
-@mixin AccordionSummary{
+@mixin AccordionSummary {
   @include flex-center;
 
-  >span{
+  > span {
     color: $white;
     text-align: center;
     font-size: 40px;
@@ -222,7 +236,6 @@ $unvisible: rgba(0, 0, 0, 0);
     font-weight: 400;
     line-height: 120%;
     margin-left: 24px;
-
   }
 }
 
@@ -230,4 +243,11 @@ $unvisible: rgba(0, 0, 0, 0);
   overflow: auto;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
+}
+
+//keybord styles
+@mixin keyboardBtnStyles {
+  @include keyboardLetterStyles(33px);
+  @include set-width-height(75px, 72px);
+  border: 1px solid $white;
 }

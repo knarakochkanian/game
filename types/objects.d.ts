@@ -1,6 +1,9 @@
 declare module 'react-world-flags';
 declare module 'socket.io-client';
 declare module 'redux-logger';
+declare module '@mui/x-date-pickers/AdapterDayjs';
+declare module '@mui/x-date-pickers/LocalizationProvider';
+declare module '@mui/x-date-pickers/DateTimePicker';
 // declare module '@/redux/store';
 
 type TMap = {
@@ -71,4 +74,24 @@ interface IIndustry {
   id: number;
   nameMain: string;
   sectors: ISector[];
+}
+
+type TLayout = {
+  firstRow: string[];
+  secondRow: string[];
+  thirdRow: string[];
+}
+
+type TRef = MutableRefObject<{
+  setSearchInput: (input: string) => void;
+} | null>
+
+interface IKeyboardManagementProps {
+  searchInputRef: RefObject<HTMLInputElement>;
+  setLayoutName: TSetString;
+  keyboardRef: TKeyboardRefFunc;
+  layoutName: string;
+  onChange: (input: string) => void;
+  onKeyPress: (button: string) => void;
+  setShowKeyboard: TSetBoolean;
 }

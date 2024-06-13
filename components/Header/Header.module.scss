@@ -31,6 +31,9 @@
     display: flex;
     gap: 40px;
     align-items: center;
+    .trashBtn {
+      display: none;
+    }
     .completingDate {
       display: flex;
       gap: 24px;

@@ -10,7 +10,9 @@ const useCloseModal = (
     if (modalIsOpen && !(event.target as Element).closest(tag)) {
       if (
         (event.target as Element).closest('dialog') ||
-        (ignoringElement && (event.target as Element).closest(ignoringElement))
+        (ignoringElement &&
+          (event.target as Element).closest(ignoringElement)) ||
+        ('button' && (event.target as Element).closest('button'))
       ) {
         return;
       }
