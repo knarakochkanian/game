@@ -36,8 +36,6 @@ export class ComplexCountry {
       State.fromGeometryGetter(countriesNamesToCode[regionName], nameToGeometryGetter[name], lineColor, shapeColor)
     ).filter(region => !!region) as State[]
 
-    console.log(regions)
-
     const a3code = countriesNamesToCode[name]
 
     const selfGeometryForOutline = getCountryGeometryByA3Code(a3code)
