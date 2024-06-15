@@ -17,6 +17,7 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
   const dispatch = useAppDispatch();  
 
   const onCountryPicked = (name: string) => {
+    alert(name)
     dispatch(setPlaceName(name));
   };
 
@@ -90,6 +91,8 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
       case MapType.sphere:
         sphereMap.onWindowResize.current ? sphereMap.onWindowResize.current() : null
     }
+
+    setCountryColor("Шанхай")
   }, [mapType, planeMap.onWindowResize, sphereMap.onWindowResize])
 
   return (

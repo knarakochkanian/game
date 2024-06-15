@@ -4,7 +4,7 @@ import { EffectComposer, GammaCorrectionShader, MapControls, RenderPass, ShaderP
 import { State } from "./state";
 import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
 import { ComplexCountry } from "./complex-country";
-import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-a3-map";
+import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-code";
 import { EarthParameters } from '../map.types';
 import { complexCountriesNames } from "../geodata/complex-countries";
 import { VignetteShader } from '../utils/VignetteShader';
