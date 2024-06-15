@@ -15,7 +15,13 @@ import {
 } from '../geodata/countries-names-to-a3-map';
 import bbox from 'geojson-bbox';
 import {
+  FrontSide,
   MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  RepeatWrapping,
+  SphereGeometry,
+  TextureLoader,
   Vector2,
 } from 'three';
 import { getRegionsNamesByCountryName } from '../utils/utils';
@@ -75,13 +81,16 @@ export class Earth implements IEarth {
     const polygonsData = countriesData as Feature[];
     polygonsData.push(...(usStatesData as Feature[]));
 
-    // const noiseTexture = new TextureLoader().load("map/noiseMap.png")
-    // noiseTexture.wrapS = RepeatWrapping;
-    // noiseTexture.wrapT = RepeatWrapping;
-    // noiseTexture.repeat.set(6.5, 6.5);
-    // const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture });
+    const noiseTexture = new TextureLoader().load("map/noiseMap.png")
+    noiseTexture.wrapS = RepeatWrapping;
+    noiseTexture.wrapT = RepeatWrapping;
+    noiseTexture.repeat.set(6.5, 6.5);
+    const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture, transparent: true, side: FrontSide, depthWrite: false, });
+
+    const innerGlobeMaterial = new MeshBasicMaterial({ side: FrontSide, color: 'black' });
 
     const globe = Globe({ animateIn: false })
+      .globeMaterial(innerGlobeMaterial)
       .polygonsData(polygonsData)
       .polygonCapCurvatureResolution(5)
       // .polygonStrokeColor(() => contourColor)
@@ -90,7 +99,23 @@ export class Earth implements IEarth {
       .showGraticules(true)
       .backgroundColor(`${BACKGROUND_COLOR}77`)
       .showAtmosphere(true)
-      .atmosphereColor("#37403f");
+      .atmosphereColor("#37403f")
+
+      
+      // extra sphere
+      .customLayerData([{}])
+      .customThreeObject(() => {
+        const noiseSphere = new Mesh(
+          new SphereGeometry(102, 64, 64),
+          noiseMaterial
+        )
+        noiseSphere.userData = { isInteractive: false }
+        return noiseSphere
+      })
+
+    // make main globe invisible to clicks
+    globe.userData = { isInteractive: false }
+
 
     this.globe = globe;
 
