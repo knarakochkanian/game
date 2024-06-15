@@ -1,5 +1,12 @@
-import geojson from '../geodata/geodata.json';
-import usstates from '../geodata/usa-states.geo.json';
+import geodata from '../geodata/geodata.json';
+import usStates from '../geodata/usa-states.geo.json';
+import chinaRegionsData from '../geodata/china-regions.json';
+import indianStates from '../geodata/indian-states.json';
+import russianStates from "../geodata/russia-states.geo.json"
+import canadianStates from "../geodata/canada-states.geo.json"
+import brazilRegions from "../geodata/brazil-states.geo.json"
+import australianRegions from "../geodata/australian-states.geo.json"
+
 import Globe, { GlobeInstance } from 'globe.gl';
 import { Feature } from 'geojson';
 import {
@@ -12,7 +19,7 @@ import { EarthParameters } from '../map.types';
 import {
   countriesNamesToCode,
   getCountryOrStateNameByCode,
-} from '../geodata/countries-names-to-a3-map';
+} from '../geodata/countries-names-to-code';
 import bbox from 'geojson-bbox';
 import {
   FrontSide,
@@ -66,10 +73,10 @@ export class Earth implements IEarth {
     this.contourColor = contourColor;
     this.countryColor = countryColor;
 
-    const countriesData = geojson.features.filter(
-      (d) => !['USA', 'ATA'].includes(d.properties.country_a3)
-    );
-    const usStatesData = usstates.features;
+    const countriesData = geodata.features.filter(
+      (d) => !['USA', 'ATA', 'CHN', 'IND', 'CAN', 'BRA', 'AUS', 'RUS'].includes(d.properties.country_a3)
+    ); // filter out all countries that we show regions on
+    const usStatesData = usStates.features;
 
     countriesData.forEach((d) => {
       this.geojsonFeatureToStateCode.set(d as Feature, d.properties.country_a3);
@@ -77,9 +84,34 @@ export class Earth implements IEarth {
     usStatesData.forEach((d) => {
       this.geojsonFeatureToStateCode.set(d as Feature, d.properties.gn_a1_code);
     });
+    chinaRegionsData.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.HASC_1);
+    });
+    indianStates.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.NAME_1);
+    });
+    russianStates.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.shapeISO);
+    });
+    canadianStates.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.nom);
+    });
+    brazilRegions.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.name);
+    });
+    australianRegions.features.forEach((d) => {
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.STATE_NAME);
+    });
+
 
     const polygonsData = countriesData as Feature[];
     polygonsData.push(...(usStatesData as Feature[]));
+    polygonsData.push(...(chinaRegionsData.features as Feature[]));
+    polygonsData.push(...(indianStates.features as Feature[]));
+    polygonsData.push(...(russianStates.features as Feature[]));
+    polygonsData.push(...(canadianStates.features as Feature[]));
+    polygonsData.push(...(brazilRegions.features as Feature[]));
+    polygonsData.push(...(australianRegions.features as Feature[]));
 
     const noiseTexture = new TextureLoader().load("map/noiseMap.png")
     noiseTexture.wrapS = RepeatWrapping;
