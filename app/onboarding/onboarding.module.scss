@@ -3,7 +3,6 @@
   position: fixed;
   z-index: 10;
   left: 1130px;
-
   &Wrapper{
     display: flex;
     padding: 51px 0 0 51px;
@@ -23,8 +22,8 @@
   &Accordion {
     &Wrapper{
       position: absolute;
-      top: 200px;
-      width: 400px;
+      top: 175px;
+      width: 354px;
     }
     &Details{
       display: flex;
@@ -71,25 +70,40 @@
       }
       &Item{
         @include flex-start;
+        align-items: center;
         gap: 32px;
       }
     }
   }
 
   &Attack{
-    width: 540px;
-    margin-left: 310px;
+    // width: 540px;
+    position: absolute;
+    left: 50%;
+    top: 26px;
+    transform: translate(-50%);
+    gap: 15px;
+    // margin-left: 310px;
     @include flex-between;
     >button{
       @include TypoBodyBig;
       text-transform: uppercase;
-
+      // font-family: "TT";
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19.21px;
+      letter-spacing: 0.01em;
+      text-align: right;
     }
     >div>img:nth-child(1){
       background-color: $attack-green;
+      width: 41px;
+      height: 41px;
     }
     >div>img:nth-child(2){
       border: 3px solid $mid-dark-gray;
+      width: 41px;
+      height: 41px;
     }
   }
 
@@ -123,6 +137,6 @@
 &Globus{
   position: absolute;
   bottom: 10%;
-  left: 30%;
+  left: 18%;
 }
 }

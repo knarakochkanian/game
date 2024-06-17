@@ -11,7 +11,10 @@
   top: 55px;
   &Title{
    @include flex-between;
-    padding-left: 24px;
+    font-size: 26.36px !important;
+    font-weight: 600 !important;
+    line-height: 31.63px !important;
+    text-align: left !important;
   }
   &AccordionSummary{
     @include AccordionSummary;
@@ -65,7 +68,7 @@
   &Wrapper{
     display: flex;
     flex-direction: column;
-    width: 672px;
-    gap: 48px;
+    width: 328px;
+    gap: 20px;
   }
 }

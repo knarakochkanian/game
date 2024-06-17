@@ -83,15 +83,15 @@ function Sidenav({
         sx={sx}
         id="mySidenav"
         className={styles.sidenav}
-        style={{ width: isOpen ? '696px' : '0' }}
+        style={{ width: isOpen ? '328px' : '0' }}
       >
         <div className={styles.sidenavWrapper}>
           <Image
             src={isAttacking ? attack : protectionIcon}
             alt="actionSign"
             className={styles.actionSign}
-            width={80}
-            height={80}
+            width={38}
+            height={38}
           />
           <div
             style={{
@@ -101,12 +101,12 @@ function Sidenav({
           >
             {isAttacking ? (
               <>
-                <h2>Атака #000-001</h2>
+                <h2 className='sidenav__title'>Атака #000-001</h2>
                 <Image
                   src="home/basket.svg"
                   alt="basket"
-                  width={48}
-                  height={48}
+                  width={23}
+                  height={23}
                 />
               </>
             ) : (
@@ -137,8 +137,8 @@ function Sidenav({
                   <Image
                     src={'onboarding/arrow.svg'}
                     alt={'arrow'}
-                    width={24}
-                    height={24}
+                    width={11}
+                    height={11}
                   />
                 }
                 aria-controls="panel1-content"
@@ -149,12 +149,12 @@ function Sidenav({
                 }}
               >
                 <div className={styles.sidenavAccordionSummary}>
-                  <h3>Регион</h3>
-                  <span>1</span>
+                  <h3 className='accordion-summary-title'>Регион</h3>
+                  <span className='accordion-summary-count'>1</span>
                 </div>
               </AccordionSummary>
               <AccordionDetails>
-                <h4>США</h4>
+                <h4 className='accordion-details-title'>США</h4>
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -172,8 +172,8 @@ function Sidenav({
                   <Image
                     src={'onboarding/arrow.svg'}
                     alt={'arrow'}
-                    width={24}
-                    height={24}
+                    width={11}
+                    height={11}
                   />
                 }
                 sx={{
@@ -183,13 +183,13 @@ function Sidenav({
                 id="panel2-header"
               >
                 <div className={styles.sidenavAccordionSummary}>
-                  <h3>Отрасль</h3>
-                  <span>1</span>
+                  <h3 className='accordion-summary-title'>Отрасль</h3>
+                  <span className='accordion-summary-count'>1</span>
                 </div>
               </AccordionSummary>
               <AccordionDetails>
                 {' '}
-                {vpkSelected && <h4>ВПК</h4>}
+                {vpkSelected && <h4 className='accordion-details-title'>ВПК</h4>}
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -207,8 +207,8 @@ function Sidenav({
                   <Image
                     src={'onboarding/arrow.svg'}
                     alt={'arrow'}
-                    width={24}
-                    height={24}
+                    width={11}
+                    height={11}
                   />
                 }
                 sx={{
@@ -218,11 +218,11 @@ function Sidenav({
                 id="panel2-header"
               >
                 <div className={styles.sidenavAccordionSummary}>
-                  <h3>Ущерб</h3>
+                  <h3 className='accordion-summary-title'>Ущерб</h3>
                 </div>
               </AccordionSummary>
               <AccordionDetails>
-                {theGorgeSelected && <h3>Критический </h3>}
+                {theGorgeSelected && <h3 className='accordion-details-title'>Критический </h3>}
               </AccordionDetails>
             </Accordion>
           </div>
@@ -235,6 +235,11 @@ function Sidenav({
               style={{
                 color: delayed ? 'white' : '#787878',
                 paddingLeft: '21px',
+                fontSize: "16px",
+                fontWeight: "600",
+                lineHeight: "19.21px",
+                letterSpacing:" 0.03em",
+                textAlign: "left",
               }}
             >
               Отложенный запуск
@@ -243,15 +248,15 @@ function Sidenav({
               <Image
                 src={'/onboarding/Toggle.svg'}
                 alt={'img'}
-                width={131}
-                height={45}
+                width={62}
+                height={21}
               />
             ) : (
               <Image
                 src={'/home/square.svg'}
                 alt={'img'}
-                width={131}
-                height={45}
+                width={62}
+                height={21}
               />
             )}
           </div>

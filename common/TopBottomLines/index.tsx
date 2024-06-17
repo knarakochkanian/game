@@ -63,6 +63,7 @@ const TopBottomLines = () => {
           width={2752}
           height={81}
           priority
+          style={{ filter: lineBlur }}
         />
       ) : (
         <Image
@@ -72,7 +73,7 @@ const TopBottomLines = () => {
           width={2754}
           height={81}
           priority
-          style={{ filter: blur ? 'none' : 'blur(22px)' }}
+          style={{ filter: lineBlur }}
         />
       )}
     </>

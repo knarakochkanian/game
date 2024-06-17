@@ -75,13 +75,7 @@ export default function Onboarding() {
     setModalOpen(true);
     setModalOpen2(false);
   };
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const isOnboardingPassed =
-  //       window.localStorage.getItem('isOnboardingPassed') === 'true';
-  //     setOnboardingPassed(isOnboardingPassed);
-  //   }
-  // }, []);
+
   useEffect(() => {
     switch(currentModal) {
       case 1:
@@ -328,6 +322,7 @@ export default function Onboarding() {
         12: false,
       }
     ));
+    dispatch(setLocalTimeBlur(false));
   };
   const closeModal = () => setModalOpen(false);
   const closeModal2 = () => setModalOpen2(false);
@@ -470,7 +465,7 @@ export default function Onboarding() {
           isOpen={modalOpen2}
           onClose={closeModal}
           counter={2}
-          sx={{ left: '1%', top: '12% !important', position: 'absolute' }}
+          sx={{ left: '45px !important', top: '115px !important', position: 'absolute' }}
         >
           <p>Выберите регион при помощи карты или списка.</p>
           <div className="ModalButtons">
@@ -489,7 +484,7 @@ export default function Onboarding() {
 
         <div
           className={styles.onboardingAccordionWrapper}
-          style={{ top: inputTheGorge ? '400px' : '200px' }}
+          style={{ top: inputTheGorge ? '175px' : '200px' }}
         >
           {inputTheGorge ? (
             <ModalWithSelect isOpen={selectOpen} onClose={closeModal2}>
@@ -499,7 +494,7 @@ export default function Onboarding() {
                     ml: 1,
                     flex: 1,
                     color: '#D9D9D9',
-                    fontSize: '34px',
+                    fontSize: '16px',
                   }}
                   placeholder="Поиск"
                 />
@@ -511,8 +506,8 @@ export default function Onboarding() {
                   <SearchIcon
                     sx={{
                       color: '#D9D9D9',
-                      width: '48px',
-                      height: '48px',
+                      width: '23px',
+                      height: '23px',
                     }}
                   />
                 </IconButton>
@@ -521,8 +516,8 @@ export default function Onboarding() {
           ) : (
             <div style={{ display: removeModal ? 'block' : 'none' }}>
               <div className={styles.onboardingTheGorge}>
-                <h5>уровень ущерба</h5>
-                <div className="TypoBodyBig" style={{ color: '#787878' }}>
+                <h5 className='onboardingTheGorge__title'>уровень ущерба</h5>
+                <div className="TypoBodyBig onboardingTheGorge__subtitle" style={{ color: '#787878' }}>
                   Для каждой задачи доступен выбор только одного уровня ущерба.
                 </div>
                 <ul className={styles.onboardingTheGorgeList}>
@@ -540,7 +535,7 @@ export default function Onboarding() {
                             height={40}
                           />
 
-                          <h4>критический</h4>
+                          <h4 className='onboardingTheGorge__damage'>критический</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
@@ -562,7 +557,7 @@ export default function Onboarding() {
                             height={40}
                           />
 
-                          <h4>минимальный</h4>
+                          <h4 className='onboardingTheGorge__damage'>минимальный</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
@@ -584,7 +579,7 @@ export default function Onboarding() {
                             height={40}
                           />
 
-                          <h4>предупреждение</h4>
+                          <h4 className='onboardingTheGorge__damage'>предупреждение</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
@@ -610,7 +605,7 @@ export default function Onboarding() {
                   sx={{
                     backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
                     color: expanded ? '#D9D9D9' : '#FFF',
-                    marginBottom: '10px',
+                    marginBottom: '4px',
                   }}
                 >
                   <AccordionSummary
@@ -618,14 +613,14 @@ export default function Onboarding() {
                       <Image
                         src={'onboarding/arrow.svg'}
                         alt={'arrow'}
-                        width={24}
-                        height={24}
+                        width={11.3}
+                        height={11.3}
                       />
                     }
                     aria-controls={`${subRegion.id}-content`}
                     id={`${subRegion.id}-header`}
                   >
-                    <h5>{subRegion.title}</h5>
+                    <h5 className='subregion-title'>{subRegion.title}</h5>
                   </AccordionSummary>
                   <div
                     className="ModalButtons"
@@ -655,7 +650,7 @@ export default function Onboarding() {
                     }
                   >
                     {subRegion.options?.map((option) => (
-                      <div key={option.id}>
+                      <div className='AccordionNested-wrapper' key={option.id}>
                         <button
                           className={
                             addColor
@@ -666,6 +661,8 @@ export default function Onboarding() {
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
+                          <div className='AccordionNested-helper-1'></div>
+                          <div className='AccordionNested-helper-2'></div>
                           <span>
                             <span>
                               <button>{option.name}</button>
@@ -708,10 +705,10 @@ export default function Onboarding() {
           onClose={closeModal3}
           counter={3}
           sx={{
-            left: '33%',
+            left: '414px !important',
             position: 'fixed',
             zIndex: '7',
-            top: '13% !important',
+            top: '116px !important',
           }}
         >
           <p>
@@ -723,7 +720,7 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                addUSA ? '  ModalButton1' : 'SecondarySmallDisableButton'
+                addUSA ? '  ModalButton1' : 'SecondarySmallDisable'
               }
               onClick={handleNext3}
             >

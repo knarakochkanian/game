@@ -7,7 +7,7 @@ import MainScreen from '../components/MainScreen';
 
 import styles from './page.module.css';
 import { useDispatch } from 'react-redux';
-import { setOnBoardingBlur } from '../redux/features/generalSlice';
+import { setLocalTimeBlur, setOnBoardingBlur } from '../redux/features/generalSlice';
 
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
@@ -37,6 +37,7 @@ export default function Home() {
         }
       ));
       console.log('onboarding passed')
+      dispatch(setLocalTimeBlur(false));
     }
     }
   }, []);
