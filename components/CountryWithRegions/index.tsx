@@ -26,6 +26,7 @@ const CountryWithRegions = ({
   const pickedCountries = useAppSelector(selectPickedCountries);
 
   return (
+    <>
     <Accordion
       key={i}
       sx={{
@@ -54,10 +55,7 @@ const CountryWithRegions = ({
         )}
         <div className={styles.placesAccordionSummary}>
           <PlaceCard fromSideNav={fromSideNav} isCountry place={place} />
-        </div>
-        {placeFirstLetterChanged && !fromSideNav && (
-          <AlphabetLetter letter={places[i + 1]?.name[0]} />
-        )}
+        </div>        
       </AccordionSummary>
       <AccordionDetails>
         {place?.regions?.map((region, i) =>
@@ -71,6 +69,11 @@ const CountryWithRegions = ({
         )}
       </AccordionDetails>
     </Accordion>
+    {placeFirstLetterChanged && !fromSideNav && (
+      <AlphabetLetter letter={places[i + 1]?.name[0]} />
+    )}
+    </>
+    
   );
 };
 

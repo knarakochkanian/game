@@ -1,12 +1,22 @@
 import Image from 'next/image';
 import PlaceCard from '../../common/PlaceCard';
-import { Option } from '../../data/attackRegionsData';
-import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
+import { Option, notFriendlyCountries } from '../../data/attackRegionsData';
+import {
+  COUNTRIES,
+  NOT_FRIENDLY_COUNTRIES,
+  RESET,
+  SELECT_ALL,
+} from '../../constants';
 import AlphabetNav from '../AlphabetNav';
 import { useRef, useState } from 'react';
 import { two_lines } from '../../public/ui_kit';
 import useHighlightCurrentLetter from '../../hooks/useHighlightCurrentLetter';
 import CountryWithRegions from '../CountryWithRegions';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectPickedCountries,
+  setPlaceName,
+} from '../../redux/features/generalSlice';
 
 import styles from './Places.module.scss';
 
@@ -17,10 +27,11 @@ interface IPlacesProps {
 }
 
 const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
+  const dispatch = useAppDispatch();
   const letters = Array.from(
     new Set(places?.map((place) => place.name[0].toUpperCase()))
   );
-  
+  const pickedCountries = useAppSelector(selectPickedCountries);
   const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
   const [currentLetter, setCurrentLetter] = useState<string>(letters[0]);
   const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -41,25 +52,37 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
     setTimeout(() => {
       setClickedOnLetter(false);
     }, 500);
-  
+
     const element = countryRefs.current[letter];
     const container = containerRef.current;
-    const offset = 60; 
-  
+    const offset = 60;
+
     if (element && container) {
       const elementPosition = element.getBoundingClientRect().top;
       const containerPosition = container.getBoundingClientRect().top;
-      const scrollPosition = container.scrollTop + (elementPosition - containerPosition) - offset;
-  
+      const scrollPosition =
+        container.scrollTop + (elementPosition - containerPosition) - offset;
+
       container.scrollTo({ top: scrollPosition, behavior: 'smooth' });
       setCurrentLetter(letter);
     }
   };
-  
 
   if (places === undefined) {
     return null;
   }
+
+  const resetButton = places.some((place) =>
+    pickedCountries.includes(place?.name)
+  );
+
+  const onResetOrSelectAll = () => {
+    if (resetButton) {
+      dispatch(setPlaceName({ members: notFriendlyCountries, action: RESET }));
+    } else {
+      dispatch(setPlaceName({ members: notFriendlyCountries, action: SELECT_ALL }));
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -72,6 +95,15 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
           height={75}
           priority
         />
+      )}
+
+      {name === NOT_FRIENDLY_COUNTRIES && (
+        <button
+          className={styles.resetOrSelectAllBtn}
+          onClick={onResetOrSelectAll}
+        >
+          {resetButton ? 'сбросить все' : 'выбрать все'}
+        </button>
       )}
 
       <div className={styles.places} ref={containerRef}>
