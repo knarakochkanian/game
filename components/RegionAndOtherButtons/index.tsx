@@ -3,7 +3,7 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
-import { regions } from '../../data/attackRegionsData';
+import { notFriendlyCountries, regions } from '../../data/attackRegionsData';
 import Keyboard from '../KeyboardOrganisms/Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
 import Places from '../Places';
@@ -16,6 +16,8 @@ import {
   NOT_FRIENDLY_COUNTRIES,
   REGIONS,
   REGION_MODAL,
+  RESET,
+  SELECT_ALL,
 } from '../../constants';
 import AccordionWrapper from '../../common/AccordionWrapper';
 import useManageModals from '../../hooks/useManageModals';
@@ -27,6 +29,7 @@ import SearchResult from '../SearchResult';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectActiveBlocks,
+  selectPickedCountries,
   selectPlaces,
   setActiveBlocks,
   setPlaceName,
@@ -57,6 +60,7 @@ const RegionAndOtherButtons = ({
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
   const countries = useAppSelector(selectPlaces);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const pickedCountries = useAppSelector(selectPickedCountries);
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -151,11 +155,8 @@ const RegionAndOtherButtons = ({
 
                 break;
               case NOT_FRIENDLY_COUNTRIES:
-                const optionNames = region.options?.map(
-                  (option) => option.name
-                );
                 placesInSwitch = countries.filter((country) =>
-                  optionNames?.includes(country.name)
+                  notFriendlyCountries?.includes(country.name)
                 );
                 break;
             }
@@ -205,31 +206,43 @@ const RegionAndOtherButtons = ({
                 {(!isAttacking && region.title === MOST_LIKELY_CHOICE
                   ? region.optionsForProtection
                   : region.options
-                )?.map((option) => (
-                  <div
-                    key={option.id}
-                    style={{
-                      flexWrap: 'wrap',
-                      gap: '10px',
-                    }}
-                  >
-                    <button
-                      className={`${styles.secondarySmallDisable} ${
-                        activeBlocks.includes(option.name)
-                          ? styles.selected
-                          : ''
-                      } ${!isAttacking ? styles.isProtecting : ''}`}
-                      onClick={() => {
-                        dispatch(setPlaceName(option.members));
-                        dispatch(setActiveBlocks(option.name));
+                )?.map((option) => {
+                  const onClick = () => {
+                    const action = option.members?.some((member) =>
+                      pickedCountries.includes(member)
+                    )
+                      ? RESET
+                      : SELECT_ALL;
+
+                    dispatch(setPlaceName({ members: option.members, action }));
+                    dispatch(setActiveBlocks(option.name));
+                  };
+
+                  return (
+                    <div
+                      key={option.id}
+                      style={{
+                        flexWrap: 'wrap',
+                        gap: '10px',
                       }}
                     >
-                      <span>
-                        <span className={styles.optionName}>{option.name}</span>
-                      </span>
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        className={`${styles.secondarySmallDisable} ${
+                          activeBlocks.includes(option.name)
+                            ? styles.selected
+                            : ''
+                        } ${!isAttacking ? styles.isProtecting : ''}`}
+                        onClick={onClick}
+                      >
+                        <span>
+                          <span className={styles.optionName}>
+                            {option.name}
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  );
+                })}
               </AccordionWrapper>
             );
           })}

@@ -6,6 +6,7 @@ import {
   addToPickedCountryObjects,
   removeFromPickedCountryObjects,
 } from '../../helpers';
+import { RESET, SELECT_ALL } from '../../constants';
 
 export interface IInitialState {
   comfirmedFromOnboarding: boolean;
@@ -23,7 +24,7 @@ export interface IInitialState {
   sideNavIsOpen: boolean;
   activeBlocks: string[];
   totalPopulationRegions: number;
-  formattedFinancialLosses: string;  
+  formattedFinancialLosses: string;
 }
 
 const initialState: IInitialState = {
@@ -128,21 +129,48 @@ const generalSlice = createSlice({
     },
     setPlaceName(state, { payload }) {
       let isSameData;
+
       switch (typeof payload) {
         case 'string':
           isSameData = payload === state.placeName;
+
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+            state.placeName = payload;
+          }
           break;
         case 'object': //array of strings
           isSameData =
-            JSON.stringify(payload) === JSON.stringify(state.placeName);
-          break;
-      }
+            JSON.stringify(payload.members) === JSON.stringify(state.placeName);
+          let updatedPlaceName;
 
-      if (isSameData) {
-        state.firstClick = !state.firstClick;
-      } else {
-        state.firstClick = false;
-        state.placeName = payload;
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+
+            console.log('payload', payload);            
+
+            switch (payload.action) {
+              case RESET:
+                updatedPlaceName = [...payload.members].filter(place => state.pickedCountries.includes(place))
+
+                break;
+              case SELECT_ALL: 
+              console.log('[...payload.members]', [...payload.members]);
+              
+              updatedPlaceName = [...payload.members].filter(place => !state.pickedCountries.includes(place))
+                break;
+            }
+
+            console.log('updatedPlaceName', updatedPlaceName);
+            
+
+            state.placeName = updatedPlaceName as [];
+          }
+          break;
       }
     },
     setTotalPopulationRegions(state, { payload }) {
