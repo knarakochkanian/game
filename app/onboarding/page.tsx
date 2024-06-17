@@ -484,7 +484,7 @@ export default function Onboarding() {
 
         <div
           className={styles.onboardingAccordionWrapper}
-          style={{ top: inputTheGorge ? '175px' : '200px' }}
+          style={{ top: inputTheGorge ? '175px' : '116px' }}
         >
           {inputTheGorge ? (
             <ModalWithSelect isOpen={selectOpen} onClose={closeModal2}>
@@ -531,8 +531,8 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/square.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={20}
+                            height={20}
                           />
 
                           <h4 className='onboardingTheGorge__damage'>критический</h4>
@@ -540,8 +540,8 @@ export default function Onboarding() {
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -553,8 +553,8 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/squareMid.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={16}
+                            height={16}
                           />
 
                           <h4 className='onboardingTheGorge__damage'>минимальный</h4>
@@ -562,8 +562,8 @@ export default function Onboarding() {
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -575,8 +575,8 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/squareLittle.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={12}
+                            height={12}
                           />
 
                           <h4 className='onboardingTheGorge__damage'>предупреждение</h4>
@@ -584,8 +584,8 @@ export default function Onboarding() {
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -650,19 +650,19 @@ export default function Onboarding() {
                     }
                   >
                     {subRegion.options?.map((option) => (
-                      <div className='AccordionNested-wrapper' key={option.id}>
+                      <div className={option.name === 'США' ? 'AccordionNested-wrapper AccordionNested-wrapper_USA' : 'AccordionNested-wrapper'} key={option.id}>
                         <button
                           className={
                             addColor
                               ? 'Green'
                               : option.name == 'США'
                                 ? 'SecondarySmallShine'
-                                : 'AccordionNested'
+                                : modalOpen4 || modalOpen5 ? 'industry-buttons' : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
-                          <div className='AccordionNested-helper-1'></div>
-                          <div className='AccordionNested-helper-2'></div>
+                          <div className={option.name === 'США' ? 'AccordionNested-helper-1 AccordionNested-helper-1_USA' : 'AccordionNested-helper-1'}></div>
+                          <div className={option.name === 'США' ? 'AccordionNested-helper-2 AccordionNested-helper-2_USA' : 'AccordionNested-helper-2'}></div>
                           <span>
                             <span>
                               <button>{option.name}</button>
@@ -738,9 +738,9 @@ export default function Onboarding() {
           onClose={closeModal3}
           counter={4}
           sx={{
-            left: '30%',
+            left: '414px !important',
             position: 'fixed',
-            top: '13% !important',
+            top: '116px !important',
             zIndex: '7',
           }}
         >
@@ -761,14 +761,14 @@ export default function Onboarding() {
           isOpen={modalOpen5}
           onClose={closeModal5}
           counter={5}
-          sx={{ left: '30%', position: 'fixed', zIndex: '7' }}
+          sx={{ left: '414px !important', top: '116px !important', position: 'fixed', zIndex: '7' }}
         >
           <p> Возможен выбор как всей отрасли, так и конкретных подотраслей.</p>
           <p> Нажмите на “Выбрать все” чтобы добавить отрасль в задачу.</p>
           <div className="ModalButtons">
             <button
               className={
-                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisableButton'
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
               }
               onClick={handleNext5}
             >
@@ -786,10 +786,10 @@ export default function Onboarding() {
           onClose={closeModal6}
           counter={6}
           sx={{
-            left: '32%',
+            left: '414px !important', 
+            top: '116px !important',
             position: 'fixed',
             zIndex: '7',
-            top: '12% !important',
           }}
         >
           <p> Выберите уровень ущерба.</p>
@@ -799,7 +799,7 @@ export default function Onboarding() {
               className={
                 theGorgeSelected
                   ? 'ModalButton1'
-                  : 'SecondarySmallDisableButton'
+                  : 'SecondarySmallDisable'
               }
               onClick={handleNext6}
             >

@@ -128,6 +128,12 @@ button {
     text-transform: uppercase;
   }
   color: $attack-green-40;
+  background-color: $attack-green-40;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.21px;
+  letter-spacing: 0.01em;
+  text-align: left;
 }
 
 .SecondarySmall {
@@ -205,15 +211,38 @@ button {
   opacity: 0.4;
 }
 .SecondarySmallShine {
-    border-right: 2px solid #ffffff;
-    border-left: 2px solid #ffffff;
+    border-top: 2px solid rgba(255, 255, 255, 1);
+    border-bottom: 2px solid rgba(255, 255, 255, 1);
     position: relative;
     cursor: pointer;
-    padding: 16px 24px;
+    padding: 5px 15px;
     overflow: hidden;
     color: #fff;
-    opacity: 1;
+    opacity: .8;
     @include TypoBodyBig;
+    font-size: 17.89px;
+    font-weight: 500;
+    line-height: 21.46px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 5px;
+      background: rgba(255, 255, 255, 1);
+      top: 0;
+      right: 0;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 5px;
+      background: rgba(255, 255, 255, 1);
+      bottom: 0;
+      right: 0;
+    }
     &:focus{
       border-top: 1px solid #5ED1C5;
       border-bottom: 1px solid #5ED1C5;
@@ -232,32 +261,32 @@ button {
       background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 75%);
       animation: shine 3s infinite;
     }
-    &::before, > span::before, > span::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 2px;
-      bottom: 0;
-    }
-    &::before {
-      right: 0;
-    }
-    > span::before {
-      top: 0;
-      left: 0;
-    }
-    > span::after {
-      top: 0;
-      right: 0;
-    }
+    // &::before, > span::before, > span::after {
+    //   content: '';
+    //   position: absolute;
+    //   width: 16px;
+    //   height: 2px;
+    //   bottom: 0;
+    // }
+    // &::before {
+    //   right: 0;
+    // }
+    // > span::before {
+    //   top: 0;
+    //   left: 0;
+    // }
+    // > span::after {
+    //   top: 0;
+    //   right: 0;
+    // }
 }
 
   @keyframes shine {
     0% {
-      transform: translateX(0);
+      transform: translateX(-50%);
     }
     100% {
-      transform: translateX(200%);
+      transform: translateX(150%);
     }
   }
   .AccordionsWrap{
@@ -279,7 +308,12 @@ button {
     border-bottom: 2px solid rgba(255, 255, 255, 0.4);
     position: relative;
     padding: 5px 15px;
-    
+    opacity: .2;
+    font-size: 17.89px;
+    font-weight: 500;
+    line-height: 21.46px;
+    letter-spacing: 0.01em;
+    text-align: left;
   }
   .AccordionNested::after {
     content: "";
@@ -302,6 +336,9 @@ button {
   .AccordionNested-wrapper {
     position: relative;
   }
+  .AccordionNested-wrapper_USA {
+    opacity: .8;
+  }
   .AccordionNested-helper-1 {
     position: absolute;
     width: 2px;
@@ -317,6 +354,12 @@ button {
     background: rgba(255, 255, 255, 0.4);
     bottom: 0;
     left: 0;
+  }
+  .AccordionNested-helper-1_USA {
+    background: rgba(255, 255, 255,1);
+  }
+  .AccordionNested-helper-2_USA {
+    background: rgba(255, 255, 255,1);
   }
   .sidenav__title {
     font-size: 26.36px !important;
@@ -362,4 +405,15 @@ button {
     line-height: 21.46px;
     letter-spacing: 0.01em;
     text-align: left;
+  }
+  .industry-buttons button {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.21px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  .industry-buttons .AccordionNested-helper-1, .industry-buttons .AccordionNested-helper-2 {
+    display: none;
   }
