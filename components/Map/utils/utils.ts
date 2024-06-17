@@ -1,9 +1,15 @@
 import { Position } from "geojson";
 import countriesJson from "../geodata/geodata.json"
 import usStatesJson from "../geodata/usa-states.geo.json"
-import { countries } from "../geodata/countries";
+import chinaRegionsJson from "../geodata/china-regions.json"
+import indianStates from "../geodata/indian-states.json"
+import russianStates from "../geodata/russia-states.geo.json"
+import canadianStates from "../geodata/canada-states.geo.json"
+import brazilRegions from "../geodata/brazil-states.geo.json"
+import australianRegions from "../geodata/australian-states.geo.json"
 import merc from 'mercator-projection'
 import { Vector2, Shape, ShapeGeometry } from "three";
+import { countries } from "../../../data/countries";
 
 export function getCountryGeometryByA3Code(a3Code: string): Position[][] | Position[][][] | undefined {
   for (const country of countriesJson.features) {
@@ -16,6 +22,54 @@ export function getCountryGeometryByA3Code(a3Code: string): Position[][] | Posit
 export function getUSStateGeometryByGN_A1Code(a1Code: string): Position[][] | Position[][][] | undefined {
   for (const country of usStatesJson.features) {
     if (country.properties?.gn_a1_code === a1Code) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getChinaRegionGeometryByHASC_1Code(hasc1Code: string): Position[][] | Position[][][] | undefined {
+  for (const country of chinaRegionsJson.features) {
+    if (country.properties?.HASC_1 === hasc1Code) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getIndiaStateGeometryByEnglishName(name: string): Position[][] | Position[][][] | undefined {
+  for (const country of indianStates.features) {
+    if (country.properties?.NAME_1 === name) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getCanadaStateGeometry(name: string): Position[][] | Position[][][] | undefined {
+  for (const country of canadianStates.features) {
+    if (country.properties?.nom === name) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getBrazilRegionGeometry(name: string): Position[][] | Position[][][] | undefined {
+  for (const country of brazilRegions.features) {
+    if (country.properties?.name === name) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getAustraliaStateGeometry(name: string): Position[][] | Position[][][] | undefined {
+  for (const country of australianRegions.features) {
+    if (country.properties?.STATE_NAME === name) {
+      return country.geometry.coordinates;
+    }
+  }
+}
+
+export function getRussiaRegionGeometry(code: string): Position[][] | Position[][][] | undefined {
+  for (const country of russianStates.features) {
+    if (country.properties?.shapeISO === code) {
       return country.geometry.coordinates;
     }
   }

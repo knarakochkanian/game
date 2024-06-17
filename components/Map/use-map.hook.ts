@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { FlatEarth } from "./flat-earth/flat-earth";
-import { countries } from "./geodata/countries";
 import { MapType, UseMapProps } from "./map.types";
 import { Earth } from "./sphere-earth/earth";
 import { IEarth } from "./IEarth";
+import { countries } from "../../data/countries";
 
 const countriesNamesList = countries.map(country => country.name)
 

@@ -2263,6 +2263,14 @@ const countriesWithCodes: IPlace[] = [
     population: 123294513,
     settlements: 1337,
   },
+  // {
+  //   isSelected: false,
+  //   id: 247,
+  //   name: 'Южный Судан',
+  //   code: '',
+  //   population: 0,
+  //   settlements: 0,
+  // },
 ];
 
 export const USARegions = [

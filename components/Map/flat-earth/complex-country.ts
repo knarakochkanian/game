@@ -1,7 +1,8 @@
 import { Box3, EdgesGeometry, Group, LineBasicMaterial, LineSegments, ShapeGeometry } from "three";
-import { countriesNamesToCode } from "../geodata/countries-names-to-a3-map";
-import { createShapeGeometry, getCountryGeometryByA3Code, getRegionsNamesByCountryName } from "../utils/utils";
+import { countriesNamesToCode } from "../geodata/countries-names-to-code";
+import { createShapeGeometry, getAustraliaStateGeometry, getBrazilRegionGeometry, getCanadaStateGeometry, getChinaRegionGeometryByHASC_1Code, getCountryGeometryByA3Code, getIndiaStateGeometryByEnglishName, getRegionsNamesByCountryName, getRussiaRegionGeometry, getUSStateGeometryByGN_A1Code } from "../utils/utils";
 import { State } from "./state";
+import { Position } from "geojson";
 
 export class ComplexCountry {
   public A3Code: string
@@ -11,15 +12,28 @@ export class ComplexCountry {
   private contourMesh: LineSegments | undefined
 
   static fromName(name: string, parentGroup: Group, lineColor: string, shapeColor: string) {
-    if (name !== "США") {
-      console.error(`Only the US are supported for now`)
+    // if (name !== "США") {
+    //   console.error(`Only the US are supported for now`)
+    //   return;
+    // }
+    const nameToGeometryGetter: Record<string, (code: string) => Position[][] | Position[][][] | undefined> = {
+      "США": getUSStateGeometryByGN_A1Code,
+      "Китай": getChinaRegionGeometryByHASC_1Code,
+      "Индия": getIndiaStateGeometryByEnglishName,
+      "Канада": getCanadaStateGeometry,
+      "Бразилия": getBrazilRegionGeometry,
+      "Австралия": getAustraliaStateGeometry,
+      "Россия": getRussiaRegionGeometry,
+    }
+    if (!nameToGeometryGetter[name]) {
+      console.error(`no geometry getter for ${name}`)
       return;
     }
 
     const regionNames = getRegionsNamesByCountryName(name)
 
     const regions = regionNames.map(regionName =>
-      State.fromGN_A1Code(countriesNamesToCode[regionName], lineColor, shapeColor)
+      State.fromGeometryGetter(countriesNamesToCode[regionName], nameToGeometryGetter[name], lineColor, shapeColor)
     ).filter(region => !!region) as State[]
 
     const a3code = countriesNamesToCode[name]

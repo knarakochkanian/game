@@ -2,7 +2,7 @@ import { Position } from 'geojson';
 import { EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, ShapeGeometry } from 'three';
 import { createShapeGeometry, getCountryGeometryByA3Code, getUSStateGeometryByGN_A1Code } from '../utils/utils';
 import { ComplexCountry } from './complex-country';
-import { getCountryOrStateNameByCode } from '../geodata/countries-names-to-a3-map';
+import { getCountryOrStateNameByCode } from '../geodata/countries-names-to-code';
 
 /**
  * defines a single country or one state of a complex country
@@ -23,24 +23,23 @@ export class State {
 
   private outlineMesh: LineSegments | undefined;
 
-  static fromGN_A1Code(GN_A1Code: string, lineColor: string, shapeColor: string) {
+  static fromGeometryGetter(countryCode: string, getGeometry: (code: string) => Position[][] | Position[][][] | undefined, lineColor: string, shapeColor: string) {
     // for now for us states only
-    const geometry = getUSStateGeometryByGN_A1Code(GN_A1Code)
+    const geometry = getGeometry(countryCode)
     if (!geometry) {
-      console.error(`no geometry for ${GN_A1Code}`)
-      return;
-    }
-    return new State(GN_A1Code, geometry, lineColor, shapeColor)
-  }
-
-  static fromA3Code(A3Code: string, lineColor: string, shapeColor: string) {
-    const geometry = getCountryGeometryByA3Code(A3Code)
-    if (!geometry) {
-      const name = getCountryOrStateNameByCode(A3Code)
+      const name = getCountryOrStateNameByCode(countryCode)
       console.error(`no geometry for ${name}`)
       return;
     }
-    return new State(A3Code, geometry, lineColor, shapeColor)
+    return new State(countryCode, geometry, lineColor, shapeColor)
+  }
+
+  static fromGN_A1Code(GN_A1Code: string, lineColor: string, shapeColor: string) {
+    return State.fromGeometryGetter(GN_A1Code, getUSStateGeometryByGN_A1Code, lineColor, shapeColor);
+  }
+
+  static fromA3Code(A3Code: string, lineColor: string, shapeColor: string) {
+    return State.fromGeometryGetter(A3Code, getCountryGeometryByA3Code, lineColor, shapeColor);
   }
 
   private constructor(A3Code: string, geometry: Position[][] | Position[][][], lineColor: string, shapeColor: string) {
