@@ -651,6 +651,7 @@ export default function Onboarding() {
                   >
                     {subRegion.options?.map((option) => (
                       <div className={option.name === 'США' ? 'AccordionNested-wrapper AccordionNested-wrapper_USA' : 'AccordionNested-wrapper'} key={option.id}>
+                        <div className='SecondarySmallShine__animation' style={{display: option.name === 'США' ? 'block' : 'none'}}></div>
                         <button
                           className={
                             addColor

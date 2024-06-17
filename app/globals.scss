@@ -210,6 +210,19 @@ button {
   text-align: left;
   opacity: 0.4;
 }
+.SecondarySmallShine__animation {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  top: -34px;
+  left: -43px;
+  opacity: .6;
+  width: 250px;
+  height: 100px;
+  /* transform: translate(-50%, -50%); */
+  background: linear-gradient(118.69deg, #0E0E0E 40.31%, rgba(14, 14, 14, 0) 50.96%, #0E0E0E 65.34%);
+  animation: shine 1s infinite;
+}
 .SecondarySmallShine {
     border-top: 2px solid rgba(255, 255, 255, 1);
     border-bottom: 2px solid rgba(255, 255, 255, 1);
@@ -252,14 +265,14 @@ button {
       color: #5ED1C5;
     }
     &>span>span::after {
-      content: '';
-      position: absolute;
-      top: -50%; /* Position the shine above the button */
-      left: -50%;
-      width: 100%; /* Width must be enough to cover the entire button */
-      height: 200%;
-      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 75%);
-      animation: shine 3s infinite;
+      // content: '';
+      // position: absolute;
+      // top: -50%; /* Position the shine above the button */
+      // left: -50%;
+      // width: 100%; /* Width must be enough to cover the entire button */
+      // height: 200%;
+      // background: linear-gradient(118.69deg, #0E0E0E 40.31%, rgba(14, 14, 14, 0) 50.96%, #0E0E0E 65.34%);
+      // animation: shine 3s infinite;
     }
     // &::before, > span::before, > span::after {
     //   content: '';
@@ -283,16 +296,16 @@ button {
 
   @keyframes shine {
     0% {
-      transform: translateX(-50%);
+      transform: translateX(-111px);
     }
     100% {
-      transform: translateX(150%);
+      transform: translateX(39px);
     }
   }
   .AccordionsWrap{
     @include flex-start;
     flex-direction: column;
-    gap: 56px;
+    gap: 5spx;
   }
 
   .subregion-title {
@@ -338,6 +351,7 @@ button {
   }
   .AccordionNested-wrapper_USA {
     opacity: .8;
+    overflow: hidden;
   }
   .AccordionNested-helper-1 {
     position: absolute;

@@ -146,6 +146,7 @@ function Sidenav({
                 sx={{
                   display: delayed ? 'none' : 'flex',
                   alignItems: 'center',
+                  padding: "0",
                 }}
               >
                 <div className={styles.sidenavAccordionSummary}>
@@ -153,7 +154,11 @@ function Sidenav({
                   <span className='accordion-summary-count'>1</span>
                 </div>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: '0',
+                }}
+              >
                 <h4 className='accordion-details-title'>США</h4>
               </AccordionDetails>
             </Accordion>
@@ -178,6 +183,7 @@ function Sidenav({
                 }
                 sx={{
                   display: delayed ? 'none' : 'flex',
+                  padding: '0',
                 }}
                 aria-controls="panel2-content"
                 id="panel2-header"
@@ -187,7 +193,11 @@ function Sidenav({
                   <span className='accordion-summary-count'>1</span>
                 </div>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: '0',
+                }}
+              >
                 {' '}
                 {vpkSelected && <h4 className='accordion-details-title'>ВПК</h4>}
               </AccordionDetails>
@@ -213,6 +223,7 @@ function Sidenav({
                 }
                 sx={{
                   display: delayed ? 'none' : 'flex',
+                  padding: '0',
                 }}
                 aria-controls="panel2-content"
                 id="panel2-header"
@@ -221,7 +232,11 @@ function Sidenav({
                   <h3 className='accordion-summary-title'>Ущерб</h3>
                 </div>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: '0',
+                }}
+              >
                 {theGorgeSelected && <h3 className='accordion-details-title'>Критический </h3>}
               </AccordionDetails>
             </Accordion>
@@ -234,7 +249,7 @@ function Sidenav({
             <h5
               style={{
                 color: delayed ? 'white' : '#787878',
-                paddingLeft: '21px',
+                paddingLeft: '0px',
                 fontSize: "16px",
                 fontWeight: "600",
                 lineHeight: "19.21px",
