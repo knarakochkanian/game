@@ -32,6 +32,7 @@ import {
   selectPickedCountries,
   selectPickedCountriesObjects,
   selectTotalPopulationRegions,
+  setBlur,
 } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
 
@@ -160,7 +161,7 @@ const LaunchConsequences = ({
               </button>
               <Link href={'/'} className="SecondarySmall">
                 <span className="TypoBodyBigLink">
-                  <button onClick={completeOnboarding}>пропустить</button>
+                  <button onClick={completeOnboarding}>пропус</button>
                 </span>
               </Link>
             </div>

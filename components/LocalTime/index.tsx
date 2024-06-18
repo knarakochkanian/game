@@ -5,16 +5,29 @@ import { usePathname } from 'next/navigation';
 import { pagesWithoutLocalTime } from '../../constants';
 
 import styles from './LocalTime.module.scss';
-import { selectBlur } from '../../redux/features/generalSlice';
+import { selectBlur, selectLocalTimeBlur, selectOnboardingBlur } from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
+import useGetPage from '../../hooks/useGetPage';
+import { useSelector } from 'react-redux';
 const Index: React.FC = () => {
   const [dateTime, setDateTime] = useState<string>('');
+  const [timeBlur, setTimeBlur] = useState('blur(22px)');
   const pathname = usePathname();
   const blur = useAppSelector(selectBlur);
   const localTimeDisplayNone = pagesWithoutLocalTime.some((page) =>
     pathname?.split('/').includes(page)
   );
-
+  const onBoardingBlur = useSelector(selectOnboardingBlur);
+  const localTimeBlur = useSelector(selectLocalTimeBlur);
+  useEffect(() => {
+    if (localTimeBlur === true) {
+      setTimeBlur('blur(22px)')
+    }
+    else {
+      setTimeBlur('none')
+    }
+  }, [localTimeBlur])
+  
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
@@ -46,7 +59,8 @@ const Index: React.FC = () => {
 
   return (
     <span
-      style={{ filter: blur ? 'blur(22px)' : 'none' }}
+      // style={{ filter: blur ? 'blur(22px)' : 'none' }}
+      style={{filter: timeBlur}}
       className={`${styles.DateTime} ${
         localTimeDisplayNone ? styles.displayNone : ''
       }`}

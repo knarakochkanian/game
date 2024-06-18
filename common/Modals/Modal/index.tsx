@@ -50,8 +50,8 @@ const Modal: React.FC<ModalProps> = ({
             <Image
               src={isTrashModal ? trashHintIcon : 'onboarding/Hint_icon.svg'}
               alt={'icon'}
-              width={128}
-              height={96}
+              width={60}
+              height={45}
             />
             {!isTrashModal && (
               <span className={styles.modalCounter_number}>{counter}/12</span>

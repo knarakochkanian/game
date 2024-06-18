@@ -3,10 +3,9 @@
   position: fixed;
   z-index: 10;
   left: 1130px;
-
   &Wrapper{
     display: flex;
-    padding: 51px 0 0 51px;
+    padding: 26px 0 0 51px;
     position: relative;
     z-index: 3;
   }
@@ -23,13 +22,14 @@
   &Accordion {
     &Wrapper{
       position: absolute;
-      top: 200px;
-      width: 400px;
+      top: 175px;
+      width: 354px;
     }
     &Details{
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
+      column-gap: 8px;
+      row-gap: 16px;
       padding-left: 20px;
       align-items: center;
     }
@@ -38,11 +38,11 @@
       padding-bottom: 40px;
       flex-direction: column;
       align-items: flex-start;
-      gap: 4px;
+      gap: 17px;
       align-self: stretch;
       >div{
         display: flex;
-        padding: 24px 40px 24px 88px;
+        // padding: 24px 40px 24px 88px;
         align-items: center;
         gap: 8px;
         align-self: stretch;
@@ -62,6 +62,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      list-style: none;
       >li>button {
         width: 100%;
       }
@@ -71,25 +72,40 @@
       }
       &Item{
         @include flex-start;
+        align-items: center;
         gap: 32px;
       }
     }
   }
 
   &Attack{
-    width: 540px;
-    margin-left: 310px;
+    // width: 540px;
+    position: absolute;
+    left: 50%;
+    top: 26px;
+    transform: translate(-50%);
+    gap: 15px;
+    // margin-left: 310px;
     @include flex-between;
     >button{
       @include TypoBodyBig;
       text-transform: uppercase;
-
+      // font-family: "TT";
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19.21px;
+      letter-spacing: 0.01em;
+      text-align: right;
     }
     >div>img:nth-child(1){
       background-color: $attack-green;
+      width: 41px;
+      height: 41px;
     }
     >div>img:nth-child(2){
       border: 3px solid $mid-dark-gray;
+      width: 41px;
+      height: 41px;
     }
   }
 
@@ -123,6 +139,6 @@
 &Globus{
   position: absolute;
   bottom: 10%;
-  left: 30%;
+  left: 18%;
 }
 }

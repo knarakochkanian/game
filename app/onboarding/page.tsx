@@ -13,8 +13,8 @@ import { regions } from '../../data/attackRegionsData';
 import styles from './onboarding.module.scss';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
-import { useAppDispatch } from '../../redux/hooks';
-import { selectBlur, setBlur } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectBlur, selectOnboardingBlur, setBlur, setLocalTimeBlur, setOnBoardingBlur } from '../../redux/features/generalSlice';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -49,6 +49,15 @@ export default function Onboarding() {
   const [vpkSelected, setVpkSelected] = useState(false);
   const [theGorgeSelected, setTheGorgeSelected] = useState(false);
 
+  const [currentModal, setCurrentModal] = useState(1);
+
+  const [step2Blur, setStep2Blur] = useState({
+    first: false,
+    second: true,
+    third: true,
+  });
+  const [attackButtonsBlur, setAttackButtonsBlur] = useState('none');
+
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -66,19 +75,254 @@ export default function Onboarding() {
     setModalOpen(true);
     setModalOpen2(false);
   };
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const isOnboardingPassed =
-  //       window.localStorage.getItem('isOnboardingPassed') === 'true';
-  //     setOnboardingPassed(isOnboardingPassed);
-  //   }
-  // }, []);
+
+  useEffect(() => {
+    switch(currentModal) {
+      case 1:
+        dispatch(setOnBoardingBlur(
+          {
+            1: true,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+      case 2:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: true,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        setAttackButtonsBlur('blur(22px)');
+        break;
+      case 3:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: true,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+      case 4:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: true,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 5:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: true,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 6:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: true,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 7:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: true,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 8:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: true,
+            9: false,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 9:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: true,
+            10: false,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 10:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: true,
+            11: false,
+            12: false,
+          }
+        ));
+        break;
+        case 11:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: true,
+            12: false,
+          }
+        ));
+        break;
+        case 12:
+        dispatch(setOnBoardingBlur(
+          {
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6: false,
+            7: false,
+            8: false,
+            9: false,
+            10: false,
+            11: false,
+            12: true,
+          }
+        ));
+        setAttackButtonsBlur('none');
+        break;
+      default:
+        break;
+    }
+  }, [currentModal])
 
   const completeOnboarding = () => {
     setOnboardingPassed(true);
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('isOnboardingPassed', 'true');
     }
+    dispatch(setOnBoardingBlur(
+      {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+        10: false,
+        11: false,
+        12: false,
+      }
+    ));
+    dispatch(setLocalTimeBlur(false));
   };
   const closeModal = () => setModalOpen(false);
   const closeModal2 = () => setModalOpen2(false);
@@ -95,6 +339,7 @@ export default function Onboarding() {
     setModalOpen(false);
     setSelectOpen(false);
     setBlurButtons(false);
+    setCurrentModal(2);
   };
 
   const handleNext2 = () => {
@@ -103,18 +348,26 @@ export default function Onboarding() {
     setModalOpen3(true);
     handleSelectRegion(1);
     setBlurButtons(false);
+    setCurrentModal(3);
+    // setStep2Blur({
+    //   first: true,
+    //   second: false,
+    //   third: true
+    // })
   };
   const handleOpenSidenav = (option: any) => {
     if (option.name === 'США' && modalOpen3) {
       setDrawerOpen(!drawerOpen);
       dispatch(setBlur(false));
       setAddUSA(true);
+      dispatch(setLocalTimeBlur(false));
     }
   };
   const handleAddTheGorge = () => {
     dispatch(setBlur(false));
     setAddConfirm(true);
     setTheGorgeSelected(true);
+    dispatch(setLocalTimeBlur(false));
   };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
@@ -123,12 +376,20 @@ export default function Onboarding() {
     setModalOpen3(false);
     setModalOpen4(true);
     setExpanded(false);
+    setCurrentModal(4);
+    setStep2Blur({
+      first: true,
+      second: false,
+      third: true,
+    });
+    dispatch(setLocalTimeBlur(true));
   };
   const handleNext4 = () => {
     setModalOpen4(false);
     setModalOpen5(true);
     setDrawerOpen(true);
     dispatch(setBlur(true));
+    setCurrentModal(5);
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
@@ -136,12 +397,25 @@ export default function Onboarding() {
     setModalOpen5(false);
     setModalOpen6(true);
     setInputTheGorge(false);
+    setCurrentModal(6);
+    setStep2Blur({
+      first: true,
+      second: true,
+      third: false,
+    });
+    dispatch(setLocalTimeBlur(true));
   };
   const handleNext6 = () => {
     dispatch(setBlur(false));
     setModalOpen6(false);
     setRemoveModal(false);
     setModalOpen7(true);
+    setCurrentModal(7);
+    setStep2Blur({
+      first: true,
+      second: true,
+      third: true,
+    })
   };
   const handleSelectOpen = () => {
     setSelectOpen(true);
@@ -150,18 +424,22 @@ export default function Onboarding() {
     dispatch(setBlur(false));
     setAddColor(true);
     setVpkSelected(true);
+    dispatch(setLocalTimeBlur(false))
   };
   const handleNext7 = () => {
     setModalOpen7(false);
     setModalOpen8(true);
     setDelayed(true);
+    setCurrentModal(8);
   };
   const handleNext8 = () => {
     setModalOpen8(false);
     setModalOpen9(true);
+    setCurrentModal(9);
   };
   const handleNext9 = () => {
     setRemoveModalDate(true);
+    setCurrentModal(10);
   };
   return (
     <>
@@ -170,8 +448,9 @@ export default function Onboarding() {
           style={{ filter: blurButtons ? 'blur(22px)' : 'none' }}
           className={styles.onboardingButtons}
         >
-          {regions.map((region) => (
+          {regions.map((region, index) => (
             <BaseButton
+              styleBlur={index === 0 ? step2Blur['first'] : index === 1 ? step2Blur['second'] : step2Blur['third']}
               key={region.id}
               active={currentRegionId === region.id}
               // disabled={ buttonsDisabled ||  region.id == 2 || region.id == 3}
@@ -186,7 +465,7 @@ export default function Onboarding() {
           isOpen={modalOpen2}
           onClose={closeModal}
           counter={2}
-          sx={{ left: '1%', top: '12% !important', position: 'absolute' }}
+          sx={{ left: '45px !important', top: '115px !important', position: 'absolute' }}
         >
           <p>Выберите регион при помощи карты или списка.</p>
           <div className="ModalButtons">
@@ -205,7 +484,7 @@ export default function Onboarding() {
 
         <div
           className={styles.onboardingAccordionWrapper}
-          style={{ top: inputTheGorge ? '400px' : '200px' }}
+          style={{ top: inputTheGorge ? '175px' : '116px' }}
         >
           {inputTheGorge ? (
             <ModalWithSelect isOpen={selectOpen} onClose={closeModal2}>
@@ -215,7 +494,7 @@ export default function Onboarding() {
                     ml: 1,
                     flex: 1,
                     color: '#D9D9D9',
-                    fontSize: '34px',
+                    fontSize: '16px',
                   }}
                   placeholder="Поиск"
                 />
@@ -227,8 +506,8 @@ export default function Onboarding() {
                   <SearchIcon
                     sx={{
                       color: '#D9D9D9',
-                      width: '48px',
-                      height: '48px',
+                      width: '23px',
+                      height: '23px',
                     }}
                   />
                 </IconButton>
@@ -237,8 +516,8 @@ export default function Onboarding() {
           ) : (
             <div style={{ display: removeModal ? 'block' : 'none' }}>
               <div className={styles.onboardingTheGorge}>
-                <h5>уровень ущерба</h5>
-                <div className="TypoBodyBig" style={{ color: '#787878' }}>
+                <h5 className='onboardingTheGorge__title'>уровень ущерба</h5>
+                <div className="TypoBodyBig onboardingTheGorge__subtitle" style={{ color: '#787878' }}>
                   Для каждой задачи доступен выбор только одного уровня ущерба.
                 </div>
                 <ul className={styles.onboardingTheGorgeList}>
@@ -252,17 +531,17 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/square.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={20}
+                            height={20}
                           />
 
-                          <h4>критический</h4>
+                          <h4 className='onboardingTheGorge__damage'>критический</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -274,17 +553,17 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/squareMid.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={16}
+                            height={16}
                           />
 
-                          <h4>минимальный</h4>
+                          <h4 className='onboardingTheGorge__damage'>минимальный</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -296,17 +575,17 @@ export default function Onboarding() {
                           <Image
                             src={'onboarding/squareLittle.svg'}
                             alt={'square'}
-                            width={40}
-                            height={40}
+                            width={12}
+                            height={12}
                           />
 
-                          <h4>предупреждение</h4>
+                          <h4 className='onboardingTheGorge__damage'>предупреждение</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
                           alt={'square'}
-                          width={40}
-                          height={40}
+                          width={19}
+                          height={19}
                         />
                       </span>
                     </button>
@@ -326,7 +605,7 @@ export default function Onboarding() {
                   sx={{
                     backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
                     color: expanded ? '#D9D9D9' : '#FFF',
-                    marginBottom: '10px',
+                    marginBottom: '4px',
                   }}
                 >
                   <AccordionSummary
@@ -334,14 +613,14 @@ export default function Onboarding() {
                       <Image
                         src={'onboarding/arrow.svg'}
                         alt={'arrow'}
-                        width={24}
-                        height={24}
+                        width={11.3}
+                        height={11.3}
                       />
                     }
                     aria-controls={`${subRegion.id}-content`}
                     id={`${subRegion.id}-header`}
                   >
-                    <h5>{subRegion.title}</h5>
+                    <h5 className='subregion-title'>{subRegion.title}</h5>
                   </AccordionSummary>
                   <div
                     className="ModalButtons"
@@ -371,17 +650,20 @@ export default function Onboarding() {
                     }
                   >
                     {subRegion.options?.map((option) => (
-                      <div key={option.id}>
+                      <div className={option.name === 'США' ? 'AccordionNested-wrapper AccordionNested-wrapper_USA' : 'AccordionNested-wrapper'} key={option.id}>
+                        <div className='SecondarySmallShine__animation' style={{display: option.name === 'США' ? 'block' : 'none'}}></div>
                         <button
                           className={
                             addColor
                               ? 'Green'
                               : option.name == 'США'
                                 ? 'SecondarySmallShine'
-                                : 'AccordionNested'
+                                : modalOpen4 || modalOpen5 ? 'industry-buttons' : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
+                          <div className={option.name === 'США' ? 'AccordionNested-helper-1 AccordionNested-helper-1_USA' : 'AccordionNested-helper-1'}></div>
+                          <div className={option.name === 'США' ? 'AccordionNested-helper-2 AccordionNested-helper-2_USA' : 'AccordionNested-helper-2'}></div>
                           <span>
                             <span>
                               <button>{option.name}</button>
@@ -424,10 +706,10 @@ export default function Onboarding() {
           onClose={closeModal3}
           counter={3}
           sx={{
-            left: '33%',
+            left: '414px !important',
             position: 'fixed',
             zIndex: '7',
-            top: '13% !important',
+            top: '116px !important',
           }}
         >
           <p>
@@ -439,7 +721,7 @@ export default function Onboarding() {
           <div className="ModalButtons">
             <button
               className={
-                addUSA ? '  ModalButton1' : 'SecondarySmallDisableButton'
+                addUSA ? '  ModalButton1' : 'SecondarySmallDisable'
               }
               onClick={handleNext3}
             >
@@ -457,9 +739,9 @@ export default function Onboarding() {
           onClose={closeModal3}
           counter={4}
           sx={{
-            left: '30%',
+            left: '414px !important',
             position: 'fixed',
-            top: '13% !important',
+            top: '116px !important',
             zIndex: '7',
           }}
         >
@@ -480,14 +762,14 @@ export default function Onboarding() {
           isOpen={modalOpen5}
           onClose={closeModal5}
           counter={5}
-          sx={{ left: '30%', position: 'fixed', zIndex: '7' }}
+          sx={{ left: '414px !important', top: '116px !important', position: 'fixed', zIndex: '7' }}
         >
           <p> Возможен выбор как всей отрасли, так и конкретных подотраслей.</p>
           <p> Нажмите на “Выбрать все” чтобы добавить отрасль в задачу.</p>
           <div className="ModalButtons">
             <button
               className={
-                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisableButton'
+                vpkSelected ? '  ModalButton1' : 'SecondarySmallDisable'
               }
               onClick={handleNext5}
             >
@@ -505,10 +787,10 @@ export default function Onboarding() {
           onClose={closeModal6}
           counter={6}
           sx={{
-            left: '32%',
+            left: '414px !important', 
+            top: '116px !important',
             position: 'fixed',
             zIndex: '7',
-            top: '12% !important',
           }}
         >
           <p> Выберите уровень ущерба.</p>
@@ -518,7 +800,7 @@ export default function Onboarding() {
               className={
                 theGorgeSelected
                   ? 'ModalButton1'
-                  : 'SecondarySmallDisableButton'
+                  : 'SecondarySmallDisable'
               }
               onClick={handleNext6}
             >
@@ -619,7 +901,7 @@ export default function Onboarding() {
             </Link>
           </div>
         </Modal>
-        <div className={styles.onboardingAttack}>
+        <div style={{ filter: attackButtonsBlur }} className={styles.onboardingAttack}>
           <button onClick={openModal}>атака</button>
           <div>
             <Image
