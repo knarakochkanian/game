@@ -51,6 +51,12 @@ export default function Onboarding() {
 
   const [currentModal, setCurrentModal] = useState(1);
 
+  const [vpkCount, setVpkCount] = useState(0);
+  const [topVpkAllButton, setTopVpkAllButton] = useState('');
+  const [vpkButtonAnimate, setVpkButtonAnimate] = useState('none');
+  const [vpkButtonText, setVpkButtonText] = useState("Выбрать все");
+  const [vpkCountColor, setVpkCountColor] = useState('rgba(153, 154, 154, 1)');
+
   const [step2Blur, setStep2Blur] = useState({
     first: false,
     second: true,
@@ -390,6 +396,8 @@ export default function Onboarding() {
     setDrawerOpen(true);
     dispatch(setBlur(true));
     setCurrentModal(5);
+    setTopVpkAllButton('top-vpk-all-button');
+    setVpkButtonAnimate('block');
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
@@ -425,6 +433,11 @@ export default function Onboarding() {
     setAddColor(true);
     setVpkSelected(true);
     dispatch(setLocalTimeBlur(false))
+    setVpkCount(5);
+    setVpkButtonAnimate('none');
+    setVpkButtonText('Сбросить все');
+    setTopVpkAllButton('');
+    setVpkCountColor('rgba(94, 209, 197, 1)');
   };
   const handleNext7 = () => {
     setModalOpen7(false);
@@ -594,6 +607,46 @@ export default function Onboarding() {
               </div>
             </div>
           )}
+          <div style={{ display: modalOpen4 || modalOpen5 ? 'block' : 'none' }}>
+            <Accordion
+              expanded={true}
+              // onChange={handleExpansion(subRegion.id)}
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
+                color: expanded ? '#D9D9D9' : '#FFF',
+                marginBottom: '4px',
+              }}
+            >
+              <AccordionSummary
+                expandIcon={
+                  <Image
+                    src={'onboarding/arrow.svg'}
+                    alt={'arrow'}
+                    width={11.3}
+                    height={11.3}
+                  />
+                }
+              >
+                <h5 className='subregion-title'>Отрасли</h5>
+              </AccordionSummary>
+              <div
+                className="ModalButtons"
+                style={{
+                  justifyContent: 'start',
+                  padding: '20px 0',
+                }}
+              >
+                <button
+                  className={`ModalButton1 vpk__all-button ${topVpkAllButton}`}
+                  onClick={handleSelectAllVPK}
+                >
+                  <span>
+                    <span>Выбрать все</span>
+                  </span>
+                </button>
+              </div>
+            </Accordion>
+          </div>
           {currentRegionId &&
             regions
               .find((region) => region.id === currentRegionId)
@@ -631,16 +684,23 @@ export default function Onboarding() {
                       padding: '20px 0',
                     }}
                   >
-                    <button
-                      className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
-                        modalOpen5 ? 'SecondarySmallShine' : ''
-                      }`}
-                      onClick={handleSelectAllVPK}
-                    >
-                      <span>
-                        <span>Выбрать все</span>
-                      </span>
-                    </button>
+                    <div className='vpk__all-container'>
+                      <span style={{ color: vpkCountColor }} className='vpk__all-container-count'>Выбрано: {vpkCount}</span>
+                      <div style={{position: 'relative', overflow: 'hidden', height: '31px'}}>
+                        <div style={{ display: vpkButtonAnimate }} className='vpk__all-button-animate'></div>
+                        <button
+                              className={'ModalButton1 vpk__all-button'}
+                          // className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
+                          //   modalOpen5 ? 'SecondarySmallShine' : ''
+                          // }`}
+                          onClick={handleSelectAllVPK}
+                        >
+                          <span>
+                            <span>{vpkButtonText}</span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <AccordionDetails
                     className={
@@ -655,7 +715,7 @@ export default function Onboarding() {
                         <button
                           className={
                             addColor
-                              ? 'Green'
+                              ? 'Green Green__vpk'
                               : option.name == 'США'
                                 ? 'SecondarySmallShine'
                                 : modalOpen4 || modalOpen5 ? 'industry-buttons' : 'AccordionNested'

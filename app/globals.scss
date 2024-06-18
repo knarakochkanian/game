@@ -429,4 +429,71 @@ button {
   .vpk__all-button {
     width: 121px !important;
     margin-left: 16px;
+    text-transform: uppercase;
+  }
+  .vpk__all-container {
+    display: flex;
+    align-items: center;
+    margin-left: 17px;
+    height: 34px;
+  }
+  .vpk__all-container .vpk__all-button {
+    font-size: 13.18px;
+    font-weight: 500;
+    line-height: 15.82px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-transform: uppercase;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .vpk__all-container-count {
+    font-size: 13.18px;
+    font-weight: 500;
+    line-height: 15.82px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    // color: rgba(153, 154, 154, 1);
+    text-transform: uppercase;
+  }
+  .top-vpk-all-button {
+    opacity: .2;
+  }
+  .vpk__all-button-animate {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    top: -34px;
+    left: -43px;
+    opacity: .6;
+    width: 300px;
+    height: 100px;
+    /* transform: translate(-50%, -50%); */
+    background: linear-gradient(118.69deg, #0E0E0E 40.31%, rgba(14, 14, 14, 0) 50.96%, #0E0E0E 65.34%);
+    animation: shine2 1s infinite;
+  }
+  @keyframes shine2 {
+    0% {
+      transform: translateX(-119px);
+    }
+    100% {
+      transform: translateX(58px);
+    }
+  }
+  .Green__vpk {
+    padding: 11.5px;
+    width: 100%;
+  }
+  .Green__vpk .AccordionNested-helper-1 {
+    display: none;
+  }
+  .Green__vpk .AccordionNested-helper-2 {
+    display: none;
+  }
+  .Green__vpk>span {
+    // margin-left: 30px;
+  }
+  .industry-buttons {
+    padding: 11.5px;
   }
