@@ -632,7 +632,7 @@ export default function Onboarding() {
                     }}
                   >
                     <button
-                      className={` ${addColor ? 'Green' : ''} ModalButton1 ${
+                      className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
                         modalOpen5 ? 'SecondarySmallShine' : ''
                       }`}
                       onClick={handleSelectAllVPK}
