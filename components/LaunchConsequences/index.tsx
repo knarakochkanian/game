@@ -38,6 +38,7 @@ import { useAppSelector } from '../../redux/hooks';
 
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 import { StaticMap } from '../Map/StaticMap.component';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -123,15 +124,17 @@ const LaunchConsequences = ({
             <ModalData
               from={LAUNCH_CONSEQUENCES}
               name={citiesUnderAttack}
-              value={totalSettlements.reduce(
-                (total, item) => total + (item.settlements || 0),
-                19937180
+              value={formatNumberWithSpaces(
+                totalSettlements.reduce(
+                  (total, item) => total + (item.settlements || 0),
+                  19937180
+                )
               )}
             />
             <ModalData
               from={LAUNCH_CONSEQUENCES}
               name={populationSuffering}
-              value={totalPopulationRegions}
+              value={formatNumberWithSpaces(totalPopulationRegions)}
             />
             <ModalData
               from={LAUNCH_CONSEQUENCES}

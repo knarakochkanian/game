@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
@@ -16,6 +16,7 @@ import {
 } from '../../redux/features/generalSlice';
 
 import styles from './SelectFromTwo.module.scss';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 type setFirstActive = (bool: boolean) => void;
 
@@ -119,7 +120,7 @@ const SelectFromTwo = ({
             ) : (
               <div>защищено населения</div>
             )}
-            <h3>{totalPopulationRegions}</h3>
+            <h3>{formatNumberWithSpaces(totalPopulationRegions)}</h3>
           </div>
         )}
         {damageLevel && (
@@ -129,7 +130,11 @@ const SelectFromTwo = ({
             ) : (
               <div>сохранено финансов</div>
             )}
-            <h3>{formattedFinancialLosses}</h3>
+            <h3>
+              {formatNumberWithSpaces(
+                parseInt(formattedFinancialLosses.replace(/[^\d]/g, ''))
+              )}
+            </h3>
           </div>
         )}
         <button

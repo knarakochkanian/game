@@ -14,20 +14,18 @@ const Grid = () => {
 
   return (
     <>
-      <div
-        className={`${styles.grid} ${
-          gridDisplayNone ? styles.gridDisplayNone : ''
-        }`}
-      >
-        <Image
-          className={styles.gridImg}
-          src={grid}
-          alt="grid"
-          width={1344}
-          height={840}
-          priority
-        />
-      </div>
+      {!gridDisplayNone && pathname !== '/' && (
+        <div className={styles.grid}>
+          <Image
+            className={styles.gridImg}
+            src={grid}
+            alt="grid"
+            width={1344}
+            height={840}
+            priority
+          />
+        </div>
+      )}
 
       <Image
         className={styles.noiseImg}
