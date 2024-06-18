@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-1e54d6fe'], (function (workbox) { 'use strict';
+define(['./workbox-60fe7365'], (function (workbox) { 'use strict';
 
   importScripts("/fallback-development.js");
   self.skipWaiting();
