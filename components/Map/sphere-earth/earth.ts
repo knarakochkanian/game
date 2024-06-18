@@ -132,6 +132,12 @@ export class Earth implements IEarth {
       .backgroundColor(`${BACKGROUND_COLOR}77`)
       .showAtmosphere(true)
       .atmosphereColor("#37403f")
+      .pointerEventsFilter(obj => {
+        if ("isInteractive" in obj.userData) {
+          return !!obj.isInteractive
+        }
+        return true
+      })
 
       
       // extra sphere
