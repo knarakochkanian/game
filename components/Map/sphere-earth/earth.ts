@@ -134,7 +134,7 @@ export class Earth implements IEarth {
       .atmosphereColor("#37403f")
       .pointerEventsFilter(obj => {
         if ("isInteractive" in obj.userData) {
-          return !!obj.isInteractive
+          return !!obj.userData.isInteractive
         }
         return true
       })
