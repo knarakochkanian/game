@@ -37,6 +37,8 @@ interface SidenavProps {
   addConfirm?: boolean;
   delayed?: boolean;
   removeModalDate?: boolean;
+  accordionWrapperIndustry: any;
+  accordionWrapperDamage: any;
 }
 
 function Sidenav({
@@ -48,6 +50,8 @@ function Sidenav({
   addConfirm,
   delayed,
   removeModalDate,
+  accordionWrapperIndustry,
+  accordionWrapperDamage
 }: SidenavProps) {
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -149,7 +153,7 @@ function Sidenav({
                   padding: "0",
                 }}
               >
-                <div className={styles.sidenavAccordionSummary}>
+                <div className={`${styles.sidenavAccordionSummary} accordion-wrapper-region`}>
                   <h3 className='accordion-summary-title'>Регион</h3>
                   <span className='accordion-summary-count'>1</span>
                 </div>
@@ -188,7 +192,7 @@ function Sidenav({
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
-                <div className={styles.sidenavAccordionSummary}>
+                <div className={`${styles.sidenavAccordionSummary} ${accordionWrapperIndustry}`}>
                   <h3 className='accordion-summary-title'>Отрасль</h3>
                   <span className='accordion-summary-count'>1</span>
                 </div>
@@ -228,7 +232,7 @@ function Sidenav({
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
-                <div className={styles.sidenavAccordionSummary}>
+                <div className={`${styles.sidenavAccordionSummary} ${accordionWrapperDamage}`}>
                   <h3 className='accordion-summary-title'>Ущерб</h3>
                 </div>
               </AccordionSummary>
@@ -244,7 +248,7 @@ function Sidenav({
 
           <div
             className={styles.sidenavSquare}
-            style={{ display: removeModalDate ? 'none' : 'flex', zIndex: 10 }}
+            style={{ display: removeModalDate ? 'none' : 'flex', zIndex: 10, marginTop: '40px', }}
           >
             <h5
               style={{
@@ -280,8 +284,14 @@ function Sidenav({
               className={styles.sidenavDelayedWrraper}
               style={{ display: removeModalDate ? 'none' : 'block' }}
             >
-              <div>
-                <h3 style={{ color: '#525252' }}>Дата</h3>
+              <div className='date-wrapper-mb'>
+                <h3 style={{
+                    color: '#525252',
+                    fontSize: "23.54px",
+                    fontWeight: "500",
+                    lineHeight: "28.24px",
+                    textAlign: "left",
+                  }}>Дата</h3>
                 <div>
                   <div className="Lead">03.02.2024</div>
                   <Image
@@ -292,8 +302,14 @@ function Sidenav({
                   />
                 </div>
               </div>
-              <div>
-                <h3 style={{ color: '#525252' }}>Время</h3>
+              <div className='time-wrapper-line'>
+                <h3 style={{ 
+                  color: '#525252',
+                  fontSize: "23.54px",
+                  fontWeight: "500",
+                  lineHeight: "28.24px",
+                  textAlign: "left",
+                  }}>Время</h3>
                 <div>
                   <div className="Lead">20:13</div>
                   <Image
@@ -310,8 +326,8 @@ function Sidenav({
             <div className={styles.sidenavAddConfirm}>
               <Image
                 src={'/onboarding/backgroundImgGreen.svg'}
-                width={692}
-                height={216}
+                width={348}
+                height={148}
                 alt={'backgr'}
                 className={styles.sidenavAddConfirmImage}
               />
@@ -326,10 +342,11 @@ function Sidenav({
                   ПОДТВЕРДИТЬ
                 </span>
                 <Image
+                  className='sidenav__add-confitm__Arrow'
                   src={'onboarding/arrowConfirm.svg'}
                   alt={'arrow'}
-                  height={48}
-                  width={48}
+                  height={23}
+                  width={23}
                 />
               </Link>
             </div>
