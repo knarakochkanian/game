@@ -5,8 +5,12 @@ import connectedTwoLines from './connectedTwoLines.svg';
 import notConnected from './notConnected.svg';
 import trashHintIcon from './trashHinticon.svg';
 import two_lines from './two_lines.svg';
+import plusIcon from './plusIcon.svg';
+import CountShape from './CountShape.svg';
 
 export {
+  plusIcon,
+  CountShape,
   two_lines,
   trashHintIcon,
   closeXButton,

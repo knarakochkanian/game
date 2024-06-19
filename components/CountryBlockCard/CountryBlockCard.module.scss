@@ -1,0 +1,71 @@
+@import '/app/variables.module.scss';
+
+.SecondarySmall {
+  border-right: 2px solid #787878;
+  border-left: 2px solid #787878;
+  position: relative;
+  cursor: pointer;
+  padding: 16px 24px;
+  @include TypoBodyBig;
+  &::after {
+    content: '';
+    width: 16px;
+    position: absolute;
+    height: 2px;
+    background: #787878;
+    bottom: 0;
+    left: 0;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background: #787878;
+    bottom: 0;
+    right: 0;
+  }
+  > span {
+    &::before {
+      content: '';
+      width: 16px;
+      position: absolute;
+      height: 2px;
+      background: #787878;
+      top: 0;
+      left: 0;
+    }
+  }
+  > span {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      background: #787878;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+
+.container {
+  flex-wrap: wrap;
+  gap: 10px;
+  .secondarySmallDisable {
+    @extend .SecondarySmall;
+    opacity: 0.4;
+  }
+  .secondarySmallDisable.selected {
+    background-color: $attack-dark-green-select-60;
+    .optionName {
+      color: $attack-green-40;
+    }
+  }
+  .secondarySmallDisable.selected.isProtecting {
+    .optionName {
+      color: $protect-blue;
+    }
+    background-color: $protect-dark-blue-select;
+  }
+}

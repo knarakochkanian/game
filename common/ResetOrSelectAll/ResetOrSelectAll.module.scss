@@ -1,0 +1,20 @@
+@import '/app/variables.module.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px;
+  .resetOrSelectAllBtn,
+  span {
+    @include resetOrSelectAllStyles;
+  }
+  span {
+    color: $light-gray;
+    border: none;
+    padding: 8px 0;
+  }
+  span.highlighted {
+    color: $attack-green;
+  }
+}

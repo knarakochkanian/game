@@ -2,26 +2,37 @@ import { ReactNode } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import { RegionCategory } from '../../data/attackRegionsData';
+import GreenLineBorders from '../GreenLineBorders';
+import { plusIcon } from '../../public/ui_kit';
+import { COMPANY_TOP_CAPITALIZATION, INDUSTRY } from '../../constants';
+import ResetOrSelectAll_2 from '../ResetOrSelectAll_2';
 
 import './AccordionWrapper.scss';
+import style from './AccordionWrapper.module.scss';
 
 type TStyle = {
   [key: string]: string;
 };
 
 interface IAccordionWrapperProps {
+  titleHighlighted?: boolean;
+  selectedOtionsCount?: number;
   data: RegionCategory;
   children: ReactNode;
   expanded: number;
   styles: TStyle;
+  from?: string;
   handleExpansion: (panel: any) => (event: any, isExpanded: any) => void;
 }
 
 const AccordionWrapper = ({
+  titleHighlighted,
   children,
   expanded,
   data,
+  from,
   handleExpansion,
+  selectedOtionsCount,
   styles,
 }: IAccordionWrapperProps) => {
   const {
@@ -29,6 +40,27 @@ const AccordionWrapper = ({
     accordionDetailsHeight,
     accordionDetailsMaxHeight,
   } = styles;
+
+  let showPlusIcon;
+  let allDataSelected;
+
+  if (selectedOtionsCount) {
+    showPlusIcon = selectedOtionsCount > 0;
+    allDataSelected = selectedOtionsCount === data.options?.length;
+  }
+
+  const summaryStyles = {
+    marginRight: '8px',
+    marginLeft: '4px',
+    padding: '12px 16px',
+    borderRight: titleHighlighted ? '0.941px solid #5ED1C5' : 'inherit',
+    borderLeft: titleHighlighted ? '0.941px solid #5ED1C5' : 'inherit',
+    background: titleHighlighted
+      ? '#011A17'
+      : showPlusIcon
+      ? '#131E1D'
+      : 'inherit',
+  };
 
   return (
     <Accordion
@@ -41,16 +73,17 @@ const AccordionWrapper = ({
             : 'rgba(0, 0, 0, 0.87) !important'
         } `,
         color: '#fff',
-        marginBottom: '10px',
+        marginBottom:
+          showPlusIcon !== undefined || from === INDUSTRY ? '0' : '10px',
       }}
     >
       <AccordionSummary
-        style={{
-          paddingLeft: '40px',
-        }}
+        style={summaryStyles}
         expandIcon={
           <Image
-            className={styles.expandedIcon}
+            className={`${style.arrow} ${
+              expanded === data.id ? style.expanded : ''
+            } ${from === INDUSTRY ? style.fromIndustry : ''}`}
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
             width={12}
@@ -60,7 +93,36 @@ const AccordionWrapper = ({
         aria-controls={`${data.id}-content`}
         id={`${data.id}-header`}
       >
-        <h5>{data.title}</h5>
+        {titleHighlighted && <GreenLineBorders />}
+        {showPlusIcon && (
+          <Image
+            className={style.plusIcon}
+            src={plusIcon}
+            alt={'plusIcon'}
+            width={49}
+            height={30}
+          />
+        )}
+
+        <div className={style.titleAndCountCts}>
+          <h5
+            className={`${style.title} ${
+              titleHighlighted ? style.highlighted : ''
+            } ${
+              data.title === COMPANY_TOP_CAPITALIZATION
+                ? style.topCapitalization
+                : ''
+            }`}
+          >
+            {data.title}
+          </h5>
+          {!allDataSelected && showPlusIcon && expanded !== data.id && (
+            <span className={style.count}>
+              {selectedOtionsCount}
+              <GreenLineBorders width={4} />
+            </span>
+          )}
+        </div>
       </AccordionSummary>
       <AccordionDetails
         style={{
@@ -71,6 +133,12 @@ const AccordionWrapper = ({
           maxHeight: accordionDetailsMaxHeight,
         }}
       >
+        {from === INDUSTRY && (
+          <ResetOrSelectAll_2
+            data={data}
+            selectedOtionsCount={selectedOtionsCount}
+          />
+        )}
         {children}
       </AccordionDetails>
     </Accordion>
