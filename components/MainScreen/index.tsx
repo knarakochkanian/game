@@ -30,6 +30,7 @@ import QueueModal from '../QueueModal';
 import { useAppSelector } from '../../redux/hooks';
 import {
   selectIsAttacking,
+  selectOnboardingBlur,
   selectPickedCountriesObjects,
   selectSideNavIsOpen,
 } from '../../redux/features/generalSlice';
@@ -51,6 +52,8 @@ const WorldMap = dynamic(
 );
 import { controllerServerAddress } from '../../app/static_variables';
 
+import Link from 'next/link';
+
 const MainScreen = () => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -60,8 +63,9 @@ const MainScreen = () => {
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const isAttacking = useAppSelector(selectIsAttacking);
-  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
+  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  // const onBoardingPass = useSelector(selecton);
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const socket = new WebSocket(`${protocol}://${controllerServerAddress}`);
@@ -121,7 +125,6 @@ const MainScreen = () => {
 
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
-
       <Help />
       <SelectFromTwo
         setFirstActive={setGlobeActive}

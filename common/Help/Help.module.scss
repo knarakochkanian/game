@@ -1,8 +1,14 @@
 @import '/app/variables.module.scss';
-
-.helpIcon {
-  position: fixed;
-  right: 40px;
-  bottom: 56px;
-  z-index: 9;
+.help{
+  &WrraperIcon{
+    position: relative;
+  }
+  &Icon {
+    position: fixed;
+    right: 40px;
+    bottom: 56px;
+    z-index: 9;
+  }
 }
+
+

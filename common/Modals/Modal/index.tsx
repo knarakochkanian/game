@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { SxProps, Theme } from '@mui/system';
 import Box from '@mui/material/Box';
-import { trashHintIcon } from '../../../public/ui_kit';
-
+import { trashHintIcon, closeXButton } from '../../../public/ui_kit';
 import styles from './modal.module.scss';
 
 interface ModalProps {
@@ -24,6 +23,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
 }) => {
   const isTrashModal = name.includes('trash');
+  const withClose = name.includes('withClose');
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
@@ -53,9 +53,20 @@ const Modal: React.FC<ModalProps> = ({
               width={60}
               height={45}
             />
-            {!isTrashModal && (
-              <span className={styles.modalCounter_number}>{counter}/12</span>
+            {withClose && (
+              <button onClick={onClose} className={styles.modalCloseButton}>
+                <Image
+                  src={closeXButton}
+                  alt={'close'}
+                  width={15}
+                  height={15}
+                />
+              </button>
             )}
+            {!isTrashModal ||
+              (!withClose && (
+                <span className={styles.modalCounter_number}>{counter}/12</span>
+              ))}
           </div>
           <div className={styles.modalMain}>{children}</div>
         </div>
