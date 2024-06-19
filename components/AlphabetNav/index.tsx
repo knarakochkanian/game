@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import useScrollToActiveLetter from '../../hooks/useScrollToActiveLetter';
+import { NOT_FRIENDLY_COUNTRIES } from '../../constants';
 
 import styles from './AlphabetNav.module.scss';
 
@@ -8,6 +9,7 @@ interface AlphabetNavProps {
   onLetterClick: (letter: string) => void;
   currentLetter: string;
   clickedOnLetter: boolean;
+  name?: string;
 }
 
 const AlphabetNav = ({
@@ -15,13 +17,18 @@ const AlphabetNav = ({
   onLetterClick,
   clickedOnLetter,
   currentLetter,
+  name,
 }: AlphabetNavProps) => {
   const letterRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  useScrollToActiveLetter(letterRefs, currentLetter, clickedOnLetter); 
+  useScrollToActiveLetter(letterRefs, currentLetter, clickedOnLetter);
 
   return (
-    <div className={styles.alphabetNav}>
+    <div
+      className={`${styles.alphabetNav} ${
+        name === NOT_FRIENDLY_COUNTRIES ? styles.fromNotFriendly : ''
+      }`}
+    >
       {letters.map((letter) => (
         <div
           key={letter}
@@ -36,7 +43,7 @@ const AlphabetNav = ({
           {letter}
           <span></span>
         </div>
-      ))}      
+      ))}
     </div>
   );
 };

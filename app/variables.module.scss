@@ -117,11 +117,9 @@ $unvisible: rgba(0, 0, 0, 0);
 
 //Typography
 @mixin TypoBodyBig {
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 120%; /* 40.8px */
-  letter-spacing: 0.34px;
+  @include set-font-size-weight(18px, 500);
+  letter-spacing: 0.179px;
 }
 @mixin TypoBodyBig_2 {
   color: $white;
@@ -177,6 +175,17 @@ $unvisible: rgba(0, 0, 0, 0);
 }
 
 //other
+@mixin resetOrSelectAllStyles {
+  padding: 8px 12px;
+  border: 1px solid $white;
+  color: $white;
+  font-variant-numeric: slashed-zero;
+  @include set-font-size-weight(14px, 500);
+  line-height: 120%;
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
+}
+
 @mixin showEllipsisInTheEnd($numOfLines, $maxWidth) {
   display: -webkit-box;
   max-width: $maxWidth;

@@ -82,3 +82,7 @@ export const getDelayedDateWithTime = (
 
   return `${delayedDateProccessed?.split(' ')[0]} ${delayedTime || '00:00'}`;
 };
+
+export const countMatchingStrings = (arr1: string[], arr2: string[]) => {
+  return arr1.filter(str => arr2.includes(str)).length;
+};

@@ -6,6 +6,7 @@ import {
   addToPickedCountryObjects,
   removeFromPickedCountryObjects,
 } from '../../helpers';
+import { RESET, SELECT_ALL } from '../../constants';
 
 export interface IInitialState {
   comfirmedFromOnboarding: boolean;
@@ -23,7 +24,7 @@ export interface IInitialState {
   sideNavIsOpen: boolean;
   activeBlocks: string[];
   totalPopulationRegions: number;
-  formattedFinancialLosses: string;  
+  formattedFinancialLosses: string;
   onBoardingBlur: any;
   localTimeBlur: any;
 }
@@ -66,6 +67,26 @@ const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
+    proccesIndustriesByTitle(
+      state,
+      { payload }: { payload: { title: string; actionType: string } }
+    ) {
+      const { actionType, title } = payload;
+      const shouldReset = actionType === RESET;
+      state.sectors
+        .find((sector) => sector.title === title)
+        ?.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        );
+    },
+    processAllIndustries(state, { payload }: { payload: string }) {
+      const shouldReset = payload === RESET;
+      state.sectors.forEach((sector) =>
+        sector.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        )
+      );
+    },
     setSelectedIndusties(
       state,
       { payload }: { payload: { name: string; parent: string } }
@@ -145,21 +166,45 @@ const generalSlice = createSlice({
     },
     setPlaceName(state, { payload }) {
       let isSameData;
+
       switch (typeof payload) {
         case 'string':
           isSameData = payload === state.placeName;
+
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+            state.placeName = payload;
+          }
           break;
         case 'object': //array of strings
           isSameData =
-            JSON.stringify(payload) === JSON.stringify(state.placeName);
-          break;
-      }
+            JSON.stringify(payload.members) === JSON.stringify(state.placeName);
+          let updatedPlaceName;
 
-      if (isSameData) {
-        state.firstClick = !state.firstClick;
-      } else {
-        state.firstClick = false;
-        state.placeName = payload;
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+
+            switch (payload.action) {
+              case RESET:
+                updatedPlaceName = [...payload.members].filter((place) =>
+                  state.pickedCountries.includes(place)
+                );
+
+                break;
+              case SELECT_ALL:
+                updatedPlaceName = [...payload.members].filter(
+                    (place) => !state.pickedCountries.includes(place)
+                );
+                break;
+            }
+
+            state.placeName = updatedPlaceName as [];
+          }
+          break;
       }
     },
     setTotalPopulationRegions(state, { payload }) {
@@ -216,6 +261,8 @@ export const {
   setTotalPopulationRegions,
   setFormattedFinancialLosses,
   setComfirmedFromOnboarding,
+  processAllIndustries,
+  proccesIndustriesByTitle,
   setOnBoardingBlur,
   setLocalTimeBlur,
 } = generalSlice.actions;

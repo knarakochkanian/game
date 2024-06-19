@@ -1,9 +1,10 @@
+import Image from 'next/image';
 import {
   selectIsAttacking,
   setSelectedIndusties,
 } from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import Image from 'next/image';
+
 import styles from './SectorOptions.module.scss';
 
 interface ISectorOptionsProps {

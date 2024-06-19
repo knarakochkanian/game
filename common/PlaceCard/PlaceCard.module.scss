@@ -2,9 +2,9 @@
 
 .placeCard {
   width: 100%;
-  padding: 24px 16px;
+  padding: 12px 8px;
   display: flex;
-  gap: 24px;
+  gap: 12px;
   align-items: center;
   cursor: pointer;
   .flagContainer {
@@ -13,8 +13,7 @@
   h4 {
     color: $white;
     font-variant-numeric: slashed-zero;
-    font-size: 28px;
-    font-weight: 400;
+    @include set-font-size-weight(18px, 500);
     line-height: 120%; /* 45.6px */
     letter-spacing: 0.38px;
     text-transform: uppercase;

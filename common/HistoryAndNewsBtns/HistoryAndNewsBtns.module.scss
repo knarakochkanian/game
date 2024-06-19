@@ -2,18 +2,28 @@
 
 .historyAndNewsBtns {
   display: flex;
-  gap: 24px;
+  gap: 12px;
   position: fixed;
   left: 40px;
   bottom: 56px;
   z-index: 9;
   button {
-    padding: 14px 22px;
+    padding: 9.42px 22px;
     color: $white;
-    @include set-font-size-weight(14px, 400);
+    @include set-font-size-weight(16px, 400);
     line-height: 120%; /* 40.8px */
     letter-spacing: -0.34px;
     text-transform: uppercase;
     border: 2px solid $light-gray;
+  }
+  button.historyCount {
+    padding: 4px;
+    background: $light-gray;
+    color: $black;
+    font-family: 'TT Lakes';
+    @include set-width-height(42px, 42px);
+    @include set-font-size-weight(16px, 600);
+    line-height: 120%; /* 19.205px */
+    letter-spacing: -0.16px;
   }
 }

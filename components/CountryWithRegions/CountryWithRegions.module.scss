@@ -1,5 +1,15 @@
 @import '/app/variables.module.scss';
 
 .placesAccordionSummary {
-    @include AccordionSummary;
+  @include AccordionSummary;
+  span.countSelected {
+    padding: 0 7px;
+    height: 33px;
+    border: 1px solid $attack-green;
+    color: $attack-green;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(25px, 500);
+    line-height: 120%; /* 40.8px */
+    letter-spacing: 0.34px;
   }
+}

@@ -1,0 +1,24 @@
+@import '/app/variables.module.scss';
+
+.resetOrSelectAllCtn {
+    display: flex;
+    gap: 30px;
+    padding: 8px 30px;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 315px;  
+    span {
+      color: $white;
+      font-variant-numeric: slashed-zero;
+      @include set-font-size-weight(13px, 500);
+      line-height: 120%; /* 15.816px */
+      letter-spacing: 0.132px;
+      text-transform: uppercase;
+    }
+    span.highlighted {
+      color: $attack-green !important;
+    }
+    .resetOrSelectAllBtn {
+      @include resetOrSelectAllStyles;
+    }
+  }

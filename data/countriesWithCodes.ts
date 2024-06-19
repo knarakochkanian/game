@@ -1824,14 +1824,6 @@ const countriesWithCodes: IPlace[] = [
       },
       {
         isSelected: false,
-        id: 247,
-        name: 'Южный Судан',
-        code: '247',
-        population: 11088796,
-        settlements: 27,
-      },
-      {
-        isSelected: false,
         id: 350,
         name: 'Юта',
         population: 4625364,

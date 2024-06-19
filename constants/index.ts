@@ -46,6 +46,10 @@ export const ACTIONS_IN_QUEUE = 'actionsInQueue';
 export const COMPLETED_ACTIONS = 'completedActions';
 export const LAST_ACTION_NAME = 'lastActionName';
 
+//actions
+export const RESET = 'RESET';
+export const SELECT_ALL = 'SELECT_ALL';
+
 //oreders
 export const CANCEL = 'ОТМЕНА';
 export const START = 'ПУСК';
@@ -82,6 +86,7 @@ export const LOG_AND_TRANSPORT = 'логистика и траспорт';
 export const UNIVERSE = 'космос';
 export const GOV_INFOSTRUCTURES = 'гос. инфраструктура';
 export const VPK = 'ВПК';
+export const COMPANY_TOP_CAPITALIZATION = 'Топ капитализаций компаний';
 
 //keyboard state
 export const SHIFT = 'SHIFT';
@@ -91,4 +96,3 @@ export const DEFAULT = 'DEFAULT';
 export const SHIFT_NAME = '{shift}';
 export const BACKSPACE_NAME = '{bksp}';
 export const SPACE_NAME = '{space}';
-

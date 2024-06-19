@@ -3,7 +3,7 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
-import { regions } from '../../data/attackRegionsData';
+import { notFriendlyCountries, regions } from '../../data/attackRegionsData';
 import Keyboard from '../KeyboardOrganisms/Keyboard';
 import useCloseModal from '../../hooks/useCloseModal';
 import Places from '../Places';
@@ -24,17 +24,15 @@ import SelectDamageModal from '../SelectDamageModal';
 import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import {
-  selectActiveBlocks,
   selectPlaces,
-  setActiveBlocks,
-  setPlaceName,
 } from '../../redux/features/generalSlice';
 import { USARegions } from '../../data/countriesWithCodes';
+import useCloseSelection from '../../hooks/useCloseSelection';
+import CountryBlocks from '../CountryBlocks';
 
 import styles from './RegionAndOtherButtons.module.scss';
-import useCloseSelection from '../../hooks/useCloseSelection';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -47,8 +45,6 @@ const RegionAndOtherButtons = ({
   // setDrawerOpen,
   isAttacking,
 }: IRegionAndOtherButtonsProps) => {
-  const dispatch = useAppDispatch();
-  const activeBlocks = useAppSelector(selectActiveBlocks);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openModal, setOpenModal] = useState('');
@@ -151,11 +147,8 @@ const RegionAndOtherButtons = ({
 
                 break;
               case NOT_FRIENDLY_COUNTRIES:
-                const optionNames = region.options?.map(
-                  (option) => option.name
-                );
                 placesInSwitch = countries.filter((country) =>
-                  optionNames?.includes(country.name)
+                  notFriendlyCountries?.includes(country.name)
                 );
                 break;
             }
@@ -165,7 +158,7 @@ const RegionAndOtherButtons = ({
               case COUNTRIES:
                 return (
                   <AccordionWrapper
-                    styles={{ accordionDetailsHeight: '686px' }}
+                    styles={{ accordionDetailsHeight: '510px' }}
                     expanded={expanded}
                     handleExpansion={handleExpansion}
                     data={region}
@@ -179,7 +172,7 @@ const RegionAndOtherButtons = ({
                 return (
                   isAttacking && (
                     <AccordionWrapper
-                      styles={{ accordionDetailsHeight: '686px' }}
+                      styles={{ accordionDetailsHeight: '510px' }}
                       expanded={expanded}
                       handleExpansion={handleExpansion}
                       data={region}
@@ -202,40 +195,13 @@ const RegionAndOtherButtons = ({
                 handleExpansion={handleExpansion}
                 data={region}
               >
-                {(!isAttacking && region.title === MOST_LIKELY_CHOICE
-                  ? region.optionsForProtection
-                  : region.options
-                )?.map((option) => (
-                  <div
-                    key={option.id}
-                    style={{
-                      flexWrap: 'wrap',
-                      gap: '10px',
-                      position: 'relative',
-                    }}
-                  >
-                    <button
-                      className={`AccordionNested ${
-                        activeBlocks.includes(option.name)
-                          ? styles.selected
-                          : ''
-                      } ${!isAttacking ? styles.isProtecting : ''}`}
-                      onClick={() => {
-                        dispatch(setPlaceName(option.members));
-                        dispatch(setActiveBlocks(option.name));
-                      }}
-                      style={{ opacity: 'unset' }}
-                    >
-                      <div className={'AccordionNested-helper-1'}></div>
-                      <div className={'AccordionNested-helper-2'}></div>
-                      <span>
-                        <span>
-                          <button>{option.name}</button>
-                        </span>
-                      </span>
-                    </button>
-                  </div>
-                ))}
+                <CountryBlocks
+                  options={
+                    !isAttacking && region.title === MOST_LIKELY_CHOICE
+                      ? region.optionsForProtection
+                      : region.options
+                  }
+                />
               </AccordionWrapper>
             );
           })}
