@@ -51,18 +51,18 @@ export default function Password() {
                 {password.split('').map((char, index) => (
                   <svg
                     key={index}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="50"
-                    height="49"
-                    viewBox="0 0 50 49"
+                    width="40"
+                    height="24"
+                    viewBox="0 0 40 24"
                     fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M39.3885 7.04199L41.9995 9.65302L27.6111 24.0417L42 38.4308L39.3888 41.042L24.9999 26.6529L10.611 41.042L8 38.431L22.3889 24.0418L8.00048 9.65322L10.6117 7.04199L25.0001 21.4306L39.3885 7.04199Z"
+                      d="M26.8802 4.01463L28.1097 5.24414L21.3343 12.0196L28.1099 18.7953L26.8803 20.0249L20.1047 13.2492L13.3291 20.0249L12.0996 18.7954L18.8752 12.0197L12.0998 5.24424L13.3294 4.01463L20.1048 10.7901L26.8802 4.01463Z"
                       fill="#5ED1C5"
                     />
                     <path
-                      d="M47.1949 22.195L47.1949 25.8876L26.8464 25.8877L26.8463 46.2368L23.1535 46.2369L23.1536 25.8877L2.8045 25.8879L2.80452 22.1954L23.1537 22.1952L23.1538 1.84676L26.8466 1.84673L26.8465 22.1952L47.1949 22.195Z"
+                      d="M30.5549 11.1501L30.5549 12.8888L20.973 12.8889L20.973 22.4711L19.2341 22.4711L19.2341 12.8889L9.65193 12.889L9.65194 11.1502L19.2341 11.1501L19.2342 1.56824L20.9731 1.56823L20.9731 11.1501L30.5549 11.1501Z"
                       fill="#5ED1C5"
                     />
                   </svg>
@@ -71,9 +71,9 @@ export default function Password() {
                   <span key={index}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="84"
-                      height="48"
-                      viewBox="0 0 84 48"
+                      width="44"
+                      height="28"
+                      viewBox="0 0 44 28"
                       fill="none"
                     >
                       <path
@@ -100,8 +100,8 @@ export default function Password() {
                 <Image
                   src={'/home/Delete.svg'}
                   alt={'delete'}
-                  width={138}
-                  height={127}
+                  width={46}
+                  height={46}
                   className={styles.passwordDelete}
                 />
               </button>

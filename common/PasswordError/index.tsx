@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import styles from './PasswordError.module.scss';
 
 const PasswordError = () => {
@@ -9,14 +9,14 @@ const PasswordError = () => {
           className={styles.loadingIcon}
           src={'loading/shield-lock.svg'}
           alt="loader icon"
-          width={80}
-          height={80}
+          width={40}
+          height={40}
         />
         <h2>Устройство недоступно</h2>
         <span>Повторите попытку через 10 секунд</span>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default PasswordError
+export default PasswordError;

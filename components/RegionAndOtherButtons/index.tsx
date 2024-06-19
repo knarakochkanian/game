@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import BaseButton from '../../common/BaseButtton';
 import ModalWithSelect from '../../common/Modals/ModalWithSelect';
 import { regions } from '../../data/attackRegionsData';
@@ -211,10 +211,12 @@ const RegionAndOtherButtons = ({
                     style={{
                       flexWrap: 'wrap',
                       gap: '10px',
+                      position: 'relative',
+                      color: 'white',
                     }}
                   >
                     <button
-                      className={`${styles.secondarySmallDisable} ${
+                      className={`AccordionNested ${
                         activeBlocks.includes(option.name)
                           ? styles.selected
                           : ''
@@ -224,8 +226,12 @@ const RegionAndOtherButtons = ({
                         dispatch(setActiveBlocks(option.name));
                       }}
                     >
+                      <div className={'AccordionNested-helper-1'}></div>
+                      <div className={'AccordionNested-helper-2'}></div>
                       <span>
-                        <span className={styles.optionName}>{option.name}</span>
+                        <span>
+                          <button>{option.name}</button>
+                        </span>
                       </span>
                     </button>
                   </div>
