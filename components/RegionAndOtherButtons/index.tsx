@@ -43,8 +43,8 @@ interface IRegionAndOtherButtonsProps {
 }
 
 const RegionAndOtherButtons = ({
-  drawerOpen,
-  setDrawerOpen,
+  // drawerOpen,
+  // setDrawerOpen,
   isAttacking,
 }: IRegionAndOtherButtonsProps) => {
   const dispatch = useAppDispatch();
@@ -212,7 +212,6 @@ const RegionAndOtherButtons = ({
                       flexWrap: 'wrap',
                       gap: '10px',
                       position: 'relative',
-                      color: 'white',
                     }}
                   >
                     <button
@@ -225,6 +224,7 @@ const RegionAndOtherButtons = ({
                         dispatch(setPlaceName(option.members));
                         dispatch(setActiveBlocks(option.name));
                       }}
+                      style={{ opacity: 'unset' }}
                     >
                       <div className={'AccordionNested-helper-1'}></div>
                       <div className={'AccordionNested-helper-2'}></div>
