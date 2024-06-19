@@ -1,0 +1,16 @@
+.forwardArrow,
+.forwardBtnShape {
+  position: fixed;
+  z-index: 12;
+}
+
+.forwardArrow {
+  right: 45px;
+  top: 865px;
+  z-index: 12;
+}
+
+.forwardBtnShape {
+  right: 23px;
+  top: 568px;
+}/*# sourceMappingURL=ForwardButton.module.css.map */

@@ -497,3 +497,119 @@ button {
   .industry-buttons {
     padding: 11.5px;
   }
+  .onboarding-george__damage-level {
+    border: none !important;
+  }
+  .onboarding-george__damage-level::before {
+    display: none;
+  }
+  .onboarding-george__damage-level::after {
+    display: none;
+  }
+  .onboarding-george__damage-level>span::before {
+    display: none;
+  }
+  .onboarding-george__damage-level>span::after {
+    display: none;
+  }
+  .onboarding-george__damage-level_critical {
+    border-right: 2px solid #787878 !important;
+    border-left: 2px solid #787878 !important;
+  }
+  .onboarding-george__damage-level_critical::before {
+    display: block;
+  }
+  .onboarding-george__damage-level_critical::after {
+    display: block;
+  }
+  .onboarding-george__damage-level_critical>span::before {
+    display: block;
+  }
+  .onboarding-george__damage-level_critical>span::after {
+    display: block;
+  }
+  .sidenav__add-confitm__Arrow {
+    position: absolute;
+    left: 300px;
+    bottom: 10px;
+  }
+  .accordion-wrapper-region {
+    position: relative;
+  }
+  .accordion-wrapper-region::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(94, 209, 197, 1);
+  }
+  .accordion-wrapper-industry {
+    position: relative;
+  }
+  .accordion-wrapper-industry::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(82, 82, 82, 1);
+  }
+  .accordion-wrapper-industry_active::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(94, 209, 197, 1);
+  }
+  .accordion-damage-wrapper {
+    position: relative;
+  }
+  .accordion-damage-wrapper::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(82, 82, 82, 1);
+  }
+  .accordion-damage-wrapper_active::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(94, 209, 197, 1);
+  }
+  .date-wrapper-mb {
+    margin-bottom: 37px;
+    margin-top: 25px;
+    position: relative;
+  }
+  .date-wrapper-mb::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(94, 209, 197, 1);
+  }
+  .time-wrapper-line {
+    position: relative;
+  }
+  .time-wrapper-line::after {
+    position: absolute;
+    content: '';
+    top: -7.5px;
+    left: 0;
+    width: 23px;
+    height: 4px;
+    background: rgba(94, 209, 197, 1);
+  }

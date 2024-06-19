@@ -57,12 +57,16 @@ export default function Onboarding() {
   const [vpkButtonText, setVpkButtonText] = useState("Выбрать все");
   const [vpkCountColor, setVpkCountColor] = useState('rgba(153, 154, 154, 1)');
 
+  const [damageLevelClass, setDamageLevelClass] = useState('');
+
   const [step2Blur, setStep2Blur] = useState({
     first: false,
     second: true,
     third: true,
   });
   const [attackButtonsBlur, setAttackButtonsBlur] = useState('none');
+  const [accordionWrapperIndustry, setAccordionWrapperIndustry] = useState('accordion-wrapper-industry');
+  const [accordionWrapperDamage, setAccordionWrapperDamage] = useState('accordion-damage-wrapper');
 
   const handleExpansion =
     (panel: number) => (event: unknown, isExpanded: boolean) => {
@@ -374,6 +378,8 @@ export default function Onboarding() {
     setAddConfirm(true);
     setTheGorgeSelected(true);
     dispatch(setLocalTimeBlur(false));
+    setDamageLevelClass('onboarding-george__damage-level_critical');
+    setAccordionWrapperDamage('accordion-damage-wrapper accordion-damage-wrapper_active');
   };
   const handleNext3 = (option: any) => {
     handleOpenSidenav(option);
@@ -438,6 +444,7 @@ export default function Onboarding() {
     setVpkButtonText('Сбросить все');
     setTopVpkAllButton('');
     setVpkCountColor('rgba(94, 209, 197, 1)');
+    setAccordionWrapperIndustry('accordion-wrapper-industry accordion-wrapper-industry_active')
   };
   const handleNext7 = () => {
     setModalOpen7(false);
@@ -536,7 +543,7 @@ export default function Onboarding() {
                 <ul className={styles.onboardingTheGorgeList}>
                   <li>
                     <button
-                      className="SecondarySmall"
+                      className={`SecondarySmall onboarding-george__damage-level ${damageLevelClass}`}
                       onClick={handleAddTheGorge}
                     >
                       <span>
@@ -560,7 +567,7 @@ export default function Onboarding() {
                     </button>
                   </li>
                   <li>
-                    <button className="SecondarySmall">
+                    <button className="SecondarySmall onboarding-george__damage-level">
                       <span>
                         <div className={styles.onboardingTheGorgeListItem}>
                           <Image
@@ -582,7 +589,7 @@ export default function Onboarding() {
                     </button>
                   </li>
                   <li>
-                    <button className="SecondarySmall">
+                    <button className="SecondarySmall onboarding-george__damage-level">
                       <span>
                         <div className={styles.onboardingTheGorgeListItem}>
                           <Image
@@ -877,7 +884,7 @@ export default function Onboarding() {
           isOpen={modalOpen7}
           onClose={closeModal7}
           counter={7}
-          sx={{ bottom: '17%', left: '50%', top: 'unset !important' }}
+          sx={{ bottom: '260px !important', left: '660px !important', top: 'unset !important' }}
         >
           <p>
             {' '}
@@ -908,7 +915,7 @@ export default function Onboarding() {
           isOpen={modalOpen8}
           onClose={closeModal8}
           counter={8}
-          sx={{ bottom: '14%', left: '51%', top: 'unset !important' }}
+          sx={{ bottom: '230px !important', left: '660px !important', top: 'unset !important' }}
         >
           <p>
             {' '}
@@ -937,7 +944,7 @@ export default function Onboarding() {
           isOpen={modalOpen9}
           onClose={closeModal9}
           counter={9}
-          sx={{ bottom: '14%', left: '51%', top: 'unset !important' }}
+          sx={{ bottom: '86px !important', left: '660px !important', top: 'unset !important' }}
         >
           <p>
             После выбора всех пунктов условий нажмите на физическую кнопку
@@ -990,6 +997,8 @@ export default function Onboarding() {
         theGorgeSelected={theGorgeSelected}
         removeModalDate={removeModalDate}
         sx={{ filter: blur ? 'blur(22px)' : 'none' }}
+        accordionWrapperIndustry={accordionWrapperIndustry}
+        accordionWrapperDamage={accordionWrapperDamage}
       />
       <Image
         src="/home/Globus1.png"

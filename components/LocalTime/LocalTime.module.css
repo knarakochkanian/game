@@ -1,0 +1,21 @@
+.DateTime {
+  position: fixed;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%; /* 40.8px */
+  letter-spacing: 0.34px;
+  text-transform: uppercase;
+  right: 45px;
+  top: 56px;
+  z-index: 13;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.21px;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.DateTime.displayNone {
+  display: none;
+}/*# sourceMappingURL=LocalTime.module.css.map */
