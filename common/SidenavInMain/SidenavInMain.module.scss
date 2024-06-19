@@ -1,7 +1,7 @@
 @import '/app/variables.module';
 
 .sidenav {
-  margin-top: 192px;
+  margin-top: 30px;
   width: 0;
   position: fixed;
   z-index: 10;
@@ -65,14 +65,13 @@
   &Wrapper {
     display: flex;
     flex-direction: column;
-    width: 672px;
+    width: 328px;
     gap: 48px;
     max-height: 80vh;
     @include scrollStyles;
     .actionSign {
       margin-left: 24px;
       position: absolute;
-      top: -128px;
     }
   }
   &TimePiker{

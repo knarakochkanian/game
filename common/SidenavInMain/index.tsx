@@ -43,6 +43,10 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import {
+  DateTimePicker,
+  type DateTimePickerProps,
+} from '@mui/x-date-pickers/DateTimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import type { DateTimePickerProps } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
@@ -104,8 +108,9 @@ function SidenavInMain({
   const handelOnDatePikerOpen = () => {
     setDay(true);
   };
+  // @ts-ignore
   const handleDateChange: DateTimePickerProps<Dayjs>['onChange'] = (
-    newValue
+    newValue: any
   ) => {
     setDelayedDate(newValue);
   };
@@ -142,7 +147,10 @@ function SidenavInMain({
       launchConsequences,
       id: extractNumber(name),
       damageLevel,
-      date: delayedDate ? delayedDateWithTime : '03.02.2024 12:30',
+      date:
+        delayedDate && delayedTime
+          ? delayedDate.format('DD.MM.YYYY HH:mm')
+          : '03.02.2024 12:30',
       industrySectors,
       isCompleted: delayedDate && delayedTime ? false : null,
       name,
@@ -168,7 +176,7 @@ function SidenavInMain({
         sx={sx}
         id="mySidenav"
         className={styles.sidenav}
-        style={{ width: isOpen ? '696px' : '0' }}
+        style={{ width: isOpen ? '328px' : '0' }}
       >
         {trashModalOpen && (
           <TrashModal
@@ -184,14 +192,21 @@ function SidenavInMain({
             src={isAttacking ? attack : protectionIcon}
             alt="actionSign"
             className={styles.actionSign}
-            width={80}
-            height={80}
+            width={40}
+            height={40}
           />
           <div className={styles.sidenavTitle}>
             <h2>
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
 
+            <Image
+              src={trash}
+              alt="actionSign"
+              className={styles.actionSign}
+              width={40}
+              height={40}
+            />
             <button onClick={() => setTrashModalOpen(true)}>
               <Image
                 src={trash}

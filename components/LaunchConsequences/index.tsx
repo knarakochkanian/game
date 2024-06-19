@@ -28,6 +28,7 @@ import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
 
 import {
+  selectDamgeLevel,
   selectFormattedFinancialLosses,
   selectPickedCountries,
   selectPickedCountriesObjects,
@@ -64,6 +65,7 @@ const LaunchConsequences = ({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
+  const damageLevel = useAppSelector(selectDamgeLevel);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
@@ -85,14 +87,31 @@ const LaunchConsequences = ({
     }
     // setIsCountDownComponent(true);
   };
-  const renderConsequences = (consequences: any) => {
-    return Object.keys(consequences).map((key) => (
-      <div key={key}>
-        <p>Критический: {consequences[key].критический}</p>
-        <p>Минимальный: {consequences[key].минимальный}</p>
-        <p>Предупреждение: {consequences[key].предупреждение}</p>
-      </div>
-    ));
+  const renderConsequences = (consequences: any, damageLevel: string) => {
+    return Object.keys(consequences).map((key) => {
+      const consequence = consequences[key];
+      let paragraph;
+
+      switch (damageLevel) {
+        case 'Критический':
+          paragraph = consequence.критический;
+          break;
+        case 'Минимальный':
+          paragraph = consequence.минимальный;
+          break;
+        case 'Предупреждение':
+          paragraph = consequence.предупреждение;
+          break;
+        default:
+          paragraph = '';
+      }
+
+      return (
+        <div key={key}>
+          <p>{paragraph}</p>
+        </div>
+      );
+    });
   };
   const notInteractiveMap = UseMap({
     onCountryPicked: () => {},
@@ -118,7 +137,7 @@ const LaunchConsequences = ({
           <Paragraph
             isOpen={fromOnboarding ? false : paragraphIsOpen}
             setIsOpen={setparagraphIsOpen}
-            content={renderConsequences(consequencesData)}
+            content={renderConsequences(consequencesData, damageLevel)}
           />
           <div className={styles.dataContainer}>
             <ModalData
