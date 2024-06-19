@@ -34,16 +34,21 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   return (
     <div className={styles.container}>
       <button
-        className={`${styles.secondarySmallDisable} ${
+        className={`AccordionNested ${styles.secondarySmallDisable} ${
           activeBlocks.includes(option.name) ||
           pickedCountries.includes(option.name)
             ? styles.selected
             : ''
         } ${!isAttacking ? styles.isProtecting : ''}`}
         onClick={onClick}
+        style={{ opacity: 'unset' }}
       >
+        <div className={'AccordionNested-helper-1'}></div>
+        <div className={'AccordionNested-helper-2'}></div>
         <span>
-          <span className={styles.optionName}>{option.name}</span>
+          <span className={styles.optionName}>
+            <button>{option.name}</button>
+          </span>
         </span>
       </button>
     </div>

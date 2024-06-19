@@ -52,8 +52,14 @@
 .container {
   flex-wrap: wrap;
   gap: 10px;
-  .secondarySmallDisable {
-    @extend .SecondarySmall;
+  .SecondarySmallDisable{
+    border: 2px solid #FFF;
+    width: 104px;
+    font-size: 13.18px;
+    font-weight: 500;
+    line-height: 15.82px;
+    letter-spacing: 0.01em;
+    text-align: left;
     opacity: 0.4;
   }
   .secondarySmallDisable.selected {
