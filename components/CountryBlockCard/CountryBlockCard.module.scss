@@ -5,8 +5,8 @@
   border-left: 2px solid #787878;
   position: relative;
   cursor: pointer;
-  padding: 16px 24px;
-  @include TypoBodyBig;
+  padding: 8px 15px;  
+  @include TypoBodyBig;  
   &::after {
     content: '';
     width: 16px;

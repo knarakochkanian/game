@@ -2,10 +2,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
-import {
-  COUNTRIES,
-  NOT_FRIENDLY_COUNTRIES,
-} from '../../constants';
+import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
 import AlphabetNav from '../AlphabetNav';
 import { two_lines } from '../../public/ui_kit';
 import useHighlightCurrentLetter from '../../hooks/useHighlightCurrentLetter';
@@ -77,11 +74,14 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         />
       )}
 
-      {name === NOT_FRIENDLY_COUNTRIES && (
-        <ResetOrSelectAll places={places} />
-      )}
+      {name === NOT_FRIENDLY_COUNTRIES && <ResetOrSelectAll places={places} />}
 
-      <div className={styles.places} ref={containerRef}>
+      <div
+        className={`${styles.places} ${
+          name === COUNTRIES ? styles.fromCountries : ''
+        }`}
+        ref={containerRef}
+      >
         {(places as IPlace[]).map((place, i) => {
           const placeFirstLetterChanged =
             places[i]?.name[0] !== places[i + 1]?.name[0];
@@ -136,6 +136,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         <AlphabetNav
           clickedOnLetter={clickedOnLetter}
           letters={letters}
+          name={name}
           onLetterClick={handleLetterClick}
           currentLetter={currentLetter}
         />

@@ -57,7 +57,7 @@ const PlaceCard = ({
       >
         {place?.code && (
           <div className={styles.flagContainer}>
-            <Flag code={place?.code} height={40} width={40} />
+            <Flag code={place?.code} height={20} width={20} />
           </div>
         )}
 

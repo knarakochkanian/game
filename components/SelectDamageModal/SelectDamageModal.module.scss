@@ -12,8 +12,9 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      list-style: none;
       > li > button {
-        width: 100%;  
+        width: 100%;
       }
       > li.selected > button {
         color: $attack-green-40 !important;
@@ -29,7 +30,11 @@
       }
       &Item {
         @include flex-start;
-        gap: 32px;
+        gap: 15px;
+        h4 {
+          @include set-font-size-weight(17px, 500);
+          letter-spacing: 0.179px;
+        }
       }
     }
   }

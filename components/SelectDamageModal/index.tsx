@@ -45,8 +45,8 @@ const SelectDamageModal = () => {
                 <Image
                   src={'onboarding/square.svg'}
                   alt={'square'}
-                  width={40}
-                  height={40}
+                  width={20}
+                  height={20}
                 />
 
                 <h4>критический</h4>
@@ -54,8 +54,8 @@ const SelectDamageModal = () => {
               <Image
                 src={'onboarding/info.svg'}
                 alt={'square'}
-                width={40}
-                height={40}
+                width={20}
+                height={20}
               />
             </span>
           </button>
@@ -70,8 +70,8 @@ const SelectDamageModal = () => {
                 <Image
                   src={'onboarding/squareMid.svg'}
                   alt={'square'}
-                  width={40}
-                  height={40}
+                  width={20}
+                  height={20}
                 />
 
                 <h4>минимальный</h4>
@@ -79,8 +79,8 @@ const SelectDamageModal = () => {
               <Image
                 src={'onboarding/info.svg'}
                 alt={'square'}
-                width={40}
-                height={40}
+                width={20}
+                height={20}
               />
             </span>
           </button>
@@ -95,8 +95,8 @@ const SelectDamageModal = () => {
                 <Image
                   src={'onboarding/squareLittle.svg'}
                   alt={'square'}
-                  width={40}
-                  height={40}
+                  width={20}
+                  height={20}
                 />
 
                 <h4>предупреждение</h4>
@@ -104,8 +104,8 @@ const SelectDamageModal = () => {
               <Image
                 src={'onboarding/info.svg'}
                 alt={'square'}
-                width={40}
-                height={40}
+                width={20}
+                height={20}
               />
             </span>
           </button>

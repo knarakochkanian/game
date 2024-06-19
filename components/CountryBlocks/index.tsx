@@ -1,13 +1,4 @@
-import { MOST_LIKELY_CHOICE, RESET, SELECT_ALL } from '../../constants';
 import { Option } from '../../data/attackRegionsData';
-import {
-  selectActiveBlocks,
-  selectIsAttacking,
-  selectPickedCountries,
-  setActiveBlocks,
-  setPlaceName,
-} from '../../redux/features/generalSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import CountryBlockCard from '../CountryBlockCard';
 
 interface ICountryBlocksProps {

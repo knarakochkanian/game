@@ -1,18 +1,21 @@
 @import '/app/variables.module.scss';
 
 .container {
-  height: 100vh;  
+  height: 100vh;
   .two_lines {
     position: absolute;
     right: 0;
     top: 43px;
   }
   .places {
-    max-height: 584px;
-    max-width: 403px;
-    margin-top: 86px;
+    max-height: 422px;
+    max-width: 338px;
+    margin-top: 9px;
     padding-right: 35px;
     @include hideScrollBar;
+  }
+  .places.fromCountries {
+    max-height: 464px;
   }
   .places::-webkit-scrollbar {
     display: none; /* Safari and Chrome */

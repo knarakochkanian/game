@@ -3,13 +3,18 @@
 /* components/AlphabetNav.module.scss */
 .alphabetNav {
   position: absolute;
-  height: 632px;
+  height: 460px;  
   right: 0;
-  top: 150px;
+  top: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
   @include hideScrollBar;
+}
+
+.alphabetNav.fromNotFriendly {
+  height: 460px;
+  top: 135px;
 }
 
 .alphabetNav::-webkit-scrollbar {
@@ -18,8 +23,9 @@
 
 .letter {
   position: relative;
-  min-height: 70px;
+  min-height: 48px;
   padding: 5px;
+  @include set-font-size-weight(13px, 500);
   cursor: pointer;
   text-decoration: none;
   color: $mid-dark-gray;
@@ -28,7 +34,7 @@
     width: 4px;
     height: 4px;
     background-color: $mid-dark-gray;
-    top: 50px;
+    top: 34px;
     left: 9px;
   }
 }
