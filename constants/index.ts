@@ -86,6 +86,7 @@ export const LOG_AND_TRANSPORT = 'логистика и траспорт';
 export const UNIVERSE = 'космос';
 export const GOV_INFOSTRUCTURES = 'гос. инфраструктура';
 export const VPK = 'ВПК';
+export const COMPANY_TOP_CAPITALIZATION = 'Топ капитализаций компаний';
 
 //keyboard state
 export const SHIFT = 'SHIFT';

@@ -16,8 +16,6 @@ import {
   NOT_FRIENDLY_COUNTRIES,
   REGIONS,
   REGION_MODAL,
-  RESET,
-  SELECT_ALL,
 } from '../../constants';
 import AccordionWrapper from '../../common/AccordionWrapper';
 import useManageModals from '../../hooks/useManageModals';
@@ -26,18 +24,15 @@ import SelectDamageModal from '../SelectDamageModal';
 import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import {
-  selectActiveBlocks,
-  selectPickedCountries,
   selectPlaces,
-  setActiveBlocks,
-  setPlaceName,
 } from '../../redux/features/generalSlice';
 import { USARegions } from '../../data/countriesWithCodes';
+import useCloseSelection from '../../hooks/useCloseSelection';
+import CountryBlocks from '../CountryBlocks';
 
 import styles from './RegionAndOtherButtons.module.scss';
-import useCloseSelection from '../../hooks/useCloseSelection';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -50,8 +45,6 @@ const RegionAndOtherButtons = ({
   setDrawerOpen,
   isAttacking,
 }: IRegionAndOtherButtonsProps) => {
-  const dispatch = useAppDispatch();
-  const activeBlocks = useAppSelector(selectActiveBlocks);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openModal, setOpenModal] = useState('');
@@ -60,7 +53,6 @@ const RegionAndOtherButtons = ({
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
   const countries = useAppSelector(selectPlaces);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const pickedCountries = useAppSelector(selectPickedCountries);
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -203,46 +195,13 @@ const RegionAndOtherButtons = ({
                 handleExpansion={handleExpansion}
                 data={region}
               >
-                {(!isAttacking && region.title === MOST_LIKELY_CHOICE
-                  ? region.optionsForProtection
-                  : region.options
-                )?.map((option) => {
-                  const onClick = () => {
-                    const action = option.members?.some((member) =>
-                      pickedCountries.includes(member)
-                    )
-                      ? RESET
-                      : SELECT_ALL;
-
-                    dispatch(setPlaceName({ members: option.members, action }));
-                    dispatch(setActiveBlocks(option.name));
-                  };
-
-                  return (
-                    <div
-                      key={option.id}
-                      style={{
-                        flexWrap: 'wrap',
-                        gap: '10px',
-                      }}
-                    >
-                      <button
-                        className={`${styles.secondarySmallDisable} ${
-                          activeBlocks.includes(option.name)
-                            ? styles.selected
-                            : ''
-                        } ${!isAttacking ? styles.isProtecting : ''}`}
-                        onClick={onClick}
-                      >
-                        <span>
-                          <span className={styles.optionName}>
-                            {option.name}
-                          </span>
-                        </span>
-                      </button>
-                    </div>
-                  );
-                })}
+                <CountryBlocks
+                  options={
+                    !isAttacking && region.title === MOST_LIKELY_CHOICE
+                      ? region.optionsForProtection
+                      : region.options
+                  }
+                />
               </AccordionWrapper>
             );
           })}

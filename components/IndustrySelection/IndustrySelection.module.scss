@@ -17,24 +17,19 @@
 .sectorsCtn {
   background: $card;
   .industryHeader {
-    padding: 32px 0 0 32px;
-    h2,
-    button {
+    @include flex-column(15px);
+    padding-left: 15px;
+    padding-bottom: 15px;
+    h2 {
       color: $white;
       font-variant-numeric: slashed-zero;
       text-transform: uppercase;
-    }
-    h2 {
-      @include set-font-size-weight(34px, 600);
-      line-height: 120%; /* 40.8px */
-      letter-spacing: 1.02px;
+      @include set-font-size-weight(16px, 600);
+      line-height: 120%; /* 19.205px */
+      letter-spacing: 0.48px;
     }
     button {
-      margin-top: 32px;
-      @include TypoBodySmall;
-      padding: 16px 24px;
-      border: 2px solid $white;
-      font-size: 28px;
+      @include resetOrSelectAllStyles;
     }
   }
 }

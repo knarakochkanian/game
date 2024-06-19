@@ -18,6 +18,7 @@ interface IPlaceCardProps {
   isCountry?: boolean;
   placeFirstLetterChanged?: boolean;
   fromSideNav?: boolean;
+  withRegions?: boolean;
 }
 
 const PlaceCard = ({
@@ -27,6 +28,7 @@ const PlaceCard = ({
   i,
   places,
   fromSideNav,
+  withRegions
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
@@ -40,6 +42,7 @@ const PlaceCard = ({
 
       <button
         onClick={() => {
+          if(withRegions) return;
           console.log('Button clicked:', place?.name);
           dispatch(setPlaceName(place?.name));
         }}
@@ -47,7 +50,7 @@ const PlaceCard = ({
         className={`${styles.placeCard} ${
           place?.regions ? styles.withRegions : ''
         } ${
-          pickedCountries.includes(place?.name) && !fromSideNav
+          pickedCountries.includes(place?.name) && !fromSideNav && !place.regions
             ? styles.selected
             : ''
         } ${!isAttacking ? styles.isProtecting : ''}`}

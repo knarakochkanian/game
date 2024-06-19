@@ -1,21 +1,11 @@
 @import '/app/variables.module.scss';
 
 .container {
-  height: 100vh;
-  .resetOrSelectAllBtn {
-    padding: 8px 12px;
-    border: 1px solid $white;
-    color: $white;
-    font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(14px, 500);
-    line-height: 120%;
-    letter-spacing: 0.28px;
-    text-transform: uppercase;
-  }
+  height: 100vh;  
   .two_lines {
     position: absolute;
     right: 0;
-    top: 80px;
+    top: 43px;
   }
   .places {
     max-height: 584px;

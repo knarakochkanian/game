@@ -50,6 +50,26 @@ const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
+    proccesIndustriesByTitle(
+      state,
+      { payload }: { payload: { title: string; actionType: string } }
+    ) {
+      const { actionType, title } = payload;
+      const shouldReset = actionType === RESET;
+      state.sectors
+        .find((sector) => sector.title === title)
+        ?.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        );
+    },
+    processAllIndustries(state, { payload }: { payload: string }) {
+      const shouldReset = payload === RESET;
+      state.sectors.forEach((sector) =>
+        sector.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        )
+      );
+    },
     setSelectedIndusties(
       state,
       { payload }: { payload: { name: string; parent: string } }
@@ -151,22 +171,19 @@ const generalSlice = createSlice({
           } else {
             state.firstClick = false;
 
-            console.log('payload', payload);            
-
             switch (payload.action) {
               case RESET:
-                updatedPlaceName = [...payload.members].filter(place => state.pickedCountries.includes(place))
+                updatedPlaceName = [...payload.members].filter((place) =>
+                  state.pickedCountries.includes(place)
+                );
 
                 break;
-              case SELECT_ALL: 
-              console.log('[...payload.members]', [...payload.members]);
-              
-              updatedPlaceName = [...payload.members].filter(place => !state.pickedCountries.includes(place))
+              case SELECT_ALL:
+                updatedPlaceName = [...payload.members].filter(
+                  (place) => !state.pickedCountries.includes(place)
+                );
                 break;
             }
-
-            console.log('updatedPlaceName', updatedPlaceName);
-            
 
             state.placeName = updatedPlaceName as [];
           }
@@ -221,6 +238,8 @@ export const {
   setTotalPopulationRegions,
   setFormattedFinancialLosses,
   setComfirmedFromOnboarding,
+  processAllIndustries,
+  proccesIndustriesByTitle,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
