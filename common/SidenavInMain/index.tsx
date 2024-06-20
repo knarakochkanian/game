@@ -43,16 +43,14 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import {
-  DateTimePicker,
-  type DateTimePickerProps,
-} from '@mui/x-date-pickers/DateTimePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import type { DateTimePickerProps } from '@mui/x-date-pickers';
+import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker, MultiSectionDigitalClock } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
-import { setCloseSelectionIfChanged, setResetMapIfChanged } from '../../redux/features/helpersSlice';
+import {
+  setCloseSelectionIfChanged,
+  setResetMapIfChanged,
+} from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 interface ISidenavInMainProps {
@@ -200,20 +198,13 @@ function SidenavInMain({
               {isAttacking ? A_TTACK : P_ROTECTION} {name}
             </h2>
 
-            <Image
-              src={trash}
-              alt="actionSign"
-              className={styles.actionSign}
-              width={40}
-              height={40}
-            />
             <button onClick={() => setTrashModalOpen(true)}>
               <Image
                 src={trash}
                 alt="trash"
                 className={styles.trash}
-                width={48}
-                height={48}
+                width={23}
+                height={23}
               />
             </button>
           </div>
@@ -247,13 +238,15 @@ function SidenavInMain({
                   onChange={handleDateChange}
                 />
               </LocalizationProvider>
-              <div className="Lead">{delayedDate?.format('DD.MM.YYYY')}</div>
-              <Image
-                src={'/onboarding/ToggleHorisontal.svg'}
-                alt={'img'}
-                width={40}
-                height={40}
-              />
+              <div className="Lead">
+                {delayedDate?.format('DD.MM.YYYY')}
+                <Image
+                  src={'/onboarding/ToggleHorisontal.svg'}
+                  alt={'img'}
+                  width={24}
+                  height={24}
+                />
+              </div>
             </div>
             <div>
               <button onClick={() => setTime(true)}>
@@ -273,16 +266,17 @@ function SidenavInMain({
                       <button onClick={() => setTime(false)}>OK</button>
                     </LocalizationProvider>
                   </div>
-
-                  <Image
-                    src={'/onboarding/ToggleHorisontal.svg'}
-                    alt={'img'}
-                    width={40}
-                    height={40}
-                  />
                 </div>
               )}
-              <div className="Lead">{delayedTime}</div>
+              <div className="Lead">
+                {delayedTime}{' '}
+                <Image
+                  src={'/onboarding/ToggleHorisontal.svg'}
+                  alt={'img'}
+                  width={24}
+                  height={24}
+                />{' '}
+              </div>
             </div>
           </div>
           {numberOfSelectedSectors !== null &&
@@ -321,8 +315,8 @@ function SidenavInMain({
                   <Image
                     src={'/onboarding/arrowConfirm.svg'}
                     alt={'arrow'}
-                    height={48}
-                    width={48}
+                    height={12}
+                    width={12}
                   />
                 </Link>
               </div>

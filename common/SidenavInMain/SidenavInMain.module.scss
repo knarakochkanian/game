@@ -10,10 +10,10 @@
   backdrop-filter: blur(10px);
   transition: 0.5s;
   padding-top: 60px;
-  height: 86.5%;
+  height: 100%;
   &Title {
     @include flex-between;
-    padding-left: 24px;
+    padding: 0 16px;
   }
   &AccordionSummary {
     @include AccordionSummary;
@@ -68,10 +68,11 @@
     width: 328px;
     gap: 48px;
     max-height: 80vh;
-    @include scrollStyles;
+    //@include scrollStyles;
     .actionSign {
-      margin-left: 24px;
+      margin-left: 16px;
       position: absolute;
+      top: 10px;
     }
   }
   &TimePiker{
