@@ -62,6 +62,7 @@ interface ISectorOption {
   name: string;
   selected: boolean;
   src?: string;
+  n?: number;
 }
 
 interface ISector {
