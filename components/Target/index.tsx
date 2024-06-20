@@ -22,8 +22,8 @@ const Target = () => {
           className={styles.targetSvgMain}
           src={'/target/target.svg'}
           alt="target"
-          width={470}
-          height={450}
+          width={221}
+          height={212}
         />
         <div className={styles.targetText}>
           <span>восток</span>
