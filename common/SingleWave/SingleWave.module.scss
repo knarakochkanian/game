@@ -2,7 +2,7 @@
 
 .singleWave {
   .container {
-    @include flex-column(24px);
+    @include flex-column(11px);
     .num {
       @include TypoH5;
     }

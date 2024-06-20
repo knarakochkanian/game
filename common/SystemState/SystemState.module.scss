@@ -1,7 +1,7 @@
 @import '/app/variables.module.scss';
 
 .systemState {
-  @include flex-column(40px);
+  @include flex-column(11px);
   .systemStateTitle {
     @include TypoH5;
   }

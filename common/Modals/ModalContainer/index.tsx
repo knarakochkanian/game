@@ -23,8 +23,8 @@ const ModalContainer = ({
             className={styles.closeXButton}
             src={closeXButton}
             alt="closeXButton"
-            width={40}
-            height={40}
+            width={20}
+            height={20}
             priority
           />
         </div>
