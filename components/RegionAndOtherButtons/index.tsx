@@ -128,9 +128,9 @@ const RegionAndOtherButtons = ({
         </SearchResult>
 
         <div
-          className={
+          className={`${styles.accordionsContainer} ${
             showKeyboard || searchInput ? styles.hideSelectionPanel : ''
-          }
+          }`}
         >
           {regions[0].regions?.map((region, index) => {
             let placesInSwitch;

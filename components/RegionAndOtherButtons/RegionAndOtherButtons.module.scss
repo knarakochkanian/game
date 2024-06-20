@@ -52,11 +52,13 @@
 .regionAndOtherButtons {
   position: fixed;
   @include flex-between;
-  width: 400px;
-  gap: 24px;
+  gap: 10px;
   z-index: 10;
-  left: 40px;
+  left: 38px;
   top: 56px;  
+  .accordionsContainer {
+    
+  }
   .searchResult {
     position: relative;
     background-color: $card;

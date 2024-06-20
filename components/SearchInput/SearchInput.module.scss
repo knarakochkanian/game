@@ -4,9 +4,8 @@
   border: 2px solid $white-40;
   background: $card;
   display: flex;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   .closeXButton {
-    @include set-width-height(48px, 48px);
-    padding-top: 5px;
+    @include set-width-height(23px, 23px);
   }
 }

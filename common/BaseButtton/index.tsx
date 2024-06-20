@@ -31,25 +31,25 @@ function BaseButton({
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,
         })}
-        style={{ left: '-7px', top: '-7px' }}
+        style={{ left: '-5px', top: '-5px' }}
       ></span>
       <span
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,
         })}
-        style={{ right: '-7px', top: '-7px' }}
+        style={{ right: '-5px', top: '-5px' }}
       ></span>
       <span
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,
         })}
-        style={{ left: '-7px', bottom: '-7px' }}
+        style={{ left: '-5px', bottom: '-5px' }}
       ></span>
       <span
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,
         })}
-        style={{ right: '-7px', bottom: '-7px' }}
+        style={{ right: '-5px', bottom: '-5px' }}
       ></span>
       {children}
     </button>

@@ -19,6 +19,9 @@
       > li.selected > button {
         color: $attack-green-40 !important;
         background-color: $attack-dark-green-select-60 !important;
+        h4 {
+          color: $attack-green;
+        }
       }
       > li.selected.isProtecting > button {
         color: $protect-blue !important;

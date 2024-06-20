@@ -1,14 +1,9 @@
-import AccordionWrapper from '../../common/AccordionWrapper';
 import { RESET, SELECT_ALL } from '../../constants';
 import { searchSectors } from '../../helpers';
 import {
   processAllIndustries,
   selectSectors,
 } from '../../redux/features/generalSlice';
-import {
-  selectAllSectorsSelected,
-  setAllSectorsSelected,
-} from '../../redux/features/helpersSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import IndustrySector from '../IndustrySector';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
@@ -46,8 +41,6 @@ const IndustrySelection = ({
       dispatch(processAllIndustries(SELECT_ALL));
     }
   };
-
-  const onSelectGroup = () => {};
 
   return (
     <>
