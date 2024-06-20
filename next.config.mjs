@@ -1,4 +1,4 @@
-import withPWAInit from "@ducanh2912/next-pwa";
+import withPWAInit, {runtimeCaching} from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
     reactStrictMode: true,
@@ -17,6 +17,13 @@ const withPWA = withPWAInit({
         // This is for fonts.
         font: "/fallback-font.woff2",
     },
+    pwa: {
+        dest: "public",
+        register: true,
+        skipWaiting: true,
+        runtimeCaching,
+        buildExcludes: [/middleware-manifest.json$/]
+    }
 });
 
 export default withPWA({
