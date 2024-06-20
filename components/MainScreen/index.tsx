@@ -114,7 +114,7 @@ const MainScreen = () => {
       )}
       {modalVisibleWave && (
         <ModalContainer setModalClose={closeModal}>
-          <Waves waves={waves} />
+          <Waves deviceConnected waves={waves} />
         </ModalContainer>
       )}
       {modalVisibleSystem && (

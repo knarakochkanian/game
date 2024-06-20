@@ -1,21 +1,19 @@
-import {
-  CONNECTED,
-  NETWORK,
-  NOT_CONNECTED,
-  WAVE_STATE,
-} from '../../constants';
+import { CONNECTED, NETWORK, NOT_CONNECTED, WAVE_STATE } from '../../constants';
 import ModalData from '../Modals/ModalData';
 
 import styles from './SingleWave.module.scss';
+
+interface ISingleWaveProps extends ISingleWave {
+  deviceConnected: boolean;
+}
 
 export interface ISingleWave {
   isOn: boolean;
   num: number;
   network: string;
-  deviceConnected: boolean;
 }
 
-const SingleWave = ({ isOn, num, network, deviceConnected }: ISingleWave) => {
+const SingleWave = ({ isOn, num, network, deviceConnected }: ISingleWaveProps) => {
   return (
     <article className={styles.singleWave}>
       <div className={styles.container}>
