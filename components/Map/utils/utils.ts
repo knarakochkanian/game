@@ -4,7 +4,7 @@ import usStatesJson from "../geodata/usa-states.geo.json"
 import chinaRegionsJson from "../geodata/china-regions.json"
 import indianStates from "../geodata/indian-states.json"
 import russianStates from "../geodata/russia-states.geo.json"
-import canadianStates from "../geodata/canada-states.geo.json"
+import canadianStates from "../geodata/canada-states.json"
 import brazilRegions from "../geodata/brazil-states.geo.json"
 import australianRegions from "../geodata/australian-states.geo.json"
 import merc from 'mercator-projection'
@@ -45,7 +45,7 @@ export function getIndiaStateGeometryByEnglishName(name: string): Position[][] |
 
 export function getCanadaStateGeometry(name: string): Position[][] | Position[][][] | undefined {
   for (const country of canadianStates.features) {
-    if (country.properties?.nom === name) {
+    if (country.properties?.name === name) {
       return country.geometry.coordinates;
     }
   }

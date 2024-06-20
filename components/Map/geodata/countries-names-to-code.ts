@@ -379,7 +379,7 @@ export const countriesNamesToCode: Record<string, string> = {
   "Уттаракханд": "Uttaranchal",
   "Западная Бенгалия": "West Bengal",
 
-  // регионы остальных стран
+  // рф
   "Луганская Народная Республика": "RU-LUH",
   "Брянская область": "RU-BRY",
   "Алтайский край": "RU-ALT",
@@ -468,17 +468,23 @@ export const countriesNamesToCode: Record<string, string> = {
   "Донецкая Народная Республика": "RU-DNR",
   "Запорожская область": "UA-ZPR",
   "Херсонская область": "UA-KHR",
-  "Британская Колумбия": "Colombie-Britannique",
-  "Ньюфаундленд и Лабрадор": "Terre-Neuve-et-Labrador",
+
+  // canada
+  "Британская Колумбия": "British Columbia",
+  "Ньюфаундленд и Лабрадор": "Newfoundland and Labrador",
   "Саскачеван": "Saskatchewan",
-  "Квебек": "Québec",
+  "Квебек": "Quebec",
   "Альберта": "Alberta",
   "Манитоба": "Manitoba",
-  "Новая Шотландия": "Nouvelle-Écosse",
+  "Новая Шотландия": "Nova Scotia",
   "Онтарио": "Ontario",
-  "Нью-Брансуик": "Nouveau-Brunswick",
-  "Остров Принца Эдуарда": "Île-du-Prince-Édouard",
-  "Юкон": "Territoire du Yukon",
+  "Нью-Брансуик": "New Brunswick",
+  "Остров Принца Эдуарда": "Prince Edward Island",
+  "Юкон": "Yukon Territory",
+  "Северо-западные территории": "Northwest Territories",
+  "Нунавут": "Nunavut",
+
+  // brazil
   "Акри": "Acre",
   "Алагоас": "Alagoas",
   "Амапа": "Amapá",
@@ -506,6 +512,8 @@ export const countriesNamesToCode: Record<string, string> = {
   "Сан-Паулу": "São Paulo",
   "Сержипи": "Sergipe",
   "Токантинс": "Tocantins",
+
+  // australia
   "Новый Южный Уэльс": "New South Wales",
   "Виктория": "Victoria",
   "Квинсленд": "Queensland",
