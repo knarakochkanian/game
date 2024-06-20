@@ -8,13 +8,13 @@
   .title {
     color: $mid-dark-gray;
     font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(50px, 400);
+    @include set-font-size-weight(24px, 400);
     line-height: 120%; /* 60px */
   }
   .info {
     color: $white;
     font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(40px, 400);
+    @include set-font-size-weight(19px, 500);
     line-height: 120%; /* 60px */
   }
   .titleAndInfo {

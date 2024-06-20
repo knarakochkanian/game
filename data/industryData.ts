@@ -18,12 +18,19 @@ const industry: IIndustry = {
       id: 8,
       title: 'ВПК',
       options: [
-        { selected: false, parent: VPK, id: '01', name: 'вооруженные силы' },
+        {
+          selected: false,
+          parent: VPK,
+          id: '01',
+          name: 'вооруженные силы',
+          n: 1,
+        },
         {
           selected: false,
           parent: VPK,
           id: '02',
           name: 'конструкторсткие бюро',
+          n: 1,
         },
         { selected: false, parent: VPK, id: '03', name: 'НИИ' },
         {
@@ -31,6 +38,7 @@ const industry: IIndustry = {
           parent: VPK,
           id: '04',
           name: 'Оборонное производство',
+          n: 0.8,
         },
         {
           selected: false,

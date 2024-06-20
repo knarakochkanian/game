@@ -136,6 +136,9 @@ const generalSlice = createSlice({
       state.sideNavIsOpen = true;
       state.damageLevel = payload;
     },
+    resetDamageLevel(state) {
+      state.damageLevel = '';
+    },
     setSingleRegionStatus(
       state,
       { payload }: { payload: { parentCountry: string; region: string } }
@@ -197,7 +200,7 @@ const generalSlice = createSlice({
                 break;
               case SELECT_ALL:
                 updatedPlaceName = [...payload.members].filter(
-                    (place) => !state.pickedCountries.includes(place)
+                  (place) => !state.pickedCountries.includes(place)
                 );
                 break;
             }
@@ -239,7 +242,7 @@ const generalSlice = createSlice({
     },
     setLocalTimeBlur(state, { payload }) {
       state.localTimeBlur = payload;
-    }
+    },
   },
 });
 
@@ -251,6 +254,7 @@ export const {
   addToPickedCountries,
   removeFromPickedCountries,
   setDamageLevel,
+  resetDamageLevel,
   setSelectedIndusties,
   setCurrentAction,
   setCurrentActionDate,
@@ -294,7 +298,9 @@ export const selectFormattedFinancialLosses = (state: RootState) =>
   state.generalReducer.formattedFinancialLosses;
 export const selectComfirmedFromOnboarding = (state: RootState) =>
   state.generalReducer.comfirmedFromOnboarding;
-export const selectOnboardingBlur = (state: RootState) => state.generalReducer.onBoardingBlur;
-export const selectLocalTimeBlur = (state: RootState) => state.generalReducer.localTimeBlur;
+export const selectOnboardingBlur = (state: RootState) =>
+  state.generalReducer.onBoardingBlur;
+export const selectLocalTimeBlur = (state: RootState) =>
+  state.generalReducer.localTimeBlur;
 
 export default generalSlice.reducer;

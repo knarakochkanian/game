@@ -62,6 +62,7 @@ interface ISectorOption {
   name: string;
   selected: boolean;
   src?: string;
+  n?: number;
 }
 
 interface ISector {
@@ -74,17 +75,18 @@ interface IIndustry {
   id: number;
   nameMain: string;
   sectors: ISector[];
+  n?: number;
 }
 
 type TLayout = {
   firstRow: string[];
   secondRow: string[];
   thirdRow: string[];
-}
+};
 
 type TRef = MutableRefObject<{
   setSearchInput: (input: string) => void;
-} | null>
+} | null>;
 
 interface IKeyboardManagementProps {
   searchInputRef: RefObject<HTMLInputElement>;

@@ -1,4 +1,14 @@
-export const consequencesParagraph = {
+interface ConsequenceLevels {
+  критический: string;
+  минимальный: string;
+  предупреждение: string;
+}
+
+interface ConsequencesParagraph {
+  [key: string]: ConsequenceLevels;
+}
+
+export const consequencesParagraph: ConsequencesParagraph = {
   ВПК: {
     критический:
       '104 000 хакеров организуют крупную атаку на военно-промышленный комплекс страны. Под атакой []. Цель атаки — взломать информационные системы и уничтожить засекреченную документацию, необходимую для серийного производства вооружений.',

@@ -25,9 +25,7 @@ import IndustrySelection from '../IndustrySelection';
 import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
 import { useAppSelector } from '../../redux/hooks';
-import {
-  selectPlaces,
-} from '../../redux/features/generalSlice';
+import { selectPlaces } from '../../redux/features/generalSlice';
 import { USARegions } from '../../data/countriesWithCodes';
 import useCloseSelection from '../../hooks/useCloseSelection';
 import CountryBlocks from '../CountryBlocks';
