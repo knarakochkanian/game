@@ -210,6 +210,9 @@ const generalSlice = createSlice({
           break;
       }
     },
+    resetPickedCountries(state) {
+      state.pickedCountries = [];
+    },
     setTotalPopulationRegions(state, { payload }) {
       state.totalPopulationRegions = payload;
     },
@@ -255,6 +258,7 @@ export const {
   removeFromPickedCountries,
   setDamageLevel,
   resetDamageLevel,
+  resetPickedCountries,
   setSelectedIndusties,
   setCurrentAction,
   setCurrentActionDate,

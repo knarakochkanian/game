@@ -6,3 +6,12 @@
       color: $mid-dark-gray;
     }
   }
+.countiesWithOutFlag{
+  max-height: 400px;
+  @include scrollStyles;
+  @include hideScrollBar;
+  >div{
+    @include flex-between;
+    align-items: center;
+  }
+}

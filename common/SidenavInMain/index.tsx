@@ -210,7 +210,10 @@ function SidenavInMain({
           </div>
 
           <div className="AccordionsWrap">
-            <RegionAccordion selectedCountries={selectedCountries} />
+            <RegionAccordion
+              selectedCountries={selectedCountries}
+              setWithOutFlag={true}
+            />
             <IndustryAccordion industrySectors={industrySectors} />
             <DamageLevelInfo damageLevel={damageLevel} />
           </div>
