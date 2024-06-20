@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { helpIcon } from '../../public/main-screen';
-
-import styles from './Help.module.scss';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { helpIcon } from '../../public/main-screen';
 import Modal from '../../common/Modals/Modal';
+
+import styles from './Help.module.scss';
+
 const Help = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);

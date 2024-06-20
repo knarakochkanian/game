@@ -15,7 +15,7 @@ const Select = ({
   handleSelectOpen,
   selectOpen,
   children,
-  name
+  name,
 }: ISelectProps) => {
   const isAttacking = useAppSelector(selectIsAttacking);
 
@@ -29,10 +29,7 @@ const Select = ({
         {name}
       </BaseButton>
 
-      <ModalWithSelect
-        isOpen={selectOpen}
-        onClose={() => {}}
-      >
+      <ModalWithSelect from="main" isOpen={selectOpen} onClose={() => {}}>
         {children}
       </ModalWithSelect>
     </>

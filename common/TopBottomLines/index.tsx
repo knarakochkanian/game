@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { bottom, bottomNarrowLines, top } from '../../public/count-down';
@@ -8,12 +10,14 @@ import {
   bottomLinesAreNarrowPages,
   bottomLinesAreStraightPages,
 } from '../../constants';
-import { selectBlur, selectOnboardingBlur, setBlur } from '../../redux/features/generalSlice';
+import {
+  selectBlur,
+  selectOnboardingBlur,
+  setBlur,
+} from '../../redux/features/generalSlice';
 import { useAppSelector } from '../../redux/hooks';
 
 import styles from './TopBottomLines.module.scss';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const TopBottomLines = () => {
   const pathname = usePathname();
@@ -28,28 +32,27 @@ const TopBottomLines = () => {
     bottomLinesAreNarrowPages.some((page) =>
       pathname?.split('/').includes(page)
     ) || pathname === '/';
-    useEffect (() => {
-      let onBoardingBlurCount = 0;
-      Object.values(onBoardingBlur).forEach(elem => {
-        if (elem === true) {
-          onBoardingBlurCount++;
-        }
-      })
-      if (onBoardingBlurCount !== 0) {
-        setLineBlur('blur(22px)');
+  useEffect(() => {
+    let onBoardingBlurCount = 0;
+    Object.values(onBoardingBlur).forEach((elem) => {
+      if (elem === true) {
+        onBoardingBlurCount++;
       }
-      else {
-        setLineBlur('none')
-      }
-    }, [onBoardingBlur])
+    });
+    if (onBoardingBlurCount !== 0) {
+      setLineBlur('blur(22px)');
+    } else {
+      setLineBlur('none');
+    }
+  }, [onBoardingBlur]);
   return (
     <>
       <Image
         className={styles.top}
         src={top}
         alt="top"
-        width={1344}
-        height={81}
+        width={1295}
+        height={38}
         priority
         style={{ filter: lineBlur }}
       />
@@ -60,8 +63,8 @@ const TopBottomLines = () => {
           className={styles.bottom}
           src={bottomNarrowLines}
           alt="bottom"
-          width={2752}
-          height={81}
+          width={1295}
+          height={38}
           priority
           style={{ filter: lineBlur }}
         />

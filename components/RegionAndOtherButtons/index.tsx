@@ -114,7 +114,7 @@ const RegionAndOtherButtons = ({
         Регион
       </BaseButton>
 
-      <ModalWithSelect isOpen={selectOpen} onClose={() => {}}>
+      <ModalWithSelect from="main" isOpen={selectOpen} onClose={() => {}}>
         <SearchInput
           searchInputRef={searchInputRef}
           onChangeInput={onChangeInput}
