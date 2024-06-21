@@ -1,7 +1,25 @@
+'use client';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './Loading.module.scss';
 
 export default function Loading() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prevProgress + 10;
+      });
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className={styles.loadingWrapper}>
       <div className={styles.loading}>
@@ -9,8 +27,8 @@ export default function Loading() {
           className={styles.loadingIcon}
           src={'/loading/TaskIcon.svg'}
           alt="loader icon"
-          width={80}
-          height={80}
+          width={40}
+          height={40}
         />
         <h4>Загрузка</h4>
       </div>
@@ -19,64 +37,86 @@ export default function Loading() {
           className={styles.loadingIcon}
           src={'/loading/Group.svg'}
           alt="loader icon"
-          width={1316}
-          height={1317}
+          width={619}
+          height={619}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group2.svg'}
           alt="loader icon"
-          width={1109}
-          height={1109}
+          width={562}
+          height={560}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group3.svg'}
           alt="loader icon"
-          width={939}
-          height={938}
+          width={440}
+          height={440}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group4.svg'}
           alt="loader icon"
-          width={841}
-          height={841}
+          width={400}
+          height={400}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group5.svg'}
           alt="loader icon"
-          width={730}
-          height={730}
+          width={340}
+          height={340}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group6.svg'}
           alt="loader icon"
-          width={631}
-          height={631}
+          width={290}
+          height={290}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group7.svg'}
           alt="loader icon"
-          width={406}
-          height={406}
+          width={190}
+          height={190}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group8.png'}
           alt="loader icon"
-          width={262}
-          height={262}
+          width={120}
+          height={120}
         />
         <Image
           className={styles.loadingIcon}
           src={'/loading/Group10.svg'}
           alt="loader icon"
-          width={135}
-          height={147}
+          width={63}
+          height={63}
+        />
+      </div>
+      <div className={styles.progressBarWrapper}>
+        <Image
+          src={'/main-screen/ProgressBarLeft.svg'}
+          alt="progressBarLeft"
+          width={20}
+          height={48}
+          className={styles.progressBarImgLeft}
+        />
+        <div className={styles.progressBarContainer}>
+          <div
+            className={styles.progressBar}
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+        <Image
+          src={'/main-screen/ProgressBarRight.svg'}
+          alt="progressBarLeft"
+          width={20}
+          height={48}
+          className={styles.progressBarImgRight}
         />
       </div>
     </div>

@@ -3,8 +3,8 @@
 .loadingWrapper {
   display: flex;
   padding: 24px;
-  height: 1700px;
-  width: 2700px;
+  height: 800px;
+  width: 100%;
   --rotate-duration: 6s;
 
   >div:nth-child(1) {
@@ -12,12 +12,43 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .progressBarContainer {
+    width: 101px;
+    height: 16px;
+    background-color: $black;
+    border-radius: 2.5px;
+    overflow: hidden;
+    border: 2px solid $attack-green-20;
+  }
+
+  .progressBar {
+    height: 100%;
+    background-color: $attack-green;
+    transition: width 0.5s ease;
+    &ImgLeft{
+      position: absolute;
+      left: -10px;
+    }
+    &ImgRight{
+      position: absolute;
+      right: -10px;
+    }
+  }
+  .progressBarWrapper{
+    @include flex-between;
+    height: 48px;
+    position: fixed;
+    bottom: 32px;
+    right: 58px;
+  }
+
 }
 
 .Loader {
   position: relative;
-  top: 194px;
-  left: 1100px;
+  top: 10%;
+  left: 42%;
   @include flex-center;
   align-items: unset;
 
@@ -34,12 +65,12 @@
   }
 
   > img:nth-child(1) { animation: rotate-cw linear 4s infinite; }
-  > img:nth-child(2) { top: 100px; animation: rotate-ccw linear 5s infinite; }
-  > img:nth-child(3) { top: 185px; animation: rotate-cw linear 6s infinite; }
-  > img:nth-child(4) { top: 230px; animation: rotate-ccw linear 6s infinite; }
-  > img:nth-child(5) { top: 275px; animation: rotate-cw linear 6s infinite; }
-  > img:nth-child(6) { top: 320px; animation: rotate-ccw linear 6s infinite; }
-  > img:nth-child(7) { top: 435px; animation: rotate-cw linear 6s infinite; }
-  > img:nth-child(8) { top: 500px; animation: rotate-ccw linear 6s infinite; }
-  > img:nth-child(9) { top: 550px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(2) { top: 25px; animation: rotate-ccw linear 5s infinite; }
+  > img:nth-child(3) { top: 80px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(4) { top: 100px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(5) { top: 130px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(6) { top: 153px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(7) { top: 200px; animation: rotate-cw linear 6s infinite; }
+  > img:nth-child(8) { top: 230px; animation: rotate-ccw linear 6s infinite; }
+  > img:nth-child(9) { top: 260px; animation: rotate-cw linear 6s infinite; }
 }
