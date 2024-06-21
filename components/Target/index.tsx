@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import FooterButton from '../../common/FooterButton';
-import { START, startAttackTitle } from '../../constants';
 
 import styles from './Target.module.scss';
 

@@ -2,11 +2,11 @@
 
 .queueModal {
   position: fixed;
-  bottom: 170px;
-  left: 75px;
-  width: 508px;
+  bottom: 90px;
+  left: 48px;
+  width: 236px;
   background: $card;
-  padding: 0 0 24px 16px;
+  padding: 0 0 11px 8px;
   h5,
   a,
   span {
@@ -16,14 +16,14 @@
     text-transform: uppercase;
   }
   h5 {
-    padding: 30px 0 29px 16px;
-    @include set-font-size-weight(34px, 600);
-    letter-spacing: 1.02px;
+    padding: 14px 0 14px 7px;
+    @include set-font-size-weight(16px, 600);
+    letter-spacing: 0.48px;
   }
   a,
   span {
-    @include set-font-size-weight(28px, 400);
-    letter-spacing: 0.28px;
+    @include set-font-size-weight(13px, 500);
+    letter-spacing: 0.132px;
   }
   .attack {
     color: $attack-green;
@@ -32,18 +32,19 @@
     color: $protect-blue;
   }
   a {
-    margin-top: 56px;
+    margin-top: 26px;
     display: inline-block;
     border: 2px solid $white;
-    padding: 16px 24px;
+    padding: 8px 11px;
+    text-decoration: none;
   }
   div {
-    padding: 12px 0 0 16px;
+    padding: 12px 0 0 7px;
     @include flex-column(16px);
   }
   .slashes_90_degree {
     position: absolute;
     right: 0;
-    bottom: 82px;
+    bottom: 52px;
   }
 }

@@ -1,7 +1,7 @@
 @import '/app/variables.module.scss';
 
 .placesAccordionSummary {
-  @include AccordionSummary;
+  @include AccordionSummary;  
   span.countSelected {
     padding: 0 7px;
     height: 33px;

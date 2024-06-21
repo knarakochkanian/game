@@ -143,7 +143,7 @@ const MainScreen = () => {
         name="mapOrGlobe"
       />
 
-      {false && <QueueModal />}
+      <QueueModal />
 
       <SidenavInMain
         isOpen={sideNavIsOpen}

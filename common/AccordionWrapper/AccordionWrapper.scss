@@ -23,3 +23,11 @@
 .css-eqpfi5-MuiAccordionSummary-content.Mui-expanded {
   margin: 0 !important;
 }
+
+.css-qhxjgx-MuiPaper-root-MuiAccordion-root {
+  box-shadow: none !important;
+}
+
+.css-qhxjgx-MuiPaper-root-MuiAccordion-root::before {
+  width: 354px !important;
+}

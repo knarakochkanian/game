@@ -8,6 +8,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectPickedCountries } from '../../redux/features/generalSlice';
 import ResetOrSelectAll from '../../common/ResetOrSelectAll';
 
+import './AccordionStyles.scss'
 import styles from './CountryWithRegions.module.scss';
 
 interface ICountryWithRegionsProps {

@@ -10,6 +10,7 @@ import AlphabetLetter from '../AlphabetLetter';
 import { Option } from '../../data/attackRegionsData';
 
 import styles from './PlaceCard.module.scss';
+import GreenLineBorders from '../GreenLineBorders';
 
 interface IPlaceCardProps {
   place: IPlace;
@@ -28,11 +29,23 @@ const PlaceCard = ({
   i,
   places,
   fromSideNav,
-  withRegions
+  withRegions,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
   const isAttacking = useAppSelector(selectIsAttacking);
+  const isSelected = pickedCountries.includes(place?.name) && !fromSideNav;
+  const className = `${styles.placeCard} ${
+    place?.regions ? styles.withRegions : ''
+  } ${isSelected ? styles.selected : ''} ${
+    !isAttacking ? styles.isProtecting : ''
+  }`;
+
+  const onClick = () => {
+    if (withRegions) return;
+    console.log('Button clicked:', place?.name);
+    dispatch(setPlaceName(place?.name));
+  };
 
   return (
     <>
@@ -41,19 +54,9 @@ const PlaceCard = ({
       )}
 
       <button
-        onClick={() => {
-          if(withRegions) return;
-          console.log('Button clicked:', place?.name);
-          dispatch(setPlaceName(place?.name));
-        }}
+        onClick={onClick}
         disabled={fromSideNav}
-        className={`${styles.placeCard} ${
-          place?.regions ? styles.withRegions : ''
-        } ${
-          pickedCountries.includes(place?.name) && !fromSideNav && !place.regions
-            ? styles.selected
-            : ''
-        } ${!isAttacking ? styles.isProtecting : ''}`}
+        className={className}
       >
         {place?.code && (
           <div className={styles.flagContainer}>
@@ -62,6 +65,7 @@ const PlaceCard = ({
         )}
 
         <h4>{place?.name}</h4>
+        {isSelected && place?.regions && <GreenLineBorders />}
       </button>
 
       {isCountry && placeFirstLetterChanged && places && i && (

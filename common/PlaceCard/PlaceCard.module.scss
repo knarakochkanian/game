@@ -21,10 +21,6 @@
   }
 }
 
-.placeCard.withRegions {
-  padding: 0;
-}
-
 .placeCard.selected {
   h4 {
     color: $attack-green;
@@ -37,4 +33,16 @@
     color: $protect-blue;
   }
   background-color: $protect-dark-blue-select;
+}
+
+.placeCard.withRegions {
+  position: relative;
+  padding: 0;
+  @include set-width-height(277px, 48px);
+  padding-left: 8px;
+}
+
+.placeCard.withRegions.selected {  
+  border-right: 2px solid $attack-green;
+  border-left: 2px solid $attack-green;
 }
