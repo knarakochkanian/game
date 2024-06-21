@@ -4,6 +4,7 @@ declare module 'redux-logger';
 declare module '@mui/x-date-pickers/AdapterDayjs';
 declare module '@mui/x-date-pickers/LocalizationProvider';
 declare module '@mui/x-date-pickers/DateTimePicker';
+declare module '@next/font/local';
 // declare module '@/redux/store';
 
 type TMap = {
