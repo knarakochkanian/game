@@ -16,7 +16,7 @@ body {
 
 :root {
   background-color: $main-dark;
-  font-family: 'TT Lakes Neue Trial', sans-serif;
+  font-family: var(--font-lakes), sans-serif;
 }
 .container {
   display: flex;

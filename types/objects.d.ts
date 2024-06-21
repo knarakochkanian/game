@@ -58,7 +58,7 @@ interface IProtection extends IAction {}
 
 interface ISectorOption {
   parent: string;
-  id: string;
+  id: number;
   name: string;
   selected: boolean;
   src?: string;

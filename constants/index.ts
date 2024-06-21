@@ -79,15 +79,26 @@ export const DEVICE_CONNECTED = 'Подключение к обоим конту
 export const DEVICE_NOT_CONNECTED = 'Устройство не подключено к защищенной сети';
 
 //sector names
-export const IT_SECTOR = 'IT-сектор';
-export const ENERGY = 'энергетика';
-export const FINANCE = 'финансы';
-export const RETAIL = 'розничная торговля';
-export const INDUSTRY = 'промышленность';
-export const LOG_AND_TRANSPORT = 'логистика и траспорт';
-export const UNIVERSE = 'космос';
-export const GOV_INFOSTRUCTURES = 'гос. инфраструктура';
+export const obrazovaniye = 'образование';
+export const seti_svyazi = 'сети связи';
+export const energetika = 'энергетика';
+export const turizm = 'туризм';
+export const SMI = 'СМИ';
+export const finansovaya_sistema = 'финансовая система';
+export const transportnaya_sistema = 'транспортная система';
+export const stroitelstvo = 'строительство';
+export const torgovlya = 'торговля';
+export const promyshlennost = 'промышленность';
+export const kosmos = 'космос';
+export const zdravookhraneniye = 'здравоохранение';
+export const dobycha_polez_iskopayemykh = 'добыча полезных ископаемых';
+export const gos_infrastruktura = 'государственная инфраструктура';
+export const vooruzhennyye_sily = 'вооруженные силы';
+export const Vodosnabzheniye = 'водоснабжение';
+export const APK = 'АПК';
 export const VPK = 'ВПК';
+export const INDUSTRY = 'промышленность';
+
 export const COMPANY_TOP_CAPITALIZATION = 'Топ капитализаций компаний';
 
 //keyboard state
