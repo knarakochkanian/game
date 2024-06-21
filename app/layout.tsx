@@ -40,15 +40,15 @@ import localFont from '@next/font/local';
 const lakes = localFont({
   src: [
     {
-      path: '../public/fonts/TT-Lakes-Compressed-Black.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Black.ttf',
       weight: '400',
     },
     {
-      path: '../public/fonts/TT-Lakes-Condensed-Bold.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Compressed Bold Italic.ttf',
       weight: '600',
     },
     {
-      path: '../public/fonts/TT-Lakes-Medium.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Medium.ttf',
       weight: '400',
     },
   ],
