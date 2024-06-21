@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
@@ -14,9 +14,9 @@ import {
   selectIsAttacking,
   resetGeneralState,
 } from '../../redux/features/generalSlice';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 import styles from './SelectFromTwo.module.scss';
-import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 type setFirstActive = (bool: boolean) => void;
 
@@ -150,15 +150,15 @@ const SelectFromTwo = ({
             onClick={handleBtn_1_Click}
             src={imgSrc_1}
             alt={'Icon'}
-            width={48}
-            height={48}
+            width={41}
+            height={41}
           />
           <Image
             onClick={handleBtn_2_Click}
             src={imgSrc_2}
             alt={'Icon'}
-            width={48}
-            height={48}
+            width={41}
+            height={41}
           />
         </div>
         <button

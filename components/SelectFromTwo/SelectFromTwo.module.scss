@@ -3,12 +3,14 @@
 .selectFromTwo {
   position: fixed;
   z-index: 9;
-  left: 530px;
+  left: 542px;
+  top: 26px;
   &Attack {
-    width: 340px;
+    width: 255px;
     @include flex-between;
     > button {
       @include TypoBodyBig;
+      font-size: 16px;
       text-transform: uppercase;
     }
     .button_1.disabled,
@@ -24,7 +26,7 @@
       cursor: pointer;
     }
   }
-  &ModalBottom{
+  &ModalBottom {
     display: flex;
     width: 409px;
     left: -214px;
@@ -33,13 +35,13 @@
     align-items: flex-start;
     position: absolute;
     bottom: 160px;
-    background-color: rgba(1, 2, 2, 0.50);
-    >div{
+    background-color: rgba(1, 2, 2, 0.5);
+    > div {
       @include TypoBodySmall;
       text-transform: uppercase;
     }
   }
-  &ModalBottomRight{
+  &ModalBottomRight {
     display: flex;
     width: 409px;
     right: -250px;
@@ -48,15 +50,15 @@
     align-items: flex-start;
     position: absolute;
     bottom: 160px;
-    background-color: rgba(1, 2, 2, 0.50);
-    >div{
+    background-color: rgba(1, 2, 2, 0.5);
+    > div {
       @include TypoBodySmall;
       text-transform: uppercase;
-
     }
   }
 }
 
 .selectFromTwo.mapOrGlobe {
-  bottom: 56px;
+  top: unset;
+  bottom: 27px;
 }

@@ -1,5 +1,15 @@
 @import '/app/variables.module.scss';
 
 .waves {
-  @include flex-column(80px);
+  @include flex-column(22px);
+  .connected,
+  .notConnected {
+    color: $mid-gray;
+    @include set-font-size-weight(13px, 400);
+    line-height: 120%; /* 15.818px */
+    letter-spacing: 0.132px;
+  }
+  .connected {
+    color: $attack-green;
+  }
 }

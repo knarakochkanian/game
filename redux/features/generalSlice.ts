@@ -107,6 +107,9 @@ const generalSlice = createSlice({
     resetGeneralState(state) {
       const initialStateCopy = { ...initialState };
       initialStateCopy.isAttacking = state.isAttacking;
+      initialStateCopy.blur = state.blur;
+      initialStateCopy.localTimeBlur = state.localTimeBlur;
+      initialStateCopy.onBoardingBlur = state.onBoardingBlur;
 
       return initialStateCopy;
     },

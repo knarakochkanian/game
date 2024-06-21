@@ -1,7 +1,7 @@
-@import "/app/variables.module";
-.target{
+@import '/app/variables.module';
+.target {
   position: fixed;
-  top: 230px;
+  top: 312px;
   z-index: 1;
   width: 1344px;
   pointer-events: none;
@@ -10,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  &Text{
+  &Text {
     display: inline-flex;
     padding: 8px 10px;
     justify-content: center;
@@ -18,9 +18,9 @@
     gap: 8px;
     background-color: $black-60;
     pointer-events: none;
-    >span{
+    > span {
       color: $white;
-      font-family: "TT Lakes Neue Trial";
+      font-family: 'TT Lakes Neue Trial';
       font-size: 12px;
       font-style: normal;
       font-weight: 200;

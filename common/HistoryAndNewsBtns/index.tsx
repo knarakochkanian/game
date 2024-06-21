@@ -15,7 +15,9 @@ const HistoryAndNewsBtns = () => {
       <Link href={HISTORY}>
         <div>
           <button>история</button>
-          <button className={styles.historyCount}>{actions.length}</button>
+          {Boolean(actions.length) && (
+            <button className={styles.historyCount}>{actions.length}</button>
+          )}
         </div>
       </Link>
       <Link href={NEWS}>

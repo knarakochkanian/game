@@ -75,6 +75,8 @@ export const stateSystemOn =
   'Система подключена к защищенной сети. Возможно создание и пуск задачи.';
 export const stateSystemOff =
   'Пуск задачи невозможен. Текущая задача будет сохранена и доступна к запуску, когда система подключится к защищенной сети.';
+export const DEVICE_CONNECTED = 'Подключение к обоим контурам защищенной сети произведено успешно';
+export const DEVICE_NOT_CONNECTED = 'Устройство не подключено к защищенной сети';
 
 //sector names
 export const obrazovaniye = 'образование';

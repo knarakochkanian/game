@@ -114,7 +114,7 @@ const RegionAndOtherButtons = ({
         Регион
       </BaseButton>
 
-      <ModalWithSelect isOpen={selectOpen} onClose={() => {}}>
+      <ModalWithSelect from="main" isOpen={selectOpen} onClose={() => {}}>
         <SearchInput
           searchInputRef={searchInputRef}
           onChangeInput={onChangeInput}
@@ -128,9 +128,9 @@ const RegionAndOtherButtons = ({
         </SearchResult>
 
         <div
-          className={
+          className={`${styles.accordionsContainer} ${
             showKeyboard || searchInput ? styles.hideSelectionPanel : ''
-          }
+          }`}
         >
           {regions[0].regions?.map((region, index) => {
             let placesInSwitch;

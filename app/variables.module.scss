@@ -124,9 +124,9 @@ $unvisible: rgba(0, 0, 0, 0);
 @mixin TypoBodyBig_2 {
   color: $white;
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(36px, 400);
+  @include set-font-size-weight(17px, 400);
   line-height: 120%; /* 43.2px */
-  letter-spacing: 0.36px;
+  letter-spacing: 0.169px;
 }
 @mixin TypoBodySmall {
   font-size: 18px;
@@ -138,9 +138,9 @@ $unvisible: rgba(0, 0, 0, 0);
 @mixin TypoH5 {
   color: $white;
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(24px, 400);
   line-height: 120%; /* 40.8px */
-  letter-spacing: 1.02px;
+  @include set-font-size-weight(16px, 600);
+  letter-spacing: 0.48px;
 }
 
 @mixin TypoH2 {
