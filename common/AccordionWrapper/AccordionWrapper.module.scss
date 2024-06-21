@@ -1,0 +1,54 @@
+@import '/app/variables.module.scss';
+
+.arrow {
+  position: absolute;
+  bottom: -20px;
+  right: -23px;
+}
+
+.arrow.expanded {
+  bottom: 10px;
+  right: 10px;
+}
+
+.arrow.fromIndustry {
+  position: static;
+}
+
+.titleAndCountCts {
+  display: flex;
+  gap: 12px;
+  .title {
+    font-variant-numeric: slashed-zero;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.179px;
+  }
+
+  .title.topCapitalization {
+    font-size: 16px;
+  }
+
+  .title.highlighted {
+    color: $attack-green;
+  }
+
+  .count {
+    position: relative;
+    color: $attack-green;
+    font-variant-numeric: slashed-zero;
+    @include set-font-size-weight(16px, 500);
+    line-height: 120%; /* 19.205px */
+    letter-spacing: 0.16px;
+    padding: 0 5px;
+    padding-top: 3px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+  }
+}
+
+.plusIcon {
+  position: absolute;
+  right: -48px;
+  top: 8px;
+}

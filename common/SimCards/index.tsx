@@ -16,7 +16,6 @@ const SimCards = ({ simCards }: TSimCardsProps) => {
       {simCards.map((card) => (
         <SimCard
           key={card.num}
-          isOn={card.isOn}
           operator={card.operator}
           simNum={card.num}
         />

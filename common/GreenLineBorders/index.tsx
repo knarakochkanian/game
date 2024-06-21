@@ -5,7 +5,11 @@ import styles from './GreenLineBorders.module.scss';
 
 const classNames = ['upLeft', 'upRight', 'downLeft', 'downRight'];
 
-const GreenLineBorders = () => {
+interface IGreenLineBordersProps {
+  width?: number;
+}
+
+const GreenLineBorders = ({width = 9}: IGreenLineBordersProps) => {
   return (
     <>
       {classNames.map((className, i) => (
@@ -14,7 +18,7 @@ const GreenLineBorders = () => {
           className={styles[className]}
           src={greenLine}
           alt="greenLine"
-          width={20}
+          width={width}
           height={2}
           priority
         />

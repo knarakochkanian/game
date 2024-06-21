@@ -1,13 +1,13 @@
 @import '/app/variables.module.scss';
 
 .buttonBase {
-  width: 143px;
-  height: 49px;
+  @include set-width-height(auto, 42px);
   @include TypoBodyBig;
+  @include set-font-size-weight(16px, 600);
   position: relative;
-  color: #fff;
+  color: $white;
   border: 3px solid $mid-gray-background;
-  padding: 5px 10px;
+  padding: 10px 17px;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -21,12 +21,12 @@
 
 .buttonActive,
 .protectModeActive {
-  width: 143px;
-  height: 49px;
+  @include set-width-height(auto, 42px);
   @include TypoBodyBig;
+  @include set-font-size-weight(16px, 600);
+  padding: 10px 17px;
   border: 3px solid $attack-green;
   position: relative;
-  padding: 5px 10px;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -41,16 +41,16 @@
 }
 
 .spanBase {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   position: absolute;
   background: $mid-gray-background;
   border-color: $mid-gray-background;
 }
 .spanActive,
 .protectSpanActive {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   position: absolute;
   background: $attack-green;
   border-color: $attack-green;
@@ -63,5 +63,3 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
-
-

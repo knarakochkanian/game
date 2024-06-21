@@ -23,4 +23,5 @@
   "background_color": "#FFFFFF",
   "start_url": "/",
   "display": "fullscreen",
-  "orientation": "any",
+  "orientation": "any"
+}

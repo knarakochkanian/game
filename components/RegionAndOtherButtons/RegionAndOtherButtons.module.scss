@@ -52,26 +52,11 @@
 .regionAndOtherButtons {
   position: fixed;
   @include flex-between;
-  width: 400px;
-  gap: 24px;
+  gap: 10px;
   z-index: 10;
-  left: 40px;
-  top: 56px;
-  .secondarySmallDisable {
-    @extend .SecondarySmall;
-    opacity: 0.4;
-  }
-  .secondarySmallDisable.selected {
-    background-color: $attack-dark-green-select-60;
-    .optionName {
-      color: $attack-green-40;
-    }    
-  }
-  .secondarySmallDisable.selected.isProtecting {
-    .optionName {
-      color: $protect-blue;
-    }
-    background-color: $protect-dark-blue-select;
+  left: 50px;
+  top: 28px;
+  .accordionsContainer {
   }
   .searchResult {
     position: relative;

@@ -2,17 +2,9 @@
 
 .simCard {
   .container {
-    @include flex-column(24px);
-    .dataContainer {
-      @include flex-column(16px);
-    }
-    .connectionCtn {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      .simNum {
-        @include TypoH5;
-      }
+    @include flex-column(11px);
+    .simNum {
+      @include TypoH5;      
     }
   }
 }

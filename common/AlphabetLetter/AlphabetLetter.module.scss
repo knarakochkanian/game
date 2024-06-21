@@ -1,11 +1,11 @@
 @import '/app/variables.module.scss';
 
 .alphabetLetter {
-  margin-top: 72px;
-  padding: 22px 24px;
+  margin-top: 36px;
+  padding: 10px 18px 10px 12px;
   color: $light-gray;
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(38px, 400);
+  @include set-font-size-weight(17px, 500);
   line-height: 120%; /* 45.6px */
   letter-spacing: 0.38px;
   text-transform: uppercase;

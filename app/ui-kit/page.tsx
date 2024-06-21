@@ -5,8 +5,6 @@ import ModalContainer from '../../common/Modals/ModalContainer';
 import SimCards from '../../common/SimCards';
 import SystemState from '../../common/SystemState';
 import Waves from '../../common/Waves';
-import AttackDetails from '../../components/ActionDetails';
-import { ONBOARDING } from '../../constants';
 import { simCards, waves } from '../../data/connectionData';
 
 import styles from './ui-kit.module.scss';
@@ -14,9 +12,6 @@ import styles from './ui-kit.module.scss';
 export default function Test() {
   return (
     <>
-      {/*<div className={styles.attackCtn}>*/}
-      {/*  <AttackDetails from={ONBOARDING} action={attackExample} />*/}
-      {/*</div>*/}
 
       <Grid />
       <div className={styles.test}>
@@ -25,7 +20,11 @@ export default function Test() {
         </ModalContainer>
 
         <ModalContainer setModalClose={() => {}}>
-          <Waves waves={waves} />
+          <Waves waves={waves} deviceConnected={true}/>
+        </ModalContainer>
+
+        <ModalContainer setModalClose={() => {}}>
+          <Waves waves={waves} deviceConnected={false}/>
         </ModalContainer>
 
         <ModalContainer setModalClose={() => {}}>

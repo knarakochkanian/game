@@ -1,8 +1,8 @@
 .styledLabel {
   display: inline-block;
   position: relative;
-  width: 60px;
-  height: 34px;
+  width: 45px;
+  height: 13px;
 }
 
 .switchInput {
@@ -25,16 +25,15 @@
 .switchSlider:before {
   position: absolute;
   content: "";
-  height: 46px;
-  width: 46px;
-  left: 4px;
+  height: 24px;
+  width: 24px;
   bottom: -5px;
   background-color: white;
   transition: 0.4s;
 }
 
 input:checked + .switchSlider {
-  background-color: #2196f3;
+  background-color: #5ED1C5;
 }
 
 input:checked + .switchSlider:before {

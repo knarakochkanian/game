@@ -1,11 +1,11 @@
-import AccordionWrapper from '../../common/AccordionWrapper';
+import { RESET, SELECT_ALL } from '../../constants';
 import { searchSectors } from '../../helpers';
-import { selectSectors } from '../../redux/features/generalSlice';
 import {
-  selectAllSectorsSelected,
-  setAllSectorsSelected,
-} from '../../redux/features/helpersSlice';
+  processAllIndustries,
+  selectSectors,
+} from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import IndustrySector from '../IndustrySector';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
 import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
@@ -30,13 +30,17 @@ const IndustrySelection = ({
 }: IIndustrySelectionProps) => {
   const dispatch = useAppDispatch();
   const industrySectors = useAppSelector(selectSectors);
-  const allSectorsSelected = useAppSelector(selectAllSectorsSelected);
+  const showReset = industrySectors.some((i) =>
+    i.options.some((option) => option.selected)
+  );
 
-  const onSelectAll = () => {
-    dispatch(setAllSectorsSelected());
+  const onResetOrSelectAll = () => {
+    if (showReset) {
+      dispatch(processAllIndustries(RESET));
+    } else {
+      dispatch(processAllIndustries(SELECT_ALL));
+    }
   };
-
-  const onSelectGroup = () => {};
 
   return (
     <>
@@ -67,27 +71,23 @@ const IndustrySelection = ({
       >
         <header className={styles.industryHeader}>
           <h2>отрасли</h2>
-          <button onClick={onSelectAll}>
-            {allSectorsSelected ? 'сбросить все' : 'выбрать все'}
+          <div>
+          <button
+            onClick={onResetOrSelectAll}
+          >
+            {showReset ? 'сбросить все' : 'выбрать все'}
           </button>
+          </div>          
         </header>
 
-        {industrySectors?.map((sector, index) => {
-          return (
-            <AccordionWrapper
-              styles={{
-                accordionDetailsHeight: 'unset',
-                accordionDetailsMaxHeight: '532px',
-              }}
-              expanded={expanded}
-              handleExpansion={handleExpansion}
-              data={sector}
-              key={index}
-            >
-              <SectorOptions sectorOptions={sector.options} />
-            </AccordionWrapper>
-          );
-        })}
+        {industrySectors?.map((sector, index) => (
+          <IndustrySector
+            expanded={expanded}
+            handleExpansion={handleExpansion}
+            sector={sector}
+            key={index}
+          />
+        ))}
       </div>
     </>
   );

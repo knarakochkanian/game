@@ -3,7 +3,7 @@ import usStates from '../geodata/usa-states.geo.json';
 import chinaRegionsData from '../geodata/china-regions.json';
 import indianStates from '../geodata/indian-states.json';
 import russianStates from "../geodata/russia-states.geo.json"
-import canadianStates from "../geodata/canada-states.geo.json"
+import canadianStates from "../geodata/canada-states.json"
 import brazilRegions from "../geodata/brazil-states.geo.json"
 import australianRegions from "../geodata/australian-states.geo.json"
 
@@ -94,7 +94,7 @@ export class Earth implements IEarth {
       this.geojsonFeatureToStateCode.set(d as Feature, d.properties.shapeISO);
     });
     canadianStates.features.forEach((d) => {
-      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.nom);
+      this.geojsonFeatureToStateCode.set(d as Feature, d.properties.name);
     });
     brazilRegions.features.forEach((d) => {
       this.geojsonFeatureToStateCode.set(d as Feature, d.properties.name);

@@ -22,8 +22,8 @@ const SearchResult = ({ searchInput, showKeyboard, children }: ISearchResultProp
         className={styles.slashes_90_degree}
         src={slashes_90_degree}
         alt="slashes_90_degree"
-        width={24}
-        height={150}
+        width={12}
+        height={70}
         priority
       />
       {children}

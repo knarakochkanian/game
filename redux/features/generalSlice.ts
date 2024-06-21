@@ -6,6 +6,7 @@ import {
   addToPickedCountryObjects,
   removeFromPickedCountryObjects,
 } from '../../helpers';
+import { RESET, SELECT_ALL } from '../../constants';
 
 export interface IInitialState {
   comfirmedFromOnboarding: boolean;
@@ -23,7 +24,7 @@ export interface IInitialState {
   sideNavIsOpen: boolean;
   activeBlocks: string[];
   totalPopulationRegions: number;
-  formattedFinancialLosses: string;  
+  formattedFinancialLosses: string;
   onBoardingBlur: any;
   localTimeBlur: any;
 }
@@ -66,6 +67,26 @@ const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
+    proccesIndustriesByTitle(
+      state,
+      { payload }: { payload: { title: string; actionType: string } }
+    ) {
+      const { actionType, title } = payload;
+      const shouldReset = actionType === RESET;
+      state.sectors
+        .find((sector) => sector.title === title)
+        ?.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        );
+    },
+    processAllIndustries(state, { payload }: { payload: string }) {
+      const shouldReset = payload === RESET;
+      state.sectors.forEach((sector) =>
+        sector.options.forEach(
+          (option) => (option.selected = shouldReset ? false : true)
+        )
+      );
+    },
     setSelectedIndusties(
       state,
       { payload }: { payload: { name: string; parent: string } }
@@ -86,6 +107,9 @@ const generalSlice = createSlice({
     resetGeneralState(state) {
       const initialStateCopy = { ...initialState };
       initialStateCopy.isAttacking = state.isAttacking;
+      initialStateCopy.blur = state.blur;
+      initialStateCopy.localTimeBlur = state.localTimeBlur;
+      initialStateCopy.onBoardingBlur = state.onBoardingBlur;
 
       return initialStateCopy;
     },
@@ -114,6 +138,9 @@ const generalSlice = createSlice({
     setDamageLevel(state, { payload }) {
       state.sideNavIsOpen = true;
       state.damageLevel = payload;
+    },
+    resetDamageLevel(state) {
+      state.damageLevel = '';
     },
     setSingleRegionStatus(
       state,
@@ -145,22 +172,49 @@ const generalSlice = createSlice({
     },
     setPlaceName(state, { payload }) {
       let isSameData;
+
       switch (typeof payload) {
         case 'string':
           isSameData = payload === state.placeName;
+
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+            state.placeName = payload;
+          }
           break;
         case 'object': //array of strings
           isSameData =
-            JSON.stringify(payload) === JSON.stringify(state.placeName);
+            JSON.stringify(payload.members) === JSON.stringify(state.placeName);
+          let updatedPlaceName;
+
+          if (isSameData) {
+            state.firstClick = !state.firstClick;
+          } else {
+            state.firstClick = false;
+
+            switch (payload.action) {
+              case RESET:
+                updatedPlaceName = [...payload.members].filter((place) =>
+                  state.pickedCountries.includes(place)
+                );
+
+                break;
+              case SELECT_ALL:
+                updatedPlaceName = [...payload.members].filter(
+                  (place) => !state.pickedCountries.includes(place)
+                );
+                break;
+            }
+
+            state.placeName = updatedPlaceName as [];
+          }
           break;
       }
-
-      if (isSameData) {
-        state.firstClick = !state.firstClick;
-      } else {
-        state.firstClick = false;
-        state.placeName = payload;
-      }
+    },
+    resetPickedCountries(state) {
+      state.pickedCountries = [];
     },
     setTotalPopulationRegions(state, { payload }) {
       state.totalPopulationRegions = payload;
@@ -194,7 +248,7 @@ const generalSlice = createSlice({
     },
     setLocalTimeBlur(state, { payload }) {
       state.localTimeBlur = payload;
-    }
+    },
   },
 });
 
@@ -206,6 +260,8 @@ export const {
   addToPickedCountries,
   removeFromPickedCountries,
   setDamageLevel,
+  resetDamageLevel,
+  resetPickedCountries,
   setSelectedIndusties,
   setCurrentAction,
   setCurrentActionDate,
@@ -216,6 +272,8 @@ export const {
   setTotalPopulationRegions,
   setFormattedFinancialLosses,
   setComfirmedFromOnboarding,
+  processAllIndustries,
+  proccesIndustriesByTitle,
   setOnBoardingBlur,
   setLocalTimeBlur,
 } = generalSlice.actions;
@@ -247,7 +305,9 @@ export const selectFormattedFinancialLosses = (state: RootState) =>
   state.generalReducer.formattedFinancialLosses;
 export const selectComfirmedFromOnboarding = (state: RootState) =>
   state.generalReducer.comfirmedFromOnboarding;
-export const selectOnboardingBlur = (state: RootState) => state.generalReducer.onBoardingBlur;
-export const selectLocalTimeBlur = (state: RootState) => state.generalReducer.localTimeBlur;
+export const selectOnboardingBlur = (state: RootState) =>
+  state.generalReducer.onBoardingBlur;
+export const selectLocalTimeBlur = (state: RootState) =>
+  state.generalReducer.localTimeBlur;
 
 export default generalSlice.reducer;

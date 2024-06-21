@@ -1,12 +1,13 @@
 import Image from 'next/image';
+import { useRef, useState } from 'react';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
 import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
 import AlphabetNav from '../AlphabetNav';
-import { useRef, useState } from 'react';
 import { two_lines } from '../../public/ui_kit';
 import useHighlightCurrentLetter from '../../hooks/useHighlightCurrentLetter';
 import CountryWithRegions from '../CountryWithRegions';
+import ResetOrSelectAll from '../../common/ResetOrSelectAll';
 
 import styles from './Places.module.scss';
 
@@ -20,7 +21,6 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
   const letters = Array.from(
     new Set(places?.map((place) => place.name[0].toUpperCase()))
   );
-  
   const isCountry = name === COUNTRIES || name === NOT_FRIENDLY_COUNTRIES;
   const [currentLetter, setCurrentLetter] = useState<string>(letters[0]);
   const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -41,21 +41,21 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
     setTimeout(() => {
       setClickedOnLetter(false);
     }, 500);
-  
+
     const element = countryRefs.current[letter];
     const container = containerRef.current;
-    const offset = 60; 
-  
+    const offset = 60;
+
     if (element && container) {
       const elementPosition = element.getBoundingClientRect().top;
       const containerPosition = container.getBoundingClientRect().top;
-      const scrollPosition = container.scrollTop + (elementPosition - containerPosition) - offset;
-  
+      const scrollPosition =
+        container.scrollTop + (elementPosition - containerPosition) - offset;
+
       container.scrollTo({ top: scrollPosition, behavior: 'smooth' });
       setCurrentLetter(letter);
     }
   };
-  
 
   if (places === undefined) {
     return null;
@@ -74,7 +74,14 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         />
       )}
 
-      <div className={styles.places} ref={containerRef}>
+      {name === NOT_FRIENDLY_COUNTRIES && <ResetOrSelectAll places={places} />}
+
+      <div
+        className={`${styles.places} ${
+          name === COUNTRIES ? styles.fromCountries : ''
+        }`}
+        ref={containerRef}
+      >
         {(places as IPlace[]).map((place, i) => {
           const placeFirstLetterChanged =
             places[i]?.name[0] !== places[i + 1]?.name[0];
@@ -129,6 +136,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         <AlphabetNav
           clickedOnLetter={clickedOnLetter}
           letters={letters}
+          name={name}
           onLetterClick={handleLetterClick}
           currentLetter={currentLetter}
         />

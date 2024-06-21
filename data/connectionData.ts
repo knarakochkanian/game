@@ -24,14 +24,12 @@ export const simCards = [
 ];
 
 export const waves: ISingleWave[] = [
-  {
-    ip: '95.163.17.10',
+  {    
     isOn: true,
     network: 'Open VPN',
     num: 1,
   },
   {
-    ip: '213.183.45.95',
     isOn: false,
     network: 'Wireguard',
     num: 2,

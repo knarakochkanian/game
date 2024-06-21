@@ -13,10 +13,10 @@ import {
   defaultStyles,
   detailsStylesInSummery,
 } from '../../data/styleObjects';
-
-import styles from './IndustryAccordion.module.scss';
 import { useAppSelector } from '../../redux/hooks';
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
+
+import styles from './IndustryAccordion.module.scss';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;
