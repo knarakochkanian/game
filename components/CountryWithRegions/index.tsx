@@ -55,8 +55,8 @@ const CountryWithRegions = ({
             <Image
               src={'/onboarding/arrow.svg'}
               alt={'arrow'}
-              width={24}
-              height={24}
+              width={11}
+              height={11}
             />
           }
           sx={{ maxWidth: '566px' }}

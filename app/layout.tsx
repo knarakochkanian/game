@@ -4,14 +4,13 @@ import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
 import ReduxProvider from '../redux/provider';
-// eslint-disable-next-line @next/next/no-document-import-in-page
-import { Head } from 'next/document';
 import './globals.scss';
 
 const APP_NAME = 'MAP';
 const APP_DEFAULT_TITLE = 'MAP';
 const APP_TITLE_TEMPLATE = 'MAP';
 const APP_DESCRIPTION = 'MAP';
+
 export const metadata: Metadata = {
   title: 'Game',
   description: 'Game about attacks and protected',
@@ -20,7 +19,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'default',
     title: APP_DEFAULT_TITLE,
-    // startUpImage: [],
   },
   formatDetection: {
     telephone: false,
@@ -35,25 +33,27 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
   },
 };
+
 import localFont from '@next/font/local';
 
 const lakes = localFont({
   src: [
     {
-      path: '../public/fonts/TT-Lakes-Compressed-Black.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Black.ttf',
       weight: '400',
     },
     {
-      path: '../public/fonts/TT-Lakes-Condensed-Bold.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Bold.ttf',
       weight: '600',
     },
     {
-      path: '../public/fonts/TT-Lakes-Medium.otf',
+      path: '../public/fonts/tt-lakes-neue-trial-cdnfonts/TT Lakes Neue Trial Medium.ttf',
       weight: '400',
     },
   ],
   variable: '--font-lakes',
 });
+
 export default function RootLayout({
   children,
 }: Readonly<{
