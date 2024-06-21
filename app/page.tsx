@@ -46,11 +46,10 @@ export default function Home() {
   }, []);
 
   return onboardingPassed ? (
-    <Loading />
+    <MainScreen />
   ) : (
     <main className={styles.main}>
-      <Loading />
-      {/*{isLoading ? <Loading /> : <Password />}*/}
+      {isLoading ? <Loading /> : <Password />}
     </main>
   );
 }
