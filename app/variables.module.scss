@@ -180,7 +180,7 @@ $unvisible: rgba(0, 0, 0, 0);
   border: 1px solid $white;
   color: $white;
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(14px, 500);
+  @include set-font-size-weight(13px, 500);
   line-height: 120%;
   letter-spacing: 0.28px;
   text-transform: uppercase;
