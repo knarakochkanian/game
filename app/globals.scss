@@ -16,8 +16,9 @@ body {
 
 :root {
   background-color: $main-dark;
-  font-family: var(--font-lakes), sans-serif;
+  font-family: 'TT Lakes', sans-serif;
 }
+
 .container {
   display: flex;
   max-width: 2752px;
