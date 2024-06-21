@@ -35,14 +35,32 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
   },
 };
+import localFont from '@next/font/local';
 
+const lakes = localFont({
+  src: [
+    {
+      path: '../public/fonts/TT-Lakes-Compressed-Black.otf',
+      weight: '400',
+    },
+    {
+      path: '../public/fonts/TT-Lakes-Condensed-Bold.otf',
+      weight: '600',
+    },
+    {
+      path: '../public/fonts/TT-Lakes-Medium.otf',
+      weight: '400',
+    },
+  ],
+  variable: '--font-lakes',
+});
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${lakes.variable} font-sans`}>
       <body>
         <Suspense fallback={<Loading />}>
           <ReduxProvider>
