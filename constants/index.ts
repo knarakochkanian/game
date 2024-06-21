@@ -95,6 +95,8 @@ export const vooruzhennyye_sily = 'вооруженные силы';
 export const Vodosnabzheniye = 'водоснабжение';
 export const APK = 'АПК';
 export const VPK = 'ВПК';
+export const INDUSTRY = 'промышленность';
+
 export const COMPANY_TOP_CAPITALIZATION = 'Топ капитализаций компаний';
 
 //keyboard state
