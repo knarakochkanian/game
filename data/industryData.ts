@@ -1169,31 +1169,29 @@ const industry: IIndustry = {
   ],
 };
 
-export const defaultSectorsSelection = [
+interface ISectorOption {
+  selected: boolean;
+  parent: string;
+  id: number;
+  name: string;
+}
+
+interface ISector {
+  id: number;
+  title: string;
+  options: ISectorOption[];
+}
+
+export const defaultSectorsSelection: ISector[] = [
   {
     id: 8,
     title: 'ВПК',
     options: [
-      { selected: true, parent: VPK, id: '01', name: 'вооруженные силы' },
-      {
-        selected: false,
-        parent: VPK,
-        id: '02',
-        name: 'конструкторсткие бюро',
-      },
-      { selected: false, parent: VPK, id: '03', name: 'НИИ' },
-      {
-        selected: false,
-        parent: VPK,
-        id: '04',
-        name: 'Оборонное производство',
-      },
-      {
-        selected: false,
-        parent: VPK,
-        id: '05',
-        name: 'экспортеры воорудения',
-      },
+      { selected: true, parent: 'VPK', id: 1, name: 'вооруженные силы' },
+      { selected: false, parent: 'VPK', id: 2, name: 'конструкторсткие бюро' },
+      { selected: false, parent: 'VPK', id: 3, name: 'НИИ' },
+      { selected: false, parent: 'VPK', id: 4, name: 'Оборонное производство' },
+      { selected: false, parent: 'VPK', id: 5, name: 'экспортеры воорудения' },
     ],
   },
 ];
