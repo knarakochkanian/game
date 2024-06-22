@@ -15,11 +15,15 @@
 }
 
 .sectorsCtn {
-  background: $card;
+  min-width: 400px;
+  .industrySectors {
+    max-height: 345px;
+    @include hideScrollBar;
+  }
   .industryHeader {
+    max-width: 354px;
     @include flex-column(15px);
-    padding-left: 15px;
-    padding-bottom: 15px;
+    padding: 15px;
     h2 {
       color: $white;
       font-variant-numeric: slashed-zero;

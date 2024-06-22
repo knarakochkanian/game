@@ -10,7 +10,9 @@ import '../../app/globals.scss';
 import { consequencesParagraph as consequencesData } from '../../data/consequencesParagraph';
 import {
   COUNT_DOWN,
+  HISTORY,
   LAUNCH_CONSEQUENCES,
+  ONBOARDING,
   PROTECTION,
   SUMMARY,
   citiesUnderAttack,
@@ -165,7 +167,7 @@ const LaunchConsequences = ({
         <div className={styles.imgAndModal}>
           <Modal
             name="damageInfo"
-            isOpen={currentPage === SUMMARY ? !!fromOnboarding : !learningStart}
+            isOpen={currentPage !== ONBOARDING ? !!fromOnboarding : !learningStart}
             counter={10}
           >
             <p>

@@ -16,7 +16,7 @@ interface ISectorOptionsProps {
 const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
-  const onClick = (name: string, parent: string) => {
+  const onClick = (name: string, parent: string) => {    
     dispatch(setSelectedIndusties({ name, parent }));
   };
 
