@@ -31,8 +31,8 @@ const Grid = () => {
         className={styles.noiseImg}
         src={noise}
         alt="noise"
-        width={1344}
-        height={840}
+        width={1318}
+        height={825}
         priority
       />
     </>

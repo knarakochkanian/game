@@ -1,7 +1,7 @@
 @import '/app/variables.module.scss';
 
 .attacksWithDates {
-  width: 523px;
-  @include flex-column(8px);
+  min-width: 276px;
+  @include flex-column(4px);
   align-items: flex-start;
 }

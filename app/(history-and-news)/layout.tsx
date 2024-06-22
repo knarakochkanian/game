@@ -39,8 +39,8 @@ export default function HistoryAndNewsLayout({
           className={styles.darkerGradient}
           src={darkerGradient}
           alt="darkerGradient"
-          width={1344}
-          height={214}
+          width={1318}
+          height={101}
           priority
         />
         {children}

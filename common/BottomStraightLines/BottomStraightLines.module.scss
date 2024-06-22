@@ -1,14 +1,14 @@
 .lineLeft,
 .lineRight {
   position: fixed;
-  bottom: -12px;
+  bottom: 12px;
   z-index: 16;
 }
 
 .lineLeft {
-  left: 20px;
+  left: 12px;
 }
 
 .lineRight {
-  right: 20px;
+  right: 12px;
 }

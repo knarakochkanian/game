@@ -152,11 +152,9 @@ $unvisible: rgba(0, 0, 0, 0);
 
 @mixin newsCardTextStyles {
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(18px, 300);
-  font-size: 18px;
-  font-weight: 300;
+  @include set-font-size-weight(13px, 500);
   line-height: 100%; /* 33.6px */
-  letter-spacing: 0.28px;
+  letter-spacing: 0.132px;
   text-transform: uppercase;
 }
 
