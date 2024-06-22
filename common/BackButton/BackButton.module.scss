@@ -8,22 +8,22 @@
   }
 
   .backArrow {
-    top: 865px;
-    left: 57px;
+    top: 374px;
+    left: 28px;
   }
   .backBtnShape {
-    top: 568px;
-    left: 23px;
+    top: 236px;
+    left: 11px;
   }
   span {
     color: $white-40;
     text-align: center;
-    @include set-font-size-weight(22px, 300);
+    @include set-font-size-weight(10px, 300);
     line-height: 120%; /* 26.4px */
-    letter-spacing: 1.32px;
+    letter-spacing: 0.621px;
     position: fixed;
     z-index: 9;
-    left: 65px;
-    top: 1000px;
+    left: 34px;
+    top: 438px;
   }
 }

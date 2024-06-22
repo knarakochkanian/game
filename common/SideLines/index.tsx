@@ -9,8 +9,8 @@ const SideLines = () => {
       <Image
         src={sideLines}
         alt="sideLines"
-        width={2752}
-        height={1466}
+        width={1295}
+        height={690}
         className={styles.sideLines}
         priority
       />

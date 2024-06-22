@@ -14,7 +14,7 @@ const DateAndMinutes = ({
     <div className={styles.date}>
       <span>{date}</span>
       <span>
-        <Image src={read} alt="read" width={40} height={40} priority />
+        <Image src={read} alt="read" width={20} height={20} priority />
         {minutes} мин
       </span>
     </div>

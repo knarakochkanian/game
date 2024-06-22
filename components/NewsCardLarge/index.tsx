@@ -29,8 +29,8 @@ const NewsCardLarge = ({ news, onClick, from }: INewsCardLargeProps) => {
           <Image
             src={news.channelLogoSrc as string}
             alt="channelLogo"
-            width={181}
-            height={53}
+            width={85}
+            height={25}
             priority
           />
           {from === 'fromSingleNewsModal' && (
