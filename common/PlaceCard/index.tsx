@@ -1,4 +1,5 @@
 'use client';
+
 import Flag from 'react-world-flags';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
@@ -8,9 +9,9 @@ import {
 } from '../../redux/features/generalSlice';
 import AlphabetLetter from '../AlphabetLetter';
 import { Option } from '../../data/attackRegionsData';
+import GreenLineBorders from '../GreenLineBorders';
 
 import styles from './PlaceCard.module.scss';
-import GreenLineBorders from '../GreenLineBorders';
 
 interface IPlaceCardProps {
   place: IPlace;

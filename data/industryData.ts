@@ -25,7 +25,7 @@ const industry: IIndustry = {
   sectors: [
     {
       id: 8,
-      title: 'АПК',
+      title: APK,
       options: [
         {
           selected: false,
@@ -59,7 +59,7 @@ const industry: IIndustry = {
     },
     {
       id: 9,
-      title: 'Водоснабжение',
+      title: Vodosnabzheniye,
       options: [
         {
           selected: false,
@@ -79,7 +79,7 @@ const industry: IIndustry = {
     },
     {
       id: 10,
-      title: 'Вооруженные силы',
+      title: vooruzhennyye_sily,
       options: [
         {
           selected: false,
@@ -309,7 +309,7 @@ const industry: IIndustry = {
     },
     {
       id: 11,
-      title: 'ВПК',
+      title: VPK,
       options: [
         {
           selected: false,
@@ -385,7 +385,7 @@ const industry: IIndustry = {
     },
     {
       id: 12,
-      title: 'Государственная инфраструктура',
+      title: gos_infrastruktura,
       options: [
         {
           selected: false,
@@ -419,7 +419,7 @@ const industry: IIndustry = {
     },
     {
       id: 13,
-      title: 'Добыча полезных ископаемых',
+      title: dobycha_polez_iskopayemykh,
       options: [
         {
           selected: false,
@@ -474,7 +474,7 @@ const industry: IIndustry = {
     },
     {
       id: 14,
-      title: 'Здравоохранение',
+      title: zdravookhraneniye,
       options: [
         {
           selected: false,
@@ -494,7 +494,7 @@ const industry: IIndustry = {
     },
     {
       id: 15,
-      title: 'Космос',
+      title: kosmos,
       options: [
         {
           selected: false,
@@ -598,7 +598,7 @@ const industry: IIndustry = {
     },
     {
       id: 16,
-      title: 'Образование',
+      title: obrazovaniye,
       options: [
         {
           selected: false,
@@ -639,7 +639,7 @@ const industry: IIndustry = {
     },
     {
       id: 17,
-      title: 'Промышленность',
+      title: promyshlennost,
       options: [
         {
           selected: false,
@@ -764,7 +764,7 @@ const industry: IIndustry = {
     },
     {
       id: 18,
-      title: 'Сети связи',
+      title: seti_svyazi,
       options: [
         {
           selected: false,
@@ -819,7 +819,7 @@ const industry: IIndustry = {
     },
     {
       id: 19,
-      title: 'СМИ',
+      title: SMI,
       options: [
         {
           selected: false,
@@ -853,7 +853,7 @@ const industry: IIndustry = {
     },
     {
       id: 20,
-      title: 'Строительство',
+      title: stroitelstvo,
       options: [
         {
           selected: false,
@@ -887,7 +887,7 @@ const industry: IIndustry = {
     },
     {
       id: 21,
-      title: 'Торговля',
+      title: torgovlya,
       options: [
         {
           selected: false,
@@ -914,7 +914,7 @@ const industry: IIndustry = {
     },
     {
       id: 22,
-      title: 'Транспортная система',
+      title: transportnaya_sistema,
       options: [
         {
           selected: false,
@@ -990,7 +990,7 @@ const industry: IIndustry = {
     },
     {
       id: 23,
-      title: 'Туризм',
+      title: turizm,
       options: [
         {
           selected: false,
@@ -1010,7 +1010,7 @@ const industry: IIndustry = {
     },
     {
       id: 24,
-      title: 'Финансовая система',
+      title: finansovaya_sistema,
       options: [
         {
           selected: false,
@@ -1093,7 +1093,7 @@ const industry: IIndustry = {
     },
     {
       id: 25,
-      title: 'Туризм',
+      title: turizm,
       options: [
         {
           selected: false,
@@ -1113,7 +1113,7 @@ const industry: IIndustry = {
     },
     {
       id: 26,
-      title: 'Энергетика',
+      title: energetika,
       options: [
         {
           selected: false,

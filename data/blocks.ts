@@ -38,6 +38,7 @@ const blocks: IBlockes = {
   USA: USARegions.map((r) => r.name),
   wholeWorld: countriesWithCodes.map((c) => c.name),
   nato: [
+    ...USARegions.map((r) => r.name),
     'Албания',
     'Бельгия',
     'Болгария',
