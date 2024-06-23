@@ -3,7 +3,8 @@
 .grid {
   position: absolute;
   top: 0;
-  max-width: 1344px;
+  max-width: 1318px;
+  height: 825px;
   overflow: hidden;
 }
 
@@ -13,6 +14,8 @@
 
 .noiseImg {
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .vignette {

@@ -618,3 +618,13 @@ button {
     height: 4px;
     background: rgba(94, 209, 197, 1);
   }
+  .damage-level-info__button {
+    height: 20px;
+  }
+  .modal.learningStart .ModalButton1 {
+    text-decoration: none;
+    padding: 0 !important; 
+  }
+  .ModalButtons_last {
+    justify-content: flex-start !important;
+  }

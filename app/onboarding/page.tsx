@@ -88,6 +88,10 @@ export default function Onboarding() {
   };
 
   useEffect(() => {
+    dispatch(setLocalTimeBlur(true))
+  }, [])
+
+  useEffect(() => {
     switch(currentModal) {
       case 1:
         dispatch(setOnBoardingBlur(

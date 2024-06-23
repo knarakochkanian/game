@@ -122,7 +122,16 @@ const Summary = () => {
         <div className="ModalButtons">
           <Link
             href={COUNT_DOWN}
-            style={{ color: 'white', padding: '20px' }}
+            style={{ color: 'white', padding: '0px', textDecoration: 'none', textTransform: 'uppercase',
+              fontSize: "13.18px",
+              fontWeight: "500",
+              lineHeight: "15.82px",
+              letterSpacing: "0.01em",
+              textAlign: "left",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+               }}
             className="ModalButton1"
           >
             далее

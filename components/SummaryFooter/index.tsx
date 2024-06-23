@@ -19,8 +19,8 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
         className={styles.topOfBotton}
         src={summaryFooterForm}
         alt="topOfBotton"
-        width={1263}
-        height={234.5}
+        width={595}
+        height={171}
         priority
       />
 
@@ -28,8 +28,8 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
         className={styles.opacityOfButton}
         src={summaryFooterGradient}
         alt="opacityOfButton"
-        width={1483}
-        height={363}
+        width={696}
+        height={500}
         priority
       />
 
