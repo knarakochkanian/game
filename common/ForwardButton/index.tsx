@@ -21,8 +21,8 @@ const ForwardButton = ({ onForward }: { onForward: () => void }) => {
         src={isAttacking ? forwardArrow : forwardArrowProtect}
         className={styles.forwardArrow}
         alt="forwardArrow"
-        width={96}
-        height={96}
+        width={45}
+        height={45}
         priority
       />
 
@@ -30,8 +30,8 @@ const ForwardButton = ({ onForward }: { onForward: () => void }) => {
         src={isAttacking ? forwardBtnShape : forwardBtnShapeProtect}
         className={styles.forwardBtnShape}
         alt="forwardBtnShape"
-        width={139}
-        height={703}
+        width={65}
+        height={331}
         priority
       />
     </Link>

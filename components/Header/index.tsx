@@ -77,8 +77,8 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
                   : leftSquareBracket
               }
               alt="leftSquareBracket"
-              width={16}
-              height={42}
+              width={7}
+              height={19}
               priority
             />
             {isCompleted ? `выполнена` : `отложенный запуск`}
@@ -90,8 +90,8 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
                   : rightSquareBracket
               }
               alt="rightSquareBracket"
-              width={16}
-              height={42}
+              width={7}
+              height={19}
               priority
             />
           </span>
@@ -110,8 +110,8 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
                 <Image
                   src={lines}
                   alt="lines"
-                  width={120}
-                  height={24}
+                  width={56}
+                  height={11}
                   priority
                 />
                 <span>будет выполнена</span>
@@ -130,8 +130,8 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
             <Image
               src={actionType === PROTECTION ? protectBlueTrash : trash}
               alt="trash"
-              width={48}
-              height={48}
+              width={23}
+              height={23}
               priority
             />
           </button>

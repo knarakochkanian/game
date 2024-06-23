@@ -50,6 +50,7 @@ const RegionAccordion = ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
         marginBottom: '10px',
+        maxWidth: '313.67px',
       })}
     >
       <AccordionSummary
@@ -57,8 +58,8 @@ const RegionAccordion = ({
           <Image
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
-            width={24}
-            height={24}
+            width={11}
+            height={11}
           />
         }
         aria-controls="panel1-content"
@@ -83,13 +84,13 @@ const RegionAccordion = ({
             {counties.map((country) => (
               <div key={country}>
                 {country}
-                <button onClick={() => handleRemove(country)}>
+                <button style={{display: 'none'}}  onClick={() => handleRemove(country)}>
                   <Image
                     className={styles.minusSign}
                     src={minusSign}
                     alt="minusSign"
-                    width={40}
-                    height={40}
+                    width={20}
+                    height={20}
                     priority
                   />
                 </button>

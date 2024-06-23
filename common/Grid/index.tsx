@@ -20,8 +20,8 @@ const Grid = () => {
             className={styles.gridImg}
             src={grid}
             alt="grid"
-            width={1344}
-            height={840}
+            width={1318}
+            height={825}
             priority
           />
         </div>

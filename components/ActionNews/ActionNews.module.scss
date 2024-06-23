@@ -1,17 +1,17 @@
 @import '/app/variables.module.scss';
 
 .actionNewsCtn {
-  padding-left: 32px;
-  padding-bottom: 32px;
+  padding-left: 15px;
+  padding-bottom: 80px;
   .news {
-    margin-top: 72px;
+    margin-top: 40px;
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(4, 1fr);
   }
   .titleAndBtnCtn {
     display: flex;
-    gap: 162px;
+    gap: 60px;
     align-items: center;
     h5,
     button {
@@ -21,14 +21,14 @@
       text-transform: uppercase;
     }
     h5 {
-      @include set-font-size-weight(34px, 600);
-      letter-spacing: 1.02px;
+      @include set-font-size-weight(16px, 600);
+      letter-spacing: 0.48px;
     }
     button {
-      padding: 16px 24px;
+      padding: 7px 11px;
       border: 2px solid $white;
-      @include set-font-size-weight(28px, 400);
-      letter-spacing: 0.28px;
+      @include set-font-size-weight(13px, 500);
+      letter-spacing: 0.132px;
     }
   }
 }
