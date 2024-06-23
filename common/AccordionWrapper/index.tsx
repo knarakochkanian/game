@@ -50,6 +50,7 @@ const AccordionWrapper = ({
   }
 
   const summaryStyles = {
+    maxWidth: '344px',
     marginRight: '8px',
     marginLeft: '4px',
     padding: '12px 16px',
@@ -70,7 +71,7 @@ const AccordionWrapper = ({
         backgroundColor: `${
           accordionBackground
             ? accordionBackground
-            : 'rgba(0, 0, 0, 0.87) !important'
+            : 'transparent'
         } `,
         color: '#fff',
         marginBottom:

@@ -7,6 +7,7 @@ import {
   removeFromPickedCountryObjects,
 } from '../../helpers';
 import { RESET, SELECT_ALL } from '../../constants';
+import { complexCountriesNames } from '../../components/Map/geodata/complex-countries';
 
 export interface IInitialState {
   comfirmedFromOnboarding: boolean;
@@ -94,7 +95,7 @@ const generalSlice = createSlice({
       const index = state.sectors.findIndex(
         (sector) => sector.title === payload.parent
       );
-
+      
       state.sideNavIsOpen = true;
 
       const targetOptionIndex = state.sectors[index]?.options.findIndex(
@@ -128,6 +129,16 @@ const generalSlice = createSlice({
       } else {
         state.activeBlocks = [...state.activeBlocks, payload];
       }
+    },
+    proccessActiveBlocks(state) {
+      const complexCountries = state.activeBlocks.filter(block => complexCountriesNames.includes(block))
+      complexCountries.forEach((block) => {
+        if (state.pickedCountries.includes(block)) {
+          state.activeBlocks = [...state.activeBlocks, block];
+        } else {
+          state.activeBlocks.splice(state.activeBlocks.indexOf(block), 1);
+        }
+      });
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
@@ -253,6 +264,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  proccessActiveBlocks,
   setSideNavIsOpen,
   setBlur,
   setIsAttacking,

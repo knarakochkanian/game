@@ -1,20 +1,20 @@
 @import '/app/variables.module.scss';
 
 .news {
-  margin: 224px 177px 260px 255px;
+  margin: 100px 84px 260px 120px;
   position: relative;
   z-index: 14;
   h1 {
     position: relative;
     color: $white;
-    @include set-font-size-weight(78px, 400);
+    @include set-font-size-weight(36px, 500);
     line-height: 120%; /* 93.6px */
     z-index: 12;
   }
   .container {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
-    gap: 137px;
+    gap: 50px;
     justify-content: space-between;
   }
 }

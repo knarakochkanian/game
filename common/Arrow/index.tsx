@@ -18,8 +18,8 @@ const Arrow = ({ open, name = '' }: { open: boolean; name?: string }) => {
           className={`${styles.arrow} ${styles[name]} ${styles.isOpen}`}
           src={isArrowGray ? arrowUpGray : arrowUp}
           alt="arrowUp"
-          width={24}
-          height={24}
+          width={11}
+          height={11}
           priority
         />
       ) : (
@@ -27,8 +27,8 @@ const Arrow = ({ open, name = '' }: { open: boolean; name?: string }) => {
           className={`${styles.arrow} ${styles[name]}`}
           src={isArrowGray ? arrowDownGray : arrowDown}
           alt="arrowDown"
-          width={24}
-          height={24}
+          width={11}
+          height={11}
           priority
         />
       )}

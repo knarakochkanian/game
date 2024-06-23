@@ -72,22 +72,22 @@ const IndustrySelection = ({
         <header className={styles.industryHeader}>
           <h2>отрасли</h2>
           <div>
-          <button
-            onClick={onResetOrSelectAll}
-          >
-            {showReset ? 'сбросить все' : 'выбрать все'}
-          </button>
-          </div>          
+            <button onClick={onResetOrSelectAll}>
+              {showReset ? 'сбросить все' : 'выбрать все'}
+            </button>
+          </div>
         </header>
 
-        {industrySectors?.map((sector, index) => (
-          <IndustrySector
-            expanded={expanded}
-            handleExpansion={handleExpansion}
-            sector={sector}
-            key={index}
-          />
-        ))}
+        <div className={styles.industrySectors}>
+          {industrySectors?.map((sector, index) => (
+            <IndustrySector
+              expanded={expanded}
+              handleExpansion={handleExpansion}
+              sector={sector}
+              key={index}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

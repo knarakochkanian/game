@@ -16,9 +16,9 @@
 }
 
 .modalContainer.singleNews {
-  width: 1138px;
-  padding-top: 81px;
-  padding-bottom: 0;
+  width: 536px;
+  padding: 38px 23px 0 23px;
   background-color: $card;
   @include modalCtnStyles;
+  border: none;
 }

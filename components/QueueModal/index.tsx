@@ -23,7 +23,7 @@ const QueueModal = () => {
                 : styles.protection
             }
           >
-            {actionsInQueueFromStorage[num].actionType === ATTACK ? ATTACK : PROTECTION}{' '}
+            {actionsInQueueFromStorage[num].actionType === ATTACK ? ATTACK : PROTECTION}
             {actionsInQueueFromStorage[num].name}
           </span>
         ))}
@@ -33,8 +33,8 @@ const QueueModal = () => {
         className={styles.slashes_90_degree}
         src={slashes_90_degree}
         alt="slashes_90_degree"
-        width={24}
-        height={150}
+        width={11}
+        height={71}
         priority
       />
     </div>

@@ -9,7 +9,7 @@
   }
   .places {
     max-height: 422px;
-    max-width: 338px;
+    min-width: 340px;
     margin-top: 9px;
     padding-right: 35px;
     @include hideScrollBar;

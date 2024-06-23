@@ -1,10 +1,10 @@
 @import '/app/variables.module.scss';
 
 .newsCardLarge {
-  @include flex-column(40px);
+  @include flex-column(20px);
   .infoCtn {
-    margin-top: 24px;
-    @include flex-column(16px);
+    margin-top: 16px;
+    @include flex-column(8px);
     h2,
     p {
       color: $white;
@@ -13,18 +13,18 @@
     }
     h2 {
       @include showEllipsisInTheEnd(2, 735px);
-      @include set-font-size-weight(40px, 600);
-      letter-spacing: 0.4px;
+      @include set-font-size-weight(18px, 600);
+      letter-spacing: 0.188px;
     }
     p {
       @include showEllipsisInTheEnd(3, 735px);
-      @include set-font-size-weight(36px, 400);
-      letter-spacing: 0.36px;
+      @include set-font-size-weight(16px, 500);
+      letter-spacing: 0.169px;
     }
   }
 
   .imgContainer {
-    height: 460px;
+    height: 217px;
     .newsCardImg {
       width: 100%;
       height: auto;
@@ -33,7 +33,7 @@
 
   button {
     align-self: flex-start;
-    padding: 16px 24px;
+    padding: 8px 12px;
     border: 2px solid $white;
     color: $white;
     @include newsCardTextStyles;
@@ -50,11 +50,11 @@
     p {
       @include unsetEllipsisInTheEnd;
       @include scrollStyles;
-      max-height: 910px;
+      max-height: 416px;
     }
   }
   .imgContainer {
-    height: 469px;
+    height: 222px;
     overflow: hidden;
   }
 }

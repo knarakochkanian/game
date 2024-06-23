@@ -10,16 +10,16 @@ const BackButton = ({ onBack }: { onBack: () => void }) => {
         src={backArrow}
         className={styles.backArrow}
         alt="backArrow"
-        width={96}
-        height={96}
+        width={45}
+        height={45}
         priority
       />
       <Image
         src={backBtnShape}
         className={styles.backBtnShape}
         alt="backBtnShape"
-        width={163}
-        height={703}
+        width={77}
+        height={331}
         priority
       />
       <span>НАЗАД</span>

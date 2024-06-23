@@ -3,7 +3,7 @@
 .attackWithDataCard {
   width: 100%;
   position: relative;
-  padding: 32px;
+  padding: 15px;
   z-index: 14;
   .attackDate,
   .attackName {
@@ -13,14 +13,15 @@
   }
   .attackName {
     color: $white-60;
-    @include set-font-size-weight(34px, 600);
-    letter-spacing: 1.02px;
+    @include set-font-size-weight(16px, 600);
+    letter-spacing: 0.48px;
   }
   .attackDate {
-    margin-top: 32px;
+    margin-top: 15px;
     color: $mid-gray;
-    @include set-font-size-weight(28px, 400);
-    letter-spacing: 0.28px;
+    @include set-font-size-weight(13px, 500);
+    letter-spacing: 0.132px;
+    text-align: start;
   }
 }
 
