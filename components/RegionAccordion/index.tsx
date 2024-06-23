@@ -43,13 +43,12 @@ const RegionAccordion = ({
 
   return (
     <Accordion
-      style={{ color: delayed ? '#0F0F0F' : 'none' }}
+      style={{ color: delayed ? '#0F0F0F' : 'none', border: "1px solid rgba(82, 82, 82, 1)" }}
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
-        marginBottom: '10px',
       })}
     >
       <AccordionSummary
@@ -57,8 +56,9 @@ const RegionAccordion = ({
           <Image
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
-            width={24}
-            height={24}
+            width={11}
+            height={11}
+            style={{marginTop: '15px'}}
           />
         }
         aria-controls="panel1-content"

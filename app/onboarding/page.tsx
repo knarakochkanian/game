@@ -56,6 +56,7 @@ export default function Onboarding() {
   const [vpkButtonAnimate, setVpkButtonAnimate] = useState('none');
   const [vpkButtonText, setVpkButtonText] = useState("Выбрать все");
   const [vpkCountColor, setVpkCountColor] = useState('rgba(153, 154, 154, 1)');
+  const [pointerEvents, setPointerEvents] = useState('none');  
 
   const [damageLevelClass, setDamageLevelClass] = useState('');
 
@@ -404,6 +405,7 @@ export default function Onboarding() {
     setCurrentModal(5);
     setTopVpkAllButton('top-vpk-all-button');
     setVpkButtonAnimate('block');
+    setPointerEvents('all');
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
@@ -418,6 +420,7 @@ export default function Onboarding() {
       third: false,
     });
     dispatch(setLocalTimeBlur(true));
+    
   };
   const handleNext6 = () => {
     dispatch(setBlur(false));
@@ -644,7 +647,7 @@ export default function Onboarding() {
                 }}
               >
                 <button
-                  className={`ModalButton1 vpk__all-button ${topVpkAllButton}`}
+                  className={`ModalButton1 vpk__all-button vpk__all-button_disable ${topVpkAllButton}`}
                   onClick={handleSelectAllVPK}
                 >
                   <span>
@@ -696,6 +699,7 @@ export default function Onboarding() {
                       <div style={{position: 'relative', overflow: 'hidden', height: '31px'}}>
                         <div style={{ display: vpkButtonAnimate }} className='vpk__all-button-animate'></div>
                         <button
+                              style={{pointerEvents: pointerEvents}}
                               className={'ModalButton1 vpk__all-button'}
                           // className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
                           //   modalOpen5 ? 'SecondarySmallShine' : ''
@@ -748,7 +752,7 @@ export default function Onboarding() {
           isOpen={modalOpen}
           onClose={closeModal}
           counter={1}
-          sx={{ left: '40%', top: '12% !important', position: 'absolute' }}
+          sx={{ left: '518px !important', top: '81px !important', position: 'absolute' }}
         >
           <p>На выбор вам доступны два режима:</p>
           <ul style={{ gap: '16px' }}>

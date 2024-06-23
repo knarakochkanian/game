@@ -55,7 +55,7 @@ const IndustryAccordion = ({
       sx={(theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
-        marginBottom: '10px',
+        border: "1px solid rgba(82, 82, 82, 1)",
       })}
     >
       <AccordionSummary
@@ -63,8 +63,9 @@ const IndustryAccordion = ({
           <Image
             src={numberOfSelectedSectors === null ? arrowDownGray : arrowDown}
             alt={'arrow'}
-            width={24}
-            height={24}
+            width={11}
+            height={11}
+            style={{marginTop: '15px'}}
           />
         }
         sx={{
