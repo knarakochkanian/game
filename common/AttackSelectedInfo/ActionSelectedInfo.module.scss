@@ -12,7 +12,7 @@
     color: $mid-dark-gray;
     font-variant-numeric: slashed-zero;
     text-overflow: ellipsis;
-    @include set-font-size-weight(36px, 400);
+    @include set-font-size-weight(17px, 500);
     line-height: 120%; /* 43.2px */
     letter-spacing: 0.36px;
     @include showEllipsisInTheEnd(1, 100%);

@@ -23,8 +23,8 @@ const DamageLevelInfo = ({ damageLevel }: { damageLevel: string }) => {
           className={styles.minusSign}
           src={minusSign}
           alt="minusSign"
-          width={40}
-          height={40}
+          width={20}
+          height={20}
           priority
         />
       </button>

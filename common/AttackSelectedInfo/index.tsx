@@ -37,16 +37,16 @@ const ActionSelectedInfo = ({
           className={styles.arrow}
           src={fromDetails ? arrowUp : arrowDown}
           alt="arrow"
-          width={24}
-          height={24}
+          width={11}
+          height={11}
           priority
         />
         <Image
           className={styles.slashesFromBottom}
           src={slashes}
           alt="slashesFromBottom"
-          width={150}
-          height={24}
+          width={71}
+          height={11}
           priority
         />
       </button>

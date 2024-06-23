@@ -13,8 +13,8 @@
       color: $white;
       text-align: center;
       font-variant-numeric: slashed-zero;
-      @include set-font-size-weight(50px, 400);
-      line-height: 60px;
+      @include set-font-size-weight(23px, 500);
+      line-height: 120%;
     }
     span {
       color: $red;
@@ -23,9 +23,9 @@
 }
 
 .buttonContainer.fromSummary {
-  bottom: 81px;
+  bottom: 30px;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
   button {
     padding: 0;
     span {
@@ -33,11 +33,11 @@
     }
   }
   p {
-    max-width: 960px;
+    max-width: 452px;
     color: $mid-dark-gray;
     text-align: center;
     font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(40px, 400);
+    @include set-font-size-weight(18.8px, 500);
     line-height: 120%; /* 48px */
   }
 }

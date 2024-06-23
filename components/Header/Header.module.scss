@@ -2,7 +2,7 @@
 
 .header {
   width: 100%;
-  padding: 20px 44px 20px 16px;
+  padding: 10px 20px 10px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,15 +28,19 @@
     }
   }
   .rightPart {
+    max-height: 23px;
     display: flex;
-    gap: 40px;
+    gap: 18px;
     align-items: center;
+    button {
+      padding-top: 5px;
+    }
     .trashBtn {
       display: none;
     }
     .completingDate {
       display: flex;
-      gap: 24px;
+      gap: 11px;
       align-items: center;
       span {
         color: $attack-green;
