@@ -703,7 +703,7 @@ export default function Onboarding() {
                       <div style={{position: 'relative', overflow: 'hidden', height: '31px'}}>
                         <div style={{ display: vpkButtonAnimate }} className='vpk__all-button-animate'></div>
                         <button
-                              style={{pointerEvents: pointerEvents}}
+                              style={{pointerEvents: pointerEvents as React.CSSProperties["pointerEvents"]}}
                               className={'ModalButton1 vpk__all-button'}
                           // className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
                           //   modalOpen5 ? 'SecondarySmallShine' : ''
