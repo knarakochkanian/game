@@ -3,7 +3,7 @@ import Image from 'next/image';
 import AccordionWrapper from '../../common/AccordionWrapper';
 import SectorOptions from '../SectorOptions';
 import { countSelectedOptions } from '../../helpers';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
 import { arrowDown, arrowDownGray } from '../../public/summary';
 import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
@@ -17,15 +17,18 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 
 import styles from './IndustryAccordion.module.scss';
+import { minusSign } from '../../public/main-screen';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;
   industrySectors: ISector[];
+  fromSideNav?: boolean;
 }
 
 const IndustryAccordion = ({
   delayed,
   industrySectors,
+  fromSideNav,
 }: IIndustryAccordionProps) => {
   const currentPage = useGetPage();
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -51,8 +54,9 @@ const IndustryAccordion = ({
   return (
     <Accordion
       disabled={disable}
-      style={{ color: delayed ? '#0F0F0F' : 'none' }}
+      style={{ color: delayed ? '#0F0F0F' : 'none', border: 'none' }}
       sx={(theme) => ({
+        border: '1px solid rgba(82, 82, 82, 1)',
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
         marginBottom: '10px',
@@ -62,6 +66,7 @@ const IndustryAccordion = ({
       <AccordionSummary
         expandIcon={
           <Image
+            style={{ marginTop: '15px' }}
             src={numberOfSelectedSectors === null ? arrowDownGray : arrowDown}
             alt={'arrow'}
             width={11}
@@ -70,11 +75,17 @@ const IndustryAccordion = ({
         }
         sx={{
           display: delayed ? 'none' : 'flex',
+          opacity: '1 !important',
         }}
         aria-controls="panel2-content"
         id="panel2-header"
       >
-        <div className={styles.accordionSummary}>
+        <div
+          className={`
+        ${fromSideNav && numberOfSelectedSectors ? styles.accordionSummaryLine : styles.accordionSummaryLineDisable}
+         ${styles.accordionSummary}
+  `}
+        >
           <h3>Отрасль</h3>
           <span>{numberOfSelectedSectors}</span>
         </div>

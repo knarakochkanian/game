@@ -3,9 +3,26 @@
 .damageLevelInfo {
   display: flex;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 12px 20px;
   align-items: center;
-  max-width: 314.33px;
+  position: relative;
+
+  &::after{
+    position: absolute;
+    content: "";
+    left: 20px;
+    top: 7px;
+    width: 23px;
+    height: 4px;
+    background: $attack-green-80;
+  }
+  &Disable{
+    @extend .damageLevelInfo;
+    &::after {
+      background: $mid-dark-gray;
+    }
+  }
+
   .title {
     color: $mid-dark-gray;
     font-variant-numeric: slashed-zero;
@@ -23,4 +40,5 @@
     gap: 32px;
     align-items: center;
   }
+
 }

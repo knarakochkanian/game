@@ -1,0 +1,19 @@
+@import '/app/variables.module.scss';
+
+.container {
+  .two_lines {
+    position: absolute;
+    right: 0;
+    top: 43px;
+  }
+  .places {
+    max-height: 422px;
+    min-width: 240px;
+    margin-top: 9px;
+    padding-right: 35px;
+    @include hideScrollBar;
+  }
+  .places.fromCountries {
+    max-height: 464px;
+  }
+}
