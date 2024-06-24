@@ -1,4 +1,3 @@
-// Switch/index.tsx
 import React, { ChangeEvent, useState } from 'react';
 import styles from './Switch.module.scss';
 

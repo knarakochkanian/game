@@ -6,4 +6,21 @@
     h3 {
       color: $mid-dark-gray;
     }
+  &Line{
+    &::after {
+      @include afterLine;
+      background: $attack-green-80;
+    }
+
+    &Disable{
+      &::after {
+        @include afterLine;
+        background: $mid-dark-gray;}
+    }
+    &Protected{
+      &::after {
+        @include afterLine;
+        background: $protect-blue-80;}
+    }
   }
+}

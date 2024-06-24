@@ -13,7 +13,11 @@ const DamageLevelInfo = ({ damageLevel }: { damageLevel: string }) => {
   };
 
   return (
-    <div className={styles.damageLevelInfo}>
+    <div
+      className={
+        damageLevel ? styles.damageLevelInfo : styles.damageLevelInfoDisable
+      }
+    >
       <div className={styles.titleAndInfo}>
         <span className={styles.title}>Ущерб</span>
         <span className={styles.info}>{damageLevel ? damageLevel : ''}</span>

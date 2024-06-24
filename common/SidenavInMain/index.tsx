@@ -44,8 +44,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { DatePicker, MultiSectionDigitalClock } from '@mui/x-date-pickers';
+import { Dayjs } from 'dayjs';
+import 'dayjs/locale/ru'; // Import Russian locale for Dayjs
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { MultiSectionDigitalClock } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
 import {
   setCloseSelectionIfChanged,
@@ -53,6 +57,7 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
+
 interface ISidenavInMainProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -96,6 +101,7 @@ function SidenavInMain({
   const [day, setDay] = useState(false);
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -103,14 +109,9 @@ function SidenavInMain({
     setIsSwitchOn(checked);
     setDelayed(checked);
   };
+
   const handelOnDatePikerOpen = () => {
     setDay(true);
-  };
-  // @ts-ignore
-  const handleDateChange: DateTimePickerProps<Dayjs>['onChange'] = (
-    newValue: any
-  ) => {
-    setDelayedDate(newValue);
   };
 
   const handleTimeChange = (newValue: Dayjs | null) => {
@@ -209,12 +210,17 @@ function SidenavInMain({
             </button>
           </div>
 
-          <div className="AccordionsWrap">
+          <div
+            className={`${'AccordionsWrap'} ${styles.sidenavAccordionsWrap}`}
+          >
             <RegionAccordion
               selectedCountries={selectedCountries}
               setWithOutFlag={true}
             />
-            <IndustryAccordion industrySectors={industrySectors} />
+            <IndustryAccordion
+              industrySectors={industrySectors}
+              fromSideNav={true}
+            />
             <DamageLevelInfo damageLevel={damageLevel} />
           </div>
 
@@ -230,47 +236,47 @@ function SidenavInMain({
             style={{ display: delayed ? 'block' : 'none' }}
           >
             <div>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
                 <button>
                   <h3 style={{ color: '#525252' }}>Дата</h3>
                 </button>
-                <DatePicker
-                  label="Controlled picker"
-                  value={delayedDate}
-                  className={styles.sidenavDelayedDate}
-                  onChange={handleDateChange}
-                />
+                <div className={styles.sidenavDelayedDateWrraper}>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date as Date)}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown={false}
+                    dropdownMode="select"
+                    className={styles.sidenavDelayedDate}
+                    locale="ru"
+                  />
+                  {delayedDate?.format('DD.MM.YYYY')}
+                  <Image
+                    src={'/onboarding/ToggleHorisontal.svg'}
+                    alt="img"
+                    width={24}
+                    height={24}
+                  />
+                </div>
               </LocalizationProvider>
-              <div className="Lead">
-                {delayedDate?.format('DD.MM.YYYY')}
-                <Image
-                  src={'/onboarding/ToggleHorisontal.svg'}
-                  alt={'img'}
-                  width={24}
-                  height={24}
-                />
-              </div>
             </div>
             <div>
               <button onClick={() => setTime(true)}>
                 <h3 style={{ color: '#525252' }}>Время</h3>
               </button>
-              {time && (
-                <div>
-                  <div className={styles.sidenavTimePiker}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimePicker']}>
-                        <DemoItem label="Multi section digital clock">
-                          <MultiSectionDigitalClock
-                            onChange={handleTimeChange}
-                          />
-                        </DemoItem>
-                      </DemoContainer>
-                      <button onClick={() => setTime(false)}>OK</button>
-                    </LocalizationProvider>
-                  </div>
+              <div>
+                <div className={styles.sidenavTimePiker}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
+                    <DemoContainer components={['TimePicker']}>
+                      <DemoItem label="Multi section digital clock">
+                        <MultiSectionDigitalClock onChange={handleTimeChange} />
+                      </DemoItem>
+                    </DemoContainer>
+                    <button onClick={() => setTime(false)}>OK</button>
+                  </LocalizationProvider>
                 </div>
-              )}
+              </div>
               <div className="Lead">
                 {delayedTime}{' '}
                 <Image
@@ -292,8 +298,8 @@ function SidenavInMain({
                       ? '/onboarding/backgroundImgGreen.svg'
                       : '/onboarding/backgroundImgBlue.svg'
                   }
-                  width={692}
-                  height={216}
+                  width={328}
+                  height={102}
                   alt={'backgr'}
                   className={styles.sidenavAddConfirmImage}
                 />
@@ -318,8 +324,9 @@ function SidenavInMain({
                   <Image
                     src={'/onboarding/arrowConfirm.svg'}
                     alt={'arrow'}
-                    height={12}
-                    width={12}
+                    className={styles.sidenavArrowSVG}
+                    height={23}
+                    width={23}
                   />
                 </Link>
               </div>

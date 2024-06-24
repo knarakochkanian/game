@@ -17,6 +17,7 @@ import styles from './RegionAccordion.module.scss';
 import React, { useState } from 'react';
 import { minusSign } from '../../public/main-screen';
 import { useDispatch } from 'react-redux';
+import PlacesInSidenavMain from '../PlacesInSidenavMain';
 
 interface IRegionAccordionProps {
   delayed?: boolean | undefined;
@@ -43,19 +44,18 @@ const RegionAccordion = ({
 
   return (
     <Accordion
-      style={{ color: delayed ? '#0F0F0F' : 'none', border: "1px solid rgba(82, 82, 82, 1)" }}
+      style={{ color: delayed ? '#0F0F0F' : 'none' }}
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
-        maxWidth: '313.67px',
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
+        marginBottom: '10px',
       })}
     >
       <AccordionSummary
         expandIcon={
           <Image
-            style={{marginTop: '15px'}}
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
             width={11}
@@ -69,7 +69,15 @@ const RegionAccordion = ({
           alignItems: 'center',
         }}
       >
-        <div className={styles.accordionSummary}>
+        <div
+          className={`${
+            setWithOutFlag && selectedCountries.length !== 0
+              ? styles.accordionWiOutFlag
+              : styles.accordionWiOutFlagDisable
+          }
+              ${styles.accordionSummary}
+          `}
+        >
           <h3>Регион</h3>
           <span>
             {selectedCountries.length === 0 ? '' : selectedCountries.length}
@@ -80,23 +88,7 @@ const RegionAccordion = ({
         sx={currentPage === SUMMARY ? detailsStylesInSummery : defaultStyles}
       >
         {setWithOutFlag ? (
-          <div className={styles.countiesWithOutFlag}>
-            {counties.map((country) => (
-              <div key={country}>
-                {country}
-                <button style={{display: 'none'}}  onClick={() => handleRemove(country)}>
-                  <Image
-                    className={styles.minusSign}
-                    src={minusSign}
-                    alt="minusSign"
-                    width={20}
-                    height={20}
-                    priority
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
+          <PlacesInSidenavMain places={selectedCountries} />
         ) : (
           <Places fromSideNav name={'страны'} places={selectedCountries} />
         )}
