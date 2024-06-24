@@ -135,6 +135,7 @@ function Sidenav({
       >
         <div className={styles.sidenavWrapper}>
           <Image
+            style={{ opacity: delayed ? '0' : '1' }}
             src={isAttacking ? attack : protectionIcon}
             alt="actionSign"
             className={styles.actionSign}
@@ -367,7 +368,7 @@ function Sidenav({
             </div>
           )}
           {addConfirm && vpkSelected && theGorgeSelected && (
-            <div className={styles.sidenavAddConfirm}>
+            <div style={{ opacity: delayed && !removeModalDate ? '0' : delayed && removeModalDate ? '1' : '0' }} className={styles.sidenavAddConfirm}>
               <Image
                 src={'/onboarding/backgroundImgGreen.svg'}
                 width={348}
