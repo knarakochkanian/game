@@ -17,6 +17,10 @@
     letter-spacing: 0.34px;
     text-transform: uppercase;
     text-align: start;
+    &ContainerSideNav{
+      @include flex-between;
+
+    }
   }
   .option.selected {
     color: $attack-green-40;

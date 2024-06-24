@@ -7,6 +7,24 @@
       color: $mid-dark-gray;
     }
   }
+.accordionWiOutFlag{
+  &::after {
+    @include afterLine;
+    background: $attack-green-80;
+  }
+
+  &Disable{
+    &::after {
+      @include afterLine;
+      background: $mid-dark-gray;}
+  }
+  &Protected{
+    &::after {
+      @include afterLine;
+      background: $protect-blue-80;}
+  }
+
+}
 .countiesWithOutFlag{
   max-height: 400px;
   @include scrollStyles;

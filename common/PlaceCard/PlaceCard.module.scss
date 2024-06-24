@@ -10,6 +10,9 @@
   .flagContainer {
     border-radius: 50%;
   }
+
+
+
   h4 {
     color: $white;
     font-variant-numeric: slashed-zero;
@@ -20,7 +23,11 @@
     text-align: start;
   }
 }
+.fromSideNav{
+  @include flex-between;
+  width: 100%;
 
+}
 .placeCard.selected {
   h4 {
     color: $attack-green;

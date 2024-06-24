@@ -1,7 +1,6 @@
 @import '/app/variables.module';
 
 .sidenav {
-  margin-top: 30px;
   width: 0;
   position: fixed;
   z-index: 10;
@@ -11,9 +10,14 @@
   transition: 0.5s;
   padding-top: 60px;
   height: 100%;
+  top: 20px;
   &Title {
     @include flex-between;
     padding: 0 16px;
+  }
+  &ArrowSVG{
+    position: absolute;
+    right: 20px;
   }
   &AccordionSummary {
     @include AccordionSummary;
@@ -29,7 +33,7 @@
     position: fixed;
     bottom: 0;
     background-repeat: no-repeat;
-    height: 218px;
+    height: 121px;
     width: 100%;
     z-index: 4;
     > a {
@@ -48,6 +52,7 @@
   }
   &Square {
     @include flex-start;
+    align-items: center;
     gap: 30px;
   }
   &DelayedWrraper {
@@ -85,4 +90,12 @@
     position: absolute !important;
     border: none !important;
   }
+}
+.sidenavDelayedDate{
+  background-color: black;
+  color: white;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
 }
