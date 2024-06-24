@@ -47,7 +47,6 @@ const RegionAccordion = ({
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
-        marginBottom: '10px',
         maxWidth: '313.67px',
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
