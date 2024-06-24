@@ -10,8 +10,8 @@ const Target = () => {
           className={styles.targetArrows}
           src={'/target/arrowTargetLeft.svg'}
           alt="target"
-          width={480}
-          height={48}
+          width={280}
+          height={28}
         />
         <div className={styles.targetText}>
           <span>запад</span>
@@ -30,8 +30,8 @@ const Target = () => {
           className={styles.targetArrows}
           src={'/target/arrowTargetRight.svg'}
           alt="target"
-          width={480}
-          height={48}
+          width={280}
+          height={28}
         />
       </div>
     </section>

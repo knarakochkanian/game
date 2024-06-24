@@ -88,6 +88,7 @@ const SelectFromTwo = ({
         return 0;
     }
   };
+  const n = 1;
 
   const totalPopulationRegions = selectedCountries.reduce((total, country) => {
     if (country.regions && country.regions.length > 0) {
@@ -102,11 +103,7 @@ const SelectFromTwo = ({
   dispatch(setTotalPopulationRegions(totalPopulationRegions));
 
   const financialLosses =
-    3000 *
-    totalPopulationRegions *
-    0.2 *
-    selectedCountries.length *
-    damageLevelCount();
+    3000 * totalPopulationRegions * 0.2 * n * damageLevelCount();
 
   dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
 
@@ -133,7 +130,8 @@ const SelectFromTwo = ({
             <h3>
               {formatNumberWithSpaces(
                 parseInt(formattedFinancialLosses.replace(/[^\d]/g, ''))
-              )}
+              )}{' '}
+              млрд $
             </h3>
           </div>
         )}
