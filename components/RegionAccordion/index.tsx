@@ -43,19 +43,20 @@ const RegionAccordion = ({
 
   return (
     <Accordion
-      style={{ color: delayed ? '#0F0F0F' : 'none' }}
+      style={{ color: delayed ? '#0F0F0F' : 'none', border: "1px solid rgba(82, 82, 82, 1)" }}
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
-        backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
-        color: '#FFF',
         marginBottom: '10px',
         maxWidth: '313.67px',
+        backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
+        color: '#FFF',
       })}
     >
       <AccordionSummary
         expandIcon={
           <Image
+            style={{marginTop: '15px'}}
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
             width={11}

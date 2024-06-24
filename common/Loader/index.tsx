@@ -20,32 +20,32 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         className={styles.smallCircle}
         src={isAttacking ? smallCircle : smallCircleBlue}
         alt="smallCircle"
-        width={515}
-        height={515}
+        width={300}
+        height={300}
         priority
       />
       <Image
         className={styles.mediumCircle}
         src={isAttacking ? mediumCircle : mediumCircleBlue}
         alt="mediumCircle"
-        width={791}
-        height={791}
+        width={576}
+        height={576}
         priority
       />
       <Image
         className={styles.bigCircle}
         src={isAttacking ? bigCircle : bigCircleBlue}
         alt="bigCircle"
-        width={1015}
-        height={1015}
+        width={800}
+        height={800}
         priority
       />
       <div className={styles.light}>
         <Image
           src={isAttacking ? greenLight : blueLight}
           alt="light"
-          width={1344}
-          height={840}
+          width={1318}
+          height={825}
           priority
         />
       </div>

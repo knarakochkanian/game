@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Sidenav.module.scss';
 import Image from 'next/image';
 import Accordion from '@mui/material/Accordion';
@@ -8,6 +8,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Modal from '../Modals/Modal';
 import {
   selectIsAttacking,
+  setAttackTime,
   setBlur,
   setComfirmedFromOnboarding,
   setCurrentAction,
@@ -80,6 +81,49 @@ function Sidenav({
     dispatch(setComfirmedFromOnboarding(true));
     dispatch(setCurrentAction(currentAction));
   };
+  const [currentDate, setCurrentDate] = useState('');
+  const [futureTime, setFutureTime] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+    const dateString = new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(now);
+    setCurrentDate(dateString);
+  }, [])
+  useEffect(() => {
+    function updateDateTime() {
+      const now = new Date();
+      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+      const timeString = new Intl.DateTimeFormat('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(futureTime);
+      setFutureTime(timeString);
+    }
+    const timerId = setInterval(updateDateTime, 1000);
+    return () => {
+      clearInterval(timerId);
+      const now = new Date();
+      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+      const timeString = new Intl.DateTimeFormat('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(futureTime);
+      const dateString = new Intl.DateTimeFormat('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }).format(now);
+      dispatch(setAttackTime({
+        date: dateString,
+        time: timeString,
+      }));
+      console.log('component Sidenav unmounted')
+    };
+  }, [])
 
   return (
     <>
@@ -293,7 +337,7 @@ function Sidenav({
                     textAlign: "left",
                   }}>Дата</h3>
                 <div>
-                  <div className="Lead">03.02.2024</div>
+                  <div className="Lead">{currentDate}</div>
                   <Image
                     src={'/onboarding/ToggleHorisontal.svg'}
                     alt={'img'}
@@ -311,7 +355,7 @@ function Sidenav({
                   textAlign: "left",
                   }}>Время</h3>
                 <div>
-                  <div className="Lead">20:13</div>
+                  <div className="Lead">{futureTime}</div>
                   <Image
                     src={'/onboarding/ToggleHorisontal.svg'}
                     alt={'img'}

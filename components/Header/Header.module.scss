@@ -15,6 +15,10 @@
     h2.actionTitle {
       @include TypoH2;
       line-height: 86%;
+      font-size: 26.36px;
+      font-weight: 600;
+      line-height: 31.63px;
+      text-align: left;
     }
     .actionStatus {
       color: $attack-green;
@@ -22,6 +26,11 @@
       text-transform: uppercase;
       @include TypoBodySmall;
       @include flex-center;
+      font-size: 13.18px;
+      font-weight: 500;
+      line-height: 15.82px;
+      letter-spacing: 0.01em;
+      text-align: left;
     }
     .actionStatus.protection {
       color: $protect-blue;
@@ -47,6 +56,11 @@
         font-variant-numeric: slashed-zero;
         text-transform: uppercase;
         @include TypoBodySmall;
+        font-size: 13.18px;
+        font-weight: 500;
+        line-height: 15.82px;
+        letter-spacing: 0.01em;
+        text-align: left;
       }
     }
     .completingDate.protection {

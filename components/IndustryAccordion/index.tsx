@@ -53,6 +53,7 @@ const IndustryAccordion = ({
       disabled={disable}
       style={{ color: delayed ? '#0F0F0F' : 'none' }}
       sx={(theme) => ({
+        border: "1px solid rgba(82, 82, 82, 1)",
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
         marginBottom: '10px',
@@ -62,6 +63,7 @@ const IndustryAccordion = ({
       <AccordionSummary
         expandIcon={
           <Image
+            style={{marginTop: '15px'}}
             src={numberOfSelectedSectors === null ? arrowDownGray : arrowDown}
             alt={'arrow'}
             width={11}

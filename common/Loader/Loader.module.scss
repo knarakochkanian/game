@@ -3,8 +3,8 @@
 .loader {
   position: fixed;
   width: 100%;
-  top: 371px;
-  left: 917px;
+  top: -4px;
+  left: 299px;
 
   @keyframes rotate-cw {
     to {
@@ -44,9 +44,9 @@
   .bigCircle {
   }
   .light {
-    position: absolute;
-    top: -300px;
-    right: 1112px;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   .target {
     position: absolute;

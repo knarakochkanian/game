@@ -28,6 +28,7 @@ export interface IInitialState {
   formattedFinancialLosses: string;
   onBoardingBlur: any;
   localTimeBlur: any;
+  attackTime: any;
 }
 
 const initialState: IInitialState = {
@@ -62,6 +63,10 @@ const initialState: IInitialState = {
     12: false,
   },
   localTimeBlur: true,
+  attackTime: {
+    time: '',
+    date: '',
+  },
 };
 
 const generalSlice = createSlice({
@@ -260,6 +265,9 @@ const generalSlice = createSlice({
     setLocalTimeBlur(state, { payload }) {
       state.localTimeBlur = payload;
     },
+    setAttackTime(state, { payload }) {
+      state.attackTime = payload;
+    }
   },
 });
 
@@ -288,6 +296,7 @@ export const {
   proccesIndustriesByTitle,
   setOnBoardingBlur,
   setLocalTimeBlur,
+  setAttackTime,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -321,5 +330,7 @@ export const selectOnboardingBlur = (state: RootState) =>
   state.generalReducer.onBoardingBlur;
 export const selectLocalTimeBlur = (state: RootState) =>
   state.generalReducer.localTimeBlur;
+export const selectAttackTime = (state: RootState) =>
+  state.generalReducer.attackTime;
 
 export default generalSlice.reducer;

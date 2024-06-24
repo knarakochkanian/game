@@ -63,7 +63,7 @@ const Modal: React.FC<ModalProps> = ({
                 />
               </button>
             )}
-            {!isTrashModal ||
+            {isTrashModal ||
               (!withClose && (
                 <span className={styles.modalCounter_number}>{counter}/12</span>
               ))}

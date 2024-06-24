@@ -15,6 +15,10 @@
       font-variant-numeric: slashed-zero;
       @include set-font-size-weight(23px, 500);
       line-height: 120%;
+      font-size: 23.54px;
+      font-weight: 500;
+      line-height: 28.24px;
+      text-align: center;
     }
     span {
       color: $red;
@@ -26,6 +30,12 @@
   bottom: 30px;
   flex-direction: column;
   gap: 10px;
+  bottom: 37px;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 595px;
+  left: 50%;
+  transform: translateX(-50%);
   button {
     padding: 0;
     span {
@@ -39,5 +49,9 @@
     font-variant-numeric: slashed-zero;
     @include set-font-size-weight(18.8px, 500);
     line-height: 120%; /* 48px */
+    font-size: 18.83px;
+    font-weight: 500;
+    line-height: 22.59px;
+    text-align: center;
   }
 }

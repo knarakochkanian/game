@@ -205,6 +205,7 @@ button {
   letter-spacing: 0.01em;
   text-align: left;
   opacity: 0.4;
+  pointer-events: none;
 }
 .SecondarySmallShine__animation {
   position: absolute;
@@ -432,6 +433,9 @@ button {
     margin-left: 16px;
     text-transform: uppercase;
   }
+  .vpk__all-button_disable {
+    pointer-events: none;
+  }
   .vpk__all-container {
     display: flex;
     align-items: center;
@@ -613,4 +617,14 @@ button {
     width: 23px;
     height: 4px;
     background: rgba(94, 209, 197, 1);
+  }
+  .damage-level-info__button {
+    height: 20px;
+  }
+  .modal.learningStart .ModalButton1 {
+    text-decoration: none;
+    padding: 0 !important; 
+  }
+  .ModalButtons_last {
+    justify-content: flex-start !important;
   }

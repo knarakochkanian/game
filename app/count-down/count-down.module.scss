@@ -5,21 +5,26 @@
 }
 
 .countdownContainer {
-  padding-top: 686px;
-  padding-left: 110px;
+  padding-top: 300px;
+  padding-left: 76px;
   position: relative;
   h5 {
     padding-left: 25px;
     position: relative;
-    z-index: 13;
+    z-index: 18;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.21px;
+    letter-spacing: 0.03em;
+    text-align: left;
   }
   .timerAndAttackCtn {
     display: flex;
-    gap: 392px;
+    gap: 90px;
     .timer {
       display: flex;
       align-items: flex-start;
-      gap: 141px;
+      gap: 75px;
       div {
         width: 397px;
         height: 336px;
@@ -35,7 +40,13 @@
         letter-spacing: -2.8px;
         text-transform: uppercase;
         z-index: 13;
-        min-width: 415px;
+        // min-width: 415px;
+
+        font-size: 131.8px;
+        font-weight: 300;
+        line-height: 158.16px;
+        letter-spacing: -0.01em;
+        text-align: left;
         .hours,
         .minutes,
         .seconds {
@@ -45,7 +56,12 @@
           @include TypoBodySmall;
           position: absolute;
           bottom: 0;
-          right: 45px;
+          right: 13px;
+          font-size: 13.18px;
+          font-weight: 500;
+          line-height: 15.82px;
+          letter-spacing: 0.01em;
+          text-align: left;
         }
       }
     }

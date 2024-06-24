@@ -18,7 +18,7 @@ const DamageLevelInfo = ({ damageLevel }: { damageLevel: string }) => {
         <span className={styles.title}>Ущерб</span>
         <span className={styles.info}>{damageLevel ? damageLevel : ''}</span>
       </div>
-      <button onClick={handleRemove}>
+      <button className='damage-level-info__button' onClick={handleRemove}>
         <Image
           className={styles.minusSign}
           src={minusSign}
