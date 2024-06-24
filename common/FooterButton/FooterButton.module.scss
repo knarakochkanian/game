@@ -13,7 +13,8 @@
       color: $white;
       text-align: center;
       font-variant-numeric: slashed-zero;
-      @include set-font-size-weight(50px, 400);
+      @include set-font-size-weight(23px, 500);
+      line-height: 120%;
       font-size: 23.54px;
       font-weight: 500;
       line-height: 28.24px;
@@ -26,6 +27,9 @@
 }
 
 .buttonContainer.fromSummary {
+  bottom: 30px;
+  flex-direction: column;
+  gap: 10px;
   bottom: 37px;
   flex-direction: column;
   gap: 18px;
@@ -43,7 +47,8 @@
     color: $mid-dark-gray;
     text-align: center;
     font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(40px, 400);
+    @include set-font-size-weight(18.8px, 500);
+    line-height: 120%; /* 48px */
     font-size: 18.83px;
     font-weight: 500;
     line-height: 22.59px;

@@ -100,7 +100,7 @@ $unvisible: rgba(0, 0, 0, 0);
 }
 
 @mixin attacksCtnStyles {
-  width: 1344px;
+  width: 975px;
   z-index: 11;
   position: absolute;
   top: 50%;
@@ -129,9 +129,7 @@ $unvisible: rgba(0, 0, 0, 0);
   letter-spacing: 0.169px;
 }
 @mixin TypoBodySmall {
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
+  @include set-font-size-weight(13px, 500);
   line-height: 120%; /* 33.6px */
   letter-spacing: 0.28px;
 }
@@ -146,7 +144,7 @@ $unvisible: rgba(0, 0, 0, 0);
 @mixin TypoH2 {
   color: $white;
   font-variant-numeric: slashed-zero;
-  @include set-font-size-weight(46px, 400);
+  @include set-font-size-weight(26px, 600);
   line-height: 100%; /* 67.2px */
 }
 

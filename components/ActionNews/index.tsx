@@ -1,7 +1,9 @@
-import NewsCard from '../NewsCard';
-import styles from './ActionNews.module.scss';
 import Link from 'next/link';
+import NewsCard from '../NewsCard';
 import { NEWS } from '../../constants';
+
+import styles from './ActionNews.module.scss';
+
 const ActionNews = ({ news }: { news: INews[] }) => {
   return (
     <section className={styles.actionNewsCtn}>

@@ -2,9 +2,9 @@
 
 .title {
     position: absolute;
-    top: 160px;
-    left: 394px;
+    top: 75px;
+    left: 188px;
     color: $white;
-    @include set-font-size-weight(78px, 400);
+    @include set-font-size-weight(36px, 500);
     line-height: 120%; /* 93.6px */
   }

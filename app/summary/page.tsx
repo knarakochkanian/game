@@ -93,8 +93,8 @@ const Summary = () => {
           className={styles.img}
           src={isAttacking ? attack : protectionIcon}
           alt="attack or protection"
-          width={80}
-          height={80}
+          width={38}
+          height={38}
           priority
         />
         <ActionDetails

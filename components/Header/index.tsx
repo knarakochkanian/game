@@ -112,7 +112,7 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
                 <Image
                   src={lines}
                   alt="lines"
-                  width={57}
+                  width={56}
                   height={11}
                   priority
                 />

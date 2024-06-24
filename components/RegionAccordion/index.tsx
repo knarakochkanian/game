@@ -47,6 +47,8 @@ const RegionAccordion = ({
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
+        marginBottom: '10px',
+        maxWidth: '313.67px',
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
       })}
@@ -54,11 +56,11 @@ const RegionAccordion = ({
       <AccordionSummary
         expandIcon={
           <Image
+            style={{marginTop: '15px'}}
             src={'onboarding/arrow.svg'}
             alt={'arrow'}
             width={11}
             height={11}
-            style={{marginTop: '15px'}}
           />
         }
         aria-controls="panel1-content"
@@ -83,13 +85,13 @@ const RegionAccordion = ({
             {counties.map((country) => (
               <div key={country}>
                 {country}
-                <button onClick={() => handleRemove(country)}>
+                <button style={{display: 'none'}}  onClick={() => handleRemove(country)}>
                   <Image
                     className={styles.minusSign}
                     src={minusSign}
                     alt="minusSign"
-                    width={40}
-                    height={40}
+                    width={20}
+                    height={20}
                     priority
                   />
                 </button>

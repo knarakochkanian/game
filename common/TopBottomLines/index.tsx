@@ -32,6 +32,7 @@ const TopBottomLines = () => {
     bottomLinesAreNarrowPages.some((page) =>
       pathname?.split('/').includes(page)
     ) || pathname === '/';
+
   useEffect(() => {
     let onBoardingBlurCount = 0;
     Object.values(onBoardingBlur).forEach((elem) => {
@@ -45,6 +46,7 @@ const TopBottomLines = () => {
       setLineBlur('none');
     }
   }, [onBoardingBlur]);
+
   return (
     <>
       <Image
@@ -73,8 +75,8 @@ const TopBottomLines = () => {
           className={styles.bottom}
           src={bottom}
           alt="bottom"
-          width={2754}
-          height={81}
+          width={1296}
+          height={38}
           priority
           style={{ filter: lineBlur }}
         />

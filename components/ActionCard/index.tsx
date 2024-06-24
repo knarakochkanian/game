@@ -38,8 +38,8 @@ const ActionCard = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         className={styles.actionImg}
         src={action.actionType === ATTACK ? attack : protectionIcon}
         alt="action"
-        width={80}
-        height={80}
+        width={38}
+        height={38}
         priority
       />
     </article>

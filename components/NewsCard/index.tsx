@@ -21,8 +21,8 @@ const NewsCard = ({ news }: { news: INews }) => {
       <Image
         src={news.channelLogoSrc}
         alt="channelLogo"
-        width={181}
-        height={53}
+        width={85}
+        height={25}
         priority
       />
 
