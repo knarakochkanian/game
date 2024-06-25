@@ -29,6 +29,7 @@ export interface IInitialState {
   onBoardingBlur: any;
   localTimeBlur: any;
   attackTime: any;
+  clickOnboardingSummary: any;
 }
 
 const initialState: IInitialState = {
@@ -67,6 +68,7 @@ const initialState: IInitialState = {
     time: '',
     date: '',
   },
+  clickOnboardingSummary: false,
 };
 
 const generalSlice = createSlice({
@@ -267,6 +269,9 @@ const generalSlice = createSlice({
     },
     setAttackTime(state, { payload }) {
       state.attackTime = payload;
+    },
+    setClickOnboardingSummary(state, { payload }) {
+      state.clickOnboardingSummary = payload;
     }
   },
 });
@@ -297,6 +302,7 @@ export const {
   setOnBoardingBlur,
   setLocalTimeBlur,
   setAttackTime,
+  setClickOnboardingSummary
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -332,5 +338,7 @@ export const selectLocalTimeBlur = (state: RootState) =>
   state.generalReducer.localTimeBlur;
 export const selectAttackTime = (state: RootState) =>
   state.generalReducer.attackTime;
+export const selectClickOnboardingSummary = (state: RootState) =>
+  state.generalReducer.clickOnboardingSummary;
 
 export default generalSlice.reducer;

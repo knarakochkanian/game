@@ -1,0 +1,34 @@
+@import '/app/variables.module.scss';
+
+.main {
+  display: block;
+  width: 100% !important;
+  height: 825px !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow: hidden;
+  .blur {
+    @include blurDivStyles;
+    width: 100%;
+    height: 100%;
+  }
+  .blur.z_15 {
+    z-index: 17;
+  }
+  .imgCtn {
+    width: 975px;
+    height: 438px;
+    position: relative;
+    z-index: 1000;
+    top: 176px;
+    left: 176px;
+    .img {
+      position: absolute;
+      left: -56px;
+      top: 0px;
+      z-index: 9;
+    }
+  }
+}

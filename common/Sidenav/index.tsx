@@ -13,6 +13,8 @@ import {
   setComfirmedFromOnboarding,
   setCurrentAction,
   setIsAttacking,
+  setClickOnboardingSummary,
+  selectClickOnboardingSummary,
 } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
@@ -29,6 +31,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
+import { useSelector } from 'react-redux';
+import SummaryOnBoarding from '../../app/summary-onboarding/page';
 interface SidenavProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -56,6 +60,7 @@ function Sidenav({
 }: SidenavProps) {
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
+  const isClickOnBoardingSummary = useSelector(selectClickOnboardingSummary);
   // const handleBtn_1_Click = () => {
   //   if (name === ATTACK_OR_PROTECT) {
   //     dispatch(setIsAttacking(true));
@@ -63,7 +68,9 @@ function Sidenav({
   //     (setFirstActive as setFirstActive)(true);
   //   }
   // };
-
+  function goOnboardingSummary() {
+    dispatch(setClickOnboardingSummary(true));
+  }
   const onSetCurrentAction = () => {
     const currentAction: IAction = {
       actionType: ATTACK,
@@ -83,6 +90,18 @@ function Sidenav({
   };
   const [currentDate, setCurrentDate] = useState('');
   const [futureTime, setFutureTime] = useState("");
+  const [opacityConfirm, setOpacityConfirm] = useState('1');
+
+  useEffect(() => {
+    console.log(removeModalDate);
+    console.log(delayed);
+    if (!removeModalDate && delayed) {
+      setOpacityConfirm('0');
+    }
+    if (removeModalDate && delayed) {
+      setOpacityConfirm('1');
+    }
+  }, [removeModalDate, delayed])
 
   useEffect(() => {
     const now = new Date();
@@ -127,6 +146,7 @@ function Sidenav({
 
   return (
     <>
+      {isClickOnBoardingSummary && <SummaryOnBoarding />}
       <Box
         sx={sx}
         id="mySidenav"
@@ -368,21 +388,43 @@ function Sidenav({
             </div>
           )}
           {addConfirm && vpkSelected && theGorgeSelected && (
-            <div style={{ opacity: delayed && !removeModalDate ? '0' : delayed && removeModalDate ? '1' : '0' }} className={styles.sidenavAddConfirm}>
+            // <div style={{ opacity: delayed && !removeModalDate ? '0' : delayed && removeModalDate ? '1' : '0' }} className={styles.sidenavAddConfirm}>
+              <div style={{ opacity: opacityConfirm}} className={styles.sidenavAddConfirm}>
               <Image
                 src={'/onboarding/backgroundImgGreen.svg'}
-                width={348}
-                height={148}
+                width={350}
+                height={140}
                 alt={'backgr'}
                 className={styles.sidenavAddConfirmImage}
               />
               <span className="Lead" style={{ color: '#787878' }}>
                 Для перехода к запуску <br /> атаки нажмите кнопку
               </span>
-              <Link href="/summary" onClick={onSetCurrentAction}>
+              {/* <div style={{transform: 'translate(20px, -15px)'}} onClick={() => {
+                  onSetCurrentAction();
+                  goOnboardingSummary();
+                }}>
                 <span
                   className="Lead"
                   style={{ color: 'white', padding: '10px' }}
+                >
+                  ПОДТВЕРДИТЬ
+                </span>
+                <Image
+                  className='sidenav__add-confitm__Arrow'
+                  src={'onboarding/arrowConfirm.svg'}
+                  alt={'arrow'}
+                  height={23}
+                  width={23}
+                />
+              </div> */}
+              <Link href={'/summary'} onClick={() => {
+                  onSetCurrentAction();
+                  // goOnboardingSummary();
+                }}>
+                <span
+                  className="Lead"
+                  style={{ color: 'white', padding: '10px 10px 10px 0' }}
                 >
                   ПОДТВЕРДИТЬ
                 </span>
