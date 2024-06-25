@@ -51,6 +51,7 @@ const RegionAccordion = ({
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
         marginBottom: '10px',
+        maxWidth: '314.33px',
       })}
     >
       <AccordionSummary

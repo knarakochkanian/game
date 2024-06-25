@@ -11,16 +11,16 @@ const Slashes = () => {
           className={styles.img}
           src={slashesFromBottom}
           alt="slashesFromBottom"
-          width={134}
-          height={26}
+          width={63}
+          height={12}
           priority
         />
         <Image
           className={styles.img}
           src={slashesFromTop}
           alt="slashesFromTop"
-          width={134}
-          height={26}
+          width={63}
+          height={12}
           priority
         />
       </div>
@@ -30,16 +30,16 @@ const Slashes = () => {
           className={styles.img}
           src={slashesFromTop}
           alt="slashesFromTop"
-          width={134}
-          height={26}
+          width={63}
+          height={12}
           priority
         />
         <Image
           className={styles.img}
           src={slashesFromBottom}
           alt="slashesFromBottom"
-          width={134}
-          height={26}
+          width={63}
+          height={12}
           priority
         />
       </div>
