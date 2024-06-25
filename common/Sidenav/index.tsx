@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Sidenav.module.scss';
 import Image from 'next/image';
 import Accordion from '@mui/material/Accordion';
@@ -8,10 +8,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Modal from '../Modals/Modal';
 import {
   selectIsAttacking,
+  setAttackTime,
   setBlur,
   setComfirmedFromOnboarding,
   setCurrentAction,
   setIsAttacking,
+  setClickOnboardingSummary,
+  selectClickOnboardingSummary,
+  selectClickOnboardingCount,
 } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
@@ -28,6 +32,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
+import { useSelector } from 'react-redux';
+import SummaryOnBoarding from '../../app/summary-onboarding/page';
+import CountDownOnboarding from '../../app/count-down-onboarding/page';
 interface SidenavProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -55,6 +62,8 @@ function Sidenav({
 }: SidenavProps) {
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
+  const isClickOnBoardingSummary = useSelector(selectClickOnboardingSummary);
+  const isClickOnBoardingCount = useSelector(selectClickOnboardingCount);
   // const handleBtn_1_Click = () => {
   //   if (name === ATTACK_OR_PROTECT) {
   //     dispatch(setIsAttacking(true));
@@ -62,7 +71,9 @@ function Sidenav({
   //     (setFirstActive as setFirstActive)(true);
   //   }
   // };
-
+  function goOnboardingSummary() {
+    dispatch(setClickOnboardingSummary(true));
+  }
   const onSetCurrentAction = () => {
     const currentAction: IAction = {
       actionType: ATTACK,
@@ -80,17 +91,75 @@ function Sidenav({
     dispatch(setComfirmedFromOnboarding(true));
     dispatch(setCurrentAction(currentAction));
   };
+  const [currentDate, setCurrentDate] = useState('');
+  const [futureTime, setFutureTime] = useState("");
+  const [opacityConfirm, setOpacityConfirm] = useState('1');
+
+  useEffect(() => {
+    console.log(removeModalDate);
+    console.log(delayed);
+    if (!removeModalDate && delayed) {
+      setOpacityConfirm('0');
+    }
+    if (removeModalDate && delayed) {
+      setOpacityConfirm('1');
+    }
+  }, [removeModalDate, delayed])
+
+  useEffect(() => {
+    const now = new Date();
+    const dateString = new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(now);
+    setCurrentDate(dateString);
+  }, [])
+  useEffect(() => {
+    function updateDateTime() {
+      const now = new Date();
+      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+      const timeString = new Intl.DateTimeFormat('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(futureTime);
+      setFutureTime(timeString);
+    }
+    const timerId = setInterval(updateDateTime, 1000);
+    return () => {
+      clearInterval(timerId);
+      const now = new Date();
+      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+      const timeString = new Intl.DateTimeFormat('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(futureTime);
+      const dateString = new Intl.DateTimeFormat('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }).format(now);
+      dispatch(setAttackTime({
+        date: dateString,
+        time: timeString,
+      }));
+      console.log('component Sidenav unmounted')
+    };
+  }, [])
 
   return (
     <>
+      {isClickOnBoardingSummary && <SummaryOnBoarding />}
+      {isClickOnBoardingCount && <CountDownOnboarding />}
       <Box
         sx={sx}
         id="mySidenav"
         className={styles.sidenav}
-        style={{ width: isOpen ? '328px' : '0' }}
+        style={{ width: isOpen ? '328px' : '0', opacity: isClickOnBoardingCount ? '0' : '1' }}
       >
         <div className={styles.sidenavWrapper}>
           <Image
+            style={{ opacity: delayed ? '0' : '1' }}
             src={isAttacking ? attack : protectionIcon}
             alt="actionSign"
             className={styles.actionSign}
@@ -293,7 +362,7 @@ function Sidenav({
                     textAlign: "left",
                   }}>Дата</h3>
                 <div>
-                  <div className="Lead">03.02.2024</div>
+                  <div className="Lead">{currentDate}</div>
                   <Image
                     src={'/onboarding/ToggleHorisontal.svg'}
                     alt={'img'}
@@ -311,7 +380,7 @@ function Sidenav({
                   textAlign: "left",
                   }}>Время</h3>
                 <div>
-                  <div className="Lead">20:13</div>
+                  <div className="Lead">{futureTime}</div>
                   <Image
                     src={'/onboarding/ToggleHorisontal.svg'}
                     alt={'img'}
@@ -323,18 +392,22 @@ function Sidenav({
             </div>
           )}
           {addConfirm && vpkSelected && theGorgeSelected && (
-            <div className={styles.sidenavAddConfirm}>
+            // <div style={{ opacity: delayed && !removeModalDate ? '0' : delayed && removeModalDate ? '1' : '0' }} className={styles.sidenavAddConfirm}>
+              <div style={{ opacity: opacityConfirm}} className={styles.sidenavAddConfirm}>
               <Image
                 src={'/onboarding/backgroundImgGreen.svg'}
-                width={348}
-                height={148}
+                width={350}
+                height={140}
                 alt={'backgr'}
                 className={styles.sidenavAddConfirmImage}
               />
               <span className="Lead" style={{ color: '#787878' }}>
                 Для перехода к запуску <br /> атаки нажмите кнопку
               </span>
-              <Link href="/summary" onClick={onSetCurrentAction}>
+              {/* <div style={{transform: 'translate(20px, -15px)'}} onClick={() => {
+                  onSetCurrentAction();
+                  goOnboardingSummary();
+                }}>
                 <span
                   className="Lead"
                   style={{ color: 'white', padding: '10px' }}
@@ -348,7 +421,26 @@ function Sidenav({
                   height={23}
                   width={23}
                 />
-              </Link>
+              </div> */}
+              <div style={{transform: 'translateY(-7px)'}} onClick={() => {
+                  // onSetCurrentAction();
+                  goOnboardingSummary();
+                }}>
+                <span
+                  className="Lead"
+                  style={{ color: 'white', padding: '10px 10px 10px 0', marginLeft: '30px' }}
+                >
+                  ПОДТВЕРДИТЬ
+                </span>
+                <Image
+                  className='sidenav__add-confitm__Arrow'
+                  src={'onboarding/arrowConfirm.svg'}
+                  alt={'arrow'}
+                  height={23}
+                  width={23}
+                  onClick={goOnboardingSummary}
+                />
+              </div>
             </div>
           )}
         </div>

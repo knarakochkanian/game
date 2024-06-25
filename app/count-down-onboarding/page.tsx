@@ -30,11 +30,23 @@ import {
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import Modal from '../../common/Modals/Modal';
+import {
+  bigCircle,
+  bigCircleBlue,
+  blueLight,
+  greenLight,
+  mediumCircle,
+  mediumCircleBlue,
+  smallCircle,
+  smallCircleBlue,
+  target,
+} from '../../public/count-down';
 
 import styles from './count-down.module.scss';
+import './count-down-onboarding.css';
 import { controllerServerAddress } from '../static_variables';
 
-export default function CountDown() {
+export default function CountDownOnboarding() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const [lastActionName, setLastActionName] = useState<string | null>();
   const dispatch = useAppDispatch();
@@ -82,44 +94,6 @@ export default function CountDown() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!fromOnboarding) {
-      const countdown = setInterval(() => {
-        if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
-          setActionCompleted(true);
-          clearInterval(countdown);
-          const completedActions = proccessActionsToSave(
-            currentAction,
-            completedActionsFromStorage,
-            true
-          );
-
-          if (typeof window !== 'undefined') {
-            if(!actionCanceled) {
-              window.localStorage.setItem(LAST_ACTION_NAME, name);
-            }
-            
-
-            window.localStorage.setItem(
-              COMPLETED_ACTIONS,
-              JSON.stringify(completedActions)
-            );
-          }
-
-          dispatch(resetGeneralState());
-          router.push('/');
-        } else if (time.seconds > 0) {
-          setTime({ ...time, seconds: time.seconds - 1 });
-        } else if (time.minutes > 0) {
-          setTime({ ...time, minutes: time.minutes - 1, seconds: 59 });
-        } else if (time.hours > 0) {
-          setTime({ ...time, hours: time.hours - 1, minutes: 59, seconds: 59 });
-        }
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [time, router]);
-
   const cancelCountdown = () => {
       setTimeout(() => {
         dispatch(resetGeneralState());
@@ -140,21 +114,6 @@ export default function CountDown() {
     // }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
-
-  // useEffect(() => {
-  //   const socket = new WebSocket(controllerServerAddress);
-  //   socket.onmessage = (event) => {
-  //     if (event.data === 'cancel pressed') {
-  //       cancelCountdown();
-  //     }
-  //   };
-
-  //   setSocket(socket);
-
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
   const onResetGlobalState = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
@@ -168,18 +127,17 @@ export default function CountDown() {
 
         <div className={styles.timerAndAttackCtn}>
           <div
-            className={`${styles.timer} ${fromOnboarding ? styles.z_17 : ''}`}
+            className={`${styles.timer} ${styles.z_17}`}
           >
             <span className={styles.time}>
-              {String(time.hours).padStart(2, '0')}
+              00
               <span className={styles.hours}>часы</span>
             </span>
             <span className={styles.time}>
-              {String(time.minutes).padStart(2, '0')}
+              00
               <span className={styles.minutes}>минуты</span>
             </span>
               <span className={styles.time}>
-                {/* {String(time.seconds).padStart(2, '0')} */}
                 15
                 <span className={styles.seconds}>секунды</span>
               </span>
@@ -189,12 +147,12 @@ export default function CountDown() {
             <Image
               src={isAttacking ? attack : protectionIcon}
               alt="attack or protect"
-              width={38}
-              height={38}
+              width={80}
+              height={80}
               priority
             />
             <h2 className={styles.attackTitle}>
-              {isAttacking ? A_TTACK : P_ROTECTION} {name}
+              {A_TTACK} {name}
             </h2>
           </div>
         </div>
@@ -202,14 +160,66 @@ export default function CountDown() {
 
       <Grid />
       <SideLines />
-      <Loader isAttacking={isAttacking} />
+      {/* <Loader isAttacking={isAttacking} /> */}
+      <div className={styles.loader}>
+        <Image
+          className={styles.smallCircle}
+          src={smallCircle}
+          alt="smallCircle"
+          width={300}
+          height={300}
+          priority
+        />
+        <Image
+          className={styles.mediumCircle}
+          src={mediumCircle}
+          alt="mediumCircle"
+          width={576}
+          height={576}
+          priority
+        />
+        <Image
+          className={styles.bigCircle}
+          src={bigCircle}
+          alt="bigCircle"
+          width={800}
+          height={800}
+          priority
+        />
+        <div className={styles.light}>
+          <Image
+            src={greenLight}
+            alt="light"
+            width={1318}
+            height={825}
+            priority
+          />
+        </div>
+        <Image
+          className={styles.target}
+          src={target}
+          alt="target"
+          width={270}
+          height={250}
+          priority
+        />
+      </div>
       <Slashes />
 
-      <Footer cancelCountdown={cancelCountdown} />
+      {/* <Footer cancelCountdown={cancelCountdown} /> */}
+      <div className={`${styles.buttonContainer}`}>
+        <button>
+          <h3>
+            Для отмены атаки нажмите кнопку
+            <span> ОТМЕНА</span>
+          </h3>
+        </button>
+      </div>
+      
 
       {fromOnboarding && <div className={styles.blur}></div>}
 
-      <Modal name="endingOnboarding" isOpen={fromOnboarding} counter={12}>
+      <Modal name="endingOnboarding" isOpen={true} counter={12}>
         <p>
           После нажатия на кнопку “ПУСК” запустится обратный отчет, и у вас
           будет 15 секунд для отмены. Для отмены необходимо будет нажать

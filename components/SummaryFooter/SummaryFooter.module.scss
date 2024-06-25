@@ -3,13 +3,14 @@
 .summaryFooter {  
   .opacityOfButton {
     position: fixed;
-    bottom: -10px;
+    bottom: 2px;
     left: 320px;
+    z-index: 16;
   }
   .topOfBotton {
     position: fixed;
-    bottom: 52px;
+    bottom: 65px;
     left: 372px;
-    z-index: 14;
+    z-index: 17;
   }
 }

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { RegionCategory } from '../../data/attackRegionsData';
 import GreenLineBorders from '../GreenLineBorders';
 import { plusIcon } from '../../public/ui_kit';
-import { COMPANY_TOP_CAPITALIZATION, INDUSTRY } from '../../constants';
+import { INDUSTRY, top_capitalization } from '../../constants';
 import ResetOrSelectAll_2 from '../ResetOrSelectAll_2';
 
 import './AccordionWrapper.scss';
@@ -59,8 +59,8 @@ const AccordionWrapper = ({
     background: titleHighlighted
       ? '#011A17'
       : showPlusIcon
-      ? '#131E1D'
-      : 'inherit',
+        ? '#131E1D'
+        : 'inherit',
   };
 
   return (
@@ -69,9 +69,7 @@ const AccordionWrapper = ({
       onChange={handleExpansion(data.id)}
       sx={{
         backgroundColor: `${
-          accordionBackground
-            ? accordionBackground
-            : 'transparent'
+          accordionBackground ? accordionBackground : 'transparent'
         } `,
         color: '#fff',
         marginBottom:
@@ -110,9 +108,7 @@ const AccordionWrapper = ({
             className={`${style.title} ${
               titleHighlighted ? style.highlighted : ''
             } ${
-              data.title === COMPANY_TOP_CAPITALIZATION
-                ? style.topCapitalization
-                : ''
+              data.title === top_capitalization ? style.topCapitalization : ''
             }`}
           >
             {data.title}

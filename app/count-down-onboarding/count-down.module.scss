@@ -1,0 +1,187 @@
+@import '/app/variables.module.scss';
+
+.blur {
+  @include blurDivStyles;
+}
+
+.countdownContainer {
+  padding-top: 300px;
+  padding-left: 76px;
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(1, 2, 2);
+  z-index: 10000;
+  @import '/app/variables.module.scss';
+  h5 {
+    padding-left: 25px;
+    position: relative;
+    z-index: 18;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.21px;
+    letter-spacing: 0.03em;
+    text-align: left;
+  }
+  .timerAndAttackCtn {
+    display: flex;
+    gap: 193px;
+    .timer {
+      display: flex;
+      align-items: flex-start;
+      gap: 75px;
+      div {
+        width: 397px;
+        height: 336px;
+        @include flex-center;
+      }
+      .time {
+        text-align: center;
+        position: relative;
+        font-size: 280px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 120%; /* 336px */
+        letter-spacing: -2.8px;
+        text-transform: uppercase;
+        z-index: 13;
+        // min-width: 415px;
+
+        font-size: 131.8px;
+        font-weight: 300;
+        line-height: 158.16px;
+        letter-spacing: -0.01em;
+        text-align: left;
+        .hours,
+        .minutes,
+        .seconds {
+          color: $white-40;
+          font-variant-numeric: slashed-zero;
+          text-transform: uppercase;
+          @include TypoBodySmall;
+          position: absolute;
+          bottom: 0;
+          right: 13px;
+          font-size: 13.18px;
+          font-weight: 500;
+          line-height: 15.82px;
+          letter-spacing: 0.01em;
+          text-align: left;
+        }
+      }
+    }
+    .timer.z_17 {
+      position: relative;
+      z-index: 18;
+    }
+    .attack {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0px 0 65px 0;
+      filter: blur(22px);
+      z-index: 13;
+      h2.attackTitle {
+        @include TypoH2;
+      }
+    }
+  }
+}
+
+.top {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  z-index: 9;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 26px;
+  left: 20px;
+  z-index: 13;
+}
+.loader {
+  position: fixed;
+  width: 100%;
+  top: -4px;
+  left: 299px;
+  z-index: 10000;
+  filter: blur(17px);
+  @keyframes rotate-cw {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate-ccw {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  > img:nth-child(1) {
+    animation: rotate-cw linear 4s infinite;
+  }
+  > img:nth-child(2) {
+    top: 100px;
+    animation: rotate-ccw linear 5s infinite;
+  }
+  > img:nth-child(3) {
+    top: 185px;
+    animation: rotate-cw linear 6s infinite;
+  }
+  .mediumCircle,
+  .smallCircle {
+    position: absolute;
+  }
+  .smallCircle {
+    top: 260px;
+    left: 245px;
+  }
+  .mediumCircle {
+    top: 117px;
+    left: 110px;
+  }
+  .bigCircle {
+  }
+  .light {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .target {
+    position: absolute;
+    top: 299px;
+    left: 274px;
+  }
+}
+.buttonContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  @include flex-center;
+  z-index: 10000;
+  filter: blur(22px);
+  button {
+    padding-top: 64px;
+    padding-bottom: 72.5px;
+    h3 {
+      color: $white;
+      text-align: center;
+      font-variant-numeric: slashed-zero;
+      @include set-font-size-weight(23px, 500);
+      line-height: 120%;
+      font-size: 23.54px;
+      font-weight: 500;
+      line-height: 28.24px;
+      text-align: center;
+    }
+    span {
+      color: $red;
+    }
+  }
+}

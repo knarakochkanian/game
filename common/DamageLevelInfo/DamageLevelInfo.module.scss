@@ -1,6 +1,7 @@
 @import '/app/variables.module.scss';
 
 .damageLevelInfo {
+  border: 1px solid rgba(82, 82, 82, 1);
   display: flex;
   justify-content: space-between;
   padding: 12px 20px;

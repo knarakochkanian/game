@@ -1,0 +1,81 @@
+@import '/app/variables.module.scss';
+
+.main {
+  display: block;
+  width: 100% !important;
+  height: 825px !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow: hidden;
+  .blur {
+    @include blurDivStyles;
+    width: 100%;
+    height: 100%;
+  }
+  .blur.z_15 {
+    z-index: 17;
+    pointer-events: none;
+  }
+  .imgCtn {
+    width: 975px;
+    height: 438px;
+    position: relative;
+    pointer-events: none;
+    z-index: 1000;
+    top: 176px;
+    left: 176px;
+    .img {
+      position: absolute;
+      left: -56px;
+      top: 0px;
+      z-index: 9;
+    }
+  }
+  .onBackBtn {
+    .backArrow,
+    .backBtnShape {
+      position: fixed;
+      z-index: 14;
+    }
+  
+    .backArrow {
+      top: 374px;
+      left: 28px;
+      opacity: 0;
+    }
+    .backBtnShape {
+      top: 236px;
+      left: 11px;
+      filter: blur(12px);
+    }
+    span {
+      color: $white-40;
+      text-align: center;
+      @include set-font-size-weight(10px, 300);
+      line-height: 120%; /* 26.4px */
+      letter-spacing: 0.621px;
+      position: fixed;
+      z-index: 9;
+      left: 34px;
+      top: 438px;
+      opacity: 0;
+    }
+  }
+  .forwardArrow,
+  .forwardBtnShape {
+    position: fixed;
+    z-index: 17;
+  }
+
+  .forwardArrow {
+    right: 20px;
+    top: 384px;
+    z-index: 17;
+  }
+  .forwardBtnShape {
+    right: 12px;
+    top: 235px;
+  }
+}

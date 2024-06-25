@@ -10,7 +10,15 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Image from 'next/image';
 import { regions } from '../../data/attackRegionsData';
+import {
+  AttackSignActive,
+  ProtectSign,
+} from '../../public/main-screen';
+import bottomElements from '../../public/onboarding/onboarding-bottom-elements.svg';
+import globusImg from '../../public/onboarding/onboarding-globus.svg';
+import closeUsa from '../../public/onboarding/onboarding-usa-close.svg';
 import styles from './onboarding.module.scss';
+import damageArrows from '../../public/onboarding/onboarding-scroll-arrow-damage.svg';
 import BaseButton from '../../common/BaseButtton';
 import Sidenav from '../../common/Sidenav';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -51,16 +59,22 @@ export default function Onboarding() {
 
   const [currentModal, setCurrentModal] = useState(1);
 
+  const [underArrowOpacity, setUnderArrowOpacity] = useState({
+    id: '1',
+    opacity: '0',
+  });
+
   const [vpkCount, setVpkCount] = useState(0);
   const [topVpkAllButton, setTopVpkAllButton] = useState('');
   const [vpkButtonAnimate, setVpkButtonAnimate] = useState('none');
   const [vpkButtonText, setVpkButtonText] = useState("Выбрать все");
   const [vpkCountColor, setVpkCountColor] = useState('rgba(153, 154, 154, 1)');
+  const [pointerEvents, setPointerEvents] = useState('none');  
 
   const [damageLevelClass, setDamageLevelClass] = useState('');
 
   const [step2Blur, setStep2Blur] = useState({
-    first: false,
+    first: true,
     second: true,
     third: true,
   });
@@ -69,8 +83,21 @@ export default function Onboarding() {
   const [accordionWrapperDamage, setAccordionWrapperDamage] = useState('accordion-damage-wrapper');
 
   const handleExpansion =
-    (panel: number) => (event: unknown, isExpanded: boolean) => {
+    (panel: any) => (event: unknown, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
+      console.log(panel);
+      if (isExpanded) {
+        setUnderArrowOpacity({
+          id: panel.toString(),
+          opacity: '1',
+        })
+      }
+      else {
+        setUnderArrowOpacity({
+          id: panel.toString(),
+          opacity: '0',
+        })
+      }
     };
 
   const handleSelectRegion = (regionId: number) => {
@@ -85,6 +112,10 @@ export default function Onboarding() {
     setModalOpen(true);
     setModalOpen2(false);
   };
+
+  useEffect(() => {
+    dispatch(setLocalTimeBlur(true));
+  }, [])
 
   useEffect(() => {
     switch(currentModal) {
@@ -142,6 +173,10 @@ export default function Onboarding() {
             12: false,
           }
         ));
+        setUnderArrowOpacity({
+          id: '1',
+          opacity: '1',
+        })
         break;
       case 4:
         dispatch(setOnBoardingBlur(
@@ -350,6 +385,11 @@ export default function Onboarding() {
     setSelectOpen(false);
     setBlurButtons(false);
     setCurrentModal(2);
+    setStep2Blur({
+      first: false,
+      second: true,
+      third: true
+    })
   };
 
   const handleNext2 = () => {
@@ -368,6 +408,12 @@ export default function Onboarding() {
   const handleOpenSidenav = (option: any) => {
     if (option.name === 'США' && modalOpen3) {
       setDrawerOpen(!drawerOpen);
+      if (drawerOpen) {
+        setAddColor(false);
+      }
+      else {
+        setAddColor(true);
+      }
       dispatch(setBlur(false));
       setAddUSA(true);
       dispatch(setLocalTimeBlur(false));
@@ -404,6 +450,7 @@ export default function Onboarding() {
     setCurrentModal(5);
     setTopVpkAllButton('top-vpk-all-button');
     setVpkButtonAnimate('block');
+    setPointerEvents('all');
   };
   const handleNext5 = () => {
     setCurrentRegionId(3);
@@ -418,6 +465,7 @@ export default function Onboarding() {
       third: false,
     });
     dispatch(setLocalTimeBlur(true));
+    
   };
   const handleNext6 = () => {
     dispatch(setBlur(false));
@@ -431,6 +479,7 @@ export default function Onboarding() {
       third: true,
     })
   };
+  const [selectAll, setSelectAll] = useState(false);
   const handleSelectOpen = () => {
     setSelectOpen(true);
   };
@@ -444,7 +493,8 @@ export default function Onboarding() {
     setVpkButtonText('Сбросить все');
     setTopVpkAllButton('');
     setVpkCountColor('rgba(94, 209, 197, 1)');
-    setAccordionWrapperIndustry('accordion-wrapper-industry accordion-wrapper-industry_active')
+    setAccordionWrapperIndustry('accordion-wrapper-industry accordion-wrapper-industry_active');
+    setSelectAll(true);
   };
   const handleNext7 = () => {
     setModalOpen7(false);
@@ -456,14 +506,53 @@ export default function Onboarding() {
     setModalOpen8(false);
     setModalOpen9(true);
     setCurrentModal(9);
+    setRemoveModalDate(true);
   };
   const handleNext9 = () => {
-    setRemoveModalDate(true);
+    // setRemoveModalDate(true);
     setCurrentModal(10);
   };
   return (
     <>
       <div className={styles.onboardingWrapper}>
+        <Image 
+          src={globusImg}
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%,-50%)',
+            pointerEvents: 'none',
+            filter:
+            modalOpen ||
+            modalOpen3 ||
+            modalOpen4 ||
+            modalOpen5 ||
+            modalOpen6 ||
+            modalOpen7 ||
+            modalOpen8 ||
+            modalOpen9
+              ? 'blur(22px)'
+              : 'none',
+          }}
+          width={745}
+          height={745}
+          alt={'globus image onboarding'}
+        />
+        <Image 
+          src={bottomElements}
+          style={{
+            position: 'fixed',
+            bottom: '12px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            pointerEvents: 'none',
+            filter: 'blur(22px)',
+          }}
+          alt={'bottom elements'}
+          width={1295}
+          height={57}
+        />
         <div
           style={{ filter: blurButtons ? 'blur(22px)' : 'none' }}
           className={styles.onboardingButtons}
@@ -474,7 +563,17 @@ export default function Onboarding() {
               key={region.id}
               active={currentRegionId === region.id}
               // disabled={ buttonsDisabled ||  region.id == 2 || region.id == 3}
-              onClick={() => handleSelectRegion(region.id)}
+              onClick={() => {
+                handleSelectRegion(region.id);
+                if (index === 0) {
+                  setSelectOpen(true);
+                  setModalOpen2(false);
+                  setModalOpen3(true);
+                  handleSelectRegion(1);
+                  setBlurButtons(false);
+                  setCurrentModal(3);
+                }
+              }}
             >
               {region.nameMain}
             </BaseButton>
@@ -541,6 +640,17 @@ export default function Onboarding() {
                   Для каждой задачи доступен выбор только одного уровня ущерба.
                 </div>
                 <ul className={styles.onboardingTheGorgeList}>
+                  <Image 
+                    src={damageArrows}
+                    alt={'arrows'}
+                    width={11}
+                    height={71}
+                    style={{
+                      position: 'absolute',
+                      right: '0',
+                      top: '41px',
+                    }}
+                  />
                   <li>
                     <button
                       className={`SecondarySmall onboarding-george__damage-level ${damageLevelClass}`}
@@ -555,7 +665,7 @@ export default function Onboarding() {
                             height={20}
                           />
 
-                          <h4 className='onboardingTheGorge__damage'>критический</h4>
+                          <h4 style={{marginLeft: '-9px'}} className='onboardingTheGorge__damage'>критический</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
@@ -577,7 +687,7 @@ export default function Onboarding() {
                             height={16}
                           />
 
-                          <h4 className='onboardingTheGorge__damage'>минимальный</h4>
+                          <h4 style={{marginLeft: '-4px'}} className='onboardingTheGorge__damage'>минимальный</h4>
                         </div>
                         <Image
                           src={'onboarding/info.svg'}
@@ -626,12 +736,30 @@ export default function Onboarding() {
             >
               <AccordionSummary
                 expandIcon={
-                  <Image
-                    src={'onboarding/arrow.svg'}
-                    alt={'arrow'}
-                    width={11.3}
-                    height={11.3}
-                  />
+                  <>
+                    <Image
+                      src={'onboarding/arrow.svg'}
+                      alt={'arrow'}
+                      width={11.3}
+                      height={11.3}
+                      style={{
+                        transform: "translateX(-14px)",
+                      }}
+                    />
+                    <Image
+                      src={'onboarding/onboarding-under-arrow.svg'}
+                      alt={'arrow'}
+                      width={11.3}
+                      height={70.61}
+                      style={{
+                        position: "absolute",
+                        left: "-15px",
+                        bottom: "0",
+                        transition: "opacity .15s ease-out",
+                        opacity:'1',
+                      }}
+                      />
+                  </>
                 }
               >
                 <h5 className='subregion-title'>Отрасли</h5>
@@ -644,7 +772,7 @@ export default function Onboarding() {
                 }}
               >
                 <button
-                  className={`ModalButton1 vpk__all-button ${topVpkAllButton}`}
+                  className={`ModalButton1 vpk__all-button vpk__all-button_disable ${topVpkAllButton}`}
                   onClick={handleSelectAllVPK}
                 >
                   <span>
@@ -663,25 +791,49 @@ export default function Onboarding() {
                   expanded={expanded === subRegion.id}
                   onChange={handleExpansion(subRegion.id)}
                   sx={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
                     color: expanded ? '#D9D9D9' : '#FFF',
                     marginBottom: '4px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
                   }}
                 >
-                  <AccordionSummary
-                    expandIcon={
-                      <Image
-                        src={'onboarding/arrow.svg'}
-                        alt={'arrow'}
-                        width={11.3}
-                        height={11.3}
-                      />
-                    }
-                    aria-controls={`${subRegion.id}-content`}
-                    id={`${subRegion.id}-header`}
-                  >
-                    <h5 className='subregion-title'>{subRegion.title}</h5>
-                  </AccordionSummary>
+                  <div className={subRegion.title == 'ВПК' && selectAll ? 'vpk-summary-container' : ''}>
+                    <AccordionSummary
+                      className={subRegion.title == 'ВПК' && selectAll ? 'vpk-summary vpk-summary_active' : 'vpk-summary'}
+                      sx={{
+                        backgroundColor: subRegion.title == 'ВПК' && selectAll ? '#011a17' : 'rgba(0, 0, 0, 0.87) !important',
+                      }}
+                      expandIcon={
+                        <>
+                          <Image
+                            src={'onboarding/arrow.svg'}
+                            alt={'arrow'}
+                            width={11.3}
+                            height={11.3}
+                          />
+                          <Image
+                            src={'onboarding/onboarding-under-arrow.svg'}
+                            alt={'arrow'}
+                            width={11.3}
+                            height={70.61}
+                            style={{
+                              display: modalOpen4 || modalOpen5 ? 'none' : 'block',
+                              position: "absolute",
+                              left: "0",
+                              bottom: "0",
+                              transition: "opacity .15s ease-out",
+                              opacity: underArrowOpacity.id.toString() == subRegion.id.toString() ? `${underArrowOpacity.opacity}` : '0',
+                            }}
+                          />
+                        </>
+                      }
+                      aria-controls={`${subRegion.id}-content`}
+                      id={`${subRegion.id}-header`}
+                    >
+                      <h5 style={{
+                        color: subRegion.title == 'ВПК' && selectAll ? '#5ED1C5' : '#D9D9D9'
+                      }} className='subregion-title'>{subRegion.title}</h5>
+                    </AccordionSummary>
+                  </div>
                   <div
                     className="ModalButtons"
                     style={{
@@ -696,6 +848,7 @@ export default function Onboarding() {
                       <div style={{position: 'relative', overflow: 'hidden', height: '31px'}}>
                         <div style={{ display: vpkButtonAnimate }} className='vpk__all-button-animate'></div>
                         <button
+                              style={{pointerEvents: pointerEvents as React.CSSProperties["pointerEvents"]}}
                               className={'ModalButton1 vpk__all-button'}
                           // className={` ${addColor ? 'Green' : ''} ModalButton1 vpk__all-button ${
                           //   modalOpen5 ? 'SecondarySmallShine' : ''
@@ -718,17 +871,33 @@ export default function Onboarding() {
                   >
                     {subRegion.options?.map((option) => (
                       <div className={option.name === 'США' ? 'AccordionNested-wrapper AccordionNested-wrapper_USA' : 'AccordionNested-wrapper'} key={option.id}>
-                        <div className='SecondarySmallShine__animation' style={{display: option.name === 'США' ? 'block' : 'none'}}></div>
+                        <div className='SecondarySmallShine__animation' style={{display: option.name === 'США' && !addColor ? 'block' : 'none'}}></div>
                         <button
+                          style={{
+                            width: addColor && option.name == 'США' ? '95px' : 'auto' ,
+                          }}
                           className={
-                            addColor
-                              ? 'Green Green__vpk'
-                              : option.name == 'США'
-                                ? 'SecondarySmallShine'
-                                : modalOpen4 || modalOpen5 ? 'industry-buttons' : 'AccordionNested'
+                            option.name == 'США'
+                                ? `SecondarySmallShine ${addColor ? 'Green' : ''}`
+                                : modalOpen4 || modalOpen5 ? `industry-buttons ${selectAll ? 'industry-buttons_active' : ''}` : 'AccordionNested'
                           }
                           onClick={() => handleOpenSidenav(option)}
                         >
+                          <Image 
+                            src={closeUsa}
+                            alt={'close cross'}
+                            width={11.3}
+                            height={11.3}
+                            style={{
+                              display: option.name == 'США' ? 'block' : 'none',
+                              position: 'absolute',
+                              right: '10px',
+                              top: '50%',
+                              transform: 'translateY(-50%)',
+                              opacity: addColor ? '1' : '0',
+                        
+                            }}
+                          />
                           <div className={option.name === 'США' ? 'AccordionNested-helper-1 AccordionNested-helper-1_USA' : 'AccordionNested-helper-1'}></div>
                           <div className={option.name === 'США' ? 'AccordionNested-helper-2 AccordionNested-helper-2_USA' : 'AccordionNested-helper-2'}></div>
                           <span>
@@ -748,7 +917,7 @@ export default function Onboarding() {
           isOpen={modalOpen}
           onClose={closeModal}
           counter={1}
-          sx={{ left: '40%', top: '12% !important', position: 'absolute' }}
+          sx={{ left: '518px !important', top: '81px !important', position: 'absolute' }}
         >
           <p>На выбор вам доступны два режима:</p>
           <ul style={{ gap: '16px' }}>
@@ -884,7 +1053,7 @@ export default function Onboarding() {
           isOpen={modalOpen7}
           onClose={closeModal7}
           counter={7}
-          sx={{ bottom: '260px !important', left: '660px !important', top: 'unset !important' }}
+          sx={{ bottom: '211px !important', left: '660px !important', top: 'unset !important' }}
         >
           <p>
             {' '}
@@ -972,13 +1141,13 @@ export default function Onboarding() {
           <button onClick={openModal}>атака</button>
           <div>
             <Image
-              src={'onboarding/AttackSign.svg'}
+              src={AttackSignActive}
               alt={'attack'}
               width={68}
               height={68}
             />
             <Image
-              src={'onboarding/ProtectSign.svg'}
+              src={ProtectSign}
               alt={'protect'}
               width={68}
               height={68}
@@ -999,26 +1168,6 @@ export default function Onboarding() {
         sx={{ filter: blur ? 'blur(22px)' : 'none' }}
         accordionWrapperIndustry={accordionWrapperIndustry}
         accordionWrapperDamage={accordionWrapperDamage}
-      />
-      <Image
-        src="/home/Globus1.png"
-        width={1071}
-        height={1070}
-        alt="Globus"
-        style={{
-          filter:
-            modalOpen ||
-            modalOpen3 ||
-            modalOpen4 ||
-            modalOpen5 ||
-            modalOpen6 ||
-            modalOpen7 ||
-            modalOpen8 ||
-            modalOpen9
-              ? 'blur(22px)'
-              : 'none',
-        }}
-        className={styles.onboardingGlobus}
       />
     </>
   );

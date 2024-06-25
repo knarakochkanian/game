@@ -41,9 +41,9 @@
     top: 54px;
   }
   .light {
-    position: absolute;
-    top: -300px;
-    right: 1112px;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   .target {
     position: absolute;

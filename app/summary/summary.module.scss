@@ -2,8 +2,13 @@
 
 .main {
   display: block;
+  width: 100% !important;
+  height: 825px !important;
+  overflow: hidden;
   .blur {
     @include blurDivStyles;
+    width: 100%;
+    height: 100%;
   }
   .blur.z_15 {
     z-index: 15;

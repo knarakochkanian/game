@@ -2,6 +2,7 @@
 
 .accordionSummary {
     @include AccordionSummary;
+    margin-top: 15px;
     h3 {
       color: $mid-dark-gray;
     }
