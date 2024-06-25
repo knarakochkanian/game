@@ -44,6 +44,10 @@ const Modal: React.FC<ModalProps> = ({
         onClick={handleOutsideClick}
         sx={sx}
         className={`${styles.modal} ${styles[name]}`}
+        style={{
+          left: counter == 11 ? '908px' : '',
+          top: counter == 11 ? '304px' : '',
+        }}
       >
         <div>
           <div className={styles.modalCounter}>
@@ -63,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({
                 />
               </button>
             )}
-            {!isTrashModal ||
+            {isTrashModal ||
               (!withClose && (
                 <span className={styles.modalCounter_number}>{counter}/12</span>
               ))}

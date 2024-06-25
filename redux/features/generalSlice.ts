@@ -28,6 +28,9 @@ export interface IInitialState {
   formattedFinancialLosses: string;
   onBoardingBlur: any;
   localTimeBlur: any;
+  attackTime: any;
+  clickOnboardingSummary: any;
+  clickOnboardingCount: any;
 }
 
 const initialState: IInitialState = {
@@ -62,6 +65,12 @@ const initialState: IInitialState = {
     12: false,
   },
   localTimeBlur: true,
+  attackTime: {
+    time: '',
+    date: '',
+  },
+  clickOnboardingSummary: false,
+  clickOnboardingCount: false,
 };
 
 const generalSlice = createSlice({
@@ -260,6 +269,15 @@ const generalSlice = createSlice({
     setLocalTimeBlur(state, { payload }) {
       state.localTimeBlur = payload;
     },
+    setAttackTime(state, { payload }) {
+      state.attackTime = payload;
+    },
+    setClickOnboardingSummary(state, { payload }) {
+      state.clickOnboardingSummary = payload;
+    },
+    setClickOnboardingCount(state, { payload }) {
+      state.clickOnboardingCount = payload;
+    }
   },
 });
 
@@ -288,6 +306,9 @@ export const {
   proccesIndustriesByTitle,
   setOnBoardingBlur,
   setLocalTimeBlur,
+  setAttackTime,
+  setClickOnboardingSummary,
+  setClickOnboardingCount,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -321,5 +342,11 @@ export const selectOnboardingBlur = (state: RootState) =>
   state.generalReducer.onBoardingBlur;
 export const selectLocalTimeBlur = (state: RootState) =>
   state.generalReducer.localTimeBlur;
+export const selectAttackTime = (state: RootState) =>
+  state.generalReducer.attackTime;
+export const selectClickOnboardingSummary = (state: RootState) =>
+  state.generalReducer.clickOnboardingSummary;
+export const selectClickOnboardingCount = (state: RootState) =>
+  state.generalReducer.clickOnboardingCount;
 
 export default generalSlice.reducer;

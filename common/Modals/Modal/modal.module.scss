@@ -56,17 +56,22 @@
 }
 
 .modal.learningStart {
-  position: relative;
-  bottom: 100px;
-  right: -1828px;
-  z-index: 16;
+  position: absolute;
+  top: 320px;
+  left: 673px;
+  z-index: 1000;
+  .ModalButton1 {
+    padding: 0 !important;
+    text-decoration: none !important;
+  }
 }
+
 
 .modal.endingOnboarding {
   position: fixed;
-  top: 593px;
-  right: 605px;
-  z-index: 19;
+  top: 271px;
+  left: 800px;
+  z-index: 10000;
   .ModalButtons {
     justify-content: flex-start;
   }

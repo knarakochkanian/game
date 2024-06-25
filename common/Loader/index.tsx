@@ -44,8 +44,8 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         <Image
           src={isAttacking ? greenLight : blueLight}
           alt="light"
-          width={1344}
-          height={840}
+          width={1318}
+          height={825}
           priority
         />
       </div>
