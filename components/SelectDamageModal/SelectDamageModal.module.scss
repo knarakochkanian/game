@@ -15,10 +15,41 @@
       list-style: none;
       > li > button {
         width: 100%;
+        border: none;
+        span {
+          width: 100%;
+          @include flex-between;
+          &::after {
+            display: none;
+          }
+          &::before {
+            display: none;
+          }
+        }
+        &::before {
+          display: none;
+        }
+        &::after {
+          display: none;
+        }
       }
       > li.selected > button {
+        border-right: 2px solid $mid-gray;
+        border-left: 2px solid $mid-gray;
         color: $attack-green-40 !important;
         background-color: $attack-dark-green-select-60 !important;
+        &::before {
+          display: block;
+        }
+        &::after {
+          display: block;
+        }
+        span::before {
+          display: block;
+        }
+        span::after {
+          display: block;
+        }
         h4 {
           color: $attack-green;
         }
@@ -26,10 +57,9 @@
       > li.selected.isProtecting > button {
         color: $protect-blue !important;
         background-color: $protect-dark-blue-select !important;
-      }
-      > li > button > span {
-        width: 100%;
-        @include flex-between;
+        span::before {
+          display: block;
+        }
       }
       &Item {
         @include flex-start;
