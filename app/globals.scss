@@ -663,6 +663,9 @@ button {
   .damage-level-info__button {
     height: 20px;
   }
+  .modal.learningStart {
+    z-index: 17 !important;
+  }
   .modal.learningStart .ModalButton1 {
     text-decoration: none;
     padding: 0 !important; 

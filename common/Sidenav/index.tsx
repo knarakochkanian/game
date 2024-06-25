@@ -15,6 +15,7 @@ import {
   setIsAttacking,
   setClickOnboardingSummary,
   selectClickOnboardingSummary,
+  selectClickOnboardingCount,
 } from '../../redux/features/generalSlice';
 import Link from 'next/link';
 import zIndex from '@mui/material/styles/zIndex';
@@ -33,6 +34,7 @@ import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
 import { useSelector } from 'react-redux';
 import SummaryOnBoarding from '../../app/summary-onboarding/page';
+import CountDownOnboarding from '../../app/count-down-onboarding/page';
 interface SidenavProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -61,6 +63,7 @@ function Sidenav({
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
   const isClickOnBoardingSummary = useSelector(selectClickOnboardingSummary);
+  const isClickOnBoardingCount = useSelector(selectClickOnboardingCount);
   // const handleBtn_1_Click = () => {
   //   if (name === ATTACK_OR_PROTECT) {
   //     dispatch(setIsAttacking(true));
@@ -147,11 +150,12 @@ function Sidenav({
   return (
     <>
       {isClickOnBoardingSummary && <SummaryOnBoarding />}
+      {isClickOnBoardingCount && <CountDownOnboarding />}
       <Box
         sx={sx}
         id="mySidenav"
         className={styles.sidenav}
-        style={{ width: isOpen ? '328px' : '0' }}
+        style={{ width: isOpen ? '328px' : '0', opacity: isClickOnBoardingCount ? '0' : '1' }}
       >
         <div className={styles.sidenavWrapper}>
           <Image
@@ -418,13 +422,13 @@ function Sidenav({
                   width={23}
                 />
               </div> */}
-              <Link href={'/summary'} onClick={() => {
-                  onSetCurrentAction();
-                  // goOnboardingSummary();
+              <div style={{transform: 'translateY(-7px)'}} onClick={() => {
+                  // onSetCurrentAction();
+                  goOnboardingSummary();
                 }}>
                 <span
                   className="Lead"
-                  style={{ color: 'white', padding: '10px 10px 10px 0' }}
+                  style={{ color: 'white', padding: '10px 10px 10px 0', marginLeft: '30px' }}
                 >
                   ПОДТВЕРДИТЬ
                 </span>
@@ -434,8 +438,9 @@ function Sidenav({
                   alt={'arrow'}
                   height={23}
                   width={23}
+                  onClick={goOnboardingSummary}
                 />
-              </Link>
+              </div>
             </div>
           )}
         </div>

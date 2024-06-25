@@ -30,6 +30,7 @@ export interface IInitialState {
   localTimeBlur: any;
   attackTime: any;
   clickOnboardingSummary: any;
+  clickOnboardingCount: any;
 }
 
 const initialState: IInitialState = {
@@ -69,6 +70,7 @@ const initialState: IInitialState = {
     date: '',
   },
   clickOnboardingSummary: false,
+  clickOnboardingCount: false,
 };
 
 const generalSlice = createSlice({
@@ -272,6 +274,9 @@ const generalSlice = createSlice({
     },
     setClickOnboardingSummary(state, { payload }) {
       state.clickOnboardingSummary = payload;
+    },
+    setClickOnboardingCount(state, { payload }) {
+      state.clickOnboardingCount = payload;
     }
   },
 });
@@ -302,7 +307,8 @@ export const {
   setOnBoardingBlur,
   setLocalTimeBlur,
   setAttackTime,
-  setClickOnboardingSummary
+  setClickOnboardingSummary,
+  setClickOnboardingCount,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
@@ -340,5 +346,7 @@ export const selectAttackTime = (state: RootState) =>
   state.generalReducer.attackTime;
 export const selectClickOnboardingSummary = (state: RootState) =>
   state.generalReducer.clickOnboardingSummary;
+export const selectClickOnboardingCount = (state: RootState) =>
+  state.generalReducer.clickOnboardingCount;
 
 export default generalSlice.reducer;
