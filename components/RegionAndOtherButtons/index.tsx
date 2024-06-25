@@ -31,6 +31,8 @@ import useCloseSelection from '../../hooks/useCloseSelection';
 import CountryBlocks from '../CountryBlocks';
 
 import styles from './RegionAndOtherButtons.module.scss';
+import useResetSearch from '../../hooks/useResetSearch';
+import { selectKeyboardInput } from '../../redux/features/helpersSlice';
 
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
@@ -51,6 +53,16 @@ const RegionAndOtherButtons = ({
   const [selectIndustryOpen, setSelectIndustryOpen] = useState(false);
   const countries = useAppSelector(selectPlaces);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const defaultInputValue = useAppSelector(selectKeyboardInput);
+  const [input, setInput] = useState(defaultInputValue || '');
+  const [cursorPosition, setCursorPosition] = useState(0);
+
+  const layoutInputProps = {
+    input,
+    setInput,
+    cursorPosition,
+    setCursorPosition,
+  };
 
   const keyboardRef = useRef<{
     setSearchInput: (input: string) => void;
@@ -63,6 +75,8 @@ const RegionAndOtherButtons = ({
     setSelectDamageOpen,
     setSelectIndustryOpen
   );
+
+  useResetSearch(openModal, setSearchInput, setInput, setCursorPosition);
 
   useCloseSelection(
     setSelectOpen,
@@ -116,6 +130,8 @@ const RegionAndOtherButtons = ({
 
       <ModalWithSelect from="main" isOpen={selectOpen} onClose={() => {}}>
         <SearchInput
+          setCursorPosition={setCursorPosition}
+          setInput={setInput}
           searchInputRef={searchInputRef}
           onChangeInput={onChangeInput}
           onSearchClick={onSearchClick}
@@ -212,6 +228,8 @@ const RegionAndOtherButtons = ({
         name="Отрасль"
       >
         <IndustrySelection
+          setCursorPosition={setCursorPosition}
+          setInput={setInput}
           searchInputRef={searchInputRef}
           expanded={expanded}
           handleExpansion={handleExpansion}
@@ -234,6 +252,7 @@ const RegionAndOtherButtons = ({
       {showKeyboard && (
         <dialog className={styles.keyboard}>
           <Keyboard
+            layoutInputProps={layoutInputProps}
             searchInputRef={searchInputRef}
             setShowKeyboard={setShowKeyboard}
             setSearchInput={setSearchInput}

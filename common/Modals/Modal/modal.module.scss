@@ -78,9 +78,9 @@
 }
 
 .modal.trashInSummary, .modal.trashInSidnav {
-  max-width: 632px;
+  max-width: 332px;
   top: -7% !important;
-  right: -42%;
+  right: -13%;
   left: unset;
   z-index: 1;
   .modalCounter {
@@ -89,8 +89,8 @@
   .modalMain {
     p {
       text-align: center;
-      width: 493px;
-      font-size: 36px;
+      width: 293px;
+      font-size: 13px;
     }
   }
   div {
@@ -104,6 +104,6 @@
 }
 
 .modal.trashInSidnav {
-  top: -1% !important;
+  top: 7% !important;
   right: 6%;
 }

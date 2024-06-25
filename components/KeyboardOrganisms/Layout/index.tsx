@@ -49,12 +49,12 @@ const Layout = ({
   setShowKeyboard,
   setLayoutName,
   searchInputRef,
+  layoutInputProps,
 }: ILayoutProps) => {
   const dispatch = useAppDispatch();
-  const defaultInputValue = useAppSelector(selectKeyboardInput);
-  const [input, setInput] = useState(defaultInputValue || '');
-  const [cursorPosition, setCursorPosition] = useState(0);
   const isUppercase = layoutName === SHIFT;
+  const { cursorPosition, input, setCursorPosition, setInput } =
+    layoutInputProps;
 
   const handleButtonClick = (button: string) => {
     const newInput = proccessNewInput(button, input, cursorPosition);
@@ -63,10 +63,12 @@ const Layout = ({
     onChange(newInput);
     onKeyPress(button);
     if (button === SHIFT_NAME) return;
-    const cursorChangeSize = button === ':)' ? 2 : 1
+    const cursorChangeSize = button === ':)' ? 2 : 1;
 
     setCursorPosition((prevPos) =>
-      button === BACKSPACE_NAME ? Math.max(prevPos - 1, 0) : prevPos + cursorChangeSize
+      button === BACKSPACE_NAME
+        ? Math.max(prevPos - 1, 0)
+        : prevPos + cursorChangeSize
     );
   };
 
