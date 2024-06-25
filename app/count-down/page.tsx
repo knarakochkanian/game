@@ -106,8 +106,8 @@ export default function CountDown() {
             );
           }
 
-          // dispatch(resetGeneralState());
-          // router.push('/');
+          dispatch(resetGeneralState());
+          router.push('/');
         } else if (time.seconds > 0) {
           setTime({ ...time, seconds: time.seconds - 1 });
         } else if (time.minutes > 0) {
