@@ -28,13 +28,13 @@
   }
   &ModalBottom {
     display: flex;
-    width: 409px;
-    left: -214px;
-    gap: 32px;
+    width: 200px;
+    left: -40%;
+    gap: 22px;
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
-    bottom: 160px;
+    bottom: 70px;
     background-color: rgba(1, 2, 2, 0.5);
     > div {
       @include TypoBodySmall;
@@ -43,13 +43,13 @@
   }
   &ModalBottomRight {
     display: flex;
-    width: 409px;
-    right: -250px;
-    gap: 32px;
+    width: 200px;
+    right: -45%;
+    gap: 22px;
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
-    bottom: 160px;
+    bottom: 70px;
     background-color: rgba(1, 2, 2, 0.5);
     > div {
       @include TypoBodySmall;

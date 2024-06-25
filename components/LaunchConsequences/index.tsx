@@ -94,18 +94,20 @@ const LaunchConsequences = ({
       const consequence = consequences[key];
       let paragraph;
 
-      switch (damageLevel) {
-        case 'Критический':
-          paragraph = consequence.критический;
-          break;
-        case 'Минимальный':
-          paragraph = consequence.минимальный;
-          break;
-        case 'Предупреждение':
-          paragraph = consequence.предупреждение;
-          break;
-        default:
-          paragraph = '';
+      switch (
+        damageLevel
+        // case 'Критический':
+        //   paragraph = consequence.critical;
+        //   break;
+        // case 'Минимальный':
+        //   paragraph = consequence.critical;
+        //   break;
+        // case 'Предупреждение':
+        //   paragraph = consequence.предупреждение;
+        //   break;
+        // default:
+        //   paragraph = '';
+      ) {
       }
 
       return (
@@ -167,7 +169,9 @@ const LaunchConsequences = ({
         <div className={styles.imgAndModal}>
           <Modal
             name="damageInfo"
-            isOpen={currentPage !== ONBOARDING ? !!fromOnboarding : !learningStart}
+            isOpen={
+              currentPage !== ONBOARDING ? !!fromOnboarding : !learningStart
+            }
             counter={10}
           >
             <p>

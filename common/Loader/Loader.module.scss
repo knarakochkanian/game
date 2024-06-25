@@ -3,8 +3,8 @@
 .loader {
   position: fixed;
   width: 100%;
-  top: -4px;
-  left: 299px;
+  top: 175px;
+  left: 422px;
 
   @keyframes rotate-cw {
     to {
@@ -22,7 +22,6 @@
     animation: rotate-cw linear 4s infinite;
   }
   > img:nth-child(2) {
-    top: 100px;
     animation: rotate-ccw linear 5s infinite;
   }
   > img:nth-child(3) {
@@ -34,14 +33,12 @@
     position: absolute;
   }
   .smallCircle {
-    top: 260px;
-    left: 245px;
+    top: 120px;
+    left: 123px;
   }
   .mediumCircle {
-    top: 117px;
-    left: 110px;
-  }
-  .bigCircle {
+    left: 55px;
+    top: 54px;
   }
   .light {
     position: fixed;
@@ -50,7 +47,7 @@
   }
   .target {
     position: absolute;
-    top: 299px;
-    left: 274px;
+    top: 120px;
+    left: 114px;
   }
 }

@@ -5,46 +5,35 @@
 }
 
 .countdownContainer {
-  padding-top: 300px;
+  padding-top: 328px;
   padding-left: 76px;
   position: relative;
   h5 {
     padding-left: 25px;
     position: relative;
     z-index: 18;
-    font-size: 16px;
-    font-weight: 600;
+    @include set-font-size-weight(16px, 600);
     line-height: 19.21px;
     letter-spacing: 0.03em;
     text-align: left;
   }
   .timerAndAttackCtn {
     display: flex;
-    gap: 90px;
+    gap: 206px;
     .timer {
       display: flex;
       align-items: flex-start;
       gap: 75px;
       div {
-        width: 397px;
-        height: 336px;
+        @include set-width-height(100px, 160px);
         @include flex-center;
       }
       .time {
-        text-align: center;
         position: relative;
-        font-size: 280px;
-        font-style: normal;
-        font-weight: 300;
-        line-height: 120%; /* 336px */
-        letter-spacing: -2.8px;
+        line-height: 120%;
         text-transform: uppercase;
         z-index: 13;
-        // min-width: 415px;
-
-        font-size: 131.8px;
-        font-weight: 300;
-        line-height: 158.16px;
+        @include set-font-size-weight(132px, 300);
         letter-spacing: -0.01em;
         text-align: left;
         .hours,
@@ -54,11 +43,10 @@
           font-variant-numeric: slashed-zero;
           text-transform: uppercase;
           @include TypoBodySmall;
+          @include set-font-size-weight(13px, 500);
           position: absolute;
           bottom: 0;
           right: 13px;
-          font-size: 13.18px;
-          font-weight: 500;
           line-height: 15.82px;
           letter-spacing: 0.01em;
           text-align: left;
@@ -73,8 +61,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 70px 0;
+      padding: 30px 0;
       z-index: 13;
+      gap: 36px;
       h2.attackTitle {
         @include TypoH2;
       }
