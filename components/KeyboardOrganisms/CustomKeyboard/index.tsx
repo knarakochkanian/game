@@ -19,6 +19,7 @@ const CustomKeyboard = ({
   setShowKeyboard,
   setLayoutName,
   searchInputRef,
+  layoutInputProps,
 }: ICustomKeyboardProps) => {
   const [isDigitLayout, setIsDigitLayout] = useState(false);
 
@@ -29,6 +30,7 @@ const CustomKeyboard = ({
       }`}
     >
       <Layout
+        layoutInputProps={layoutInputProps}
         searchInputRef={searchInputRef}
         setLayoutName={setLayoutName}
         setShowKeyboard={setShowKeyboard}

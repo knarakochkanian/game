@@ -17,6 +17,7 @@ interface IKeyBoardProps {
     setSearchInput: (input: string) => void;
   } | null>;
   searchInputRef: RefObject<HTMLInputElement>;
+  layoutInputProps: ILayoutInputProps;
 }
 
 const Keyboard = ({
@@ -24,6 +25,7 @@ const Keyboard = ({
   keyboardRef,
   setShowKeyboard,
   searchInputRef,
+  layoutInputProps,
 }: IKeyBoardProps) => {
   const [layoutName, setLayoutName] = useState(DEFAULT);
   const [language, setLanguage] = useState(RUSSIAN);
@@ -49,6 +51,7 @@ const Keyboard = ({
   return (
     <>
       <CustomKeyboard
+        layoutInputProps={layoutInputProps}
         searchInputRef={searchInputRef}
         setLayoutName={setLayoutName}
         setShowKeyboard={setShowKeyboard}

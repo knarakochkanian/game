@@ -16,6 +16,8 @@ export interface ISearchInputProps {
   onSearchClick: () => void;
   setSearchInput: TSetString;
   searchInputRef: RefObject<HTMLInputElement>;
+  setInput: TSetString;
+  setCursorPosition: TSetNumber;
 }
 
 const SearchInput = ({
@@ -23,12 +25,16 @@ const SearchInput = ({
   onSearchClick,
   searchInput,
   setSearchInput,
-  searchInputRef
+  searchInputRef,
+  setCursorPosition,
+  setInput,
 }: ISearchInputProps) => {
   const dispatch = useAppDispatch();
   const onCleanSearch = () => {
     dispatch(setKeyboardInput(''));
-    setSearchInput('')
+    setSearchInput('');
+    setInput('');
+    setCursorPosition(0);
   }
   
   return (

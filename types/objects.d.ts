@@ -90,6 +90,7 @@ type TRef = MutableRefObject<{
 } | null>;
 
 interface IKeyboardManagementProps {
+  layoutInputProps: ILayoutInputProps;
   searchInputRef: RefObject<HTMLInputElement>;
   setLayoutName: TSetString;
   keyboardRef: TKeyboardRefFunc;
@@ -97,4 +98,11 @@ interface IKeyboardManagementProps {
   onChange: (input: string) => void;
   onKeyPress: (button: string) => void;
   setShowKeyboard: TSetBoolean;
+}
+
+interface ILayoutInputProps {
+  input: string;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
+  cursorPosition: number;
+  setCursorPosition: React.Dispatch<React.SetStateAction<number>>;
 }
