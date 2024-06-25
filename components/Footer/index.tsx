@@ -12,8 +12,8 @@ const Footer = ({ cancelCountdown }: { cancelCountdown: () => void }) => {
         className={styles.topOfBotton}
         src={topOfBotton}
         alt="topOfBotton"
-        width={1263}
-        height={84.905}
+        width={595}
+        height={40}
         priority
       />
 
@@ -21,8 +21,8 @@ const Footer = ({ cancelCountdown }: { cancelCountdown: () => void }) => {
         className={styles.opacityOfButton}
         src={opacityOfButton}
         alt="opacityOfButton"
-        width={1482.5}
-        height={196.5}
+        width={698}
+        height={92}
         priority
       />
 

@@ -106,8 +106,8 @@ export default function CountDown() {
             );
           }
 
-          dispatch(resetGeneralState());
-          router.push('/');
+          // dispatch(resetGeneralState());
+          // router.push('/');
         } else if (time.seconds > 0) {
           setTime({ ...time, seconds: time.seconds - 1 });
         } else if (time.minutes > 0) {
@@ -190,8 +190,8 @@ export default function CountDown() {
             <Image
               src={isAttacking ? attack : protectionIcon}
               alt="attack or protect"
-              width={80}
-              height={80}
+              width={38}
+              height={38}
               priority
             />
             <h2 className={styles.attackTitle}>
