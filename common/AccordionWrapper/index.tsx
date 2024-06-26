@@ -59,8 +59,8 @@ const AccordionWrapper = ({
     background: titleHighlighted
       ? '#011A17'
       : showPlusIcon
-        ? '#131E1D'
-        : 'inherit',
+      ? '#131E1D'
+      : 'inherit',
   };
 
   return (
@@ -69,7 +69,9 @@ const AccordionWrapper = ({
       onChange={handleExpansion(data.id)}
       sx={{
         backgroundColor: `${
-          accordionBackground ? accordionBackground : 'transparent'
+          accordionBackground
+            ? accordionBackground
+            : 'transparent'
         } `,
         color: '#fff',
         marginBottom:
@@ -108,7 +110,9 @@ const AccordionWrapper = ({
             className={`${style.title} ${
               titleHighlighted ? style.highlighted : ''
             } ${
-              data.title === top_capitalization ? style.topCapitalization : ''
+              data.title === top_capitalization
+                ? style.topCapitalization
+                : ''
             }`}
           >
             {data.title}
