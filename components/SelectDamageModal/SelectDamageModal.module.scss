@@ -34,8 +34,8 @@
         }
       }
       > li.selected > button {
-        border-right: 2px solid $mid-gray;
-        border-left: 2px solid $mid-gray;
+        border-right: 1px solid $mid-gray;
+        border-left: 1px solid $mid-gray;
         color: $attack-green-40 !important;
         background-color: $attack-dark-green-select-60 !important;
         &::before {
@@ -56,9 +56,26 @@
       }
       > li.selected.isProtecting > button {
         color: $protect-blue !important;
+        border-color: $protect-blue;
         background-color: $protect-dark-blue-select !important;
         span::before {
           display: block;
+          background: $protect-blue;
+        }
+        &::before {
+          display: block;
+          background: $protect-blue;
+        }
+        &::after {
+          display: block;
+          background: $protect-blue;
+        }
+        span::after {
+          display: block;
+          background: $protect-blue;
+        }
+        h4 {
+          color: $protect-blue;
         }
       }
       &Item {

@@ -3,9 +3,11 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import { RegionCategory } from '../../data/attackRegionsData';
 import GreenLineBorders from '../GreenLineBorders';
-import { plusIcon } from '../../public/ui_kit';
+import { plusIcon, plusIconProtect } from '../../public/ui_kit';
 import { INDUSTRY, top_capitalization } from '../../constants';
 import ResetOrSelectAll_2 from '../ResetOrSelectAll_2';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import './AccordionWrapper.scss';
 import style from './AccordionWrapper.module.scss';
@@ -35,6 +37,7 @@ const AccordionWrapper = ({
   selectedOtionsCount,
   styles,
 }: IAccordionWrapperProps) => {
+  const isAttacking = useAppSelector(selectIsAttacking);  
   const {
     accordionBackground,
     accordionDetailsHeight,
@@ -54,10 +57,16 @@ const AccordionWrapper = ({
     marginRight: '8px',
     marginLeft: '4px',
     padding: '12px 16px',
-    borderRight: titleHighlighted ? '0.941px solid #5ED1C5' : 'inherit',
-    borderLeft: titleHighlighted ? '0.941px solid #5ED1C5' : 'inherit',
+    borderRight: titleHighlighted
+      ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
+      : 'inherit',
+    borderLeft: titleHighlighted
+      ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
+      : 'inherit',
     background: titleHighlighted
-      ? '#011A17'
+      ? isAttacking
+        ? '#011A17'
+        : '#010526'
       : showPlusIcon
       ? '#131E1D'
       : 'inherit',
@@ -69,9 +78,7 @@ const AccordionWrapper = ({
       onChange={handleExpansion(data.id)}
       sx={{
         backgroundColor: `${
-          accordionBackground
-            ? accordionBackground
-            : 'transparent'
+          accordionBackground ? accordionBackground : 'transparent'
         } `,
         color: '#fff',
         marginBottom:
@@ -98,7 +105,7 @@ const AccordionWrapper = ({
         {showPlusIcon && (
           <Image
             className={style.plusIcon}
-            src={plusIcon}
+            src={isAttacking ? plusIcon : plusIconProtect}
             alt={'plusIcon'}
             width={49}
             height={30}
@@ -110,15 +117,17 @@ const AccordionWrapper = ({
             className={`${style.title} ${
               titleHighlighted ? style.highlighted : ''
             } ${
-              data.title === top_capitalization
-                ? style.topCapitalization
-                : ''
-            }`}
+              data.title === top_capitalization ? style.topCapitalization : ''
+            } ${isAttacking ? '' : style.isProtecting}`}
           >
             {data.title}
           </h5>
           {!allDataSelected && showPlusIcon && expanded !== data.id && (
-            <span className={style.count}>
+            <span
+              className={`${style.count} ${
+                isAttacking ? '' : style.isProtecting
+              }`}
+            >
               {selectedOtionsCount}
               <GreenLineBorders width={4} />
             </span>

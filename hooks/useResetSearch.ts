@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { selectKeyboardInput, setKeyboardInput } from '../redux/features/helpersSlice';
+import { useAppDispatch } from '../redux/hooks';
+import { setKeyboardInput } from '../redux/features/helpersSlice';
 
 const useResetSearch = (
   openModal: string,
@@ -9,7 +9,6 @@ const useResetSearch = (
   setCursorPosition: TSetNumber
 ) => {
   const dispatch = useAppDispatch();
-  const defaultInputValue = useAppSelector(selectKeyboardInput);
 
   useEffect(() => {
     dispatch(setKeyboardInput(''));

@@ -1,34 +1,40 @@
 @import '/app/variables.module.scss';
 
 .accordionSummary {
-    @include AccordionSummary;
-    h3 {
-      color: $mid-dark-gray;
-    }
+  @include AccordionSummary;
+  h3 {
+    color: $mid-dark-gray;
   }
-.accordionWiOutFlag{
+}
+.accordionWiOutFlag {
   &::after {
     @include afterLine;
     background: $attack-green-80;
   }
 
-  &Disable{
+  &Disable {
     &::after {
       @include afterLine;
-      background: $mid-dark-gray;}
+      background: $mid-dark-gray;
+    }
   }
-  &Protected{
+  &Protected {
     &::after {
       @include afterLine;
-      background: $protect-blue-80;}
+      background: $protect-blue-80;
+    }
   }
-
 }
-.countiesWithOutFlag{
+.accordionWiOutFlag.isProtecting {
+  &::after {
+    background-color: $protect-blue;
+  }
+}
+.countiesWithOutFlag {
   max-height: 400px;
   @include scrollStyles;
   @include hideScrollBar;
-  >div{
+  > div {
     @include flex-between;
     align-items: center;
   }

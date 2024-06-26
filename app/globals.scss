@@ -134,8 +134,8 @@ button {
 
 .SecondarySmall {
   text-decoration: none;
-  border-right: 2px solid #787878;
-  border-left: 2px solid #787878;
+  border-right: 1px solid #787878;
+  border-left: 1px solid #787878;
   position: relative;
   cursor: pointer;
   padding: 7.5px;
@@ -149,9 +149,9 @@ button {
   @include TypoBodyBig;
   &::after{
     content: '';
-    width: 16px;
+    width: 9px;
     position: absolute;
-    height: 2px;
+    height: 1px;
     background:  #787878;
     bottom: 0;
     left: 0;
@@ -159,8 +159,8 @@ button {
   &::before{
     content: '';
     position: absolute;
-    width: 16px;
-    height: 2px;
+    width: 9px;
+    height: 1px;
     background:  #787878;
     bottom: 0;
     right: 0;
@@ -175,9 +175,9 @@ button {
     text-transform: uppercase;
     &::before {
       content: '';
-      width: 16px;
+      width: 9px;
       position: absolute;
-      height: 2px;
+      height: 1px;
       background: #787878;
       top: 0;
       left: 0;
@@ -187,8 +187,8 @@ button {
     &::after{
       content: '';
       position: absolute;
-      width: 16px;
-      height: 2px;
+      width: 9px;
+      height: 1px;
       background:  #787878;
       top: 0;
       right: 0;

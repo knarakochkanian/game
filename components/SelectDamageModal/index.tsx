@@ -9,18 +9,22 @@ import {
 } from '../../redux/features/generalSlice';
 import { CRITICAL, MINIMAL, WARNING } from '../../constants';
 import { getLiClassnames } from '../../helpers/helpers_1';
+import { infoProtectMode, infoSelected } from '../../public/ui_kit';
 
 import styles from './SelectDamageModal.module.scss';
 
 const SelectDamageModal = () => {
   const dispatch = useAppDispatch();
   const damageLevel = useAppSelector(selectDamgeLevel);
+  const criticalSelected = damageLevel === CRITICAL;
+  const minimalSelected = damageLevel === MINIMAL;
+  const warningSelected = damageLevel === WARNING;
   const isAttacking = useAppSelector(selectIsAttacking);
   const liClassnames = {
     critical: getLiClassnames(damageLevel, isAttacking, CRITICAL, styles),
     minimal: getLiClassnames(damageLevel, isAttacking, MINIMAL, styles),
     warning: getLiClassnames(damageLevel, isAttacking, WARNING, styles),
-  }
+  };
 
   const handleLevelClick = (level: string) => {
     dispatch(setDamageLevel(level));
@@ -33,9 +37,7 @@ const SelectDamageModal = () => {
         Для каждой задачи доступен выбор только одного уровня ущерба.
       </div>
       <ul className={styles.damageLevelTheGorgeList}>
-        <li
-          className={liClassnames.critical}
-        >
+        <li className={liClassnames.critical}>
           <button
             className="SecondarySmall"
             onClick={() => handleLevelClick(CRITICAL)}
@@ -52,7 +54,15 @@ const SelectDamageModal = () => {
                 <h4>критический</h4>
               </div>
               <Image
-                src={'onboarding/info.svg'}
+                src={
+                  isAttacking
+                    ? criticalSelected
+                      ? infoSelected
+                      : 'onboarding/info.svg'
+                    : criticalSelected
+                    ? infoProtectMode
+                    : 'onboarding/info.svg'
+                }
                 alt={'square'}
                 width={20}
                 height={20}
@@ -77,7 +87,15 @@ const SelectDamageModal = () => {
                 <h4>минимальный</h4>
               </div>
               <Image
-                src={'onboarding/info.svg'}
+                src={
+                  isAttacking
+                    ? minimalSelected
+                      ? infoSelected
+                      : 'onboarding/info.svg'
+                    : minimalSelected
+                    ? infoProtectMode
+                    : 'onboarding/info.svg'
+                }
                 alt={'square'}
                 width={20}
                 height={20}
@@ -102,7 +120,15 @@ const SelectDamageModal = () => {
                 <h4>предупреждение</h4>
               </div>
               <Image
-                src={'onboarding/info.svg'}
+                src={
+                  isAttacking
+                    ? warningSelected
+                      ? infoSelected
+                      : 'onboarding/info.svg'
+                    : warningSelected
+                    ? infoProtectMode
+                    : 'onboarding/info.svg'
+                }
                 alt={'square'}
                 width={20}
                 height={20}

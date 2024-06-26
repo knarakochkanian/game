@@ -2,6 +2,7 @@ import { RESET, SELECT_ALL } from '../../constants';
 import { Option, notFriendlyCountries } from '../../data/attackRegionsData';
 import { countMatchingStrings } from '../../helpers/helpers_1';
 import {
+  selectIsAttacking,
   selectPickedCountries,
   setPlaceName,
 } from '../../redux/features/generalSlice';
@@ -22,6 +23,8 @@ const ResetOrSelectAll = ({
 }: IResetOrSelectAllProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
+  const isAttacking = useAppSelector(selectIsAttacking);
+
   let placeNames;
   let selectedCount;
   if (withCount) {
@@ -49,7 +52,11 @@ const ResetOrSelectAll = ({
   return (
     <div className={styles.container}>
       {withCount && (
-        <span className={selectedCount !== 0 ? styles.highlighted : ''}>
+        <span
+          className={`${isAttacking ? '' : styles.isProtecting} ${
+            selectedCount !== 0 ? styles.highlighted : ''
+          }`}
+        >
           Выбрано: {selectedCount}
         </span>
       )}
