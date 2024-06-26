@@ -110,7 +110,7 @@
   top: -4px;
   left: 299px;
   z-index: 10000;
-  filter: blur(17px);
+  filter: blur(25px);
   @keyframes rotate-cw {
     to {
       transform: rotate(360deg);
@@ -123,7 +123,7 @@
     }
   }
 
-  > img:nth-child(1) {
+  /* > img:nth-child(1) {
     animation: rotate-cw linear 4s infinite;
   }
   > img:nth-child(2) {
@@ -133,7 +133,7 @@
   > img:nth-child(3) {
     top: 185px;
     animation: rotate-cw linear 6s infinite;
-  }
+  } */
   .mediumCircle,
   .smallCircle {
     position: absolute;

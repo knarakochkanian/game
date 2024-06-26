@@ -67,30 +67,30 @@ export default function CountDownOnboarding() {
   const [actionCanceled, setActionCanceled] = useState(false);
 
   useEffect(() => {
-    const name = lastActionName
-      ? getNextActionName(lastActionName)
-      : '#000-001';
-    setName(name);
+    // const name = lastActionName
+    //   ? getNextActionName(lastActionName)
+    //   : '#000-001';
+    // setName(name);
   }, [lastActionName]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const lastActionName = window.localStorage.getItem('lastActionName');
+    // if (typeof window !== 'undefined') {
+    //   const lastActionName = window.localStorage.getItem('lastActionName');
 
-      setLastActionName(lastActionName);
-    }
+    //   setLastActionName(lastActionName);
+    // }
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const actionsInQueueFromStorage = getItemFromStorage(
-        ACTIONS_IN_QUEUE,
-        window
-      );
-      const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
-      setCompletedActionsFromStorage(actions);
-      setActionsInQueueFromStorage(actionsInQueueFromStorage);
-    }
+    // if (typeof window !== 'undefined') {
+    //   const actionsInQueueFromStorage = getItemFromStorage(
+    //     ACTIONS_IN_QUEUE,
+    //     window
+    //   );
+    //   const actions = getItemFromStorage(COMPLETED_ACTIONS, window);
+    //   setCompletedActionsFromStorage(actions);
+    //   setActionsInQueueFromStorage(actionsInQueueFromStorage);
+    // }
   }, []);
 
   const cancelCountdown = () => {

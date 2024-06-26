@@ -26,7 +26,7 @@ function BaseButton({
   });
 
   return (
-    <button style={{filter: styleBlur === true ? 'blur(22px)' : 'none'}} className={buttonClass} onClick={onClick} disabled={disabled}>
+    <button style={{filter: styleBlur === true ? 'blur(22px)' : 'none', pointerEvents: styleBlur === true ? 'none' : 'all'}} className={buttonClass} onClick={onClick} disabled={disabled}>
       <span
         className={clsx(styles.spanBase, {
           [protectMode ? styles.protectSpanActive : styles.spanActive]: active,
