@@ -35,7 +35,7 @@ import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
-import { trash } from '../../public/summary';
+import { protectBlueTrash, trash } from '../../public/summary';
 
 import styles from './SidenavInMain.module.scss';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -201,7 +201,7 @@ function SidenavInMain({
 
             <button onClick={() => setTrashModalOpen(true)}>
               <Image
-                src={trash}
+                src={isAttacking ? trash : protectBlueTrash}
                 alt="trash"
                 className={styles.trash}
                 width={23}

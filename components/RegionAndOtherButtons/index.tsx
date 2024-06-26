@@ -29,11 +29,10 @@ import { selectPlaces } from '../../redux/features/generalSlice';
 import { USARegions } from '../../data/countriesWithCodes';
 import useCloseSelection from '../../hooks/useCloseSelection';
 import CountryBlocks from '../CountryBlocks';
-
-import styles from './RegionAndOtherButtons.module.scss';
 import useResetSearch from '../../hooks/useResetSearch';
 import { selectKeyboardInput } from '../../redux/features/helpersSlice';
 
+import styles from './RegionAndOtherButtons.module.scss';
 interface IRegionAndOtherButtonsProps {
   drawerOpen: boolean;
   setDrawerOpen: TSetBoolean;
@@ -96,15 +95,27 @@ const RegionAndOtherButtons = ({
   };
 
   const handleSelectOpen = () => {
-    setOpenModal(REGION_MODAL);
+    if (openModal === REGION_MODAL) {
+      setOpenModal('');
+    } else {
+      setOpenModal(REGION_MODAL);
+    }
   };
 
   const handleDamageSelectOpen = () => {
-    setOpenModal(DAMAGE_LEVEL_MODAL);
+    if (openModal === DAMAGE_LEVEL_MODAL) {
+      setOpenModal('');
+    } else {
+      setOpenModal(DAMAGE_LEVEL_MODAL);
+    }
   };
 
   const handleIndustrySelectOpen = () => {
-    setOpenModal(INDUSTRY_MODAL);
+    if (openModal === INDUSTRY_MODAL) {
+      setOpenModal('');
+    } else {
+      setOpenModal(INDUSTRY_MODAL);
+    }
   };
 
   // @ts-ignore
