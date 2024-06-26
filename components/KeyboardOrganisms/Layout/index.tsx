@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import {
   backspace,
@@ -21,9 +20,8 @@ import {
   SPACE_NAME,
 } from '../../../constants';
 import DigitsLayout from '../DigitsLayout';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch } from '../../../redux/hooks';
 import {
-  selectKeyboardInput,
   setKeyboardInput,
 } from '../../../redux/features/helpersSlice';
 import KeyboardLetters from '../../../common/KeyboardLetters';

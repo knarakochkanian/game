@@ -53,6 +53,10 @@
 }
 
 .placeCard.withRegions.selected {  
-  border-right: 2px solid $attack-green;
-  border-left: 2px solid $attack-green;
+  border-right: 1px solid $attack-green;
+  border-left: 1px solid $attack-green;
+}
+
+.placeCard.withRegions.selected.isProtecting {  
+  border-color: $protect-blue;
 }

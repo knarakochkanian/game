@@ -14,10 +14,13 @@ import {
   detailsStylesInSummery,
 } from '../../data/styleObjects';
 import { useAppSelector } from '../../redux/hooks';
-import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
+import {
+  selectComfirmedFromOnboarding,
+  selectIsAttacking,
+} from '../../redux/features/generalSlice';
+import { minusSign } from '../../public/main-screen';
 
 import styles from './IndustryAccordion.module.scss';
-import { minusSign } from '../../public/main-screen';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;
@@ -36,6 +39,7 @@ const IndustryAccordion = ({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   const [expanded, setExpanded] = useState(industrySectors[0].id);
 
@@ -82,8 +86,12 @@ const IndustryAccordion = ({
       >
         <div
           className={`
-        ${fromSideNav && numberOfSelectedSectors ? styles.accordionSummaryLine : styles.accordionSummaryLineDisable}
-         ${styles.accordionSummary}
+        ${
+          fromSideNav && numberOfSelectedSectors
+            ? styles.accordionSummaryLine
+            : styles.accordionSummaryLineDisable
+        }
+         ${styles.accordionSummary} ${isAttacking ? '' : styles.isProtecting}
   `}
         >
           <h3>Отрасль</h3>

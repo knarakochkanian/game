@@ -18,11 +18,13 @@
 .titleAndCountCts {
   display: flex;
   gap: 12px;
+  align-items: center;
   .title {
     font-variant-numeric: slashed-zero;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0.179px;
+    max-width: 250px;
   }
 
   .title.topCapitalization {
@@ -33,7 +35,13 @@
     color: $attack-green;
   }
 
+  .title.title.highlighted.isProtecting {
+    color: $protect-blue;
+    ;
+  }
+
   .count {
+    max-height: 22.20px;
     position: relative;
     color: $attack-green;
     font-variant-numeric: slashed-zero;
@@ -44,6 +52,9 @@
     padding-top: 3px;
     border-left: 1px solid;
     border-right: 1px solid;
+  }
+  .count.isProtecting {
+    color: $protect-blue;
   }
 }
 

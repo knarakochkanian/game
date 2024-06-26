@@ -1,9 +1,7 @@
 import { RESET, SELECT_ALL } from '../../constants';
 import { RegionCategory } from '../../data/attackRegionsData';
-import {
-  proccesIndustriesByTitle,
-} from '../../redux/features/generalSlice';
-import { useAppDispatch } from '../../redux/hooks';
+import { proccesIndustriesByTitle, selectIsAttacking } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import style from './ResetOrSelectAll_2.module.scss';
 
@@ -15,6 +13,7 @@ const ResetOrSelectAll_2 = ({
   data: RegionCategory;
 }) => {
   const dispatch = useAppDispatch();
+  const isAttacking = useAppSelector(selectIsAttacking);
 
   const onResetOrSelectAll = () => {
     if (selectedOtionsCount) {
@@ -36,7 +35,11 @@ const ResetOrSelectAll_2 = ({
 
   return (
     <div className={style.resetOrSelectAllCtn}>
-      <span className={selectedOtionsCount !== 0 ? style.highlighted : ''}>
+      <span
+        className={`${isAttacking ? '' : style.isProtecting} ${
+          selectedOtionsCount !== 0 ? style.highlighted : ''
+        }`}
+      >
         Выбрано: {selectedOtionsCount}
       </span>
 

@@ -1,5 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Places from '../Places';
 import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
@@ -10,14 +12,13 @@ import {
   resetDamageLevel,
   resetPickedCountries,
   selectComfirmedFromOnboarding,
+  selectIsAttacking,
   selectPickedCountries,
 } from '../../redux/features/generalSlice';
+import PlacesInSidenavMain from '../PlacesInSidenavMain';
+import { minusSign } from '../../public/main-screen';
 
 import styles from './RegionAccordion.module.scss';
-import React, { useState } from 'react';
-import { minusSign } from '../../public/main-screen';
-import { useDispatch } from 'react-redux';
-import PlacesInSidenavMain from '../PlacesInSidenavMain';
 
 interface IRegionAccordionProps {
   delayed?: boolean | undefined;
@@ -33,6 +34,7 @@ const RegionAccordion = ({
   const currentPage = useGetPage();
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const counties = useAppSelector(selectPickedCountries);
+  const isAttacking = useAppSelector(selectIsAttacking);
   const dispatch = useDispatch();
   const handleRemove = (countryName: string) => {
     dispatch(removeFromPickedCountries(countryName));
@@ -76,7 +78,9 @@ const RegionAccordion = ({
               ? styles.accordionWiOutFlag
               : styles.accordionWiOutFlagDisable
           }
-              ${styles.accordionSummary}
+              ${styles.accordionSummary} ${
+            isAttacking ? '' : styles.isProtecting
+          }
           `}
         >
           <h3>Регион</h3>

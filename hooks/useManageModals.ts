@@ -25,6 +25,9 @@ const useManageModals = (
         setSelectIndustryOpen(true);
         break;
       default:
+        setSelectRegionOpen(false);
+        setSelectDamageOpen(false);
+        setSelectIndustryOpen(false);
         break;
     }
   }, [openModal]);
