@@ -422,7 +422,7 @@ function Sidenav({
                   width={23}
                 />
               </div> */}
-              <div style={{transform: 'translateY(-7px)'}} onClick={() => {
+              <div style={{transform: 'translateY(-7px)', pointerEvents: removeModalDate ? 'all' : 'none'}} onClick={() => {
                   // onSetCurrentAction();
                   goOnboardingSummary();
                 }}>
@@ -435,6 +435,7 @@ function Sidenav({
                 <Image
                   className='sidenav__add-confitm__Arrow'
                   src={'onboarding/arrowConfirm.svg'}
+                  style={{pointerEvents: removeModalDate ? 'all' : 'none'}}
                   alt={'arrow'}
                   height={23}
                   width={23}
