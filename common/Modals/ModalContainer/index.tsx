@@ -18,17 +18,21 @@ const ModalContainer = ({
   return (
     <dialog className={`${styles.modalContainer} ${name ? styles[name] : ''}`}>
       <div>
-        <div role="button" onClick={setModalClose}>
+        <button
+          role="button"
+          onClick={() => {
+            setModalClose();
+          }}
+        >
           <Image
             className={styles.closeXButton}
             src={closeXButton}
-            alt="closeXButton"
+            alt="Close button"
             width={20}
             height={20}
             priority
           />
-        </div>
-
+        </button>
         {children}
       </div>
     </dialog>

@@ -14,7 +14,7 @@ export interface InteractiveMapProps {
 }
 
 export const WorldMap = ({ mapType }: InteractiveMapProps) => {
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
 
   const onCountryPicked = (name: string) => {
     dispatch(setPlaceName(name));
@@ -86,11 +86,15 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
   useEffect(() => {
     switch (mapType) {
       case MapType.plane:
-        planeMap.onWindowResize.current ? planeMap.onWindowResize.current() : null
+        planeMap.onWindowResize.current
+          ? planeMap.onWindowResize.current()
+          : null;
       case MapType.sphere:
-        sphereMap.onWindowResize.current ? sphereMap.onWindowResize.current() : null
+        sphereMap.onWindowResize.current
+          ? sphereMap.onWindowResize.current()
+          : null;
     }
-  }, [mapType, planeMap.onWindowResize, sphereMap.onWindowResize])
+  }, [mapType, planeMap.onWindowResize, sphereMap.onWindowResize]);
 
   return (
     <>
@@ -102,7 +106,6 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
         style={{
           position: 'absolute',
           width: '280px',
-          height: '100vh',
           zIndex: 1,
         }}
       />
@@ -114,7 +117,6 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
         style={{
           position: 'absolute',
           width: '280px',
-          height: '100vh',
           zIndex: 1,
           right: 0,
         }}

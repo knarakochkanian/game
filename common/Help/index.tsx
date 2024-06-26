@@ -9,10 +9,11 @@ import styles from './Help.module.scss';
 const Help = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setModalOpen(false);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -34,7 +35,17 @@ const Help = () => {
           bottom: '-640px !important',
         }}
       >
-        <p>Нажмите для знакомства с работой системы</p>
+        <p>
+          Нажмите{' '}
+          <Image
+            alt="helpIcon"
+            src={helpIcon}
+            width={22}
+            height={22}
+            priority
+          />{' '}
+          для знакомства с работой системы
+        </p>
       </Modal>
       <Link href={'/onboarding'} className={styles.helpIcon}>
         <Image alt="helpIcon" src={helpIcon} width={48} height={48} priority />

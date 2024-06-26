@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { io, Socket as IOSocket } from 'socket.io-client';
 import Grid from '../../common/Grid';
 import RegionAndOtherButtons from '../RegionAndOtherButtons';
 import Help from '../../common/Help';
@@ -12,7 +11,6 @@ import {
   MAP,
   PROTECTION,
 } from '../../constants';
-import { Socket } from 'net';
 import {
   AttackSign,
   AttackSignActive,
@@ -43,6 +41,7 @@ import SimCards from '../../common/SimCards';
 import { simCards, waves } from '../../data/connectionData';
 import Waves from '../../common/Waves';
 import SystemState from '../../common/SystemState';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 import styles from './MainScreen.module.scss';
 
@@ -50,9 +49,6 @@ const WorldMap = dynamic(
   () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),
   { ssr: false }
 );
-import { controllerServerAddress } from '../../app/static_variables';
-
-import Link from 'next/link';
 
 const MainScreen = () => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
@@ -61,15 +57,13 @@ const MainScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleWave, setModalVisibleWave] = useState(false);
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const { socket, pingFailed } = useWebSocket()!;
   const isAttacking = useAppSelector(selectIsAttacking);
-
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
-  // const onBoardingPass = useSelector(selecton);
+
   useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socket = new WebSocket(`${protocol}://${controllerServerAddress}`);
-    socket.onmessage = (event) => {
+    if (!socket) return;
+    const handleSocketMessage = (event: MessageEvent) => {
       if (event.data === 'sim pressed') {
         setModalVisible(true);
       }
@@ -81,16 +75,12 @@ const MainScreen = () => {
       }
     };
 
-    setSocket(socket);
+    socket.addEventListener('message', handleSocketMessage);
 
     return () => {
-      socket.close();
+      socket.removeEventListener('message', handleSocketMessage);
     };
-  }, []);
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+  }, [socket]);
 
   return (
     <main className={styles.mainScreen}>
@@ -108,21 +98,20 @@ const MainScreen = () => {
         name={ATTACK_OR_PROTECT}
       />
       {modalVisible && (
-        <ModalContainer setModalClose={closeModal}>
+        <ModalContainer setModalClose={() => setModalVisible(false)}>
           <SimCards simCards={simCards} />
         </ModalContainer>
       )}
       {modalVisibleWave && (
-        <ModalContainer setModalClose={closeModal}>
-          <Waves deviceConnected waves={waves} />
+        <ModalContainer setModalClose={() => setModalVisibleWave(false)}>
+          <Waves deviceConnected={true} waves={waves} />
         </ModalContainer>
       )}
       {modalVisibleSystem && (
-        <ModalContainer setModalClose={closeModal}>
+        <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
           <SystemState isOn />
         </ModalContainer>
       )}
-
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
       <Help />
@@ -142,9 +131,7 @@ const MainScreen = () => {
         }
         name="mapOrGlobe"
       />
-
       <QueueModal />
-
       <SidenavInMain
         isOpen={sideNavIsOpen}
         onClose={() => setDrawerOpen(false)}
