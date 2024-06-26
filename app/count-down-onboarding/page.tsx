@@ -76,7 +76,6 @@ export default function CountDownOnboarding() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const lastActionName = window.localStorage.getItem('lastActionName');
-      console.log('lastActionName', lastActionName);
 
       setLastActionName(lastActionName);
     }

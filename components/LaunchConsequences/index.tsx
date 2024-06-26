@@ -182,14 +182,14 @@ const LaunchConsequences = ({
             <div className="ModalButtons">
               <button
                 onClick={headerGoToCountComponent}
-                style={{ color: 'white' }}
+                style={{ color: 'white', padding: '20px' }}
                 className="ModalButton1"
               >
                 далее
               </button>
               <Link href={'/'} className="SecondarySmall">
                 <span className="TypoBodyBigLink">
-                  <button onClick={completeOnboarding}>пропустить</button>
+                  <button onClick={completeOnboarding}>пропус</button>
                 </span>
               </Link>
             </div>
@@ -206,7 +206,6 @@ const LaunchConsequences = ({
                   filter: 'blur(22px)',
                   position: 'absolute',
                   zIndex: '-1',
-                  bottom: '200px',
                 }}
               />
             ) : (

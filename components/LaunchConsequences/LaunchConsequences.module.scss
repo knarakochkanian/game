@@ -3,26 +3,16 @@
 .launchConsequences {
   position: relative;
   display: flex;
-  gap: 44px;
-  margin-top: 30px;
-  width: 463px;
   gap: 22px;
   margin-top: 30px;
-  width: 463px;
   .imgAndModal {
     @include set-width-height(493px, 255px);
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 542px;
-    width: 500px;
   }
   .info {
     width: 463px;
     padding: 15px;
     border: 2px solid $attack-green;
     background: $attack-dark-green-select-60;
-    width: 100%;
     .dataContainer {
       @include flex-column(7px);
       margin-top: 30px;
@@ -32,10 +22,6 @@
       font-variant-numeric: slashed-zero;
       @include set-font-size-weight(23px, 500);
       line-height: 120%; /* 60px */
-      font-size: 23.54px;
-      font-weight: 500;
-      line-height: 28.24px;
-      text-align: left;
     }
   }
   .info.protectMode {

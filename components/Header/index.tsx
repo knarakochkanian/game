@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   leftSquareBracket,
   leftSquareBracketBlue,
@@ -14,13 +14,12 @@ import { IActionCardProps } from '../ActionCard';
 import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import { useAppDispatch } from '../../redux/hooks';
-import { resetGeneralState, selectAttackTime } from '../../redux/features/generalSlice';
+import { resetGeneralState } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
 import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 import styles from './Header.module.scss';
-import { useSelector } from 'react-redux';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const page = useGetPage();
@@ -30,7 +29,6 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
-  const timeObject = useSelector(selectAttackTime);
 
   switch (page) {
     case SUMMARY:
@@ -119,8 +117,8 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
                 <span>будет выполнена</span>
               </>
             )}
-            <span>{timeObject.date}</span>
-            <span>в {timeObject.time}</span>
+            <span>{date.split(' ')[0]}</span>
+            <span>в {date.split(' ')[1]}</span>
           </div>
         )}
 

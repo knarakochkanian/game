@@ -64,7 +64,6 @@ export default function CountDown() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const lastActionName = window.localStorage.getItem('lastActionName');
-      console.log('lastActionName', lastActionName);
 
       setLastActionName(lastActionName);
     }
@@ -178,11 +177,12 @@ export default function CountDown() {
               {String(time.minutes).padStart(2, '0')}
               <span className={styles.minutes}>минуты</span>
             </span>
+            <div>
               <span className={styles.time}>
-                {/* {String(time.seconds).padStart(2, '0')} */}
-                15
+                {String(time.seconds).padStart(2, '0')}
                 <span className={styles.seconds}>секунды</span>
               </span>
+            </div>
           </div>
 
           <div className={styles.attack}>
@@ -215,22 +215,11 @@ export default function CountDown() {
           будет 15 секунд для отмены. Для отмены необходимо будет нажать
           физическую кнопку “ОТМЕНА”, расположенную правее от дисплея.
         </p>
-        <div className="ModalButtons ModalButtons_last">
+        <div className="ModalButtons">
           <Link
             onClick={onResetGlobalState}
             href={'/'}
-            style={{ color: 'white', padding: '0px', textDecoration: 'none', textTransform: 'uppercase',
-              fontSize: "13.18px",
-              fontWeight: "500",
-              lineHeight: "15.82px",
-              letterSpacing: "0.01em",
-              textAlign: "left",
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '112px',
-              height: '32px',
-            }}
+            style={{ color: 'white', padding: '20px' }}
             className="ModalButton1"
           >
             завершить

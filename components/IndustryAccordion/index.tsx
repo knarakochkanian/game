@@ -59,6 +59,7 @@ const IndustryAccordion = ({
         border: '1px solid rgba(82, 82, 82, 1)',
         backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
         color: '#FFF',
+        marginBottom: '10px',
         maxWidth: '314.33px',
       })}
     >
