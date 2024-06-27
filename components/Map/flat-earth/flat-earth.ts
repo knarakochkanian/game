@@ -362,7 +362,10 @@ export class FlatEarth implements IEarth {
         if (!(country instanceof ComplexCountry)) {
           continue;
         }
-        return country.regions.find(region => region.A3Code === code)
+        const foundCountry = country.regions.find(region => region.A3Code === code)
+        if (foundCountry) {
+          return foundCountry;
+        }
       }
     }
   }

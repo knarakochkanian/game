@@ -82,6 +82,11 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
     setCountryContourVisibility
   );
 
+  // фокусирует камеру на северной америке при запуске
+  useEffect(() => {
+    focusOnCountry('Канзас');
+  }, [focusOnCountry]);
+
   // update sizes on maptype change
   useEffect(() => {
     switch (mapType) {
