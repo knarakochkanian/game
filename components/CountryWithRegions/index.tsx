@@ -8,7 +8,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { selectPickedCountries } from '../../redux/features/generalSlice';
 import ResetOrSelectAll from '../../common/ResetOrSelectAll';
 
-import './AccordionStyles.scss'
+import './AccordionStyles.scss';
 import styles from './CountryWithRegions.module.scss';
 
 interface ICountryWithRegionsProps {
@@ -53,12 +53,14 @@ const CountryWithRegions = ({
           key={place.code}
           aria-expanded={isAccordionExpanded}
           expandIcon={
-            <Image
-              src={'/onboarding/arrow.svg'}
-              alt={'arrow'}
-              width={11}
-              height={11}
-            />
+            !fromSideNav && (
+              <Image
+                src={'/onboarding/arrow.svg'}
+                alt={'arrow'}
+                width={11}
+                height={11}
+              />
+            )
           }
           sx={{ maxWidth: '566px' }}
           aria-controls="panel2-content"

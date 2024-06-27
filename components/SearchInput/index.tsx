@@ -7,7 +7,6 @@ import { useAppDispatch } from '../../redux/hooks';
 import { setKeyboardInput } from '../../redux/features/helpersSlice';
 
 import styles from './SearchInput.module.scss';
-
 export interface ISearchInputProps {
   searchInput: string;
   onChangeInput: (

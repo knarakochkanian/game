@@ -25,8 +25,11 @@
 }
 .fromSideNav{
   @include flex-between;
-  width: 100%;
-
+  width: 100% !important;
+  min-width: 290px;
+  .MuiPaper-root-MuiAccordion-root{
+    padding-left: 20px;
+  }
 }
 .placeCard.selected {
   h4 {
@@ -50,6 +53,10 @@
 }
 
 .placeCard.withRegions.selected {  
-  border-right: 2px solid $attack-green;
-  border-left: 2px solid $attack-green;
+  border-right: 1px solid $attack-green;
+  border-left: 1px solid $attack-green;
+}
+
+.placeCard.withRegions.selected.isProtecting {  
+  border-color: $protect-blue;
 }

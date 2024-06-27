@@ -16,7 +16,10 @@
       text-transform: uppercase;
     }
     span.highlighted {
-      color: $attack-green !important;
+      color: $attack-green;
+    }
+    span.highlighted.isProtecting {
+      color: $protect-blue;
     }
     .resetOrSelectAllBtn {
       @include resetOrSelectAllStyles;

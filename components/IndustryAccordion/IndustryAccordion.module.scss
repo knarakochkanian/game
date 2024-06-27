@@ -1,25 +1,39 @@
 @import '/app/variables.module.scss';
 
 .accordionSummary {
-    @include AccordionSummary;
-    h3 {
-      color: $mid-dark-gray;
-    }
-  &Line{
+  @include AccordionSummary;
+  h3 {
+    color: $mid-dark-gray;
+  }
+  &Line {
     &::after {
       @include afterLine;
       background: $attack-green-80;
     }
 
-    &Disable{
+    &Disable {
       &::after {
         @include afterLine;
-        background: $mid-dark-gray;}
+        background: $mid-dark-gray;
+      }
     }
-    &Protected{
+    &Protected {
       &::after {
         @include afterLine;
-        background: $protect-blue-80;}
+        background: $protect-blue-80;
+      }
     }
+  }
+}
+
+.accordionSummary.isProtecting {
+  &::after {
+    background: $protect-blue;
+  }
+}
+
+.accordionSummary.isProtecting.accordionSummaryLineDisable {
+  &::after {
+    background: $mid-dark-gray;
   }
 }

@@ -7,19 +7,19 @@
   align-items: center;
   position: relative;
 
-  &::after{
+  &::after {
     position: absolute;
-    content: "";
+    content: '';
     left: 20px;
     top: 7px;
     width: 23px;
     height: 4px;
     background: $attack-green-80;
   }
-  &Disable{
+  &Disable {
     @extend .damageLevelInfo;
     &::after {
-      background: $mid-dark-gray;
+      background: $mid-dark-gray !important;
     }
   }
 
@@ -40,5 +40,10 @@
     gap: 32px;
     align-items: center;
   }
+}
 
+.damageLevelInfo.isProtecting {
+  &::after {
+    background: $protect-blue;
+  }
 }

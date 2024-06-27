@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import { greenLine } from '../../public/news';
+import { blueLine, greenLine } from '../../public/news';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 import styles from './GreenLineBorders.module.scss';
 
@@ -9,14 +11,16 @@ interface IGreenLineBordersProps {
   width?: number;
 }
 
-const GreenLineBorders = ({width = 9}: IGreenLineBordersProps) => {
+const GreenLineBorders = ({ width = 9 }: IGreenLineBordersProps) => {
+  const isAttacking = useAppSelector(selectIsAttacking);
+
   return (
     <>
       {classNames.map((className, i) => (
         <Image
           key={i}
           className={styles[className]}
-          src={greenLine}
+          src={isAttacking ? greenLine : blueLine}
           alt="greenLine"
           width={width}
           height={2}

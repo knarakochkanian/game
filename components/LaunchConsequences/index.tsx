@@ -94,20 +94,18 @@ const LaunchConsequences = ({
       const consequence = consequences[key];
       let paragraph;
 
-      switch (
-        damageLevel
-        // case 'Критический':
-        //   paragraph = consequence.critical;
-        //   break;
-        // case 'Минимальный':
-        //   paragraph = consequence.critical;
-        //   break;
-        // case 'Предупреждение':
-        //   paragraph = consequence.предупреждение;
-        //   break;
-        // default:
-        //   paragraph = '';
-      ) {
+      switch (damageLevel) {
+        case 'Критический':
+          paragraph = consequence.critical;
+          break;
+        case 'Минимальный':
+          paragraph = consequence.minimal;
+          break;
+        case 'Предупреждение':
+          paragraph = consequence.warning;
+          break;
+        default:
+          paragraph = '';
       }
 
       return (
