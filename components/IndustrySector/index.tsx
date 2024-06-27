@@ -38,7 +38,7 @@ const IndustrySector = ({
       handleExpansion={handleExpansion}
       data={sector}
     >
-      <SectorOptions sectorOptions={sector.options} />
+      <SectorOptions fromLeftSideNav sectorOptions={sector.options} />
     </AccordionWrapper>
   );
 };

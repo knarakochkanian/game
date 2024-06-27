@@ -20,7 +20,7 @@ const InfoModal = ({ setModalClose, infoName }: IInfoModalProps) => {
         />
       </div>
       <p className={styles.paragraph}>
-        Текстовая подсказка с описанием того, что подразумевается под
+        Текстовая подсказка с описанием того, что подразумевается под{' '}
         {infoName} уровнем ущерба.
       </p>
     </ModalContainer>

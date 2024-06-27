@@ -62,7 +62,7 @@ const IndustrySelection = ({
             sector.options[0] && (
               <>
                 <h4 className={styles.sectorTitle}>{sector.title}</h4>
-                <SectorOptions sectorOptions={sector.options} />
+                <SectorOptions fromLeftSideNav sectorOptions={sector.options} />
               </>
             )
         )}

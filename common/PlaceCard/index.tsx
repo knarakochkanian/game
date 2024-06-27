@@ -23,6 +23,7 @@ interface IPlaceCardProps {
   isCountry?: boolean;
   placeFirstLetterChanged?: boolean;
   fromSideNav?: boolean;
+  fromLeftSideNav?: boolean;
   withRegions?: boolean;
 }
 
@@ -33,6 +34,7 @@ const PlaceCard = ({
   i,
   places,
   fromSideNav,
+  fromLeftSideNav,
   withRegions,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
@@ -41,7 +43,7 @@ const PlaceCard = ({
   const isSelected = pickedCountries.includes(place?.name) && !fromSideNav;
   const className = `${styles.placeCard} ${fromSideNav ? styles.fromSideNav : ''} ${
     place?.regions ? styles.withRegions : ''
-  } ${isSelected ? styles.selected : ''} ${
+  } ${isSelected && fromLeftSideNav ? styles.selected : ''} ${
     !isAttacking ? styles.isProtecting : ''
   }`;
 
@@ -64,7 +66,7 @@ const PlaceCard = ({
           </div>
         )}
         <h4>{place?.name}</h4>
-        {isSelected && place?.regions && <GreenLineBorders />}
+        {isSelected && fromLeftSideNav && place?.regions && <GreenLineBorders />}
         {fromSideNav && (
           <button onClick={onClick}>
             <Image
