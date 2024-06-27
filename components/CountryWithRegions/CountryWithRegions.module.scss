@@ -1,15 +1,23 @@
 @import '/app/variables.module.scss';
 
 .placesAccordionSummary {
-  @include AccordionSummary;  
+  @include AccordionSummary;
   span.countSelected {
+    position: relative;
+    max-height: 22.2px;
     padding: 0 7px;
+    padding-top: 2px;
     height: 33px;
-    border: 1px solid $attack-green;
+    border-left: 1px solid $attack-green;
+    border-right: 1px solid $attack-green;
     color: $attack-green;
     font-variant-numeric: slashed-zero;
-    @include set-font-size-weight(25px, 500);
-    line-height: 120%; /* 40.8px */
-    letter-spacing: 0.34px;
+    @include set-font-size-weight(16px, 500);
+    line-height: 120%;
+    letter-spacing: 0.16px;
+  }
+  span.countSelected.isProtecting {
+    color: $protect-blue;
+    border-color: $protect-blue;
   }
 }

@@ -14,7 +14,7 @@ import GreenLineBorders from '../GreenLineBorders';
 import styles from './PlaceCard.module.scss';
 import Image from 'next/image';
 import { minusSign } from '../../public/main-screen';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface IPlaceCardProps {
   place: IPlace;
@@ -25,6 +25,7 @@ interface IPlaceCardProps {
   fromSideNav?: boolean;
   fromLeftSideNav?: boolean;
   withRegions?: boolean;
+  selectedCountComponent?: ReactNode;
 }
 
 const PlaceCard = ({
@@ -36,12 +37,15 @@ const PlaceCard = ({
   fromSideNav,
   fromLeftSideNav,
   withRegions,
+  selectedCountComponent,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
   const isAttacking = useAppSelector(selectIsAttacking);
   const isSelected = pickedCountries.includes(place?.name) && !fromSideNav;
-  const className = `${styles.placeCard} ${fromSideNav ? styles.fromSideNav : ''} ${
+  const className = `${styles.placeCard} ${
+    selectedCountComponent ? styles.withCount : ''
+  } ${fromSideNav ? styles.fromSideNav : ''} ${
     place?.regions ? styles.withRegions : ''
   } ${isSelected && fromLeftSideNav ? styles.selected : ''} ${
     !isAttacking ? styles.isProtecting : ''
@@ -66,7 +70,9 @@ const PlaceCard = ({
           </div>
         )}
         <h4>{place?.name}</h4>
-        {isSelected && fromLeftSideNav && place?.regions && <GreenLineBorders />}
+        {isSelected && fromLeftSideNav && place?.regions && (
+          <GreenLineBorders />
+        )}
         {fromSideNav && (
           <button onClick={onClick}>
             <Image
@@ -79,6 +85,7 @@ const PlaceCard = ({
             />
           </button>
         )}
+        {selectedCountComponent}
       </button>
       {isCountry && placeFirstLetterChanged && places && i && (
         <AlphabetLetter letter={places[i + 1]?.name[0]} />

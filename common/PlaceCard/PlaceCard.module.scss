@@ -11,8 +11,6 @@
     border-radius: 50%;
   }
 
-
-
   h4 {
     color: $white;
     font-variant-numeric: slashed-zero;
@@ -23,11 +21,11 @@
     text-align: start;
   }
 }
-.fromSideNav{
+.fromSideNav {
   @include flex-between;
   width: 100% !important;
   min-width: 290px;
-  .MuiPaper-root-MuiAccordion-root{
+  .MuiPaper-root-MuiAccordion-root {
     padding-left: 20px;
   }
 }
@@ -48,15 +46,26 @@
 .placeCard.withRegions {
   position: relative;
   padding: 0;
-  @include set-width-height(255px, 48px);
+  @include set-width-height(299px, 48px);
   padding-left: 8px;
 }
 
-.placeCard.withRegions.selected {  
+.placeCard.withRegions.selected {
   border-right: 1px solid $attack-green;
   border-left: 1px solid $attack-green;
 }
 
-.placeCard.withRegions.selected.isProtecting {  
+.placeCard.withRegions.selected.withCount {
+  background: $attack-dark-green-focus;
+  h4 {
+    color: $white;
+  }
+}
+
+.placeCard.withRegions.selected.withCount.isProtecting {
+  background: $protect-dark-blue-select;
+}
+
+.placeCard.withRegions.selected.isProtecting {
   border-color: $protect-blue;
 }
