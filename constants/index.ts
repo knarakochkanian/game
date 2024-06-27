@@ -41,6 +41,11 @@ export const CRITICAL = 'Критический';
 export const MINIMAL = 'Минимальный';
 export const WARNING = 'Предупреждение';
 
+//damage info
+export const CRITICAL_INFO = 'критическим';
+export const MINIMAL__INFO = 'минимальным';
+export const WARNING__INFO = 'предупрежденным';
+
 //local storage data
 export const ACTIONS_IN_QUEUE = 'actionsInQueue';
 export const COMPLETED_ACTIONS = 'completedActions';

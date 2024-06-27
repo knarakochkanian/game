@@ -10,8 +10,10 @@ import CountShape from './CountShape.svg';
 import plusIconProtect from './plusIconProtect.svg';
 import infoProtectMode from './infoProtectMode.svg';
 import infoSelected from './infoSelected.svg';
+import infoActive from './infoActive.svg';
 
 export {
+  infoActive,
   infoSelected,
   infoProtectMode,
   plusIcon,
