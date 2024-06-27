@@ -147,7 +147,7 @@ const LaunchConsequences = ({
               name={citiesUnderAttack}
               value={formatNumberWithSpaces(
                 totalSettlements.reduce(
-                  (total, item) => total + (item.settlements || 0),
+                  (total, item) => item.settlements || 0,
                   19937180
                 )
               )}
