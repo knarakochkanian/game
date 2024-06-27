@@ -15,14 +15,20 @@ import {
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
+  const [isPasswordPassed, setIsPasswordPassed] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const isOnboardingPassed =
+      const passwordPassed =
+        window.localStorage.getItem('isPasswordPassed') === 'true';
+      const onboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
-      setOnboardingPassed(isOnboardingPassed);
+      setIsPasswordPassed(passwordPassed);
+      setOnboardingPassed(onboardingPassed);
       setLoading(false);
-      if (isOnboardingPassed) {
+
+      if (onboardingPassed) {
         dispatch(
           setOnBoardingBlur({
             1: false,
@@ -39,17 +45,20 @@ export default function Home() {
             12: false,
           })
         );
-        console.log('onboarding passed');
         dispatch(setLocalTimeBlur(false));
       }
     }
-  }, []);
+  }, [dispatch]);
 
-  return onboardingPassed ? (
-    <MainScreen />
-  ) : (
+  return (
     <main className={styles.main}>
-      {isLoading ? <Loading /> : <Password />}
+      {isLoading ? (
+        <Loading />
+      ) : onboardingPassed || isPasswordPassed ? (
+        <MainScreen />
+      ) : (
+        <Password setIsPasswordPassed={setIsPasswordPassed} />
+      )}
     </main>
   );
 }
