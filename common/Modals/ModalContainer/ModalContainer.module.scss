@@ -23,3 +23,12 @@
   @include modalCtnStyles;
   border: none;
 }
+
+.modalContainer.infoModal {
+  position: absolute;
+  left: 337px;
+  top: 2px;
+  padding: 24px;
+  width: 230px;
+  border: none;
+}

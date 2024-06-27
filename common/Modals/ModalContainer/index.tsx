@@ -23,9 +23,9 @@ const ModalContainer = ({
           onClick={() => {
             setModalClose();
           }}
+          className={styles.closeXButton}
         >
           <Image
-            className={styles.closeXButton}
             src={closeXButton}
             alt="Close button"
             width={20}

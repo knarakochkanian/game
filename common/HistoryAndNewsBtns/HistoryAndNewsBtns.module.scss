@@ -1,6 +1,8 @@
 @import '/app/variables.module.scss';
 
 .historyAndNewsBtns {
+  max-height: 42px;
+  overflow: hidden;
   display: flex;
   gap: 12px;
   position: fixed;
@@ -8,7 +10,7 @@
   bottom: 28px;
   z-index: 9;
   button {
-    padding: 11px 15px;
+    padding: 9.41px 15px;
     color: $white;
     @include set-font-size-weight(16px, 400);
     line-height: 120%; /* 40.8px */

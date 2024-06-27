@@ -1,0 +1,11 @@
+@import '/app/variables.module.scss';
+
+.paragraph {
+  margin-top: 11px;
+  color: $white;
+  font-variant-numeric: slashed-zero;
+  font-family: 'TT Lakes';
+  @include set-font-size-weight(17px, 500);
+  line-height: 120%; /* 20.335px */
+  letter-spacing: 0.169px;
+}
