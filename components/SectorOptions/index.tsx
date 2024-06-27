@@ -43,7 +43,7 @@ const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
             ${option.src ? styles.hasImage : ''}`}
           >
             {option.src && (
-              <Image src={option.src} alt="img" width={48} height={48} />
+              <Image src={option.src} alt="img" width={23} height={23} />
             )}
             {option.name}
           </button>
