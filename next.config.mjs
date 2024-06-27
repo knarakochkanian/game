@@ -18,6 +18,9 @@ const withPWA = withPWAInit({
         runtimeCaching,
         buildExcludes: [/middleware-manifest.json$/],
     },
+    customWorkerSrc: "service-worker",
+    customWorkerDest: "somewhere-else",
+    customWorkerPrefix: "not/a-worker",
 });
 
 export default withPWA({});

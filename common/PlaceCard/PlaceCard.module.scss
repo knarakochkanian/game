@@ -48,7 +48,7 @@
 .placeCard.withRegions {
   position: relative;
   padding: 0;
-  @include set-width-height(277px, 48px);
+  @include set-width-height(255px, 48px);
   padding-left: 8px;
 }
 
