@@ -89,7 +89,12 @@ const IndustryAccordion = ({
         ${
           fromSideNav && numberOfSelectedSectors
             ? styles.accordionSummaryLine
-            : styles.accordionSummaryLineDisable
+            : ''
+        }
+        ${
+          fromSideNav && !numberOfSelectedSectors
+            ? styles.accordionSummaryLineDisable
+            : ''
         }
          ${styles.accordionSummary} ${isAttacking ? '' : styles.isProtecting}
   `}
@@ -120,7 +125,7 @@ const IndustryAccordion = ({
               data={sector}
               key={index}
             >
-              <SectorOptions fromSideNav sectorOptions={sector.options} />
+              <SectorOptions fromSideNav={fromSideNav} sectorOptions={sector.options} />
             </AccordionWrapper>
           );
         })}

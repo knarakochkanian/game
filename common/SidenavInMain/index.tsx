@@ -221,7 +221,7 @@ function SidenavInMain({
               industrySectors={industrySectors}
               fromSideNav={true}
             />
-            <DamageLevelInfo damageLevel={damageLevel} />
+            <DamageLevelInfo fromSideNav damageLevel={damageLevel} />
           </div>
 
           <div

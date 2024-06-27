@@ -17,6 +17,7 @@ interface ICountryWithRegionsProps {
   places: (IPlace | Option)[];
   placeFirstLetterChanged: boolean;
   fromSideNav: boolean | undefined;
+  fromLeftSideNav?: boolean;
 }
 
 const CountryWithRegions = ({
@@ -25,6 +26,7 @@ const CountryWithRegions = ({
   place,
   placeFirstLetterChanged,
   places,
+  fromLeftSideNav,
 }: ICountryWithRegionsProps) => {
   const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
   const pickedCountries = useAppSelector(selectPickedCountries);
@@ -72,6 +74,7 @@ const CountryWithRegions = ({
           <div className={styles.placesAccordionSummary}>
             <PlaceCard
               withRegions
+              fromLeftSideNav={fromLeftSideNav}
               fromSideNav={fromSideNav}
               isCountry
               place={place}
@@ -84,19 +87,31 @@ const CountryWithRegions = ({
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <ResetOrSelectAll
-            setSelectedCount={setSelectedCount}
-            places={place?.regions}
-            withCount
-          />
+          {fromLeftSideNav && (
+            <ResetOrSelectAll
+              setSelectedCount={setSelectedCount}
+              places={place?.regions}
+              withCount
+            />
+          )}
 
           {place?.regions?.map((region, i) =>
             fromSideNav ? (
               pickedCountries.includes(region.name) && (
-                <PlaceCard fromSideNav={fromSideNav} key={i} place={region} />
+                <PlaceCard
+                  fromLeftSideNav={fromLeftSideNav}
+                  fromSideNav={fromSideNav}
+                  key={i}
+                  place={region}
+                />
               )
             ) : (
-              <PlaceCard fromSideNav={fromSideNav} key={i} place={region} />
+              <PlaceCard
+                fromLeftSideNav={fromLeftSideNav}
+                fromSideNav={fromSideNav}
+                key={i}
+                place={region}
+              />
             )
           )}
         </AccordionDetails>

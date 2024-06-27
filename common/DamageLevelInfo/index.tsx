@@ -10,7 +10,13 @@ import { useAppSelector } from '../../redux/hooks';
 
 import styles from './DamageLevelInfo.module.scss';
 
-const DamageLevelInfo = ({ damageLevel }: { damageLevel: string }) => {
+const DamageLevelInfo = ({
+  damageLevel,
+  fromSideNav,
+}: {
+  damageLevel: string;
+  fromSideNav?: boolean;
+}) => {
   const dispatch = useDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
 
@@ -20,24 +26,28 @@ const DamageLevelInfo = ({ damageLevel }: { damageLevel: string }) => {
 
   return (
     <div
-      className={`${
-        damageLevel ? styles.damageLevelInfo : styles.damageLevelInfoDisable
-      } ${isAttacking ? '' : styles.isProtecting}`}
+      className={`${damageLevel ? styles.damageLevelInfo : ''} 
+      ${!damageLevel && fromSideNav ? styles.damageLevelInfoDisable : ''}
+      ${isAttacking ? '' : styles.isProtecting} 
+      ${fromSideNav ? styles.fromSideNav : ''}
+      `}
     >
       <div className={styles.titleAndInfo}>
         <span className={styles.title}>Ущерб</span>
         <span className={styles.info}>{damageLevel ? damageLevel : ''}</span>
       </div>
-      <button onClick={handleRemove}>
-        <Image
-          className={styles.minusSign}
-          src={minusSign}
-          alt="minusSign"
-          width={20}
-          height={20}
-          priority
-        />
-      </button>
+      {fromSideNav && (
+        <button onClick={handleRemove}>
+          <Image
+            className={styles.minusSign}
+            src={minusSign}
+            alt="minusSign"
+            width={20}
+            height={20}
+            priority
+          />
+        </button>
+      )}
     </div>
   );
 };

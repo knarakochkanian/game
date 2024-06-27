@@ -12,10 +12,15 @@ import React from 'react';
 interface ISectorOptionsProps {
   sectorOptions: ISectorOption[];
   fromSideNav?: boolean;
+  fromLeftSideNav?: boolean;
   src?: string;
 }
 
-const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
+const SectorOptions = ({
+  sectorOptions,
+  fromSideNav,
+  fromLeftSideNav,
+}: ISectorOptionsProps) => {
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
   const onClick = (name: string, parent: string) => {
@@ -37,7 +42,7 @@ const SectorOptions = ({ sectorOptions, fromSideNav }: ISectorOptionsProps) => {
             disabled={fromSideNav}
             onClick={() => onClick(option.name, option.parent)}
             className={`${styles.option} ${
-              option.selected && !fromSideNav ? styles.selected : ''
+              option.selected && fromLeftSideNav ? styles.selected : ''
             } ${!option.selected && fromSideNav ? styles.displayNone : ''}
             ${!isAttacking ? styles.isProtecting : ''}
             ${option.src ? styles.hasImage : ''}`}
