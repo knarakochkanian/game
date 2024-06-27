@@ -47,6 +47,11 @@ export default function Home() {
         );
         dispatch(setLocalTimeBlur(false));
       }
+
+      return () => {
+        document.visibilityState !== 'visible' &&
+          window.localStorage.removeItem('isPasswordPassed');
+      };
     }
   }, [dispatch]);
 
