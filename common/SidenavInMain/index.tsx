@@ -191,17 +191,30 @@ function SidenavInMain({
     if (
       numberOfSelectedSectors !== null &&
       damageLevel &&
-      selectedCountries.length !== 0
+      selectedCountries.length !== 0 &&
+      !pingFailed &&
+      socket?.readyState === WebSocket.OPEN
     ) {
-      if (socket?.readyState === WebSocket.OPEN) {
-        socket?.send('ready');
-      } else {
-        socket?.addEventListener('open', () => {
-          socket?.send('ready');
-        });
-      }
+      socket.send('ready');
+    } else if (socket?.readyState !== WebSocket.OPEN) {
+      socket?.addEventListener('open', () => {
+        if (
+          numberOfSelectedSectors !== null &&
+          damageLevel &&
+          selectedCountries.length !== 0 &&
+          !pingFailed
+        ) {
+          socket.send('ready');
+        }
+      });
     }
-  }, [numberOfSelectedSectors, damageLevel, selectedCountries, socket]);
+  }, [
+    numberOfSelectedSectors,
+    damageLevel,
+    selectedCountries,
+    pingFailed,
+    socket,
+  ]);
 
   useEffect(() => {
     setModalVisibleSystem(pingFailed);
