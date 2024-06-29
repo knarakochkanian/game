@@ -338,7 +338,8 @@ function SidenavInMain({
           </div>
           {numberOfSelectedSectors !== null &&
             damageLevel &&
-            selectedCountries.length !== 0 && (
+            selectedCountries.length !== 0 &&
+            isReadyPressed && (
               <div className={styles.sidenavAddConfirm}>
                 <Image
                   src={
@@ -359,35 +360,33 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                {isReadyPressed ? (
-                  <Link
-                    href={delayedTime && delayedDate ? '/queue' : '/summary'}
-                    onClick={onSetCurrentAction}
-                    ref={confirmButtonRef}
+                <Link
+                  href={delayedTime && delayedDate ? '/queue' : '/summary'}
+                  onClick={onSetCurrentAction}
+                  ref={confirmButtonRef}
+                >
+                  <span
+                    className="Lead"
+                    style={{ color: 'white', padding: '10px' }}
                   >
-                    <span
-                      className="Lead"
-                      style={{ color: 'white', padding: '10px' }}
-                    >
-                      ПОДТВЕРДИТЬ
-                    </span>
-                    <Image
-                      src={'/onboarding/arrowConfirm.svg'}
-                      alt={'arrow'}
-                      className={styles.sidenavArrowSVG}
-                      height={23}
-                      width={23}
-                    />
-                  </Link>
+                    ПОДТВЕРДИТЬ
+                  </span>
+                  <Image
+                    src={'/onboarding/arrowConfirm.svg'}
+                    alt={'arrow'}
+                    className={styles.sidenavArrowSVG}
+                    height={23}
+                    width={23}
+                  />
+                </Link>
                 ) : (
-                  <Box sx={{ bottom: '200px', position: 'absolute' }}>
-                    <ModalContainer
-                      setModalClose={() => setModalVisibleSystem(false)}
-                    >
-                      <SystemState isOn />
-                    </ModalContainer>
-                  </Box>
-                )}
+                <Box sx={{ bottom: '200px', position: 'absolute' }}>
+                  <ModalContainer
+                    setModalClose={() => setModalVisibleSystem(false)}
+                  >
+                    <SystemState isOn />
+                  </ModalContainer>
+                </Box>
               </div>
             )}
         </div>

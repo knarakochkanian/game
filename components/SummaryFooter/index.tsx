@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import FooterButton from '../../common/FooterButton';
 import { START, startAttackTitle } from '../../constants';
 import { summaryFooterForm, summaryFooterGradient } from '../../public/summary';
-
 import styles from './SummaryFooter.module.scss';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 const buttonInfo = (
   <p>
@@ -13,6 +14,25 @@ const buttonInfo = (
 );
 
 const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
+  const { socket } = useWebSocket()!;
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleSocketMessage = (event: MessageEvent) => {
+      if (event.data === 'start pressed' && buttonRef.current) {
+        buttonRef.current.click();
+      }
+    };
+
+    socket.addEventListener('message', handleSocketMessage);
+
+    return () => {
+      socket.removeEventListener('message', handleSocketMessage);
+    };
+  }, [socket]);
+
   return (
     <footer className={styles.summaryFooter}>
       <Image
@@ -39,6 +59,7 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
         title={startAttackTitle}
         from="Summary"
         buttonInfo={buttonInfo}
+        buttonRef={buttonRef}
       />
     </footer>
   );

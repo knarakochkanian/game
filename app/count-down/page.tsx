@@ -94,10 +94,9 @@ export default function CountDown() {
           );
 
           if (typeof window !== 'undefined') {
-            if(!actionCanceled) {
+            if (!actionCanceled) {
               window.localStorage.setItem(LAST_ACTION_NAME, name);
             }
-            
 
             window.localStorage.setItem(
               COMPLETED_ACTIONS,
@@ -120,40 +119,29 @@ export default function CountDown() {
   }, [time, router]);
 
   const cancelCountdown = () => {
-      setTimeout(() => {
-        dispatch(resetGeneralState());
-      }, 10);
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 10);
     dispatch(setDamageLevel(null));
     return router.push('/');
-    // if (!actionCompleted && actionsInQueueFromStorage) {
-    //   const actionsInQueue = proccessActionsToSave(
-    //     currentAction,
-    //     actionsInQueueFromStorage,
-    //     false
-    //   );
-    // if (typeof window !== 'undefined') {
-    //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
-
-    // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
-    // }
-    // }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
 
-  // useEffect(() => {
-  //   const socket = new WebSocket(controllerServerAddress);
-  //   socket.onmessage = (event) => {
-  //     if (event.data === 'cancel pressed') {
-  //       cancelCountdown();
-  //     }
-  //   };
+  useEffect(() => {
+    const socket = new WebSocket(controllerServerAddress);
+    socket.onmessage = (event) => {
+      if (event.data === 'cancel pressed') {
+        cancelCountdown();
+      }
+    };
 
-  //   setSocket(socket);
+    setSocket(socket);
 
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
+    return () => {
+      socket.close();
+    };
+  }, []);
+
   const onResetGlobalState = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
