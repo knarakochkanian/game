@@ -204,12 +204,8 @@ function SidenavInMain({
   }, [numberOfSelectedSectors, damageLevel, selectedCountries, socket]);
 
   useEffect(() => {
-    if (!socket || pingFailed) {
-      setModalVisibleSystem(true);
-    } else {
-      setModalVisibleSystem(false);
-    }
-  }, [socket, pingFailed]);
+    setModalVisibleSystem(pingFailed);
+  }, [pingFailed]);
 
   return (
     <>
@@ -227,13 +223,6 @@ function SidenavInMain({
             trashModalOpen={trashModalOpen}
           />
         )}
-
-        {modalVisibleSystem && (
-          <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
-            <SystemState isOn />
-          </ModalContainer>
-        )}
-
         <div className={styles.sidenavWrapper}>
           <Image
             src={isAttacking ? attack : protectionIcon}
@@ -380,13 +369,15 @@ function SidenavInMain({
                   />
                 </Link>
                 ) : (
-                <Box sx={{ bottom: '200px', position: 'absolute' }}>
-                  <ModalContainer
-                    setModalClose={() => setModalVisibleSystem(false)}
-                  >
-                    <SystemState isOn />
-                  </ModalContainer>
-                </Box>
+                {modalVisibleSystem && (
+                  <Box sx={{ bottom: '200px', position: 'absolute' }}>
+                    <ModalContainer
+                      setModalClose={() => setModalVisibleSystem(false)}
+                    >
+                      <SystemState isOn={pingFailed} />
+                    </ModalContainer>
+                  </Box>
+                )}
               </div>
             )}
         </div>

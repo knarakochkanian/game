@@ -107,11 +107,6 @@ const MainScreen = () => {
           <Waves deviceConnected={true} waves={waves} />
         </ModalContainer>
       )}
-      {modalVisibleSystem && (
-        <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
-          <SystemState isOn />
-        </ModalContainer>
-      )}
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
       <Help />

@@ -5,6 +5,7 @@ import { controllerServerAddress } from '../app/static_variables';
 interface WebSocketContextProps {
   socket: WebSocket | null;
   pingFailed: boolean;
+  modalVisible?: boolean;
 }
 
 const WebSocketContext = createContext<WebSocketContextProps | null>(null);
@@ -18,18 +19,25 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socket = new WebSocket(`${protocol}://${controllerServerAddress}`);
-    console.log('Attempting to connect WebSocket');
+    const socketUrl = `${protocol}://${controllerServerAddress}`;
+    const ws = new WebSocket(socketUrl);
+    console.log(`Attempting to connect WebSocket to ${socketUrl}`);
 
-    socket.onopen = () => {
+    ws.onopen = () => {
       console.log('WebSocket connection established');
     };
 
-    socket.onclose = () => {
+    ws.onclose = () => {
       console.log('WebSocket connection closed');
     };
 
-    setSocket(socket);
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setPingFailed(true);
+      setModalVisible(true);
+    };
+
+    setSocket(ws);
 
     const pingInterval = setInterval(() => {
       pingAddress('10.99.2.5').then((isReachable) => {
@@ -37,7 +45,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          socket.send(JSON.stringify({ command: 'cancel' }));
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ command: 'cancel' }));
+          }
         } else {
           setPingFailed(false);
           setModalVisible(false);
@@ -48,18 +58,18 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
-      if (socket) socket.close();
+      ws.close();
     };
   }, []);
 
   useEffect(() => {
-    let timer: any;
-    timer = setTimeout(() => {
-      console.log('Automatically hiding modal after 5 seconds');
-      setModalVisible(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
+    if (modalVisible) {
+      const timer = setTimeout(() => {
+        console.log('Automatically hiding modal after 5 seconds');
+        setModalVisible(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
   }, [modalVisible]);
 
   const pingAddress = async (address: string) => {
@@ -76,7 +86,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <WebSocketContext.Provider value={{ socket, pingFailed }}>
+    <WebSocketContext.Provider value={{ socket, pingFailed, modalVisible }}>
       {children}
     </WebSocketContext.Provider>
   );
