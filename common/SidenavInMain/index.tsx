@@ -45,7 +45,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import { Dayjs } from 'dayjs';
-import 'dayjs/locale/ru'; // Import Russian locale for Dayjs
+import 'dayjs/locale/ru';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -57,6 +57,7 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -102,7 +103,7 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
-
+  const { socket, pingFailed } = useWebSocket()!;
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
 
@@ -168,6 +169,36 @@ function SidenavInMain({
     }
     dispatch(setCurrentAction(currentAction));
   };
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleSocketClick = (event: MessageEvent) => {
+      if (event.data === 'ready pressed') {
+        onSetCurrentAction();
+      }
+    };
+    socket.addEventListener('message', handleSocketClick);
+
+    return () => {
+      socket.removeEventListener('message', handleSocketClick);
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (
+      numberOfSelectedSectors !== null &&
+      damageLevel &&
+      selectedCountries.length !== 0
+    ) {
+      if (socket?.readyState === WebSocket.OPEN) {
+        socket?.send('ready');
+      } else {
+        socket?.addEventListener('open', () => {
+          socket?.send('ready');
+        });
+      }
+    }
+  }, [numberOfSelectedSectors, damageLevel, selectedCountries, socket]);
 
   return (
     <>
