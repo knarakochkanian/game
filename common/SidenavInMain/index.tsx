@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -36,9 +35,8 @@ import IndustryAccordion from '../../components/IndustryAccordion';
 import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
 import { protectBlueTrash, trash } from '../../public/summary';
-
 import styles from './SidenavInMain.module.scss';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -46,7 +44,6 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import { Dayjs } from 'dayjs';
 import 'dayjs/locale/ru';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { MultiSectionDigitalClock } from '@mui/x-date-pickers';
@@ -58,6 +55,8 @@ import {
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 import { useWebSocket } from '../../contexts/WebSocketContext';
+import ModalContainer from '../Modals/ModalContainer';
+import SystemState from '../SystemState';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -83,7 +82,6 @@ function SidenavInMain({
     dispatch(setResetMapIfChanged());
     dispatch(resetGeneralState());
     dispatch(setCloseSelectionIfChanged());
-
     closeModal();
   };
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
@@ -104,9 +102,12 @@ function SidenavInMain({
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
   const { socket, pingFailed } = useWebSocket()!;
+  const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
+  const [isReadyPressed, setIsReadyPressed] = useState(false);
+  const confirmButtonRef = useRef<HTMLAnchorElement>(null);
+
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
-
     setIsSwitchOn(checked);
     setDelayed(checked);
   };
@@ -174,11 +175,13 @@ function SidenavInMain({
     if (!socket) return;
     const handleSocketClick = (event: MessageEvent) => {
       if (event.data === 'ready pressed') {
-        onSetCurrentAction();
+        setIsReadyPressed(true);
+      }
+      if (event.data === 'accept pressed' && confirmButtonRef.current) {
+        confirmButtonRef.current.click();
       }
     };
     socket.addEventListener('message', handleSocketClick);
-
     return () => {
       socket.removeEventListener('message', handleSocketClick);
     };
@@ -200,6 +203,14 @@ function SidenavInMain({
     }
   }, [numberOfSelectedSectors, damageLevel, selectedCountries, socket]);
 
+  useEffect(() => {
+    if (!socket || pingFailed) {
+      setModalVisibleSystem(true);
+    } else {
+      setModalVisibleSystem(false);
+    }
+  }, [socket, pingFailed]);
+
   return (
     <>
       <Box
@@ -215,6 +226,12 @@ function SidenavInMain({
             trashCallBack={trashCallBack}
             trashModalOpen={trashModalOpen}
           />
+        )}
+
+        {modalVisibleSystem && (
+          <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
+            <SystemState isOn />
+          </ModalContainer>
         )}
 
         <div className={styles.sidenavWrapper}>
@@ -342,24 +359,35 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                <Link
-                  href={delayedTime && delayedDate ? '/queue' : '/summary'}
-                  onClick={onSetCurrentAction}
-                >
-                  <span
-                    className="Lead"
-                    style={{ color: 'white', padding: '10px' }}
+                {isReadyPressed ? (
+                  <Link
+                    href={delayedTime && delayedDate ? '/queue' : '/summary'}
+                    onClick={onSetCurrentAction}
+                    ref={confirmButtonRef}
                   >
-                    ПОДТВЕРДИТЬ
-                  </span>
-                  <Image
-                    src={'/onboarding/arrowConfirm.svg'}
-                    alt={'arrow'}
-                    className={styles.sidenavArrowSVG}
-                    height={23}
-                    width={23}
-                  />
-                </Link>
+                    <span
+                      className="Lead"
+                      style={{ color: 'white', padding: '10px' }}
+                    >
+                      ПОДТВЕРДИТЬ
+                    </span>
+                    <Image
+                      src={'/onboarding/arrowConfirm.svg'}
+                      alt={'arrow'}
+                      className={styles.sidenavArrowSVG}
+                      height={23}
+                      width={23}
+                    />
+                  </Link>
+                ) : (
+                  <Box sx={{ bottom: '200px', position: 'absolute' }}>
+                    <ModalContainer
+                      setModalClose={() => setModalVisibleSystem(false)}
+                    >
+                      <SystemState isOn />
+                    </ModalContainer>
+                  </Box>
+                )}
               </div>
             )}
         </div>
