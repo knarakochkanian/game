@@ -48,19 +48,19 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     setSocket(ws);
 
     const pingInterval = setInterval(() => {
-      pingAddress('192.168.0.1').then((isReachable) => {
+      pingAddress('google.com').then((isReachable) => {
         console.log(`Ping result for 192.168.0.1: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
           if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ command: 'cancel' }));
+            ws.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
           if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ command: 'ping' }));
+            ws.send('ping');
           }
         }
       });
@@ -89,7 +89,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         method: 'HEAD',
         mode: 'no-cors',
       });
-      return response.status === 200;
+      return response.status === 0;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;
