@@ -26,7 +26,7 @@ import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
 import { useAppSelector } from '../../redux/hooks';
 import { selectPlaces } from '../../redux/features/generalSlice';
-import { USARegions } from '../../data/countriesWithCodes';
+import { RegionsInMain } from '../../data/countriesWithCodes';
 import useCloseSelection from '../../hooks/useCloseSelection';
 import CountryBlocks from '../CountryBlocks';
 import useResetSearch from '../../hooks/useResetSearch';
@@ -164,7 +164,7 @@ const RegionAndOtherButtons = ({
 
             switch (region.title) {
               case REGIONS:
-                placesInSwitch = USARegions;
+                placesInSwitch = RegionsInMain;
 
                 break;
               case COUNTRIES:
@@ -189,7 +189,11 @@ const RegionAndOtherButtons = ({
                     data={region}
                     key={index}
                   >
-                    <Places fromLeftSideNav name={region.title} places={placesInSwitch} />
+                    <Places
+                      fromLeftSideNav
+                      name={region.title}
+                      places={placesInSwitch}
+                    />
                   </AccordionWrapper>
                 );
 
@@ -203,7 +207,11 @@ const RegionAndOtherButtons = ({
                       data={region}
                       key={index}
                     >
-                      <Places fromLeftSideNav name={region.title} places={placesInSwitch} />
+                      <Places
+                        fromLeftSideNav
+                        name={region.title}
+                        places={placesInSwitch}
+                      />
                     </AccordionWrapper>
                   )
                 );
