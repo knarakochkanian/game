@@ -1,13 +1,13 @@
 import Image from 'next/image';
+import React from 'react';
 import {
   selectIsAttacking,
   setSelectedIndusties,
 } from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { minusSign } from '../../public/main-screen';
 
 import styles from './SectorOptions.module.scss';
-import { minusSign } from '../../public/main-screen';
-import React from 'react';
 
 interface ISectorOptionsProps {
   sectorOptions: ISectorOption[];

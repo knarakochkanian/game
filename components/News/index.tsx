@@ -18,7 +18,8 @@ const News = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
-
+      console.log('actions', actions);
+      
       const foundAction = getAction(actionId, actions) as IAction | undefined;
       setActions(storedActions);
       setAction(foundAction);

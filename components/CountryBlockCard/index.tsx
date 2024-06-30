@@ -36,7 +36,7 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
       <button
         className={`AccordionNested ${styles.secondarySmallDisable} ${
           activeBlocks.includes(option.name) ||
-          pickedCountries.includes(option.name)
+          pickedCountries.includes(option.name) && !activeBlocks.includes('ВЕСЬ МИР')
             ? styles.selected
             : ''
         } ${!isAttacking ? styles.isProtecting : ''}`}

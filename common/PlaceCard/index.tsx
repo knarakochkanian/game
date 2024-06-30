@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import React, { ReactNode } from 'react';
 import Flag from 'react-world-flags';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
@@ -10,11 +12,9 @@ import {
 import AlphabetLetter from '../AlphabetLetter';
 import { Option } from '../../data/attackRegionsData';
 import GreenLineBorders from '../GreenLineBorders';
+import { minusSign } from '../../public/main-screen';
 
 import styles from './PlaceCard.module.scss';
-import Image from 'next/image';
-import { minusSign } from '../../public/main-screen';
-import React, { ReactNode } from 'react';
 
 interface IPlaceCardProps {
   place: IPlace;

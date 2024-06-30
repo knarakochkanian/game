@@ -8,6 +8,8 @@ import {
 } from '../../helpers';
 import { RESET, SELECT_ALL } from '../../constants';
 import { complexCountriesNames } from '../../components/Map/geodata/complex-countries';
+import { getRegionNames } from '../../helpers/helpers_1';
+import blocks from '../../data/blocks';
 
 export interface IInitialState {
   comfirmedFromOnboarding: boolean;
@@ -104,7 +106,7 @@ const generalSlice = createSlice({
       const index = state.sectors.findIndex(
         (sector) => sector.title === payload.parent
       );
-      
+
       state.sideNavIsOpen = true;
 
       const targetOptionIndex = state.sectors[index]?.options.findIndex(
@@ -140,14 +142,26 @@ const generalSlice = createSlice({
       }
     },
     proccessActiveBlocks(state) {
-      const complexCountries = state.activeBlocks.filter(block => complexCountriesNames.includes(block))
+      const complexCountries = state.activeBlocks.filter((block) =>
+        complexCountriesNames.includes(block)
+      );
       complexCountries.forEach((block) => {
         if (state.pickedCountries.includes(block)) {
-          state.activeBlocks = [...state.activeBlocks, block];
+          if (!state.activeBlocks.includes(block) && !state.activeBlocks.includes('ВЕСЬ МИР')) {
+            state.activeBlocks = [...state.activeBlocks, block];
+          }
         } else {
           state.activeBlocks.splice(state.activeBlocks.indexOf(block), 1);
         }
       });
+
+      if (state.activeBlocks.includes('ВЕСЬ МИР')) {
+        state.activeBlocks = ['ВЕСЬ МИР'];
+      }
+
+      // const activeBlocks = blocks.filter() state.activeBlocks
+
+      state.activeBlocks.forEach((block) => {});
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
@@ -214,15 +228,23 @@ const generalSlice = createSlice({
           } else {
             state.firstClick = false;
 
+            const complexCountries = payload.members.filter((member: string) =>
+              complexCountriesNames.includes(member)
+            );
+
+            let regions: string[] = [];
+
             switch (payload.action) {
               case RESET:
-                updatedPlaceName = [...payload.members].filter((place) =>
-                  state.pickedCountries.includes(place)
+                regions = getRegionNames(complexCountries, state, RESET);
+                updatedPlaceName = [...payload.members, ...regions].filter(
+                  (place) => state.pickedCountries.includes(place)
                 );
 
                 break;
               case SELECT_ALL:
-                updatedPlaceName = [...payload.members].filter(
+                regions = getRegionNames(complexCountries, state, SELECT_ALL);
+                updatedPlaceName = [...payload.members, ...regions].filter(
                   (place) => !state.pickedCountries.includes(place)
                 );
                 break;
@@ -277,7 +299,7 @@ const generalSlice = createSlice({
     },
     setClickOnboardingCount(state, { payload }) {
       state.clickOnboardingCount = payload;
-    }
+    },
   },
 });
 

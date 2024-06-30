@@ -12,12 +12,12 @@ const AttacksWithDates = ({
 }: {
   attacks: IAction[];
   setActionId: TSetString;
-  actionId: string
+  actionId: string;
 }) => {
 
-  useEffect(() => {
-    setActionId(actionId as string);
-  }, [actionId]);
+  // useEffect(() => {
+  //   setActionId(actionId as string);
+  // }, [actionId]);
 
   if (!attacks) return <></>;
 
