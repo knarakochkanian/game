@@ -1,5 +1,5 @@
 import blocks from './blocks';
-import countriesWithCodes, { USARegions } from './countriesWithCodes';
+import countriesWithCodes, { RegionsInMain } from './countriesWithCodes';
 
 export interface Option {
   id: number | string;
@@ -11,7 +11,7 @@ export interface IPlace extends Option {
   members?: string[];
 }
 
-export interface RegionCategory {  
+export interface RegionCategory {
   id: number;
   title?: string;
   options?: (Option | IPlace)[];
@@ -736,7 +736,7 @@ export const regions: Region[] = [
       {
         id: 6,
         title: 'регионы',
-        options: USARegions,
+        options: RegionsInMain,
       },
       {
         id: 7,
@@ -808,7 +808,6 @@ export const regions: Region[] = [
   },
 ];
 
-
 export const notFriendlyCountries = [
   { id: '1', name: 'Австралия' },
   { id: '2', name: 'Албания' },
@@ -859,4 +858,4 @@ export const notFriendlyCountries = [
   { id: '47', name: 'Чехия' },
   { id: '48', name: 'Швеция' },
   { id: '49', name: 'Эстония' },
-].map(place => place.name);
+].map((place) => place.name);
