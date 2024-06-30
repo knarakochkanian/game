@@ -24,15 +24,14 @@ import {
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
-  setCurrentAction,
   setDamageLevel,
 } from '../../redux/features/generalSlice';
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import Modal from '../../common/Modals/Modal';
+import { controllerServerAddress } from '../static_variables';
 
 import styles from './count-down.module.scss';
-import { controllerServerAddress } from '../static_variables';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);

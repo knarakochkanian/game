@@ -14,7 +14,6 @@ import GreenLineBorders from '../../common/GreenLineBorders';
 
 import './AccordionStyles.scss';
 import styles from './CountryWithRegions.module.scss';
-
 interface ICountryWithRegionsProps {
   i: number;
   place: IPlace;
