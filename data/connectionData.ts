@@ -30,7 +30,7 @@ export const waves: ISingleWave[] = [
     num: 1,
   },
   {
-    isOn: false,
+    isOn: true,
     network: 'Wireguard',
     num: 2,
   },

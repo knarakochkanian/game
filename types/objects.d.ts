@@ -40,9 +40,8 @@ interface INews {
   imgSrc?: string;
   channelLogoSrc: string;
   title: string;
-  content: string;
   date?: string;
-  minutes?: number;
+  fullDate: string;
 }
 
 interface IPlace {

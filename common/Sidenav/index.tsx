@@ -23,7 +23,6 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK, ATTACK_OR_PROTECT, CRITICAL } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
-import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
 import industry, { defaultSectorsSelection } from '../../data/industryData';
 import USA from '../../data/countriesWithCodes';
@@ -77,7 +76,7 @@ function Sidenav({
   const onSetCurrentAction = () => {
     const currentAction: IAction = {
       actionType: ATTACK,
-      news: news_2,
+      news: [],
       launchConsequences,
       id: 1,
       damageLevel: CRITICAL,

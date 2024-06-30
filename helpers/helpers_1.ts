@@ -12,6 +12,14 @@ import englishLayout from '../data/keyboardData/englishLayout';
 import russianLayout from '../data/keyboardData/russianLayout';
 import { formatDate } from '.';
 import { IInitialState } from '../redux/features/generalSlice';
+import getTopCapitalizationNews_2 from '../data/topCapitalizationNews';
+import {
+  BBCMainImg,
+  FoxNewsMainImg,
+  SkyNewsMainImg,
+  TheTimesMainImg,
+} from '../public/news';
+import { BBCLogo, foxNewsLogo, skyNewsLogo, theTimesLogo } from '../public/history';
 
 export const getLiClassnames = (
   damageLevel: string,
@@ -98,7 +106,7 @@ export const getRegionNames = (
   let regions: string[] = [];
 
   complexCountries.forEach((country: string) => {
-    const foundCountry = state.places.find((place) => (place.name === country));
+    const foundCountry = state.places.find((place) => place.name === country);
 
     if (foundCountry) {
       foundCountry.regions?.forEach((region) => {
@@ -121,4 +129,90 @@ export const getRegionNames = (
   });
 
   return regions;
+};
+
+const months = [
+  'Янв',
+  'Февр',
+  'Март',
+  'Апр',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Авг',
+  'Сент',
+  'Окт',
+  'Ноя',
+  'Дек',
+];
+
+export const getDayAndMonthAbbr = (dateStr: string): string => {
+  const dateParts = dateStr.split(' ');
+  const dateComponent = dateParts[0];
+  const [day, month, year] = dateComponent
+    .split('.')
+    .map((part) => parseInt(part));
+  const monthAbbreviation = months[month - 1];
+
+  return `${day} ${monthAbbreviation}`;
+};
+
+export const joinStrings = (arr: string[]): string => {
+  return arr.join(', ');
+};
+
+interface INewsObj {
+  [key: string]: any;
+}
+
+export const getTopCapitalizationNews = (sector: ISector, date: string) => {
+  const selectedOptionNames = sector.options
+    .filter((o) => o.selected)
+    .map((o) => o.name);
+
+  const topCapitalizationNews = getTopCapitalizationNews_2(date);
+  let news: INews[] = [];
+
+  selectedOptionNames.forEach((industry) => {
+    let industryName;
+
+    switch (industry) {
+      case 'Amazon.com':
+        industryName = 'Amazon';
+        break;
+      case 'Exxon Mobil':
+        industryName = 'ExxonMobil';
+        break;
+      case 'McDonald’s':
+        industryName = 'McDonald';
+        break;
+      default:
+        industryName = industry;
+        break;
+    }
+
+    news = [
+      ...news,
+      ...(topCapitalizationNews as INewsObj)[industryName as string],
+    ];
+  });
+
+  return news;
+};
+
+export const getRandomNewsPic = () => {
+  const pictures = [
+    BBCMainImg,
+    FoxNewsMainImg,
+    SkyNewsMainImg,
+    TheTimesMainImg,
+  ];
+
+  return pictures[Math.floor(Math.random() * 4)];
+};
+
+export const getRandomChannelLogo = () => {
+  const logos = [BBCLogo, foxNewsLogo, skyNewsLogo, theTimesLogo];
+
+  return logos[Math.floor(Math.random() * 4)];
 };
