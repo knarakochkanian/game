@@ -44,6 +44,7 @@ import SystemState from '../../common/SystemState';
 import { useWebSocket } from '../../contexts/WebSocketContext';
 
 import styles from './MainScreen.module.scss';
+import Box from '@mui/material/Box';
 
 const WorldMap = dynamic(
   () => import('../Map/InteractiveMap.component').then((mod) => mod.WorldMap),
@@ -107,6 +108,12 @@ const MainScreen = () => {
           <Waves deviceConnected={true} waves={waves} />
         </ModalContainer>
       )}
+      {modalVisibleSystem && (
+        <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
+          <SystemState isOn={pingFailed} />
+        </ModalContainer>
+      )}
+
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
       <Help />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -22,6 +22,10 @@ import {
 import { ACTIONS_IN_QUEUE, COUNT_DOWN } from '../../constants';
 import { formatDate, getItemFromStorage } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
+import {
+  WebSocketContext,
+  WebSocketContextProps,
+} from '../../contexts/WebSocketContext';
 
 import styles from './summary.module.scss';
 
@@ -39,6 +43,9 @@ const Summary = () => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
+  const webSocketContext = useContext(
+    WebSocketContext
+  ) as WebSocketContextProps;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -78,6 +85,13 @@ const Summary = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
     }, 10);
+
+    if (
+      webSocketContext?.socket &&
+      webSocketContext.socket.readyState === WebSocket.OPEN
+    ) {
+      webSocketContext.socket.send(JSON.stringify({ command: 'cancel' }));
+    }
 
     router.back();
   };

@@ -19,7 +19,7 @@ const News = () => {
     if (typeof window !== 'undefined') {
       const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
       console.log('actions', actions);
-      
+
       const foundAction = getAction(actionId, actions) as IAction | undefined;
       setActions(storedActions);
       setAction(foundAction);
@@ -27,26 +27,25 @@ const News = () => {
   }, [JSON.stringify(action), actionId]);
 
   useEffect(() => {
-    if(!actions) return;
+    if (!actions) return;
     setActionId(String(actions[0]?.id));
   }, [JSON.stringify(actions)]);
 
   console.log('action', action);
 
   if (action === undefined) {
-    return null; 
+    return null;
   }
 
   if (!action) {
     notFound();
-    return null; 
+    return null;
   }
 
   return (
     <div className={styles.news}>
       <Suspense fallback={<Loading />}>
         <h1>Влияние на мир</h1>
-
         <div className={styles.container}>
           <AttacksWithDates
             actionId={actionId}

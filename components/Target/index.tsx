@@ -13,18 +13,26 @@ const Target = () => {
           width={280}
           height={28}
         />
-        <div className={styles.targetText}>
-          <span>запад</span>
-        </div>
-        <Image
-          className={styles.targetSvgMain}
-          src={'/target/target.svg'}
-          alt="target"
-          width={221}
-          height={212}
-        />
-        <div className={styles.targetText}>
-          <span>восток</span>
+        <div className={styles.targetTextContainer}>
+          <div className={styles.targetTextWest}>
+            <span>запад</span>
+          </div>
+          <div className={styles.targetTextNorth}>
+            <span>север</span>
+          </div>
+          <Image
+            className={styles.targetSvgMain}
+            src={'/target/target.svg'}
+            alt="target"
+            width={221}
+            height={212}
+          />
+          <div className={styles.targetTextSouth}>
+            <span>юг</span>
+          </div>
+          <div className={styles.targetTextEast}>
+            <span>восток</span>
+          </div>
         </div>
         <Image
           className={styles.targetArrows}

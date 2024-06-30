@@ -93,13 +93,15 @@ const SelectFromTwo = ({
   const totalPopulationRegions = selectedCountries.reduce((total, country) => {
     if (country.regions && country.regions.length > 0) {
       const regionsPopulation = country.regions.reduce((acc, region) => {
-        return acc + (region.population || 0);
+        return acc + (region.isSelected ? region.population ?? 0 : 0);
       }, 0);
+
       return total + regionsPopulation;
     } else {
-      return total + (country.population || 0);
+      return total + (country.isSelected ? country.population ?? 0 : 0);
     }
   }, 0);
+
   dispatch(setTotalPopulationRegions(totalPopulationRegions));
 
   const financialLosses =

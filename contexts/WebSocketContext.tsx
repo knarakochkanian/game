@@ -1,16 +1,24 @@
 'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 import { controllerServerAddress } from '../app/static_variables';
 
-interface WebSocketContextProps {
+export interface WebSocketContextProps {
   socket: WebSocket | null;
   pingFailed: boolean;
   modalVisible?: boolean;
 }
 
-const WebSocketContext = createContext<WebSocketContextProps | null>(null);
+export const WebSocketContext = createContext<WebSocketContextProps | null>(
+  null
+);
 
-export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
+export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -41,7 +49,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const pingInterval = setInterval(() => {
       pingAddress('192.168.0.1').then((isReachable) => {
-        console.log(`Ping result for 10.99.2.5: ${isReachable}`);
+        console.log(`Ping result for 192.168.0.1: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
@@ -51,6 +59,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
         } else {
           setPingFailed(false);
           setModalVisible(false);
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ command: 'ping' }));
+          }
         }
       });
     }, 5000);
@@ -78,7 +89,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
         method: 'HEAD',
         mode: 'no-cors',
       });
-      return response.status == 0;
+      return response.status === 200;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;

@@ -1,32 +1,64 @@
 @import '/app/variables.module';
+
+@mixin text-style {
+  color: $white;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: 100%;
+  letter-spacing: 1.32px;
+  text-transform: uppercase;
+  background-color: $black-60;
+  pointer-events: none;
+  padding: 8px 10px;
+}
+
 .target {
   position: fixed;
   top: 312px;
   z-index: 1;
-  width: 1344px;
+  width: 1318px;
   pointer-events: none;
+
   &Wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &Text {
     display: inline-flex;
-    padding: 8px 10px;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    background-color: $black-60;
-    pointer-events: none;
+
+
     > span {
-      color: $white;
-      font-family: 'TT Lakes Neue Trial';
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 200;
-      line-height: 100%; /* 26.4px */
-      letter-spacing: 1.32px;
-      text-transform: uppercase;
+      @include text-style;
+    }
+    &Container{
+      position: relative;
+    }
+    &North, &South, &West, &East {
+      position: absolute;
+      @include text-style;
+    }
+
+    &North {
+      top: -45px;
+      left: 75px;
+    }
+
+    &South {
+      bottom: -44px;
+      left: 85px;
+    }
+    &West {
+      left: -78px;
+      top: 91px;
+    }
+    &East {
+      right: -88px;
+      top: 91px;
     }
   }
 }

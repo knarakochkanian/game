@@ -78,20 +78,8 @@ function SidenavInMain({
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
-  let trashCallBack = () => {
-    dispatch(setResetMapIfChanged());
-    dispatch(resetGeneralState());
-    dispatch(setCloseSelectionIfChanged());
-    closeModal();
-  };
-  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
-  const damageLevel = useAppSelector(selectDamgeLevel);
-  const isAttacking = useAppSelector(selectIsAttacking);
-  const industrySectors = useAppSelector(selectSectors);
-  const numberOfSelectedSectors =
-    countSelectedOptions(industrySectors, 'selected') !== 0
-      ? countSelectedOptions(industrySectors, 'selected')
-      : null;
+  const { socket, pingFailed } = useWebSocket()!;
+  const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
   const [lastActionName, setLastActionName] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -101,10 +89,16 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
-  const { socket, pingFailed } = useWebSocket()!;
-  const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
-  const [isReadyPressed, setIsReadyPressed] = useState(false);
   const confirmButtonRef = useRef<HTMLAnchorElement>(null);
+  const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  const damageLevel = useAppSelector(selectDamgeLevel);
+  const isAttacking = useAppSelector(selectIsAttacking);
+  const industrySectors = useAppSelector(selectSectors);
+  const numberOfSelectedSectors =
+    countSelectedOptions(industrySectors, 'selected') !== 0
+      ? countSelectedOptions(industrySectors, 'selected')
+      : null;
+  const [isReadyPressed, setIsReadyPressed] = useState(false);
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -157,7 +151,7 @@ function SidenavInMain({
       name,
       selectedCountries,
     };
-    
+
     if (delayedDate && delayedTime) {
       const actionsInQueue = JSON.parse(
         window.localStorage.getItem(ACTIONS_IN_QUEUE) || '[]'
@@ -233,7 +227,12 @@ function SidenavInMain({
           <TrashModal
             closeModal={closeModal}
             name="trashInSidnav"
-            trashCallBack={trashCallBack}
+            trashCallBack={() => {
+              dispatch(setResetMapIfChanged());
+              dispatch(resetGeneralState());
+              dispatch(setCloseSelectionIfChanged());
+              closeModal();
+            }}
             trashModalOpen={trashModalOpen}
           />
         )}
@@ -342,7 +341,7 @@ function SidenavInMain({
           {numberOfSelectedSectors !== null &&
             damageLevel &&
             selectedCountries.length !== 0 &&
-            isReadyPressed && (
+            !pingFailed && (
               <div className={styles.sidenavAddConfirm}>
                 <Image
                   src={
@@ -382,18 +381,17 @@ function SidenavInMain({
                     width={23}
                   />
                 </Link>
-                ) : (
-                {modalVisibleSystem && (
-                  <Box sx={{ bottom: '200px', position: 'absolute' }}>
-                    <ModalContainer
-                      setModalClose={() => setModalVisibleSystem(false)}
-                    >
-                      <SystemState isOn={pingFailed} />
-                    </ModalContainer>
-                  </Box>
-                )}
               </div>
             )}
+          {modalVisibleSystem && (
+            <Box sx={{ bottom: '200px', position: 'absolute' }}>
+              <ModalContainer
+                setModalClose={() => setModalVisibleSystem(false)}
+              >
+                <SystemState isOn={pingFailed} />
+              </ModalContainer>
+            </Box>
+          )}
         </div>
       </Box>
     </>
