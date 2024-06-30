@@ -1178,6 +1178,7 @@ const industry: IIndustry = {
           name: 'Google',
           src: '/top-capitalization/google.svg',
           n: 2150000000000,
+          capitalization: 2150,
         },
         {
           selected: false,
@@ -1186,6 +1187,7 @@ const industry: IIndustry = {
           name: 'Apple',
           src: '/top-capitalization/apple.svg',
           n: 3331000000000,
+          capitalization: 3331,
         },
         {
           selected: false,
@@ -1194,6 +1196,7 @@ const industry: IIndustry = {
           name: 'Microsoft',
           src: '/top-capitalization/microsoft.svg',
           n: 3332000000000,
+          capitalization: 3332,
         },
         {
           selected: false,
@@ -1202,6 +1205,7 @@ const industry: IIndustry = {
           name: 'Amazon.com',
           src: '/top-capitalization/amazon.svg',
           n: 1970000000000,
+          capitalization: 1970,
         },
         {
           selected: false,
@@ -1210,6 +1214,7 @@ const industry: IIndustry = {
           name: 'NVIDIA',
           src: '/top-capitalization/nvidia.svg',
           n: 3251000000000,
+          capitalization: 3251,
         },
         {
           selected: false,
@@ -1218,6 +1223,7 @@ const industry: IIndustry = {
           name: 'Meta',
           src: '/top-capitalization/meta.svg',
           n: 1220000000000,
+          capitalization: 1220,
         },
         {
           selected: false,
@@ -1234,6 +1240,7 @@ const industry: IIndustry = {
           name: 'Mastercard',
           src: '/top-capitalization/mastercard.svg',
           n: 392000000000,
+          capitalization: 392,
         },
         {
           selected: false,
@@ -1242,6 +1249,7 @@ const industry: IIndustry = {
           name: 'Exxon Mobil',
           src: '/top-capitalization/exxon.svg',
           n: 448000000000,
+          capitalization: 448,
         },
         {
           selected: false,
@@ -1250,6 +1258,7 @@ const industry: IIndustry = {
           name: 'McDonald’s',
           src: '/top-capitalization/McDonald’s.svg',
           n: 173000000000,
+          capitalization: 173,
         },
       ],
     },

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
@@ -27,6 +27,17 @@ interface ISelectFromTwoProps {
   imgSrc_2: string;
   name?: string;
   setFirstActive?: setFirstActive;
+  isTopCapitalization: boolean;
+  options: {
+    capitalization: number;
+    n: number;
+    companies: Array<{
+      selected: boolean;
+      name: string;
+      capitalization: number;
+      n: number;
+    }>;
+  };
 }
 
 const SelectFromTwo = ({
@@ -36,10 +47,24 @@ const SelectFromTwo = ({
   imgSrc_2,
   name,
   setFirstActive,
+  isTopCapitalization,
+  options,
 }: ISelectFromTwoProps) => {
   const [disabledBtn, setDisabledBtn] = useState(2);
+  const [selectedCompanies, setSelectedCompanies] = useState(
+    options?.companies
+  );
+
   const dispatch = useAppDispatch();
   const isAttacking = useAppSelector(selectIsAttacking);
+
+  useEffect(() => {
+    if (isTopCapitalization) {
+      dispatch(setFormattedFinancialLosses(formatNumber(totalCapitalization)));
+    } else {
+      dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
+    }
+  }, [isTopCapitalization, dispatch]);
 
   const handleBtn_1_Click = () => {
     setDisabledBtn(2);
@@ -88,6 +113,7 @@ const SelectFromTwo = ({
         return 0;
     }
   };
+
   const n = 1;
 
   const totalPopulationRegions = selectedCountries.reduce((total, country) => {
@@ -102,12 +128,27 @@ const SelectFromTwo = ({
     }
   }, 0);
 
-  dispatch(setTotalPopulationRegions(totalPopulationRegions));
+  useEffect(() => {
+    dispatch(setTotalPopulationRegions(totalPopulationRegions));
+  }, [totalPopulationRegions, dispatch]);
 
   const financialLosses =
     3000 * totalPopulationRegions * 0.2 * n * damageLevelCount();
 
-  dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
+  useEffect(() => {
+    dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
+  }, [financialLosses, dispatch]);
+
+  const calculateTotalCapitalization = () => {
+    const selectedCompanies = options?.companies.filter(
+      (company) => company.selected
+    );
+    return selectedCompanies?.reduce((total, company) => {
+      return company.capitalization * company.n;
+    }, 0);
+  };
+
+  const totalCapitalization = calculateTotalCapitalization();
 
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
@@ -131,7 +172,9 @@ const SelectFromTwo = ({
             )}
             <h3>
               {formatNumberWithSpaces(
-                parseInt(formattedFinancialLosses.replace(/[^\d]/g, ''))
+                isTopCapitalization
+                  ? totalCapitalization
+                  : parseInt(formattedFinancialLosses.replace(/[^\d]/g, ''))
               )}{' '}
               млрд $
             </h3>
