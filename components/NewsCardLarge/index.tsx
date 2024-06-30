@@ -36,7 +36,7 @@ const NewsCardLarge = ({ news, onClick, from }: INewsCardLargeProps) => {
           {from === 'fromSingleNewsModal' && (
             <DateAndMinutes
               date={news.date as string}
-              minutes={news.minutes as number}
+              fullDate={news.fullDate}
             />
           )}
         </div>
@@ -46,12 +46,12 @@ const NewsCardLarge = ({ news, onClick, from }: INewsCardLargeProps) => {
           <p>
             {from === 'fromSingleNewsModal'
               ? news.contentInDetails
-              : news.content}
+              : news.contentInDetails?.split('. ')[0]}
           </p>
           {from !== 'fromSingleNewsModal' && (
             <DateAndMinutes
               date={news.date as string}
-              minutes={news.minutes as number}
+              fullDate={news.fullDate}
             />
           )}
         </div>

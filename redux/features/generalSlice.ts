@@ -128,6 +128,9 @@ const generalSlice = createSlice({
     setCurrentActionDate(state, { payload }: { payload: string }) {
       (state.currentAction as IAction).date = payload;
     },
+    setCurrentActionNews(state, { payload }: { payload: INews[] }) {
+      (state.currentAction as IAction).news = payload;
+    },
     setCurrentAction(state, { payload }: { payload: IAction }) {
       state.currentAction = payload;
     },
@@ -304,6 +307,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setCurrentActionNews,
   proccessActiveBlocks,
   setSideNavIsOpen,
   setBlur,

@@ -32,7 +32,6 @@ import {
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
-import { news_2 } from '../../data/news';
 import launchConsequences from '../../data/launchConsequences';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
@@ -138,7 +137,7 @@ function SidenavInMain({
 
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
-      news: news_2,
+      news: [],
       launchConsequences,
       id: extractNumber(name),
       damageLevel,
