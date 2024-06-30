@@ -18,7 +18,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const protocol = 'ws';
     const socketUrl = `${protocol}://${controllerServerAddress}`;
     const ws = new WebSocket(socketUrl);
     console.log(`Attempting to connect WebSocket to ${socketUrl}`);
@@ -40,7 +40,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
     setSocket(ws);
 
     const pingInterval = setInterval(() => {
-      pingAddress('10.99.2.5').then((isReachable) => {
+      pingAddress('192.168.0.1').then((isReachable) => {
         console.log(`Ping result for 10.99.2.5: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
@@ -74,11 +74,11 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const pingAddress = async (address: string) => {
     try {
-      const response = await fetch(`https://${address}`, {
+      const response = await fetch(`http://${address}`, {
         method: 'HEAD',
         mode: 'no-cors',
       });
-      return response.ok;
+      return response.status == 0;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;
