@@ -1,5 +1,8 @@
 const nextConfig = {
-    output: 'export',
-}
-
-module.exports = nextConfig
+    // output: 'export',
+    images: {
+      unoptimized: true,
+    },
+  };
+  
+  module.exports = nextConfig;

@@ -9,7 +9,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import styles from './ResetOrSelectAll.module.scss';
-
 interface IResetOrSelectAllProps {
   places: (IPlace | Option)[] | undefined;
   withCount?: boolean;

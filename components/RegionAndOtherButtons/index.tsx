@@ -163,10 +163,6 @@ const RegionAndOtherButtons = ({
             let placesInSwitch;
 
             switch (region.title) {
-              case REGIONS:
-                placesInSwitch = RegionsInMain;
-
-                break;
               case COUNTRIES:
                 placesInSwitch = countries;
 
@@ -179,7 +175,6 @@ const RegionAndOtherButtons = ({
             }
 
             switch (region.title) {
-              case REGIONS:
               case COUNTRIES:
                 return (
                   <AccordionWrapper

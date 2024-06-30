@@ -1,10 +1,7 @@
-import Image from 'next/image';
 import { useRef, useState } from 'react';
 import PlaceCard from '../../common/PlaceCard';
 import { Option } from '../../data/attackRegionsData';
 import { COUNTRIES, NOT_FRIENDLY_COUNTRIES } from '../../constants';
-import AlphabetNav from '../AlphabetNav';
-import { two_lines } from '../../public/ui_kit';
 import useHighlightCurrentLetter from '../../hooks/useHighlightCurrentLetter';
 import CountryWithRegions from '../CountryWithRegions';
 import ResetOrSelectAll from '../../common/ResetOrSelectAll';

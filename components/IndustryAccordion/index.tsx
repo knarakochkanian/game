@@ -18,7 +18,6 @@ import {
   selectComfirmedFromOnboarding,
   selectIsAttacking,
 } from '../../redux/features/generalSlice';
-import { minusSign } from '../../public/main-screen';
 
 import styles from './IndustryAccordion.module.scss';
 
