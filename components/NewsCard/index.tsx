@@ -28,7 +28,7 @@ const NewsCard = ({ news }: { news: INews }) => {
 
       <div>
         <h2 ref={titleRef}>{news.title}</h2>
-        <p>{news.content}</p>
+        <p>{news.contentInDetails?.split('. ')[0]}</p>
       </div>
     </article>
   );
