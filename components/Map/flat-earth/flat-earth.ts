@@ -127,6 +127,14 @@ export class FlatEarth implements IEarth {
     }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
   }
 
+  public stopRenderLoop() {
+    this.renderer?.setAnimationLoop(null)
+  }
+
+  public resumeRenderLoop() {
+    this.runRenderLoop()
+  }
+
   public onRotateStart(direction: 'left' | 'right'): void {
     console.error("rotation is only implemented for spherical map")
   }
@@ -171,6 +179,11 @@ export class FlatEarth implements IEarth {
       const width = parentHtmlElement.clientWidth
       const ratio = width / height
 
+      if (width === 0 && height === 0) {
+        this.stopRenderLoop()
+        return;
+      }
+
       this.renderer.setPixelRatio(ratio);
       this.renderer.setSize(width, height);
 
@@ -181,6 +194,7 @@ export class FlatEarth implements IEarth {
         // this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
       }
 
+      this.resumeRenderLoop()
     }
 
     if (this.isNotInteractive) {
@@ -388,16 +402,15 @@ export class FlatEarth implements IEarth {
     const controls = this.controls
     const composer = this.composer
 
-    function animate() {
+    function animationLoop() {
       if (!scene || !renderer || !controls || !camera) {
         return;
       }
-      requestAnimationFrame(animate);
       renderer.render(scene, camera);
       controls.update()
       composer?.render()
     }
-    animate();
+    renderer?.setAnimationLoop(animationLoop)
   }
 
   public dispose() {

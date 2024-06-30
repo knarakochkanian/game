@@ -65,6 +65,8 @@ export class Earth implements IEarth {
 
   private vignetteShaderPass: ShaderPass | undefined;
 
+  private parentHtmlElement: HTMLElement | undefined;
+
   constructor({
     onCountryClick,
     countryColor = DEFAULT_COLOR,
@@ -124,14 +126,11 @@ export class Earth implements IEarth {
     const globe = Globe({ animateIn: false })
       .globeMaterial(innerGlobeMaterial)
       .polygonsData(polygonsData)
-      .polygonCapCurvatureResolution(5)
+      .polygonCapCurvatureResolution(10)
       // .polygonStrokeColor(() => contourColor)
-      .polygonAltitude(() => 0.01)
+      .polygonAltitude(() => 0.015)
       .polygonSideColor(() => 'rgba(0, 0, 0, 0)') // hidden
-      .showGraticules(true)
       .backgroundColor(`${BACKGROUND_COLOR}77`)
-      .showAtmosphere(true)
-      .atmosphereColor("#37403f")
       .pointerEventsFilter(obj => {
         if ("isInteractive" in obj.userData) {
           return !!obj.userData.isInteractive
@@ -165,6 +164,14 @@ export class Earth implements IEarth {
     this.updateCountryContoursVisibility();
 
     this.setupOnCountryClick(onCountryClick);
+  }
+
+  public stopRenderLoop() {
+    this.globe?.pauseAnimation()
+  }
+
+  public resumeRenderLoop() {
+    this.globe?.resumeAnimation()
   }
 
   private setupOnCountryClick(onCountryClick: (name: string) => void) {
@@ -320,14 +327,27 @@ export class Earth implements IEarth {
 
 
   public onWindowResize() {
+    if (!this.parentHtmlElement) {
+      return;
+    }
+    const width = this.parentHtmlElement.clientWidth
+    const height = this.parentHtmlElement.clientHeight
+
+    if (width === 0 && height === 0) {
+      this.stopRenderLoop()
+      return;
+    }
+
     if (this.vignetteShaderPass) {
       this.vignetteShaderPass.uniforms['resolution'].value = new Vector2(
-        window.innerWidth,
-        window.innerHeight
+        width,
+        height
       );
     }
-    this.globe?.width(window.innerWidth);
-    this.globe?.height(window.innerHeight);
+    this.globe?.width(width);
+    this.globe?.height(height);
+
+    this.resumeRenderLoop();
   }
 
   public render(parentHtmlElement: HTMLElement) {
@@ -335,6 +355,7 @@ export class Earth implements IEarth {
       return;
     }
 
+    this.parentHtmlElement = parentHtmlElement;
     this.globe(parentHtmlElement);
 
     //#region post-processing
