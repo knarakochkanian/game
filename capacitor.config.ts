@@ -6,8 +6,12 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     androidScheme: 'http',
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true
+    }
   }
-  
 };
 
 export default config;

@@ -111,7 +111,7 @@ const Summary = () => {
       webSocketContext?.socket &&
       webSocketContext.socket.readyState === WebSocket.OPEN
     ) {
-      webSocketContext.socket.send(JSON.stringify({ command: 'cancel' }));
+      webSocketContext.socket.send('cancel');
     }
 
     router.back();
