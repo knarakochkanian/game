@@ -124,7 +124,10 @@ const IndustryAccordion = ({
               data={sector}
               key={index}
             >
-              <SectorOptions fromSideNav={fromSideNav} sectorOptions={sector.options} />
+              <SectorOptions
+                fromSideNav={fromSideNav}
+                sectorOptions={sector.options}
+              />
             </AccordionWrapper>
           );
         })}

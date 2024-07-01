@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import styles from './FooterButton.module.scss';
 
 interface FooterButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   title: string;
   order: string;
   from?: string;

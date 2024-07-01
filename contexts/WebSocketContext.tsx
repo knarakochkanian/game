@@ -7,6 +7,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { controllerServerAddress } from '../app/static_variables';
+import { CapacitorHttp } from '@capacitor/core';
 
 export interface WebSocketContextProps {
   socket: WebSocket | null;
@@ -48,8 +49,8 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     setSocket(ws);
 
     const pingInterval = setInterval(() => {
-      pingAddress('google.com').then((isReachable) => {
-        console.log(`Ping result for 192.168.0.1: ${isReachable}`);
+      pingAddress('10.99.2.5').then((isReachable) => {
+        console.log(`Ping result for 10.99.2.5: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
@@ -85,11 +86,12 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
 
   const pingAddress = async (address: string) => {
     try {
-      const response = await fetch(`http://${address}`, {
+      const options = {
+        url: `https://${address}`,
         method: 'HEAD',
-        mode: 'no-cors',
-      });
-      return response.status === 0;
+      };
+      const response = await CapacitorHttp.get(options);
+      return response.status === 200;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,6 +32,7 @@ import Modal from '../../common/Modals/Modal';
 import { controllerServerAddress } from '../static_variables';
 
 import styles from './count-down.module.scss';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -127,7 +128,10 @@ export default function CountDown() {
   };
 
   useEffect(() => {
-    const socket = new WebSocket("ws://" + controllerServerAddress);
+    const socket = new WebSocket('ws://' + controllerServerAddress);
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 2000);
     socket.onmessage = (event) => {
       if (event.data === 'cancel pressed') {
         cancelCountdown();
@@ -139,13 +143,7 @@ export default function CountDown() {
     return () => {
       socket.close();
     };
-  }, []);
-
-  const onResetGlobalState = () => {
-    setTimeout(() => {
-      dispatch(resetGeneralState());
-    }, 2000);
-  };
+  }, [socket]);
 
   return (
     <>
@@ -204,7 +202,6 @@ export default function CountDown() {
         </p>
         <div className="ModalButtons">
           <Link
-            onClick={onResetGlobalState}
             href={'/'}
             style={{ color: 'white', padding: '20px' }}
             className="ModalButton1"

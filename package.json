@@ -13,6 +13,7 @@
     "@capacitor/cli": "^6.1.0",
     "@capacitor/core": "^6.1.0",
     "@capacitor/network": "^6.0.1",
+    "@capacitor/status-bar": "^6.0.0",
     "@ducanh2912/next-pwa": "^10.2.7",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
