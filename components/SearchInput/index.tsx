@@ -51,6 +51,7 @@ const SearchInput = ({
         value={searchInput}
         onChange={(e) => onChangeInput(e)}
         onClick={onSearchClick}
+        readOnly
       />
       <IconButton
         type="button"

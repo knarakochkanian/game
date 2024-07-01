@@ -358,6 +358,11 @@ export class Earth implements IEarth {
     this.parentHtmlElement = parentHtmlElement;
     this.globe(parentHtmlElement);
 
+    const canvas = parentHtmlElement.querySelector('canvas');
+    if (canvas) {
+      canvas.style.cursor = 'default';
+    }
+
     //#region post-processing
     // const composer = this.globe.postProcessingComposer();
 
