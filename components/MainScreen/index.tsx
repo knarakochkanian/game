@@ -105,12 +105,12 @@ const MainScreen = () => {
       )}
       {modalVisibleWave && (
         <ModalContainer setModalClose={() => setModalVisibleWave(false)}>
-          <Waves deviceConnected={true} waves={waves} />
+          <Waves deviceConnected={!pingFailed} waves={waves} />
         </ModalContainer>
       )}
       {modalVisibleSystem && (
         <ModalContainer setModalClose={() => setModalVisibleSystem(false)}>
-          <SystemState isOn={pingFailed} />
+          <SystemState isOn={!pingFailed} />
         </ModalContainer>
       )}
 
