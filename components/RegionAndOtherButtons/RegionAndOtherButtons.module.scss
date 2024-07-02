@@ -56,10 +56,6 @@
   z-index: 10;
   left: 50px;
   top: 28px;
-  .accordionsContainer {
-    max-height: 428px;
-    @include hideScrollBar;
-  }
   .searchResult {
     position: relative;
     background-color: $card;

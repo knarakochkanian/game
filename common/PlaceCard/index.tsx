@@ -50,7 +50,6 @@ const PlaceCard = ({
   } ${isSelected && fromLeftSideNav ? styles.selected : ''} ${
     !isAttacking ? styles.isProtecting : ''
   }`;
-
   const onClick = () => {
     if (withRegions) return;
     console.log('Button clicked:', place?.name);
@@ -77,10 +76,10 @@ const PlaceCard = ({
           <button onClick={onClick}>
             <Image
               className={styles.minusSign}
-              src={minusSign}
+              src={withRegions ? 'onboarding/arrow.svg' : minusSign}
               alt="minusSign"
-              width={40}
-              height={40}
+              width={withRegions ? 11 : 40}
+              height={withRegions ? 11 : 40}
               priority
             />
           </button>

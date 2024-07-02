@@ -37,7 +37,7 @@ const AccordionWrapper = ({
   selectedOtionsCount,
   styles,
 }: IAccordionWrapperProps) => {
-  const isAttacking = useAppSelector(selectIsAttacking);  
+  const isAttacking = useAppSelector(selectIsAttacking);
   const {
     accordionBackground,
     accordionDetailsHeight,
@@ -53,7 +53,7 @@ const AccordionWrapper = ({
   }
 
   const summaryStyles = {
-    maxWidth: '344px',
+    maxWidth: '364px',
     marginRight: '8px',
     marginLeft: '4px',
     padding: '12px 16px',
@@ -68,8 +68,8 @@ const AccordionWrapper = ({
         ? '#011A17'
         : '#010526'
       : showPlusIcon
-      ? '#131E1D'
-      : 'inherit',
+        ? '#131E1D'
+        : 'inherit',
   };
 
   return (

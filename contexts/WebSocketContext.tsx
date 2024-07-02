@@ -85,6 +85,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   }, [modalVisible]);
 
   const pingAddress = async (address: string) => {
+    return true;
     try {
       const options = {
         url: `http://${address}`,
