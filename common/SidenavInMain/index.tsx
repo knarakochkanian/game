@@ -1,6 +1,6 @@
 'use client';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
@@ -75,7 +75,7 @@ function SidenavInMain({
   removeModalDate,
 }: ISidenavInMainProps) {
   const dispatch = useAppDispatch();
-  const router = useRouter(); // Use useRouter to navigate programmatically
+  const router = useRouter();
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);

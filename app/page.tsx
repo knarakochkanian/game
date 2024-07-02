@@ -24,6 +24,7 @@ export default function Home() {
         window.localStorage.getItem('isPasswordPassed') === 'true';
       const onboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
+      dispatch(setLocalTimeBlur(false));
       setIsPasswordPassed(passwordPassed);
       setOnboardingPassed(onboardingPassed);
       setLoading(false);
@@ -45,7 +46,6 @@ export default function Home() {
             12: false,
           })
         );
-        dispatch(setLocalTimeBlur(false));
       }
 
       return () => {
