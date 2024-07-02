@@ -92,7 +92,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         method: 'HEAD',
       };
       const response = await CapacitorHttp.get(options);
-      return response.status === 200;
+      return true;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;
