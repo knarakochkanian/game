@@ -53,6 +53,8 @@ export const proccessParagraphByDamageLevel = (
   damageLevel: string,
   consequence: ConsequenceLevels
 ) => {
+    if(!consequence) return '';
+
   switch (damageLevel) {
     case 'Критический':
       return (consequence as ConsequenceLevels).critical;
