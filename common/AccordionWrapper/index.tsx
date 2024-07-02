@@ -54,9 +54,9 @@ const AccordionWrapper = ({
 
   const summaryStyles = {
     maxWidth: '364px',
+    maxHeight: '50px',
     marginRight: '8px',
     marginLeft: '4px',
-    padding: '12px 16px',
     borderRight: titleHighlighted
       ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
       : 'inherit',
@@ -81,8 +81,6 @@ const AccordionWrapper = ({
           accordionBackground ? accordionBackground : 'transparent'
         } `,
         color: '#fff',
-        marginBottom:
-          showPlusIcon !== undefined || from === INDUSTRY ? '0' : '10px',
       }}
     >
       <AccordionSummary
