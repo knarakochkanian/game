@@ -20,6 +20,7 @@ import {
   TheTimesMainImg,
 } from '../public/news';
 import { BBCLogo, foxNewsLogo, skyNewsLogo, theTimesLogo } from '../public/history';
+import { proccessIndustryName } from './helpers_2';
 
 export const getLiClassnames = (
   damageLevel: string,
@@ -174,22 +175,7 @@ export const getTopCapitalizationNews = (sector: ISector, date: string) => {
   let news: INews[] = [];
 
   selectedOptionNames.forEach((industry) => {
-    let industryName;
-
-    switch (industry) {
-      case 'Amazon.com':
-        industryName = 'Amazon';
-        break;
-      case 'Exxon Mobil':
-        industryName = 'ExxonMobil';
-        break;
-      case 'McDonald’s':
-        industryName = 'McDonald';
-        break;
-      default:
-        industryName = industry;
-        break;
-    }
+    let industryName = proccessIndustryName(industry);
 
     news = [
       ...news,
