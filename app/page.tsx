@@ -20,6 +20,9 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // Clear isPasswordPassed from localStorage to ensure it's false on each run
+      window.localStorage.removeItem('isPasswordPassed');
+
       const passwordPassed =
         window.localStorage.getItem('isPasswordPassed') === 'true';
       const onboardingPassed =
@@ -59,7 +62,7 @@ export default function Home() {
     <main className={styles.main}>
       {isLoading ? (
         <Loading />
-      ) : onboardingPassed || isPasswordPassed ? (
+      ) : isPasswordPassed ? (
         <MainScreen />
       ) : (
         <Password setIsPasswordPassed={setIsPasswordPassed} />
