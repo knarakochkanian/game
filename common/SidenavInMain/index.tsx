@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
@@ -74,6 +75,7 @@ function SidenavInMain({
   removeModalDate,
 }: ISidenavInMainProps) {
   const dispatch = useAppDispatch();
+  const router = useRouter(); // Use useRouter to navigate programmatically
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
@@ -88,7 +90,7 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
-  const confirmButtonRef = useRef<HTMLAnchorElement>(null);
+  const confirmButtonRef = useRef<HTMLDivElement>(null); // Update ref type to HTMLDivElement
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -163,6 +165,8 @@ function SidenavInMain({
       window.localStorage.setItem(LAST_ACTION_NAME, name);
     }
     dispatch(setCurrentAction(currentAction));
+
+    router.push(delayedTime && delayedDate ? '/queue' : '/summary');
   };
 
   useEffect(() => {
@@ -361,11 +365,7 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                <Link
-                  href={delayedTime && delayedDate ? '/queue' : '/summary'}
-                  onClick={onSetCurrentAction}
-                  ref={confirmButtonRef}
-                >
+                <div>
                   <span
                     className="Lead"
                     style={{ color: 'white', padding: '10px' }}
@@ -379,7 +379,7 @@ function SidenavInMain({
                     height={23}
                     width={23}
                   />
-                </Link>
+                </div>
               </div>
             )}
           {modalVisibleSystem && (
