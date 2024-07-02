@@ -344,7 +344,8 @@ function SidenavInMain({
           {numberOfSelectedSectors !== null &&
             damageLevel &&
             selectedCountries.length !== 0 &&
-            !pingFailed && (
+            // !pingFailed &&
+             (
               <div className={styles.sidenavAddConfirm}>
                 <Image
                   src={

@@ -24,6 +24,7 @@ import {
   SUMMARY,
   citiesUnderAttack,
   populationSuffering,
+  top_capitalization,
   wholeDamage,
 } from '../../constants';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
@@ -36,11 +37,9 @@ import {
   selectComfirmedFromOnboarding,
   setBlur,
 } from '../../redux/features/generalSlice';
-
-// Define types for props
-interface IAction {
-  actionType: string;
-}
+import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
+import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
+import TopCapitalParagraphs from './TopCapitalParagraphs';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -50,14 +49,14 @@ interface ILaunchConsequencesProps {
 }
 
 // Define ConsequenceLevels type
-interface ConsequenceLevels {
+export interface ConsequenceLevels {
   critical: string;
   minimal: string;
   warning: string;
 }
 
 // Define TopCapitalizationLevels type
-interface TopCapitalizationLevels {
+export interface TopCapitalizationLevels {
   [company: string]: ConsequenceLevels;
 }
 
@@ -84,10 +83,8 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
-  const damageLevel = useAppSelector(selectDamgeLevel);
-  const industrySectors = useAppSelector(selectCurrentAction);
 
-  const consequencesData = getConsequencesData();
+  const consequencesData = getConsequencesData(action.industrySectors);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -120,28 +117,27 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       return <p>No consequences data available</p>;
     }
 
-    console.log('Damage Level:', damageLevel);
-    console.log('Consequences Data:', consequences);
+    const selectedSectorNames = action.industrySectors
+      .filter((s) => s.options.some((o) => o.selected))
+      .map((s) => getIndustryNameInEnglish(s.title));
 
-    return Object.keys(consequences).map((key) => {
-      const consequence = consequences[key] as ConsequenceLevels;
-      let paragraph;
-
-      switch (damageLevel) {
-        case 'Критический':
-          paragraph = consequence.critical;
-          break;
-        case 'Минимальный':
-          paragraph = consequence.minimal;
-          break;
-        case 'Предупреждение':
-          paragraph = consequence.warning;
-          break;
-        default:
-          paragraph = '';
+    return selectedSectorNames.map((key) => {
+      const consequence = consequences[key as string];
+      let paragraph = proccessParagraphByDamageLevel(
+        damageLevel,
+        consequence as ConsequenceLevels
+      );      
+      
+      if (key === 'COMPANY_TOP_CAPITALIZATION') {
+        return (
+          <TopCapitalParagraphs
+            key={key}
+            action={action}
+            consequence={consequence}
+            damageLevel={damageLevel}
+          />
+        );
       }
-
-      console.log('Key:', key, 'Paragraph:', paragraph);
 
       return (
         <div key={key}>
@@ -162,16 +158,20 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   ) : (
     <>
       <div
-        className={`${styles.launchConsequences} ${paragraphIsOpen ? styles.paragraphIsOpen : ''} ${from} ${styles[from]}`}
+        className={`${styles.launchConsequences} ${
+          paragraphIsOpen ? styles.paragraphIsOpen : ''
+        } ${from} ${styles[from]}`}
       >
         <div
-          className={`${styles.info} ${action.actionType === PROTECTION ? styles.protectMode : ''}`}
+          className={`${styles.info} ${
+            action.actionType === PROTECTION ? styles.protectMode : ''
+          }`}
         >
           <h3 className={styles.title}>Последствия запуска</h3>
           <Paragraph
             isOpen={fromOnboarding ? false : paragraphIsOpen}
             setIsOpen={setParagraphIsOpen}
-            content={renderConsequences(consequencesData, damageLevel)}
+            content={renderConsequences(consequencesData, action.damageLevel)}
           />
           <div className={styles.dataContainer}>
             <ModalData
