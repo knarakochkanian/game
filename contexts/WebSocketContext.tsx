@@ -49,7 +49,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     setSocket(ws);
 
     const pingInterval = setInterval(() => {
-      pingAddress('10.99.2.5').then((isReachable) => {
+      pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
         console.log(`Ping result for 10.99.2.5: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
@@ -97,6 +97,15 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       console.error('Ping failed:', error);
       return false;
     }
+  };
+
+  const pingAddressWithTimeout = (address: string, timeout: number) => {
+    return Promise.race([
+      pingAddress(address),
+      new Promise<boolean>((resolve) =>
+        setTimeout(() => resolve(false), timeout)
+      ),
+    ]);
   };
 
   return (
