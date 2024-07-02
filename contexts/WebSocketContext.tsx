@@ -87,7 +87,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const pingAddress = async (address: string) => {
     try {
       const options = {
-        url: `https://${address}`,
+        url: `http://${address}`,
         method: 'HEAD',
       };
       const response = await CapacitorHttp.get(options);
