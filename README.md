@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## UPDATED APK PIPELINE
+
+To build the application in the apk file you need to install Android Studio
+
+- next build
+- npx cap sync
+- npx cap open android
+
+In Android Studio:
+- Build -> Build Bundle(s) / APK(s) -> Build APK(s)
+- The finished apk is located in the directory: android\app\build\outputs\apk\debug
+
 ## Getting Started
 
 First, run the development server:

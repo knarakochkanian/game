@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { controllerServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
+import {StatusBar} from "@capacitor/status-bar";
 
 export interface WebSocketContextProps {
   socket: WebSocket | null;
@@ -67,9 +68,17 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       });
     }, 5000);
 
+    const subscription = setInterval(async () => {
+      console.log('Status bar hide!')
+      
+      const info = await StatusBar.getInfo();
+      if (info.visible) { await StatusBar.hide(); }
+    }, 1000);
+
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
+      clearInterval(subscription);
       ws.close();
     };
   }, []);
