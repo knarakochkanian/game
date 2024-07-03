@@ -165,8 +165,6 @@ function SidenavInMain({
       window.localStorage.setItem(LAST_ACTION_NAME, name);
     }
     dispatch(setCurrentAction(currentAction));
-
-    router.push(delayedTime && delayedDate ? '/queue' : '/summary');
   };
 
   useEffect(() => {
@@ -177,6 +175,8 @@ function SidenavInMain({
       }
       if (event.data === 'accept pressed' && confirmButtonRef.current) {
         confirmButtonRef.current.click();
+        onSetCurrentAction();
+        router.push(delayedTime && delayedDate ? '/queue' : '/summary');
       }
     };
     socket.addEventListener('message', handleSocketClick);
@@ -305,6 +305,7 @@ function SidenavInMain({
                   <span
                     className="Lead"
                     style={{ color: 'white', padding: '10px' }}
+                    onClick={onSetCurrentAction}
                   >
                     ПОДТВЕРДИТЬ
                   </span>
