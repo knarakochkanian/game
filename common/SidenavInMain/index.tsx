@@ -90,7 +90,7 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
-  const confirmButtonRef = useRef<HTMLDivElement>(null); // Update ref type to HTMLDivElement
+  const confirmButtonRef = useRef<HTMLDivElement>(null);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -277,70 +277,6 @@ function SidenavInMain({
             <DamageLevelInfo fromSideNav damageLevel={damageLevel} />
           </div>
 
-          {/*<div*/}
-          {/*  className={styles.sidenavSquare}*/}
-          {/*  style={{ display: removeModalDate ? 'none' : 'flex', zIndex: 10 }}*/}
-          {/*>*/}
-          {/*  <h5 style={{ paddingLeft: '24px' }}>Отложенный запуск</h5>*/}
-          {/*  <Switch isOn={isSwitchOn} handleSwitchChange={handleSwitchChange} />*/}
-          {/*</div>*/}
-          {/*<div*/}
-          {/*  className={styles.sidenavDelayedWrraper}*/}
-          {/*  style={{ display: delayed ? 'block' : 'none' }}*/}
-          {/*>*/}
-          {/*  <div>*/}
-          {/*    <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">*/}
-          {/*      <button>*/}
-          {/*        <h3 style={{ color: '#525252' }}>Дата</h3>*/}
-          {/*      </button>*/}
-          {/*      <div className={styles.sidenavDelayedDateWrraper}>*/}
-          {/*        <DatePicker*/}
-          {/*          selected={startDate}*/}
-          {/*          onChange={(date) => setStartDate(date as Date)}*/}
-          {/*          peekNextMonth*/}
-          {/*          showMonthDropdown*/}
-          {/*          showYearDropdown={false}*/}
-          {/*          dropdownMode="select"*/}
-          {/*          className={styles.sidenavDelayedDate}*/}
-          {/*          locale="ru"*/}
-          {/*        />*/}
-          {/*        {delayedDate?.format('DD.MM.YYYY')}*/}
-          {/*        <Image*/}
-          {/*          src={'/onboarding/ToggleHorisontal.svg'}*/}
-          {/*          alt="img"*/}
-          {/*          width={24}*/}
-          {/*          height={24}*/}
-          {/*        />*/}
-          {/*      </div>*/}
-          {/*    </LocalizationProvider>*/}
-          {/*  </div>*/}
-          {/*  <div>*/}
-          {/*    <button onClick={() => setTime(true)}>*/}
-          {/*      <h3 style={{ color: '#525252' }}>Время</h3>*/}
-          {/*    </button>*/}
-          {/*    <div>*/}
-          {/*      <div className={styles.sidenavTimePiker}>*/}
-          {/*        <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">*/}
-          {/*          <DemoContainer components={['TimePicker']}>*/}
-          {/*            <DemoItem label="Multi section digital clock">*/}
-          {/*              <MultiSectionDigitalClock onChange={handleTimeChange} />*/}
-          {/*            </DemoItem>*/}
-          {/*          </DemoContainer>*/}
-          {/*          <button onClick={() => setTime(false)}>OK</button>*/}
-          {/*        </LocalizationProvider>*/}
-          {/*      </div>*/}
-          {/*    </div>*/}
-          {/*    <div className="Lead">*/}
-          {/*      {delayedTime}{' '}*/}
-          {/*      <Image*/}
-          {/*        src={'/onboarding/ToggleHorisontal.svg'}*/}
-          {/*        alt={'img'}*/}
-          {/*        width={24}*/}
-          {/*        height={24}*/}
-          {/*      />{' '}*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
           {numberOfSelectedSectors !== null &&
             damageLevel &&
             selectedCountries.length !== 0 &&
@@ -365,7 +301,7 @@ function SidenavInMain({
                   {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
                   нажмите кнопку
                 </span>
-                <div>
+                <div ref={confirmButtonRef}>
                   <span
                     className="Lead"
                     style={{ color: 'white', padding: '10px' }}
