@@ -173,9 +173,7 @@ function SidenavInMain({
       if (event.data === 'ready pressed') {
         setIsReadyPressed(true);
       }
-      if (event.data === 'accept pressed' && confirmButtonRef.current) {
-        confirmButtonRef.current.click();
-        onSetCurrentAction();
+      if (event.data === 'accept pressed') {
         router.push(delayedTime && delayedDate ? '/queue' : '/summary');
       }
     };
