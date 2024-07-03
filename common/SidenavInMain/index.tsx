@@ -168,11 +168,6 @@ function SidenavInMain({
     dispatch(setCurrentAction(currentAction));
   };
 
-  const handleConfirmClick = () => {
-    onSetCurrentAction();
-    router.push(delayedTime && delayedDate ? '/queue' : '/summary');
-  };
-
   useEffect(() => {
     if (!socket) return;
     const handleSocketClick = (event: MessageEvent) => {
@@ -371,7 +366,7 @@ function SidenavInMain({
                 </span>
                 <Link
                   href={delayedTime && delayedDate ? '/queue' : '/summary'}
-                  onClick={handleConfirmClick}
+                  onClick={onSetCurrentAction}
                   ref={confirmButtonRef}
                 >
                   <span
