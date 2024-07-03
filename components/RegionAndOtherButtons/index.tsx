@@ -215,7 +215,8 @@ const RegionAndOtherButtons = ({
             return (
               <AccordionWrapper
                 styles={{
-                  accordionDetailsHeight: 'unset',
+                  accordionDetailsHeight:
+                    region.title === REGIONS ? '250px' : 'unset',
                   accordionDetailsHeightMax: '600px',
                 }}
                 key={index}

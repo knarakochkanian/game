@@ -139,6 +139,8 @@ const AccordionWrapper = ({
           gap: '10px',
           height: accordionDetailsHeight,
           maxHeight: accordionDetailsMaxHeight,
+          overflowY: 'auto',
+          scrollbarWidth: 'none',
         }}
       >
         {from === INDUSTRY && (
