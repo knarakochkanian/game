@@ -12,12 +12,12 @@ import { IEarth } from '../IEarth';
 
 const FOV = 50;
 const MIN_ZOOM = 40;
-const MAX_ZOOM = 180;
+const MAX_ZOOM = 190;
 const MAX_X = 215;
 const MAX_Z = 160;
 const MIN_X = 40;
 const MIN_Z = 25;
-const DEFAULT_ZOOM = 140;
+const DEFAULT_ZOOM = 190;
 
 
 export class FlatEarth implements IEarth {
@@ -115,16 +115,14 @@ export class FlatEarth implements IEarth {
       }
     })
 
-    // this.controls.addEventListener("change", this._render.bind(this));
     if (!this.isNotInteractive) {
       renderer.domElement.addEventListener('click', this.onClick.bind(this));
     }
 
-    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 0)
-
     setTimeout(() => {
       this._render();
-    }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
+      this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 100)
+  }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
   }
 
   public stopRenderLoop() {
