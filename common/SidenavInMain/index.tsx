@@ -88,7 +88,7 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
-  const confirmButtonRef = useRef<HTMLDivElement>(null); // Update ref type to HTMLDivElement
+  const confirmButtonRef = useRef<HTMLAnchorElement>(null); // Update ref type to HTMLDivElement
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
@@ -164,7 +164,7 @@ function SidenavInMain({
     }
     dispatch(setCurrentAction(currentAction));
 
-    router.push(delayedTime && delayedDate ? '/queue' : '/summary');
+    //router.push(delayedTime && delayedDate ? '/queue' : '/summary');
   };
 
   useEffect(() => {
