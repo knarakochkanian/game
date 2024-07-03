@@ -54,11 +54,13 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
       />
 
       <FooterButton
+        onClick={onClick}
         order={START}
         title={startAttackTitle}
         from="Summary"
         buttonInfo={buttonInfo}
         buttonRef={buttonRef}
+        sx={{ pointerEvents: 'none' }}
       />
     </footer>
   );

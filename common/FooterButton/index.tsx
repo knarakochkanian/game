@@ -8,6 +8,7 @@ interface FooterButtonProps {
   from?: string;
   buttonInfo?: ReactNode;
   buttonRef?: React.RefObject<HTMLButtonElement>;
+  sx?: React.CSSProperties;
 }
 
 const FooterButton = ({
@@ -17,12 +18,13 @@ const FooterButton = ({
   from = '',
   buttonInfo,
   buttonRef,
+  sx = {},
 }: FooterButtonProps) => {
   const classname = `from${from}`;
 
   return (
     <div className={`${styles.buttonContainer} ${styles[classname]}`}>
-      <button onClick={onClick} ref={buttonRef}>
+      <button onClick={onClick} ref={buttonRef} style={sx}>
         <h3>
           {title}
           <span> {`“${order}"`}</span>
