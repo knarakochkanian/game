@@ -53,7 +53,7 @@ const AccordionWrapper = ({
   }
 
   const summaryStyles = {
-    maxWidth: '364px',
+    maxWidth: '346px',
     maxHeight: '50px',
     marginRight: '8px',
     marginLeft: '4px',

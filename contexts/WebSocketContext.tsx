@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { controllerServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
-import {StatusBar} from "@capacitor/status-bar";
+import { StatusBar } from '@capacitor/status-bar';
 
 export interface WebSocketContextProps {
   socket: WebSocket | null;
@@ -27,7 +27,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
+  const connectWebSocket = () => {
     const protocol = 'ws';
     const socketUrl = `${protocol}://${controllerServerAddress}`;
     const ws = new WebSocket(socketUrl);
@@ -35,19 +35,33 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
 
     ws.onopen = () => {
       console.log('WebSocket connection established');
+      setPingFailed(false);
     };
 
     ws.onclose = () => {
-      console.log('WebSocket connection closed');
+      console.log('WebSocket connection closed, retrying...');
+      retryConnection();
     };
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
       setPingFailed(true);
       setModalVisible(true);
+      retryConnection();
     };
 
     setSocket(ws);
+  };
+
+  const retryConnection = () => {
+    setTimeout(() => {
+      console.log('Retrying WebSocket connection...');
+      connectWebSocket();
+    }, 1000);
+  };
+
+  useEffect(() => {
+    connectWebSocket();
 
     const pingInterval = setInterval(() => {
       pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
@@ -55,31 +69,35 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('cancel');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('ping');
           }
         }
       });
     }, 5000);
 
     const subscription = setInterval(async () => {
-      console.log('Status bar hide!')
-      
+      console.log('Status bar hide!');
+
       const info = await StatusBar.getInfo();
-      if (info.visible) { await StatusBar.hide(); }
+      if (info.visible) {
+        await StatusBar.hide();
+      }
     }, 1000);
 
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
       clearInterval(subscription);
-      ws.close();
+      if (socket) {
+        socket.close();
+      }
     };
   }, []);
 
