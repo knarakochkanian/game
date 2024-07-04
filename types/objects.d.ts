@@ -22,6 +22,12 @@ interface IOption {
   label: string;
 }
 
+interface ILaunchConsequences {
+  citiesUnderAttack: string;
+  populationSuffering?: string;
+  wholeDamage: string;
+}
+
 interface IAction {
   actionType: string;
   news: INews[];

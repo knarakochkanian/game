@@ -6,9 +6,11 @@ import { SxProps, Theme } from '@mui/system';
 import {
   resetGeneralState,
   selectDamgeLevel,
+  selectFormattedFinancialLosses,
   selectIsAttacking,
   selectPickedCountriesObjects,
   selectSectors,
+  selectTotalPopulationRegions,
   setCurrentAction,
 } from '../../redux/features/generalSlice';
 import Switch from '../Switch/index';
@@ -32,7 +34,6 @@ import {
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
-import launchConsequences from '../../data/launchConsequences';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -56,6 +57,8 @@ import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 import { useWebSocket } from '../../contexts/WebSocketContext';
 import ModalContainer from '../Modals/ModalContainer';
 import SystemState from '../SystemState';
+import { ILaunchConsequences } from '../../data/launchConsequences';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -93,6 +96,12 @@ function SidenavInMain({
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
   const industrySectors = useAppSelector(selectSectors);
+  const totalPopulationRegions = useAppSelector(selectTotalPopulationRegions); //populationSuffering
+  const totalSettlements = useAppSelector(selectPickedCountriesObjects); ///citiesUnderAttack
+  const formattedFinancialLosses = useAppSelector(
+    selectFormattedFinancialLosses
+  ); //wholeDamage
+
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
@@ -134,6 +143,17 @@ function SidenavInMain({
       delayedDate,
       delayedTime
     );
+
+    const launchConsequences: ILaunchConsequences = {
+      citiesUnderAttack: formatNumberWithSpaces(
+        totalSettlements.reduce(
+          (total, item) => item.settlements || 0,
+          19937180
+        )
+      ),
+      populationSuffering: formatNumberWithSpaces(totalPopulationRegions),
+      wholeDamage: formattedFinancialLosses,
+    };
 
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,

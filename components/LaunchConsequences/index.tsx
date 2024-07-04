@@ -22,10 +22,10 @@ import {
   ONBOARDING,
   PROTECTION,
   SUMMARY,
-  citiesUnderAttack,
-  populationSuffering,
+  citiesUnderAttack as citiesUnderAttackName,
+  populationSuffering as populationSufferingName,
   top_capitalization,
-  wholeDamage,
+  wholeDamage as wholeDamageName,
 } from '../../constants';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 import {
@@ -83,6 +83,8 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
+  const { citiesUnderAttack, wholeDamage, populationSuffering } =
+    action.launchConsequences;
 
   const consequencesData = getConsequencesData(action.industrySectors);
 
@@ -126,8 +128,8 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       let paragraph = proccessParagraphByDamageLevel(
         damageLevel,
         consequence as ConsequenceLevels
-      );      
-      
+      );
+
       if (key === 'COMPANY_TOP_CAPITALIZATION') {
         return (
           <TopCapitalParagraphs
@@ -176,23 +178,18 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
           <div className={styles.dataContainer}>
             <ModalData
               from={LAUNCH_CONSEQUENCES}
-              name={citiesUnderAttack}
-              value={formatNumberWithSpaces(
-                totalSettlements.reduce(
-                  (total, item) => item.settlements || 0,
-                  19937180
-                )
-              )}
+              name={citiesUnderAttackName}
+              value={citiesUnderAttack}
             />
             <ModalData
               from={LAUNCH_CONSEQUENCES}
-              name={populationSuffering}
-              value={formatNumberWithSpaces(totalPopulationRegions)}
+              name={populationSufferingName}
+              value={populationSuffering}
             />
             <ModalData
               from={LAUNCH_CONSEQUENCES}
-              name={wholeDamage}
-              value={formattedFinancialLosses}
+              name={wholeDamageName}
+              value={wholeDamage}
             />
           </div>
         </div>
