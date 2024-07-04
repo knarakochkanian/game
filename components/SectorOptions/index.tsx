@@ -45,7 +45,8 @@ const SectorOptions = ({
               option.selected && fromLeftSideNav ? styles.selected : ''
             } ${!option.selected && fromSideNav ? styles.displayNone : ''}
             ${!isAttacking ? styles.isProtecting : ''}
-            ${option.src ? styles.hasImage : ''}`}
+           ${(option.src && option.selected) || fromLeftSideNav ? styles.hasImage : ''}
+           `}
           >
             {option.src && (
               <Image src={option.src} alt="img" width={23} height={23} />

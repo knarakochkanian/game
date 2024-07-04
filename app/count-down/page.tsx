@@ -140,9 +140,7 @@ export default function CountDown() {
 
   useEffect(() => {
     const socket = new WebSocket('ws://' + controllerServerAddress);
-    setTimeout(() => {
-      dispatch(resetGeneralState());
-    }, 2000);
+
     socket.onmessage = (event) => {
       if (event.data === 'cancel pressed') {
         cancelCountdown();
