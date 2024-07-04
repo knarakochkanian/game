@@ -26,50 +26,28 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [reconnectAttempts, setReconnectAttempts] = useState(0);
-
-  const maxReconnectAttempts = 5;
 
   useEffect(() => {
-    const connectWebSocket = () => {
-      const protocol = 'ws';
-      const socketUrl = `${protocol}://${controllerServerAddress}`;
-      const ws = new WebSocket(socketUrl);
-      console.log(`Attempting to connect WebSocket to ${socketUrl}`);
+    const protocol = 'ws';
+    const socketUrl = `${protocol}://${controllerServerAddress}`;
+    const ws = new WebSocket(socketUrl);
+    console.log(`Attempting to connect WebSocket to ${socketUrl}`);
 
-      ws.onopen = () => {
-        console.log('WebSocket connection established');
-        setReconnectAttempts(0); // Reset the reconnection attempts on successful connection
-      };
-
-      ws.onclose = () => {
-        console.log('WebSocket connection closed');
-        attemptReconnection();
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setPingFailed(true);
-        setModalVisible(true);
-        attemptReconnection();
-      };
-
-      setSocket(ws);
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
     };
 
-    const attemptReconnection = () => {
-      if (reconnectAttempts < maxReconnectAttempts) {
-        setTimeout(() => {
-          console.log('Attempting to reconnect...');
-          setReconnectAttempts((prev) => prev + 1);
-          connectWebSocket();
-        }, 2000); // Delay before attempting to reconnect
-      } else {
-        console.error('Max reconnection attempts reached.');
-      }
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
     };
 
-    connectWebSocket();
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setPingFailed(true);
+      setModalVisible(true);
+    };
+
+    setSocket(ws);
 
     const pingInterval = setInterval(() => {
       pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
@@ -77,14 +55,14 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (socket?.readyState === WebSocket.OPEN) {
-            socket.send('cancel');
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (socket?.readyState === WebSocket.OPEN) {
-            socket.send('ping');
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send('ping');
           }
         }
       });
@@ -103,9 +81,9 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
       clearInterval(subscription);
-      socket?.close();
+      ws.close();
     };
-  }, [reconnectAttempts]);
+  }, []);
 
   useEffect(() => {
     if (modalVisible) {
