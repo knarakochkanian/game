@@ -48,6 +48,7 @@ const SelectDamageModal = () => {
     } else {
       setOpenModal(modalNum);
     }
+    
     setTimeout(() => {
       setOpenModal(0);
     }, 3000);

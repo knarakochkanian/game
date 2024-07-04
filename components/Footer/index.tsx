@@ -2,10 +2,13 @@ import Image from 'next/image';
 import { opacityOfButton, topOfBotton } from '../../public/count-down';
 import FooterButton from '../../common/FooterButton';
 import { CANCEL, cancelAttackTitle } from '../../constants';
-
 import styles from './Footer.module.scss';
 
-const Footer = ({ cancelCountdown }: { cancelCountdown: () => void }) => {
+interface FooterProps {
+  cancelCountdown: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ cancelCountdown }) => {
   return (
     <footer className={styles.footer}>
       <Image
@@ -29,7 +32,7 @@ const Footer = ({ cancelCountdown }: { cancelCountdown: () => void }) => {
       <FooterButton
         onClick={cancelCountdown}
         order={CANCEL}
-        title={cancelAttackTitle}        
+        title={cancelAttackTitle}
       />
     </footer>
   );

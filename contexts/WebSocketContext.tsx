@@ -1,82 +1,141 @@
 'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 import { controllerServerAddress } from '../app/static_variables';
+import { CapacitorHttp } from '@capacitor/core';
+import { StatusBar } from '@capacitor/status-bar';
 
-interface WebSocketContextProps {
+export interface WebSocketContextProps {
   socket: WebSocket | null;
   pingFailed: boolean;
+  modalVisible?: boolean;
 }
 
-const WebSocketContext = createContext<WebSocketContextProps | null>(null);
+export const WebSocketContext = createContext<WebSocketContextProps | null>(
+  null
+);
 
-export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
+export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socket = new WebSocket(`${protocol}://${controllerServerAddress}`);
-    console.log('Attempting to connect WebSocket');
+  const connectWebSocket = () => {
+    const protocol = 'ws';
+    const socketUrl = `${protocol}://${controllerServerAddress}`;
+    const ws = new WebSocket(socketUrl);
+    console.log(`Attempting to connect WebSocket to ${socketUrl}`);
 
-    socket.onopen = () => {
+    ws.onopen = () => {
       console.log('WebSocket connection established');
+      setPingFailed(false);
     };
 
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
+    ws.onclose = () => {
+      console.log('WebSocket connection closed, retrying...');
+      retryConnection();
     };
 
-    setSocket(socket);
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setPingFailed(true);
+      setModalVisible(true);
+      retryConnection();
+    };
+
+    setSocket(ws);
+  };
+
+  const retryConnection = () => {
+    setTimeout(() => {
+      console.log('Retrying WebSocket connection...');
+      connectWebSocket();
+    }, 1000);
+  };
+
+  useEffect(() => {
+    connectWebSocket();
 
     const pingInterval = setInterval(() => {
-      pingAddress('10.99.2.5').then((isReachable) => {
+      pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
         console.log(`Ping result for 10.99.2.5: ${isReachable}`);
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          socket.send(JSON.stringify({ command: 'cancel' }));
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('cancel');
+          }
         } else {
           setPingFailed(false);
           setModalVisible(false);
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('ping');
+          }
         }
       });
     }, 5000);
 
+    const subscription = setInterval(async () => {
+      console.log('Status bar hide!');
+
+      const info = await StatusBar.getInfo();
+      if (info.visible) {
+        await StatusBar.hide();
+      }
+    }, 1000);
+
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
-      if (socket) socket.close();
+      clearInterval(subscription);
+      if (socket) {
+        socket.close();
+      }
     };
   }, []);
 
   useEffect(() => {
-    let timer: any;
-    timer = setTimeout(() => {
-      console.log('Automatically hiding modal after 5 seconds');
-      setModalVisible(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
+    if (modalVisible) {
+      const timer = setTimeout(() => {
+        console.log('Automatically hiding modal after 5 seconds');
+        setModalVisible(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
   }, [modalVisible]);
 
   const pingAddress = async (address: string) => {
     try {
-      const response = await fetch(`https://${address}`, {
+      const options = {
+        url: `http://${address}`,
         method: 'HEAD',
-        mode: 'no-cors',
-      });
-      return response.ok;
+      };
+      const response = await CapacitorHttp.get(options);
+      return true;
     } catch (error) {
       console.error('Ping failed:', error);
       return false;
     }
   };
 
+  const pingAddressWithTimeout = (address: string, timeout: number) => {
+    return Promise.race([
+      pingAddress(address),
+      new Promise<boolean>((resolve) =>
+        setTimeout(() => resolve(false), timeout)
+      ),
+    ]);
+  };
+
   return (
-    <WebSocketContext.Provider value={{ socket, pingFailed }}>
+    <WebSocketContext.Provider value={{ socket, pingFailed, modalVisible }}>
       {children}
     </WebSocketContext.Provider>
   );

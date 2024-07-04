@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import React, { ReactNode } from 'react';
 import Flag from 'react-world-flags';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
@@ -10,11 +12,9 @@ import {
 import AlphabetLetter from '../AlphabetLetter';
 import { Option } from '../../data/attackRegionsData';
 import GreenLineBorders from '../GreenLineBorders';
+import { minusSign } from '../../public/main-screen';
 
 import styles from './PlaceCard.module.scss';
-import Image from 'next/image';
-import { minusSign } from '../../public/main-screen';
-import React from 'react';
 
 interface IPlaceCardProps {
   place: IPlace;
@@ -23,7 +23,9 @@ interface IPlaceCardProps {
   isCountry?: boolean;
   placeFirstLetterChanged?: boolean;
   fromSideNav?: boolean;
+  fromLeftSideNav?: boolean;
   withRegions?: boolean;
+  selectedCountComponent?: ReactNode;
 }
 
 const PlaceCard = ({
@@ -33,18 +35,21 @@ const PlaceCard = ({
   i,
   places,
   fromSideNav,
+  fromLeftSideNav,
   withRegions,
+  selectedCountComponent,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
   const isAttacking = useAppSelector(selectIsAttacking);
   const isSelected = pickedCountries.includes(place?.name) && !fromSideNav;
-  const className = `${styles.placeCard} ${fromSideNav ? styles.fromSideNav : ''} ${
+  const className = `${styles.placeCard} ${
+    selectedCountComponent ? styles.withCount : ''
+  } ${fromSideNav ? styles.fromSideNav : ''} ${
     place?.regions ? styles.withRegions : ''
-  } ${isSelected ? styles.selected : ''} ${
+  } ${isSelected && fromLeftSideNav ? styles.selected : ''} ${
     !isAttacking ? styles.isProtecting : ''
   }`;
-
   const onClick = () => {
     if (withRegions) return;
     console.log('Button clicked:', place?.name);
@@ -64,19 +69,22 @@ const PlaceCard = ({
           </div>
         )}
         <h4>{place?.name}</h4>
-        {isSelected && place?.regions && <GreenLineBorders />}
+        {isSelected && fromLeftSideNav && place?.regions && (
+          <GreenLineBorders />
+        )}
         {fromSideNav && (
           <button onClick={onClick}>
             <Image
               className={styles.minusSign}
-              src={minusSign}
+              src={withRegions ? 'onboarding/arrow.svg' : minusSign}
               alt="minusSign"
-              width={40}
-              height={40}
+              width={withRegions ? 11 : 40}
+              height={withRegions ? 11 : 40}
               priority
             />
           </button>
         )}
+        {selectedCountComponent}
       </button>
       {isCountry && placeFirstLetterChanged && places && i && (
         <AlphabetLetter letter={places[i + 1]?.name[0]} />

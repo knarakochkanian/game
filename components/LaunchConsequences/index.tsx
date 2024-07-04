@@ -2,63 +2,79 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useAppSelector } from '../../redux/hooks';
+import { selectCurrentAction } from '../../redux/features/generalSlice';
 import ModalData from '../../common/Modals/ModalData';
 import CountOnboarding from '../Count-onboarding';
-import Image from 'next/image';
-import { noiseMap } from '../../public/summary';
+import Modal from '../../common/Modals/Modal';
+import Paragraph from '../../common/Paragraph';
+import useGetPage from '../../hooks/useGetPage';
+import { UseMap } from '../Map/use-map.hook';
+import { MapType } from '../Map/map.types';
+import { StaticMap } from '../Map/StaticMap.component';
+import { ConsequencesParagraph as getConsequencesData } from '../../data/consequencesParagraph';
 import '../../app/globals.scss';
-import { consequencesParagraph as consequencesData } from '../../data/consequencesParagraph';
+import styles from './LaunchConsequences.module.scss';
 import {
   COUNT_DOWN,
-  HISTORY,
   LAUNCH_CONSEQUENCES,
   ONBOARDING,
   PROTECTION,
   SUMMARY,
   citiesUnderAttack,
   populationSuffering,
+  top_capitalization,
   wholeDamage,
 } from '../../constants';
-import { formatNumber } from '../../helpers';
-import Modal from '../../common/Modals/Modal';
-import Paragraph from '../../common/Paragraph';
-import useGetPage from '../../hooks/useGetPage';
-import { UseMap } from '../Map/use-map.hook';
-import { MapType } from '../Map/map.types';
-
-import '../../app/globals.scss';
-import styles from './LaunchConsequences.module.scss';
-
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 import {
   selectDamgeLevel,
   selectFormattedFinancialLosses,
   selectPickedCountries,
   selectPickedCountriesObjects,
   selectTotalPopulationRegions,
+  selectComfirmedFromOnboarding,
   setBlur,
 } from '../../redux/features/generalSlice';
-import { useAppSelector } from '../../redux/hooks';
-
-import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
-import { StaticMap } from '../Map/StaticMap.component';
-import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
+import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
+import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
+import TopCapitalParagraphs from './TopCapitalParagraphs';
 
 interface ILaunchConsequencesProps {
   action: IAction;
   from?: string;
-  setLearningStart?: TSetBoolean;
+  setLearningStart?: (value: boolean) => void;
   learningStart?: boolean;
 }
 
-const LaunchConsequences = ({
+// Define ConsequenceLevels type
+export interface ConsequenceLevels {
+  critical: string;
+  minimal: string;
+  warning: string;
+}
+
+// Define TopCapitalizationLevels type
+export interface TopCapitalizationLevels {
+  [company: string]: ConsequenceLevels;
+}
+
+// Define ConsequencesParagraph type
+interface ConsequencesParagraph {
+  [key: string]: ConsequenceLevels | TopCapitalizationLevels;
+}
+
+// Define the component with proper typing
+const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   action,
   setLearningStart,
   learningStart,
   from = '',
-}: ILaunchConsequencesProps) => {
+}) => {
   const currentPage = useGetPage();
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
-  const [paragraphIsOpen, setparagraphIsOpen] = useState(false);
+  const [paragraphIsOpen, setParagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
   const pickedCountries = useAppSelector(selectPickedCountries);
@@ -67,7 +83,9 @@ const LaunchConsequences = ({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   );
-  const damageLevel = useAppSelector(selectDamgeLevel);
+
+  const consequencesData = getConsequencesData(action.industrySectors);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isOnboardingPassed =
@@ -75,7 +93,8 @@ const LaunchConsequences = ({
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
-  if (!action) return;
+
+  if (!action) return null;
 
   const completeOnboarding = () => {
     if (typeof window !== 'undefined') {
@@ -83,29 +102,41 @@ const LaunchConsequences = ({
       window.localStorage.setItem('isOnboardingPassed', 'true');
     }
   };
+
   const headerGoToCountComponent = () => {
     if (setLearningStart) {
       setLearningStart(true);
     }
-    // setIsCountDownComponent(true);
   };
-  const renderConsequences = (consequences: any, damageLevel: string) => {
-    return Object.keys(consequences).map((key) => {
-      const consequence = consequences[key];
-      let paragraph;
 
-      switch (damageLevel) {
-        case 'Критический':
-          paragraph = consequence.critical;
-          break;
-        case 'Минимальный':
-          paragraph = consequence.minimal;
-          break;
-        case 'Предупреждение':
-          paragraph = consequence.warning;
-          break;
-        default:
-          paragraph = '';
+  const renderConsequences = (
+    consequences: ConsequencesParagraph,
+    damageLevel: string
+  ) => {
+    if (!consequences) {
+      return <p>No consequences data available</p>;
+    }
+
+    const selectedSectorNames = action.industrySectors
+      .filter((s) => s.options.some((o) => o.selected))
+      .map((s) => getIndustryNameInEnglish(s.title));
+
+    return selectedSectorNames.map((key) => {
+      const consequence = consequences[key as string];
+      let paragraph = proccessParagraphByDamageLevel(
+        damageLevel,
+        consequence as ConsequenceLevels
+      );      
+      
+      if (key === 'COMPANY_TOP_CAPITALIZATION') {
+        return (
+          <TopCapitalParagraphs
+            key={key}
+            action={action}
+            consequence={consequence}
+            damageLevel={damageLevel}
+          />
+        );
       }
 
       return (
@@ -115,6 +146,7 @@ const LaunchConsequences = ({
       );
     });
   };
+
   const notInteractiveMap = UseMap({
     onCountryPicked: () => {},
     mapType: MapType.plane,
@@ -138,8 +170,8 @@ const LaunchConsequences = ({
           <h3 className={styles.title}>Последствия запуска</h3>
           <Paragraph
             isOpen={fromOnboarding ? false : paragraphIsOpen}
-            setIsOpen={setparagraphIsOpen}
-            content={renderConsequences(consequencesData, damageLevel)}
+            setIsOpen={setParagraphIsOpen}
+            content={renderConsequences(consequencesData, action.damageLevel)}
           />
           <div className={styles.dataContainer}>
             <ModalData
@@ -147,7 +179,7 @@ const LaunchConsequences = ({
               name={citiesUnderAttack}
               value={formatNumberWithSpaces(
                 totalSettlements.reduce(
-                  (total, item) => total + (item.settlements || 0),
+                  (total, item) => item.settlements || 0,
                   19937180
                 )
               )}
@@ -173,7 +205,6 @@ const LaunchConsequences = ({
             counter={10}
           >
             <p>
-              {' '}
               В данном окне отображается информация об уроне, который будет
               нанесен выбранным вами регионам, а также о последствиях атаки.
             </p>
@@ -192,7 +223,6 @@ const LaunchConsequences = ({
               </Link>
             </div>
           </Modal>
-
           <div className={styles.map}>
             {currentPage === SUMMARY && fromOnboarding ? (
               <Image

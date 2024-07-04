@@ -1,4 +1,3 @@
-import { notFriendlyCountries } from './attackRegionsData';
 import countriesWithCodes, { USARegions } from './countriesWithCodes';
 
 interface IBlockes {

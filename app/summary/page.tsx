@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -18,12 +18,19 @@ import {
   selectCurrentAction,
   selectIsAttacking,
   setCurrentActionDate,
+  setCurrentActionNews,
 } from '../../redux/features/generalSlice';
-import { ACTIONS_IN_QUEUE, COUNT_DOWN } from '../../constants';
+import { ACTIONS_IN_QUEUE, COUNT_DOWN, top_capitalization } from '../../constants';
 import { formatDate, getItemFromStorage } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
+import {
+  WebSocketContext,
+  WebSocketContextProps,
+} from '../../contexts/WebSocketContext';
 
 import styles from './summary.module.scss';
+import proccessNewsData from '../../helpers/proccessNewsData';
+import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,
@@ -39,6 +46,9 @@ const Summary = () => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
+  const webSocketContext = useContext(
+    WebSocketContext
+  ) as WebSocketContextProps;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -69,6 +79,24 @@ const Summary = () => {
       case null:
         const currentDate = formatDate(new Date());
         dispatch(setCurrentActionDate(currentDate));
+        const { selectedCountries, industrySectors } = currentAction;
+        const selectedCountryNames = selectedCountries
+          .filter((c) => c.code)
+          .map((c) => c.name);
+        const selectedSectorsNames = industrySectors
+          .filter((s) => s.options.some((o) => o.selected))
+          .map((s) => s.title)
+          .map((t) => getIndustryNameInEnglish(t));
+        const topCapitalizationSector = industrySectors.find(s => s.title === top_capitalization)
+          
+        let news: INews[] = proccessNewsData(
+          selectedCountryNames,
+          currentDate,
+          selectedSectorsNames,
+          topCapitalizationSector as ISector
+        );
+
+        dispatch(setCurrentActionNews(news));
         router.push(COUNT_DOWN);
         break;
     }
@@ -78,6 +106,13 @@ const Summary = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
     }, 10);
+
+    if (
+      webSocketContext?.socket &&
+      webSocketContext.socket.readyState === WebSocket.OPEN
+    ) {
+      webSocketContext.socket.send('cancel');
+    }
 
     router.back();
   };

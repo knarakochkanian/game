@@ -38,8 +38,10 @@
     z-index: 4;
     > a {
       padding: 0 32px;
+      text-decoration: unset;
       @include flex-between;
       width: 660px;
+      cursor: pointer;
     }
     > span {
       padding: 0 32px;

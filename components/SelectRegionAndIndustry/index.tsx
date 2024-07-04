@@ -2,6 +2,7 @@ import DamageLevelInfo from '../../common/DamageLevelInfo';
 import IndustryAccordion from '../IndustryAccordion';
 import RegionAccordion from '../RegionAccordion';
 
+import './Accordion.scss';
 import styles from './SelectRegionAndIndustry.module.scss';
 
 interface ISelectRegionAndIndustryProps {

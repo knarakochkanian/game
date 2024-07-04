@@ -26,7 +26,7 @@ import SearchInput from '../SearchInput';
 import SearchResult from '../SearchResult';
 import { useAppSelector } from '../../redux/hooks';
 import { selectPlaces } from '../../redux/features/generalSlice';
-import { USARegions } from '../../data/countriesWithCodes';
+import { RegionsInMain } from '../../data/countriesWithCodes';
 import useCloseSelection from '../../hooks/useCloseSelection';
 import CountryBlocks from '../CountryBlocks';
 import useResetSearch from '../../hooks/useResetSearch';
@@ -151,7 +151,7 @@ const RegionAndOtherButtons = ({
         />
 
         <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
-          <Places places={search(searchInput)} />
+          <Places fromLeftSideNav places={search(searchInput)} />
         </SearchResult>
 
         <div
@@ -163,10 +163,6 @@ const RegionAndOtherButtons = ({
             let placesInSwitch;
 
             switch (region.title) {
-              case REGIONS:
-                placesInSwitch = USARegions;
-
-                break;
               case COUNTRIES:
                 placesInSwitch = countries;
 
@@ -179,7 +175,6 @@ const RegionAndOtherButtons = ({
             }
 
             switch (region.title) {
-              case REGIONS:
               case COUNTRIES:
                 return (
                   <AccordionWrapper
@@ -189,7 +184,11 @@ const RegionAndOtherButtons = ({
                     data={region}
                     key={index}
                   >
-                    <Places name={region.title} places={placesInSwitch} />
+                    <Places
+                      fromLeftSideNav
+                      name={region.title}
+                      places={placesInSwitch}
+                    />
                   </AccordionWrapper>
                 );
 
@@ -203,7 +202,11 @@ const RegionAndOtherButtons = ({
                       data={region}
                       key={index}
                     >
-                      <Places name={region.title} places={placesInSwitch} />
+                      <Places
+                        fromLeftSideNav
+                        name={region.title}
+                        places={placesInSwitch}
+                      />
                     </AccordionWrapper>
                   )
                 );
@@ -212,7 +215,8 @@ const RegionAndOtherButtons = ({
             return (
               <AccordionWrapper
                 styles={{
-                  accordionDetailsHeight: 'unset',
+                  accordionDetailsHeight:
+                    region.title === REGIONS ? '250px' : 'unset',
                   accordionDetailsHeightMax: '600px',
                 }}
                 key={index}

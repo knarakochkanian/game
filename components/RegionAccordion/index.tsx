@@ -76,7 +76,11 @@ const RegionAccordion = ({
           className={`${
             setWithOutFlag && selectedCountries.length !== 0
               ? styles.accordionWiOutFlag
-              : styles.accordionWiOutFlagDisable
+              : ''
+          } ${
+            setWithOutFlag && selectedCountries.length === 0
+              ? styles.accordionWiOutFlagDisable
+              : ''
           }
               ${styles.accordionSummary} ${
             isAttacking ? '' : styles.isProtecting
@@ -95,7 +99,7 @@ const RegionAccordion = ({
         {setWithOutFlag ? (
           <PlacesInSidenavMain places={selectedCountries} />
         ) : (
-          <Places fromSideNav name={'страны'} places={selectedCountries} />
+          <Places name={'страны'} places={selectedCountries} />
         )}
       </AccordionDetails>
     </Accordion>

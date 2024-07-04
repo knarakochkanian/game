@@ -1,0 +1,25 @@
+@import '/app/variables.module.scss';
+
+.css-1calurb-MuiAccordionDetails-root,
+.css-130y52x-MuiAccordionDetails-root {
+  @include hideScrollBar;
+}
+
+.css-1tljqkl-MuiPaper-root-MuiAccordion-root.Mui-expanded,
+.css-1o055bu-MuiPaper-root-MuiAccordion-root.Mui-expanded {
+  margin: 0 !important;
+  margin-bottom: 10px !important;
+}
+
+.css-1vdzbqz-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded,
+.css-62txek-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded,
+.css-62txek-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
+  min-height: 48px !important;
+}
+
+.css-yw020d-MuiAccordionSummary-expandIconWrapper {
+  img {
+    margin: 0 !important;
+    position: static;
+  }
+}

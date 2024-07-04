@@ -7,10 +7,10 @@ import { useAppDispatch } from '../../redux/hooks';
 import { MapType } from './map.types';
 import { UseMap } from './use-map.hook';
 import useResetMaps from '../../hooks/useResetMaps';
+import { IEarth } from './IEarth';
 
 export interface InteractiveMapProps {
   mapType: MapType;
-  // isInteractive?: boolean;
 }
 
 export const WorldMap = ({ mapType }: InteractiveMapProps) => {
@@ -82,19 +82,16 @@ export const WorldMap = ({ mapType }: InteractiveMapProps) => {
     setCountryContourVisibility
   );
 
-  // update sizes on maptype change
+  // фокусирует камеру на северной америке при запуске
   useEffect(() => {
-    switch (mapType) {
-      case MapType.plane:
-        planeMap.onWindowResize.current
-          ? planeMap.onWindowResize.current()
-          : null;
-      case MapType.sphere:
-        sphereMap.onWindowResize.current
-          ? sphereMap.onWindowResize.current()
-          : null;
-    }
-  }, [mapType, planeMap.onWindowResize, sphereMap.onWindowResize]);
+    focusOnCountry('Канзас');
+  }, [focusOnCountry]);
+
+  // update sizes on maptype change (also triggers pausing rendering for the hidden maptype)
+  useEffect(() => {
+    planeMap.onWindowResize.current?.()
+    sphereMap.onWindowResize.current?.()
+  }, [mapType]);
 
   return (
     <>

@@ -15,14 +15,24 @@ import {
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
+  const [isPasswordPassed, setIsPasswordPassed] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const isOnboardingPassed =
+      // Clear isPasswordPassed from localStorage to ensure it's false on each run
+      window.localStorage.removeItem('isPasswordPassed');
+
+      const passwordPassed =
+        window.localStorage.getItem('isPasswordPassed') === 'true';
+      const onboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
-      setOnboardingPassed(isOnboardingPassed);
+      dispatch(setLocalTimeBlur(false));
+      setIsPasswordPassed(passwordPassed);
+      setOnboardingPassed(onboardingPassed);
       setLoading(false);
-      if (isOnboardingPassed) {
+
+      if (onboardingPassed) {
         dispatch(
           setOnBoardingBlur({
             1: false,
@@ -39,17 +49,24 @@ export default function Home() {
             12: false,
           })
         );
-        console.log('onboarding passed');
-        dispatch(setLocalTimeBlur(false));
       }
-    }
-  }, []);
 
-  return onboardingPassed ? (
-    <MainScreen />
-  ) : (
+      return () => {
+        document.visibilityState !== 'visible' &&
+          window.localStorage.removeItem('isPasswordPassed');
+      };
+    }
+  }, [dispatch]);
+
+  return (
     <main className={styles.main}>
-      {isLoading ? <Loading /> : <Password />}
+      {isLoading ? (
+        <Loading />
+      ) : isPasswordPassed ? (
+        <MainScreen />
+      ) : (
+        <Password setIsPasswordPassed={setIsPasswordPassed} />
+      )}
     </main>
   );
 }

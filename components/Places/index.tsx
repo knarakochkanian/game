@@ -15,9 +15,15 @@ interface IPlacesProps {
   places: (IPlace | Option)[] | undefined;
   name?: string;
   fromSideNav?: boolean;
+  fromLeftSideNav?: boolean;
 }
 
-const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
+const Places = ({
+  places,
+  name,
+  fromSideNav,
+  fromLeftSideNav,
+}: IPlacesProps) => {
   const letters = Array.from(
     new Set(places?.map((place) => place.name[0].toUpperCase()))
   );
@@ -104,6 +110,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
                 <>
                   {i === 0 && <div id={firstLetter} />}
                   <CountryWithRegions
+                    fromLeftSideNav={fromLeftSideNav}
                     fromSideNav={fromSideNav}
                     i={i}
                     place={place}
@@ -115,6 +122,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
                 <>
                   {i === 0 && <div id={firstLetter} />}
                   <PlaceCard
+                    fromLeftSideNav={fromLeftSideNav}
                     fromSideNav={fromSideNav}
                     i={i}
                     places={places}
@@ -132,7 +140,7 @@ const Places = ({ places, name, fromSideNav }: IPlacesProps) => {
         })}
       </div>
 
-      {isCountry && (
+      {isCountry && fromLeftSideNav && (
         <AlphabetNav
           clickedOnLetter={clickedOnLetter}
           letters={letters}

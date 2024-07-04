@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -24,15 +24,15 @@ import {
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
-  setCurrentAction,
   setDamageLevel,
 } from '../../redux/features/generalSlice';
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import Modal from '../../common/Modals/Modal';
+import { controllerServerAddress } from '../static_variables';
 
 import styles from './count-down.module.scss';
-import { controllerServerAddress } from '../static_variables';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -94,10 +94,9 @@ export default function CountDown() {
           );
 
           if (typeof window !== 'undefined') {
-            if(!actionCanceled) {
+            if (!actionCanceled) {
               window.localStorage.setItem(LAST_ACTION_NAME, name);
             }
-            
 
             window.localStorage.setItem(
               COMPLETED_ACTIONS,
@@ -120,45 +119,31 @@ export default function CountDown() {
   }, [time, router]);
 
   const cancelCountdown = () => {
-      setTimeout(() => {
-        dispatch(resetGeneralState());
-      }, 10);
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 10);
     dispatch(setDamageLevel(null));
     return router.push('/');
-    // if (!actionCompleted && actionsInQueueFromStorage) {
-    //   const actionsInQueue = proccessActionsToSave(
-    //     currentAction,
-    //     actionsInQueueFromStorage,
-    //     false
-    //   );
-    // if (typeof window !== 'undefined') {
-    //   // window.localStorage.setItem(LAST_ACTION_NAME, name);
-
-    // // window.localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(actionsInQueue));
-    // }
-    // }
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
   };
 
-  // useEffect(() => {
-  //   const socket = new WebSocket(controllerServerAddress);
-  //   socket.onmessage = (event) => {
-  //     if (event.data === 'cancel pressed') {
-  //       cancelCountdown();
-  //     }
-  //   };
-
-  //   setSocket(socket);
-
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-  const onResetGlobalState = () => {
+  useEffect(() => {
+    const socket = new WebSocket('ws://' + controllerServerAddress);
     setTimeout(() => {
       dispatch(resetGeneralState());
     }, 2000);
-  };
+    socket.onmessage = (event) => {
+      if (event.data === 'cancel pressed') {
+        cancelCountdown();
+      }
+    };
+
+    setSocket(socket);
+
+    return () => {
+      socket.close();
+    };
+  }, [socket]);
 
   return (
     <>
@@ -217,7 +202,6 @@ export default function CountDown() {
         </p>
         <div className="ModalButtons">
           <Link
-            onClick={onResetGlobalState}
             href={'/'}
             style={{ color: 'white', padding: '20px' }}
             className="ModalButton1"

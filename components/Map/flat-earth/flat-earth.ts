@@ -12,12 +12,12 @@ import { IEarth } from '../IEarth';
 
 const FOV = 50;
 const MIN_ZOOM = 40;
-const MAX_ZOOM = 180;
+const MAX_ZOOM = 190;
 const MAX_X = 215;
 const MAX_Z = 160;
 const MIN_X = 40;
 const MIN_Z = 25;
-const DEFAULT_ZOOM = 140;
+const DEFAULT_ZOOM = 190;
 
 
 export class FlatEarth implements IEarth {
@@ -115,16 +115,22 @@ export class FlatEarth implements IEarth {
       }
     })
 
-    // this.controls.addEventListener("change", this._render.bind(this));
     if (!this.isNotInteractive) {
       renderer.domElement.addEventListener('click', this.onClick.bind(this));
     }
 
-    this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 0)
-
     setTimeout(() => {
       this._render();
-    }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
+      this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 100)
+  }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
+  }
+
+  public stopRenderLoop() {
+    this.renderer?.setAnimationLoop(null)
+  }
+
+  public resumeRenderLoop() {
+    this.runRenderLoop()
   }
 
   public onRotateStart(direction: 'left' | 'right'): void {
@@ -171,6 +177,11 @@ export class FlatEarth implements IEarth {
       const width = parentHtmlElement.clientWidth
       const ratio = width / height
 
+      if (width === 0 && height === 0) {
+        this.stopRenderLoop()
+        return;
+      }
+
       this.renderer.setPixelRatio(ratio);
       this.renderer.setSize(width, height);
 
@@ -181,6 +192,7 @@ export class FlatEarth implements IEarth {
         // this.vignetteShaderPass.uniforms["resolution"].value = new Vector2(window.innerWidth, window.innerHeight);
       }
 
+      this.resumeRenderLoop()
     }
 
     if (this.isNotInteractive) {
@@ -362,7 +374,10 @@ export class FlatEarth implements IEarth {
         if (!(country instanceof ComplexCountry)) {
           continue;
         }
-        return country.regions.find(region => region.A3Code === code)
+        const foundCountry = country.regions.find(region => region.A3Code === code)
+        if (foundCountry) {
+          return foundCountry;
+        }
       }
     }
   }
@@ -385,16 +400,15 @@ export class FlatEarth implements IEarth {
     const controls = this.controls
     const composer = this.composer
 
-    function animate() {
+    function animationLoop() {
       if (!scene || !renderer || !controls || !camera) {
         return;
       }
-      requestAnimationFrame(animate);
       renderer.render(scene, camera);
       controls.update()
       composer?.render()
     }
-    animate();
+    renderer?.setAnimationLoop(animationLoop)
   }
 
   public dispose() {
