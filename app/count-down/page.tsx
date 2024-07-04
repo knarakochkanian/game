@@ -145,7 +145,7 @@ export default function CountDown() {
     }, 2000);
     socket.onmessage = (event) => {
       if (event.data === 'cancel pressed') {
-        navigateToHome();
+        cancelCountdown();
       }
     };
 
@@ -154,7 +154,7 @@ export default function CountDown() {
     return () => {
       socket.close();
     };
-  }, [socket]);
+  }, []);
 
   return (
     <>
