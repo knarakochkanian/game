@@ -105,7 +105,7 @@ export default function CountDown() {
           }
 
           dispatch(resetGeneralState());
-          router.push('/');
+          navigateToHome();
         } else if (time.seconds > 0) {
           setTime({ ...time, seconds: time.seconds - 1 });
         } else if (time.minutes > 0) {
@@ -118,13 +118,24 @@ export default function CountDown() {
     }
   }, [time, router]);
 
+  const navigateToHome = () => {
+    if (
+      typeof window !== 'undefined' &&
+      (window as unknown as CapacitorWindow).Capacitor
+    ) {
+      window.location.href = '/';
+    } else {
+      router.push('/');
+    }
+  };
+
   const cancelCountdown = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
     }, 10);
     dispatch(setDamageLevel(null));
-    return router.push('/');
     setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
+    navigateToHome();
   };
 
   useEffect(() => {
