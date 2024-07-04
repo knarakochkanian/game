@@ -1093,26 +1093,6 @@ const industry: IIndustry = {
       ],
     },
     {
-      id: 25,
-      title: turizm,
-      options: [
-        {
-          selected: false,
-          parent: turizm,
-          id: 1,
-          name: 'Гостиницы',
-          n: 1,
-        },
-        {
-          selected: false,
-          parent: turizm,
-          id: 2,
-          name: 'Санатории',
-          n: 1,
-        },
-      ],
-    },
-    {
       id: 26,
       title: energetika,
       options: [
