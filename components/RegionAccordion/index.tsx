@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Places from '../Places';
-import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
+import {
+  pagesWhereAccordionIsLikeInSummary,
+  pagesWhereDropdownDisabled,
+} from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import { defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
 import { useAppSelector } from '../../redux/hooks';
@@ -94,7 +97,13 @@ const RegionAccordion = ({
         </div>
       </AccordionSummary>
       <AccordionDetails
-        sx={currentPage === SUMMARY ? detailsStylesInSummery : defaultStyles}
+        sx={
+          pagesWhereAccordionIsLikeInSummary.includes(
+            currentPage || 'undefined'
+          )
+            ? detailsStylesInSummery
+            : defaultStyles
+        }
       >
         {setWithOutFlag ? (
           <PlacesInSidenavMain places={selectedCountries} />

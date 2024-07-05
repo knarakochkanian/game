@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { RefObject } from 'react';
-
 export interface IInitialState {
   resetMapIfChanged: boolean;
   allSectorsSelected: boolean;
   keyboardInput: string;
   closeSelectionIfChanged: boolean;
+  newsActionId: string;
 }
 
 const initialState: IInitialState = {
@@ -14,6 +13,7 @@ const initialState: IInitialState = {
   resetMapIfChanged: false,
   allSectorsSelected: false,
   keyboardInput: '',
+  newsActionId: '',
 };
 
 const helpersSlice = createSlice({
@@ -29,6 +29,9 @@ const helpersSlice = createSlice({
     setKeyboardInput(state, { payload }: { payload: string }) {
       state.keyboardInput = payload;
     },
+    setNewsActionId(state, { payload }: { payload: string }) {
+      state.newsActionId = payload;
+    },
     setAllSectorsSelected(state) {
       state.allSectorsSelected = !state.allSectorsSelected;
     },
@@ -40,6 +43,7 @@ export const {
   setResetMapIfChanged,
   setAllSectorsSelected,
   setKeyboardInput,
+  setNewsActionId
 } = helpersSlice.actions;
 
 export const selectResetMapIfChanged = (state: RootState) =>
@@ -50,5 +54,7 @@ export const selectKeyboardInput = (state: RootState) =>
   state.helpersReducer.keyboardInput;
 export const selectCloseSelectionIfChanged = (state: RootState) =>
   state.helpersReducer.closeSelectionIfChanged;
+export const selectNewsActionId = (state: RootState) =>
+  state.helpersReducer.newsActionId;
 
 export default helpersSlice.reducer;

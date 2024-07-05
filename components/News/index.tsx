@@ -9,26 +9,35 @@ import { getAction, getItemFromStorage } from '../../helpers';
 import { COMPLETED_ACTIONS } from '../../constants';
 
 import styles from './News.module.scss';
+import useGetHistoryActions from '../../hooks/useGetHistoryActions';
+import { useAppSelector } from '../../redux/hooks';
+import { selectNewsActionId } from '../../redux/features/helpersSlice';
 
 const News = () => {
+  const idFromHistory = useAppSelector(selectNewsActionId);
   const [actions, setActions] = useState<IAction[]>([]);
   const [actionId, setActionId] = useState('');
   const [action, setAction] = useState<IAction | undefined>();
 
+  useGetHistoryActions(setActions);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedActions = getItemFromStorage(COMPLETED_ACTIONS, window);
       console.log('actions', actions);
+      console.log('action id:', actionId);
 
       const foundAction = getAction(actionId, actions) as IAction | undefined;
-      setActions(storedActions);
       setAction(foundAction);
     }
   }, [JSON.stringify(action), actionId]);
 
   useEffect(() => {
     if (!actions) return;
-    setActionId(String(actions[0]?.id));
+
+    const actionId = idFromHistory ? idFromHistory : String(actions[0]?.id);
+    console.log('actions[0]?.id', actionId);
+
+    setActionId(actionId);
   }, [JSON.stringify(actions)]);
 
   console.log('action', action);

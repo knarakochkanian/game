@@ -32,7 +32,7 @@ const ActionInDetails = ({
         from={HISTORY}
         action={action}
       />
-      {page !== QUEUE && <ActionNews news={(action as IAction).news} />}
+      {page !== QUEUE && <ActionNews id={actionId} news={(action as IAction).news} />}
     </section>
   );
 };

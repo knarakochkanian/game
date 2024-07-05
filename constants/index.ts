@@ -26,11 +26,12 @@ export const COUNT_DOWN = 'count-down';
 export const QUEUE = 'queue';
 export const SUMMARY = 'summary';
 
-export const pagesWhereDropdownDisabled = [ONBOARDING, HISTORY, QUEUE];
+export const pagesWhereDropdownDisabled = [ONBOARDING];
 export const bottomLinesAreStraightPages = [NEWS, HISTORY];
 export const pagesWithoutGrid = [NEWS];
 export const pagesWithoutLocalTime = [COUNT_DOWN];
 export const bottomLinesAreNarrowPages = [ONBOARDING];
+export const pagesWhereAccordionIsLikeInSummary = [SUMMARY, HISTORY, QUEUE];
 
 export const REGION_MODAL = 'REGION_MODAL';
 export const DAMAGE_LEVEL_MODAL = 'DAMAGE_LEVEL_MODAL';

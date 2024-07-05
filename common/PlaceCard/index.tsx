@@ -86,8 +86,8 @@ const PlaceCard = ({
         )}
         {selectedCountComponent}
       </button>
-      {isCountry && placeFirstLetterChanged && places && i && (
-        <AlphabetLetter letter={places[i + 1]?.name[0]} />
+      {isCountry && placeFirstLetterChanged && places && Boolean(i) && (
+        <AlphabetLetter letter={places[(i as number) + 1]?.name[0]} />
       )}
     </>
   );

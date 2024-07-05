@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAppSelector } from '../../redux/hooks';
-import { selectCurrentAction } from '../../redux/features/generalSlice';
 import ModalData from '../../common/Modals/ModalData';
 import CountOnboarding from '../Count-onboarding';
 import Modal from '../../common/Modals/Modal';
@@ -14,32 +13,24 @@ import { UseMap } from '../Map/use-map.hook';
 import { MapType } from '../Map/map.types';
 import { StaticMap } from '../Map/StaticMap.component';
 import { ConsequencesParagraph as getConsequencesData } from '../../data/consequencesParagraph';
-import '../../app/globals.scss';
-import styles from './LaunchConsequences.module.scss';
 import {
-  COUNT_DOWN,
   LAUNCH_CONSEQUENCES,
   ONBOARDING,
   PROTECTION,
   SUMMARY,
   citiesUnderAttack as citiesUnderAttackName,
   populationSuffering as populationSufferingName,
-  top_capitalization,
   wholeDamage as wholeDamageName,
 } from '../../constants';
-import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 import {
-  selectDamgeLevel,
-  selectFormattedFinancialLosses,
-  selectPickedCountries,
-  selectPickedCountriesObjects,
-  selectTotalPopulationRegions,
   selectComfirmedFromOnboarding,
-  setBlur,
 } from '../../redux/features/generalSlice';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
 import TopCapitalParagraphs from './TopCapitalParagraphs';
+
+import '../../app/globals.scss';
+import styles from './LaunchConsequences.module.scss';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -77,12 +68,6 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   const [paragraphIsOpen, setParagraphIsOpen] = useState(false);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
-  const pickedCountries = useAppSelector(selectPickedCountries);
-  const totalPopulationRegions = useAppSelector(selectTotalPopulationRegions);
-  const totalSettlements = useAppSelector(selectPickedCountriesObjects);
-  const formattedFinancialLosses = useAppSelector(
-    selectFormattedFinancialLosses
-  );
   const { citiesUnderAttack, wholeDamage, populationSuffering } =
     action.launchConsequences;
 
@@ -240,7 +225,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
                   height: '542px !important',
                 }}
               >
-                <StaticMap pickedCountries={pickedCountries} />
+                <StaticMap pickedCountries={action.pickedCountries} />
               </div>
             )}
           </div>

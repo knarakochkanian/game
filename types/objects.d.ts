@@ -31,6 +31,7 @@ interface ILaunchConsequences {
 interface IAction {
   actionType: string;
   news: INews[];
+  pickedCountries: string[];
   launchConsequences: ILaunchConsequences;
   id: number;
   damageLevel: string;
