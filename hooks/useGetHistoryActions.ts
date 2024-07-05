@@ -22,7 +22,7 @@ const useGetHistoryActions = (setActions: TSetAction) => {
             setActions(filteredActions);
           }      
         }
-      }, []);
+      }, [isAttacking]);
 }
 
 export default useGetHistoryActions

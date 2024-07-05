@@ -2,10 +2,13 @@
 
 import Arrow from '../Arrow';
 import GreenLineBorders from '../GreenLineBorders';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from './AttackWithDataCard.module.scss';
+import useGetHistoryActions from '../../hooks/useGetHistoryActions';
+import { useAppSelector } from '../../redux/hooks';
+import { selectNewsActionId } from '../../redux/features/helpersSlice';
 
 interface IAttackWithDataCardProps {
   name: string;
@@ -22,10 +25,15 @@ const AttackWithDataCard = ({
   onClick,
   id,
 }: IAttackWithDataCardProps) => {
-  const navigate = useRouter();
+  const idFromHistory = useAppSelector(selectNewsActionId);
+  const [actions, setActions] = useState<IAction[]>([]);
+
+  useGetHistoryActions(setActions);
 
   useEffect(() => {
-    if (id === '3') {
+    const actionId = idFromHistory ? idFromHistory : String(actions[0]?.id);
+
+    if (id === actionId) {
       onClick();
     }
   }, []);
