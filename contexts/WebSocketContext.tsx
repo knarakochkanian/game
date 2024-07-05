@@ -27,7 +27,10 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
+  const maxAttempts = 5;
+  let attemptCount = 0;
+
+  const initializeWebSocket = () => {
     const protocol = 'ws';
     const socketUrl = `${protocol}://${controllerServerAddress}`;
     const ws = new WebSocket(socketUrl);
@@ -35,10 +38,18 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
 
     ws.onopen = () => {
       console.log('WebSocket connection established');
+      attemptCount = 0; // Reset attempt count on successful connection
     };
 
     ws.onclose = () => {
       console.log('WebSocket connection closed');
+      if (attemptCount < maxAttempts) {
+        console.log(`Reconnection attempt ${attemptCount + 1}`);
+        attemptCount++;
+        setTimeout(initializeWebSocket, 5000); // Retry connection after 5 seconds
+      } else {
+        console.log('Max reconnection attempts reached');
+      }
     };
 
     ws.onerror = (error) => {
@@ -48,6 +59,10 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     setSocket(ws);
+  };
+
+  useEffect(() => {
+    initializeWebSocket();
 
     const pingInterval = setInterval(() => {
       pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
@@ -55,14 +70,14 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('cancel');
+          if (socket?.readyState === WebSocket.OPEN) {
+            socket.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
+          if (socket?.readyState === WebSocket.OPEN) {
+            socket.send('ping');
           }
         }
       });
@@ -81,7 +96,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
       clearInterval(subscription);
-      ws.close();
+      socket?.close();
     };
   }, []);
 
