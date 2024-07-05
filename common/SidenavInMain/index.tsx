@@ -11,6 +11,7 @@ import {
   selectPickedCountriesObjects,
   selectSectors,
   selectTotalPopulationRegions,
+  selectTotalPopulationRegionsAffected,
   setCurrentAction,
 } from '../../redux/features/generalSlice';
 import Switch from '../Switch/index';
@@ -96,7 +97,9 @@ function SidenavInMain({
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
   const industrySectors = useAppSelector(selectSectors);
-  const totalPopulationRegions = useAppSelector(selectTotalPopulationRegions); //populationSuffering
+  const totalPopulationRegions = useAppSelector(
+    selectTotalPopulationRegionsAffected
+  ); //populationSuffering
   const totalSettlements = useAppSelector(selectPickedCountriesObjects); ///citiesUnderAttack
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
@@ -322,7 +325,7 @@ function SidenavInMain({
                   href={delayedTime && delayedDate ? '/queue' : '/summary'}
                   onClick={onSetCurrentAction}
                   ref={confirmButtonRef}
-                  style={{ pointerEvents: "none" }}
+                  style={{ pointerEvents: 'none' }}
                 >
                   <span
                     className="Lead"
