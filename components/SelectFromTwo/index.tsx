@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { ATTACK_OR_PROTECT } from '../../constants';
@@ -8,11 +8,13 @@ import {
   selectDamgeLevel,
   selectPickedCountriesObjects,
   setIsAttacking,
+  setTotalPopulationRegionsAffected,
   setTotalPopulationRegions,
   selectFormattedFinancialLosses,
   setFormattedFinancialLosses,
   selectIsAttacking,
   resetGeneralState,
+  selectSectors,
 } from '../../redux/features/generalSlice';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
@@ -67,10 +69,12 @@ const SelectFromTwo = ({
 
   const formatNumber = (number: number) => {
     const billion = 1000000000;
-    return `${(number / billion).toFixed(0)} млрд $`;
+    const roundedNumber = Math.ceil(number / (billion / 10)) / 10;
+    return `${roundedNumber.toFixed(1).replace('.', ',')}`;
   };
 
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  const sectorsIndustry = useAppSelector(selectSectors);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
@@ -88,38 +92,47 @@ const SelectFromTwo = ({
         return 0;
     }
   };
-  const n = 1;
 
   const totalPopulationRegions = selectedCountries.reduce((total, country) => {
     if (country.regions && country.regions.length > 0) {
       const regionsPopulation = country.regions.reduce((acc, region) => {
         return acc + (region.isSelected ? region.population ?? 0 : 0);
       }, 0);
-
       return total + regionsPopulation;
     } else {
       return total + (country.isSelected ? country.population ?? 0 : 0);
     }
   }, 0);
-
   dispatch(setTotalPopulationRegions(totalPopulationRegions));
 
+  const selectedOptionsN = useMemo(() => {
+    return sectorsIndustry
+      ?.flatMap((sector) => sector.options)
+      .filter((option) => option.selected)
+      .reduce((sum, option) => sum + (option.n ?? 0), 0);
+  }, [sectorsIndustry]);
+
   const financialLosses =
-    3000 * totalPopulationRegions * 0.2 * n * damageLevelCount();
+    3000 * totalPopulationRegions * 0.2 * selectedOptionsN * damageLevelCount();
 
   dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
+
+  const affectedRegions = Math.ceil(
+    (totalPopulationRegions / selectedOptionsN) * damageLevelCount()
+  );
+  dispatch(setTotalPopulationRegionsAffected(affectedRegions));
 
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
-        {selectedCountries.length > 0 && (
+        {!!affectedRegions && (
           <div className={styles.selectFromTwoModalBottom}>
             {isAttacking ? (
               <div>затронет населения</div>
             ) : (
               <div>защищено населения</div>
             )}
-            <h3>{formatNumberWithSpaces(totalPopulationRegions)}</h3>
+            <h3>{formatNumberWithSpaces(affectedRegions)}</h3>
           </div>
         )}
         {damageLevel && (
@@ -129,12 +142,7 @@ const SelectFromTwo = ({
             ) : (
               <div>сохранено финансов</div>
             )}
-            <h3>
-              {formatNumberWithSpaces(
-                parseInt(formattedFinancialLosses.replace(/[^\d]/g, ''))
-              )}{' '}
-              млрд $
-            </h3>
+            <h3>{formattedFinancialLosses} млрд $</h3>
           </div>
         )}
         <button

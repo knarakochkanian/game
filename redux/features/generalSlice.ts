@@ -26,6 +26,7 @@ export interface IInitialState {
   places: IPlace[];
   sideNavIsOpen: boolean;
   activeBlocks: string[];
+  totalPopulationRegionsAffected: number;
   totalPopulationRegions: number;
   formattedFinancialLosses: string;
   onBoardingBlur: any;
@@ -50,6 +51,7 @@ const initialState: IInitialState = {
   sectors: industry.sectors,
   places: countriesWithCodes,
   sideNavIsOpen: false,
+  totalPopulationRegionsAffected: 20,
   totalPopulationRegions: 20,
   formattedFinancialLosses: '12 млн $',
   onBoardingBlur: {
@@ -150,7 +152,10 @@ const generalSlice = createSlice({
       );
       complexCountries.forEach((block) => {
         if (state.pickedCountries.includes(block)) {
-          if (!state.activeBlocks.includes(block) && !state.activeBlocks.includes('ВЕСЬ МИР')) {
+          if (
+            !state.activeBlocks.includes(block) &&
+            !state.activeBlocks.includes('ВЕСЬ МИР')
+          ) {
             state.activeBlocks = [...state.activeBlocks, block];
           }
         } else {
@@ -264,6 +269,9 @@ const generalSlice = createSlice({
     setTotalPopulationRegions(state, { payload }) {
       state.totalPopulationRegions = payload;
     },
+    setTotalPopulationRegionsAffected(state, { payload }) {
+      state.totalPopulationRegionsAffected = payload;
+    },
     setFormattedFinancialLosses(state, { payload }) {
       state.formattedFinancialLosses = payload;
     },
@@ -325,6 +333,7 @@ export const {
   setActiveBlocks,
   setRegionsStatus,
   setSingleRegionStatus,
+  setTotalPopulationRegionsAffected,
   setTotalPopulationRegions,
   setFormattedFinancialLosses,
   setComfirmedFromOnboarding,
@@ -360,6 +369,8 @@ export const selectActiveBlocks = (state: RootState) =>
   state.generalReducer.activeBlocks;
 export const selectTotalPopulationRegions = (state: RootState) =>
   state.generalReducer.totalPopulationRegions;
+export const selectTotalPopulationRegionsAffected = (state: RootState) =>
+  state.generalReducer.totalPopulationRegionsAffected;
 export const selectFormattedFinancialLosses = (state: RootState) =>
   state.generalReducer.formattedFinancialLosses;
 export const selectComfirmedFromOnboarding = (state: RootState) =>
