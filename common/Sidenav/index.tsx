@@ -75,6 +75,7 @@ function Sidenav({
   }
   const onSetCurrentAction = () => {
     const currentAction: IAction = {
+      pickedCountries: [],
       actionType: ATTACK,
       news: [],
       launchConsequences,

@@ -8,6 +8,7 @@ import {
   selectDamgeLevel,
   selectFormattedFinancialLosses,
   selectIsAttacking,
+  selectPickedCountries,
   selectPickedCountriesObjects,
   selectSectors,
   selectTotalPopulationRegions,
@@ -104,6 +105,7 @@ function SidenavInMain({
   const formattedFinancialLosses = useAppSelector(
     selectFormattedFinancialLosses
   ); //wholeDamage
+  const pickedCountries = useAppSelector(selectPickedCountries);
 
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
@@ -161,6 +163,7 @@ function SidenavInMain({
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
       news: [],
+      pickedCountries,
       launchConsequences,
       id: extractNumber(name),
       damageLevel,
