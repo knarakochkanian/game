@@ -149,13 +149,21 @@ function SidenavInMain({
       delayedTime
     );
 
+    const selectedOptionsN = industrySectors
+      ?.flatMap((sector) => sector.options)
+      .filter((option) => option.selected)
+      .reduce((sum, option) => sum + (option.n ?? 0), 0);
+
+    const citiesUnderAttack = formatNumberWithSpaces(
+      Math.ceil(
+        (totalSettlements.reduce((total, item) => item.settlements || 0, 0) /
+          selectedOptionsN) *
+          0.75
+      )
+    );
+
     const launchConsequences: ILaunchConsequences = {
-      citiesUnderAttack: formatNumberWithSpaces(
-        totalSettlements.reduce(
-          (total, item) => item.settlements || 0,
-          19937180
-        )
-      ),
+      citiesUnderAttack,
       populationSuffering: formatNumberWithSpaces(totalPopulationRegions),
       wholeDamage: formattedFinancialLosses,
     };
@@ -189,8 +197,6 @@ function SidenavInMain({
       window.localStorage.setItem(LAST_ACTION_NAME, name);
     }
     dispatch(setCurrentAction(currentAction));
-
-    //router.push(delayedTime && delayedDate ? '/queue' : '/summary');
   };
 
   useEffect(() => {
