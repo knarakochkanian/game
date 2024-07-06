@@ -126,7 +126,10 @@ const SelectFromTwo = ({
   const affectedRegions =
     totalPopulationRegions > 0 && selectedOptionsN > 0
       ? Math.ceil(
-          (totalPopulationRegions / selectedOptionsN) * damageLevelCount()
+          totalPopulationRegions *
+            damageLevelCount() *
+            (selectedOptionsN / 100) *
+            0.912
         )
       : 0;
   dispatch(setTotalPopulationRegionsAffected(affectedRegions));

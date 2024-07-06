@@ -154,13 +154,32 @@ function SidenavInMain({
       .filter((option) => option.selected)
       .reduce((sum, option) => sum + (option.n ?? 0), 0);
 
-    const citiesUnderAttack = formatNumberWithSpaces(
-      Math.ceil(
-        (totalSettlements.reduce((total, item) => item.settlements || 0, 0) /
-          selectedOptionsN) *
-          0.75
-      )
+    const damageLevelCount = () => {
+      switch (damageLevel) {
+        case 'Критический':
+          return 0.4;
+        case 'Минимальный':
+          return 0.23;
+        case 'Предупреждение':
+          return 0.08;
+        default:
+          return 0;
+      }
+    };
+
+    const totalSettlementsCount = totalSettlements.reduce(
+      (total, item) => total + (item.settlements || 0),
+      0
     );
+
+    let calculatedCitiesUnderAttack = Math.ceil(
+      (totalSettlementsCount / selectedOptionsN) * damageLevelCount() * 0.75
+    );
+
+    const citiesUnderAttack =
+      calculatedCitiesUnderAttack > totalSettlementsCount
+        ? formatNumberWithSpaces(totalSettlementsCount)
+        : formatNumberWithSpaces(calculatedCitiesUnderAttack);
 
     const launchConsequences: ILaunchConsequences = {
       citiesUnderAttack,
