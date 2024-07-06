@@ -11,5 +11,8 @@ project(':capacitor-network').projectDir = new File('../node_modules/@capacitor/
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
+include ':hugotomazi-capacitor-navigation-bar'
+project(':hugotomazi-capacitor-navigation-bar').projectDir = new File('../node_modules/@hugotomazi/capacitor-navigation-bar/android')
+
 include ':miaz-capacitor-websocket'
 project(':miaz-capacitor-websocket').projectDir = new File('../node_modules/@miaz/capacitor-websocket/android')

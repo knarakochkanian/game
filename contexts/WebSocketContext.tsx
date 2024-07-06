@@ -9,6 +9,7 @@ import React, {
 import { controllerServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
 import { StatusBar } from '@capacitor/status-bar';
+import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
 export interface WebSocketContextProps {
   socket: WebSocket | null;
@@ -75,6 +76,8 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       if (info.visible) {
         await StatusBar.hide();
       }
+
+      NavigationBar.hide();
     }, 1000);
 
     return () => {
@@ -96,7 +99,6 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   }, [modalVisible]);
 
   const pingAddress = async (address: string) => {
-    return true;
     try {
       const options = {
         url: `http://${address}`,
