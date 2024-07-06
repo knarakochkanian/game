@@ -113,13 +113,25 @@ const SelectFromTwo = ({
   }, [sectorsIndustry]);
 
   const financialLosses =
-    3000 * totalPopulationRegions * 0.2 * selectedOptionsN * damageLevelCount();
+    totalPopulationRegions > 0
+      ? 3000 *
+        totalPopulationRegions *
+        0.2 *
+        selectedOptionsN *
+        damageLevelCount()
+      : 0;
 
   dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
 
-  const affectedRegions = Math.ceil(
-    (totalPopulationRegions / selectedOptionsN) * damageLevelCount()
-  );
+  const affectedRegions =
+    totalPopulationRegions > 0 && selectedOptionsN > 0
+      ? Math.ceil(
+          totalPopulationRegions *
+            damageLevelCount() *
+            (selectedOptionsN / 100) *
+            0.912
+        )
+      : 0;
   dispatch(setTotalPopulationRegionsAffected(affectedRegions));
 
   return (

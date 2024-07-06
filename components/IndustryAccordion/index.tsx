@@ -6,7 +6,7 @@ import { countSelectedOptions } from '../../helpers';
 import React, { useState } from 'react';
 import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
 import { arrowDown, arrowDownGray } from '../../public/summary';
-import { SUMMARY, pagesWhereDropdownDisabled } from '../../constants';
+import { pagesWhereAccordionIsLikeInSummary, pagesWhereDropdownDisabled } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import {
   card,
@@ -103,7 +103,13 @@ const IndustryAccordion = ({
         </div>
       </AccordionSummary>
       <AccordionDetails
-        sx={currentPage === SUMMARY ? detailsStylesInSummery : defaultStyles}
+        sx={
+          pagesWhereAccordionIsLikeInSummary.includes(
+            currentPage || 'undefined'
+          )
+            ? detailsStylesInSummery
+            : defaultStyles
+        }
       >
         {industrySectors?.map((sector, index) => {
           const selectedOptionsLength = sector.options.filter(
