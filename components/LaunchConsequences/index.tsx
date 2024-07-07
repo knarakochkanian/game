@@ -69,7 +69,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
   const { citiesUnderAttack, wholeDamage, populationSuffering } =
-    action.launchConsequences;
+    action?.launchConsequences;
 
   const consequencesData = getConsequencesData(action.industrySectors);
 
@@ -174,7 +174,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
             <ModalData
               from={LAUNCH_CONSEQUENCES}
               name={wholeDamageName}
-              value={wholeDamage}
+              value={`${wholeDamage} млрд $`}
             />
           </div>
         </div>
