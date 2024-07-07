@@ -26,7 +26,7 @@ export const StaticMap = ({
 
   const focusOnCountry = useCallback(
     (
-      name: string,
+      name: string | string[],
       animationDurationMs?: number,
       zoomOnCountry?: boolean,
       extendBbox?: number

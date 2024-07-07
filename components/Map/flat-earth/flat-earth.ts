@@ -1,5 +1,5 @@
 import anime from 'animejs'
-import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry, LoadingManager } from "three";
+import { WebGLRenderer, Scene, PerspectiveCamera, Color, Mesh, Group, MOUSE, TOUCH, Raycaster, Vector2, Vector3, BoxGeometry, MathUtils, RepeatWrapping, TextureLoader, DoubleSide, MeshBasicMaterial, PlaneGeometry, ShapeGeometry, LoadingManager, Box3 } from "three";
 import { EffectComposer, GammaCorrectionShader, MapControls, RenderPass, ShaderPass } from "three/examples/jsm/Addons.js";
 import { State } from "./state";
 import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
@@ -117,12 +117,14 @@ export class FlatEarth implements IEarth {
 
     if (!this.isNotInteractive) {
       renderer.domElement.addEventListener('click', this.onClick.bind(this));
+      setTimeout(() => {
+        this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 100)
+      }, 700);
     }
 
     setTimeout(() => {
       this._render();
-      this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 100)
-  }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
+    }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
   }
 
   public stopRenderLoop() {
@@ -245,29 +247,36 @@ export class FlatEarth implements IEarth {
     }
   }
 
-  public moveCameraToCountry(name: string, animationDurationMs = 500, zoomOnCountry = true, extendBbox = 50, showBoxHelperDebug?: boolean) {
+  public moveCameraToCountry(names: string | string[], animationDurationMs = 500, zoomOnCountry = true, extendBbox = 50, showBoxHelperDebug?: boolean) {
     if (this.isNotInteractive) {
       animationDurationMs = 0;
     }
     if (!this.scene) {
       return;
     }
-
-    const country = this.getCountryOrRegionByName(name)
-    if (!country) {
-      console.error(`no country with name ${name}`)
-      return;
+    if (typeof names === "string") {
+      names = [names];
     }
 
+    let bboxAbs = new Box3();
+    for (const name of names) {
+      const country = this.getCountryOrRegionByName(name)
+      if (!country) {
+        console.error(`no country with name ${names}`)
+        continue;
+      }
+
+      const currentBbox = country.getBoundingBox();
+  
+      if (!currentBbox) {
+        console.error(`couldn't get bounding box for ${names}`)
+        continue;
+      }
+      bboxAbs = bboxAbs.union(currentBbox);
+    }
+  
     const center = new Vector3();
     const size = new Vector3();
-    const bboxAbs = country.getBoundingBox();
-
-    if (!bboxAbs) {
-      console.error(`couldn't get bounding box for ${name}`)
-      return;
-    }
-
     bboxAbs.getCenter(center);
     bboxAbs.getSize(size)
 
