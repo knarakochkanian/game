@@ -112,15 +112,24 @@ const SelectFromTwo = ({
       .reduce((sum, option) => sum + (option.n ?? 0), 0);
   }, [sectorsIndustry]);
 
+  const capitalization = useMemo(() => {
+    return (
+      sectorsIndustry
+        ?.find((sector) => sector.title === 'Топ капитализаций компаний')
+        ?.options.filter((option) => option.selected)
+        .reduce((sum, option) => sum + (option.capitalization ?? 0), 0) ?? 0
+    );
+  }, [sectorsIndustry]);
+
   const financialLosses =
     totalPopulationRegions > 0
       ? 3000 *
-        totalPopulationRegions *
-        0.2 *
-        selectedOptionsN *
-        damageLevelCount()
-      : 0;
-
+          totalPopulationRegions *
+          0.2 *
+          selectedOptionsN *
+          damageLevelCount() +
+        capitalization * damageLevelCount()
+      : capitalization * damageLevelCount();
   dispatch(setFormattedFinancialLosses(formatNumber(financialLosses)));
 
   const affectedRegions =

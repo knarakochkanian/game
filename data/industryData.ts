@@ -1157,8 +1157,7 @@ const industry: IIndustry = {
           id: 1,
           name: 'Google',
           src: '/top-capitalization/google.svg',
-          n: 2150000000000,
-          capitalization: 2150,
+          capitalization: 2150000000000,
         },
         {
           selected: false,
@@ -1166,8 +1165,7 @@ const industry: IIndustry = {
           id: 2,
           name: 'Apple',
           src: '/top-capitalization/apple.svg',
-          n: 3331000000000,
-          capitalization: 3331,
+          capitalization: 3331000000000,
         },
         {
           selected: false,
@@ -1175,8 +1173,7 @@ const industry: IIndustry = {
           id: 3,
           name: 'Microsoft',
           src: '/top-capitalization/microsoft.svg',
-          n: 3332000000000,
-          capitalization: 3332,
+          capitalization: 3332000000000,
         },
         {
           selected: false,
@@ -1184,8 +1181,7 @@ const industry: IIndustry = {
           id: 4,
           name: 'Amazon.com',
           src: '/top-capitalization/amazon.svg',
-          n: 1970000000000,
-          capitalization: 1970,
+          capitalization: 1970000000000,
         },
         {
           selected: false,
@@ -1193,8 +1189,7 @@ const industry: IIndustry = {
           id: 5,
           name: 'NVIDIA',
           src: '/top-capitalization/nvidia.svg',
-          n: 3251000000000,
-          capitalization: 3251,
+          capitalization: 3251000000000,
         },
         {
           selected: false,
@@ -1202,8 +1197,7 @@ const industry: IIndustry = {
           id: 6,
           name: 'Meta',
           src: '/top-capitalization/meta.svg',
-          n: 1220000000000,
-          capitalization: 1220,
+          capitalization: 1220000000000,
         },
         {
           selected: false,
@@ -1211,7 +1205,7 @@ const industry: IIndustry = {
           id: 7,
           name: 'Visa',
           src: '/top-capitalization/visa.svg',
-          n: 554000000000,
+          capitalization: 554000000000,
         },
         {
           selected: false,
@@ -1219,8 +1213,7 @@ const industry: IIndustry = {
           id: 8,
           name: 'Mastercard',
           src: '/top-capitalization/mastercard.svg',
-          n: 392000000000,
-          capitalization: 392,
+          capitalization: 392000000000,
         },
         {
           selected: false,
@@ -1228,8 +1221,7 @@ const industry: IIndustry = {
           id: 9,
           name: 'Exxon Mobil',
           src: '/top-capitalization/exxon.svg',
-          n: 448000000000,
-          capitalization: 448,
+          capitalization: 448000000000,
         },
         {
           selected: false,
@@ -1237,8 +1229,7 @@ const industry: IIndustry = {
           id: 10,
           name: 'McDonald’s',
           src: '/top-capitalization/McDonald’s.svg',
-          n: 173000000000,
-          capitalization: 173,
+          capitalization: 173000000000,
         },
       ],
     },
