@@ -1,4 +1,6 @@
+'use client';
 import Modal from '../Modals/Modal';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 type TTrashModalProps = {
   name: string;
@@ -13,6 +15,21 @@ const TrashModal = ({
   trashCallBack,
   trashModalOpen,
 }: TTrashModalProps) => {
+  const webSocketContext = useWebSocket();
+
+  if (!webSocketContext) {
+    return null;
+  }
+
+  const { socket } = webSocketContext;
+
+  const handleDelete = () => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send('cancel');
+    }
+    trashCallBack();
+  };
+
   return (
     <Modal
       name={name}
@@ -23,7 +40,7 @@ const TrashModal = ({
     >
       <p>Вы уверены что хотите удалить задачу?</p>
       <div className="ModalButtons">
-        <button className="ModalButton1" onClick={trashCallBack}>
+        <button className="ModalButton1" onClick={handleDelete}>
           удалить
         </button>
         <button className="SecondarySmall" onClick={closeModal}>

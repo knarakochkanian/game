@@ -9,10 +9,10 @@ import React, {
 import { controllerServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
 import { StatusBar } from '@capacitor/status-bar';
-import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
+import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 export interface WebSocketContextProps {
-  socket: WebSocket | null;
+  socket: WebSocket;
   pingFailed: boolean;
   modalVisible?: boolean;
 }
@@ -122,7 +122,9 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <WebSocketContext.Provider value={{ socket, pingFailed, modalVisible }}>
+    <WebSocketContext.Provider
+      value={{ socket: socket!, pingFailed, modalVisible }}
+    >
       {children}
     </WebSocketContext.Provider>
   );
