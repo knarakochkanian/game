@@ -13,8 +13,11 @@ import {
 import { IActionCardProps } from '../ActionCard';
 import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
-import { useAppDispatch } from '../../redux/hooks';
-import { resetGeneralState } from '../../redux/features/generalSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  resetGeneralState,
+  selectIsAttacking,
+} from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
 import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
@@ -56,7 +59,9 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
 
   return (
     <header
-      className={`${styles.header} ${setActionId ? styles.cursorPointer : ''}`}
+      className={`${styles.header} ${
+        actionType === ATTACK ? '' : styles.isProtecting
+      } ${setActionId ? styles.cursorPointer : ''}`}
       onClick={handleClick}
     >
       <div className={styles.leftPart}>

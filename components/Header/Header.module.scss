@@ -60,3 +60,7 @@
 .header.cursorPointer {
   cursor: pointer;
 }
+
+.header.isProtecting {
+  background-color: $protect-dark-blue-focus;
+}

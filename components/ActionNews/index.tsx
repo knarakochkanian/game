@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { setNewsActionId } from '../../redux/features/helpersSlice';
 
 import styles from './ActionNews.module.scss';
+import { copyFirstFourElements } from '../../helpers/helpers_2';
 
 interface IActionNewsProps {
   news: INews[];
@@ -13,6 +14,7 @@ interface IActionNewsProps {
 
 const ActionNews = ({ news, id }: IActionNewsProps) => {
   const dispatch = useAppDispatch();
+  const firstFourNews = copyFirstFourElements(news);
 
   const onSeeAll = () => {
     dispatch(setNewsActionId(id));
@@ -28,7 +30,7 @@ const ActionNews = ({ news, id }: IActionNewsProps) => {
       </div>
 
       <section className={styles.news}>
-        {news?.map((news, i) => (
+        {firstFourNews?.map((news, i) => (
           <NewsCard news={news} key={i} />
         ))}
       </section>
