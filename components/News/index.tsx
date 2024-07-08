@@ -5,13 +5,12 @@ import { Suspense, useEffect, useState } from 'react';
 import Loading from '../Loading';
 import AttacksWithDates from '../AttacksWithDates';
 import SingleAttackNews from '../SingleAttackNews';
-import { getAction, getItemFromStorage } from '../../helpers';
-import { COMPLETED_ACTIONS } from '../../constants';
-
-import styles from './News.module.scss';
+import { getAction } from '../../helpers';
 import useGetHistoryActions from '../../hooks/useGetHistoryActions';
 import { useAppSelector } from '../../redux/hooks';
 import { selectNewsActionId } from '../../redux/features/helpersSlice';
+
+import styles from './News.module.scss';
 
 const News = () => {
   const idFromHistory = useAppSelector(selectNewsActionId);

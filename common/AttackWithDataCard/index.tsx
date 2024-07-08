@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import useGetHistoryActions from '../../hooks/useGetHistoryActions';
 import { useAppSelector } from '../../redux/hooks';
 import { selectNewsActionId } from '../../redux/features/helpersSlice';
-
-import styles from './AttackWithDataCard.module.scss';
 import { selectIsAttacking } from '../../redux/features/generalSlice';
 import { A_TTACK, P_ROTECTION } from '../../constants';
+
+import styles from './AttackWithDataCard.module.scss';
 
 interface IAttackWithDataCardProps {
   name: string;

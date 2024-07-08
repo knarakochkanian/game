@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import AttackWithDataCard from '../../common/AttackWithDataCard';
 
 import styles from './AttacksWithDates.module.scss';
