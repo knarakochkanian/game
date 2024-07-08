@@ -5,14 +5,12 @@ import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
 import ReduxProvider from '../redux/provider';
 import './globals.scss';
-import { StatusBar } from '@capacitor/status-bar';
 import { Keyboard } from '@capacitor/keyboard';
 const APP_NAME = 'MAP';
 const APP_DEFAULT_TITLE = 'MAP';
 const APP_TITLE_TEMPLATE = 'MAP';
 const APP_DESCRIPTION = 'MAP';
 
-StatusBar.hide();
 Keyboard.hide();
 
 export const metadata: Metadata = {
@@ -21,7 +19,6 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
     title: APP_DEFAULT_TITLE,
   },
   formatDetection: {
