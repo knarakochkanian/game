@@ -84,17 +84,22 @@ export function searchSectors(
   const result = Array<ISector>()
 
   sectors.forEach((s) => {
-
-    const options = s.options.filter((option) => {
-      return option.name.toLocaleLowerCase().includes(query)
-    })
-
-    if (options.length > 0) {
-      result.push({
-        ...s, options: options
-      }
-      )
+    if (s.title.toLocaleLowerCase().includes(query)) {
+      result.push(s)
     }
+    else {
+      const options = s.options.filter((option) => {
+        return option.name.toLocaleLowerCase().includes(query)
+      })
+
+      if (options.length > 0) {
+        result.push({
+          ...s, options: options
+        }
+        )
+      }
+    }
+
   })
   console.log("searchSectors.result", result)
   return result
