@@ -13,10 +13,9 @@ import {
 import { IActionCardProps } from '../ActionCard';
 import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import {
   resetGeneralState,
-  selectIsAttacking,
 } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';

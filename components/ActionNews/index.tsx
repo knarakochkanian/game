@@ -3,9 +3,9 @@ import NewsCard from '../NewsCard';
 import { NEWS } from '../../constants';
 import { useAppDispatch } from '../../redux/hooks';
 import { setNewsActionId } from '../../redux/features/helpersSlice';
+import { copyFirstFourElements } from '../../helpers/helpers_2';
 
 import styles from './ActionNews.module.scss';
-import { copyFirstFourElements } from '../../helpers/helpers_2';
 
 interface IActionNewsProps {
   news: INews[];
