@@ -69,3 +69,18 @@ export const proccessParagraphByDamageLevel = (
       return '';
   }
 };
+
+export const copyFirstFourElements = (arr: INews[]) => {
+  // Create a new array to hold the result
+  let result = [];
+
+  // Loop through the first four elements of the input array
+  for (let i = 0; i < 4; i++) {
+    // If the element is defined, add it to the result array
+    if (arr[i] !== undefined) {
+      result.push(arr[i]);
+    }
+  }
+
+  return result;
+}
