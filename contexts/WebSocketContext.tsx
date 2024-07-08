@@ -12,7 +12,7 @@ import { StatusBar } from '@capacitor/status-bar';
 import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 export interface WebSocketContextProps {
-  socket: WebSocket;
+  socket: WebSocket | null;
   pingFailed: boolean;
   modalVisible?: boolean;
 }
@@ -56,14 +56,14 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('cancel');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('ping');
           }
         }
       });
@@ -84,7 +84,9 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
       clearInterval(subscription);
-      ws.close();
+      if (socket) {
+        socket.close();
+      }
     };
   }, []);
 
