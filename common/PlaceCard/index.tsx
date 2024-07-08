@@ -54,7 +54,7 @@ const PlaceCard = ({
     if (withRegions) return;
     console.log('Button clicked:', place?.name);
     dispatch(setPlaceName(place?.name));
-  };
+  };  
 
   return (
     <>
@@ -86,7 +86,7 @@ const PlaceCard = ({
         )}
         {selectedCountComponent}
       </button>
-      {isCountry && placeFirstLetterChanged && places && Boolean(i) && (
+      {isCountry && placeFirstLetterChanged && places && (Boolean(i) || i === 0) && (
         <AlphabetLetter letter={places[(i as number) + 1]?.name[0]} />
       )}
     </>
