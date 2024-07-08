@@ -74,34 +74,31 @@ export const findFirstSectorWithSelectedOption = (sectors: ISector[]) => {
   };
 };
 
-export const searchSectors = (
-  searchText: string,
-  industrySectors: ISector[]
-) => {
-  if (!searchText) return;
+export function searchSectors(
+  q: string, sectors: ISector[]
+): ISector[] {
+  if (q == null || q.length == 0) {
+    return []
+  }
+  const query = q.toLocaleLowerCase()
+  const result = Array<ISector>()
 
-  const emptySectorsCopy: ISector[] = emptySectors.map((sector) => ({
-    ...sector,
-    options: [],
-  }));
+  sectors.forEach((s) => {
 
-  industrySectors.forEach((sector) => {
-    sector.options.forEach((option) => {
-      if (
-        option.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-      ) {
-        const targetSector = emptySectorsCopy.find(
-          (s) => s.title === sector.title
-        );
-        if (targetSector) {
-          targetSector.options.push(option);
-        }
+    const options = s.options.filter((option) => {
+      return option.name.toLocaleLowerCase().includes(query)
+    })
+
+    if (options.length > 0) {
+      result.push({
+        ...s, options: options
       }
-    });
-  });
-
-  return emptySectorsCopy;
-};
+      )
+    }
+  })
+  console.log("searchSectors.result", result)
+  return result
+}
 
 export const addToPickedCountryObjects = (
   state: IInitialState,
