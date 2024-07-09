@@ -89,14 +89,15 @@ export default function Password({ setIsPasswordPassed }: PasswordProps) {
             {Array.from({ length: 9 }, (_, i) => (
               <button
                 key={i + 1}
-                onClick={() => handleNumberClick((i + 1).toString())}
+                disabled={showError}
+                onTouchEnd={() => handleNumberClick((i + 1).toString())}
               >
                 {i + 1}
               </button>
             ))}
             <div></div>
-            <button onClick={() => handleNumberClick('0')}>0</button>
-            <button onClick={handleClear}>
+            <button disabled={showError} onTouchEnd={() => handleNumberClick('0')}>0</button>
+            <button onTouchEnd={handleClear} disabled={showError}>
               <Image
                 src={'/home/Delete.svg'}
                 alt={'delete'}

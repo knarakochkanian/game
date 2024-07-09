@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Loading from '../components/Loading';
 import Password from '../components/Password';
 import MainScreen from '../components/MainScreen';
@@ -18,19 +18,23 @@ export default function Home() {
   const [isPasswordPassed, setIsPasswordPassed] = useState(false);
   const dispatch = useDispatch();
 
+  const hideSplash = useCallback(() => {
+    const timeoutId = setTimeout(() => {
+
+      const passwordPassed = window.localStorage.getItem('isPasswordPassed') === 'true';
+      setIsPasswordPassed(passwordPassed);
+      setLoading(false)
+      return () => clearTimeout(timeoutId)
+    }, 2000);
+  }, [setLoading, setIsPasswordPassed])
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Clear isPasswordPassed from localStorage to ensure it's false on each run
-      window.localStorage.removeItem('isPasswordPassed');
-
-      const passwordPassed =
-        window.localStorage.getItem('isPasswordPassed') === 'true';
       const onboardingPassed =
         window.localStorage.getItem('isOnboardingPassed') === 'true';
       dispatch(setLocalTimeBlur(false));
-      setIsPasswordPassed(passwordPassed);
       setOnboardingPassed(onboardingPassed);
-      setLoading(false);
+      hideSplash();
 
       if (onboardingPassed) {
         dispatch(
@@ -56,7 +60,7 @@ export default function Home() {
           window.localStorage.removeItem('isPasswordPassed');
       };
     }
-  }, [dispatch]);
+  }, [dispatch, hideSplash]);
 
   return (
     <main className={styles.main}>
