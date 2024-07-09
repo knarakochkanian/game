@@ -1704,14 +1704,6 @@ const countriesWithCodes: IPlace[] = [
   },
   {
     isSelected: false,
-    id: 141,
-    name: 'Нидерландские Антильские острова',
-    code: '530',
-    population: 260000,
-    settlements: 7,
-  },
-  {
-    isSelected: false,
     id: 142,
     name: 'Нидерланды',
     code: '528',
