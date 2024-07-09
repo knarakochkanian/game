@@ -1,0 +1,2 @@
+npm run build && npx cap sync
+npx cap build android --androidreleasetype APK --keystorepath ~/.android/debug.keystore --keystorepass android --keystorealias androiddebugkey --keystorealiaspass android --signing-type apksigner --configuration=production
