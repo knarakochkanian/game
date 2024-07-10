@@ -26,6 +26,11 @@ const TrashModal = ({
   const handleDelete = () => {
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send('cancel');
+      setTimeout(() => {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send('ping');
+        }
+      }, 1000);
     }
     trashCallBack();
   };
