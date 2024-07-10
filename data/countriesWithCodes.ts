@@ -1199,7 +1199,7 @@ const countriesWithCodes: IPlace[] = [
         isSelected: false,
         id: 701,
         name: 'Аньхой',
-        population: 70665533,
+        population: 63240000,
         settlements: 130,
       },
       {
@@ -1933,9 +1933,9 @@ const countriesWithCodes: IPlace[] = [
       {
         isSelected: false,
         id: 513,
-        name: 'Республика Крым',
-        population: 1909499,
-        settlements: 16,
+        name: 'Республика Крым и Севастополь',
+        population: 2470873,
+        settlements: 17,
       },
       {
         isSelected: false,
@@ -2429,13 +2429,6 @@ const countriesWithCodes: IPlace[] = [
       },
       {
         isSelected: false,
-        id: 584,
-        name: 'Севастополь',
-        population: 561374,
-        settlements: 1,
-      },
-      {
-        isSelected: false,
         id: 585,
         name: 'Еврейская АО',
         population: 145802,
@@ -2580,14 +2573,14 @@ const countriesWithCodes: IPlace[] = [
     id: 193,
     name: 'США',
     code: '840',
-    population: 333287557,
+    population: 317565345,
     settlements: 5324,
     regions: [
       {
         isSelected: false,
         id: 301,
         name: 'Айдахо',
-        population: 47500,
+        population: 1839106,
         settlements: 78,
       },
       {
