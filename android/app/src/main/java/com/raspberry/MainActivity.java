@@ -1,7 +1,6 @@
 package com.raspberry;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
@@ -9,7 +8,9 @@ import androidx.appcompat.app.ActionBar;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
-    private static final String CLEAR_PASS_JS = "window.localStorage.removeItem('isPasswordPassed')";
+
+    private JSBridge jsBridge = null;
+    private NTPManager ntpManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +19,22 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
         hideActionBars();
 
-        getBridge().eval(CLEAR_PASS_JS, value -> {
-            Log.v("MainActivity", "Device will be locked");
-        });
+        jsBridge = new JSBridge(getBridge());
+        jsBridge.clearPassword();
+
+        ntpManager = new NTPManager(jsBridge,
+                //"10.99.13.10" -- replace for volna environment
+                "time.google.com"
+        );
+        ntpManager.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        jsBridge = null;
+        ntpManager.stop();
+        ntpManager = null;
     }
 
     private void hideActionBars() {
