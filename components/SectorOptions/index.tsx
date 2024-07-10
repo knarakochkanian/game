@@ -43,7 +43,7 @@ const SectorOptions = ({
             onClick={() => onClick(option.name, option.parent)}
             className={`${styles.option} ${
               option.selected && fromLeftSideNav ? styles.selected : ''
-            } ${!option.selected && fromSideNav ? styles.displayNone : ''}
+            } ${!option.selected && !fromLeftSideNav ? styles.displayNone : ''}
             ${!isAttacking ? styles.isProtecting : ''}
            ${(option.src && option.selected) || fromLeftSideNav ? styles.hasImage : ''}
            `}
