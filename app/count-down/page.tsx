@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -102,6 +102,10 @@ export default function CountDown() {
     };
   }, []);
 
+  const navigateToHome = useCallback(() => {
+    router.push('/news?backTo=home&id=' + currentAction.id);
+  }, [currentAction])
+
   useEffect(() => {
     let countdown: NodeJS.Timeout;
 
@@ -140,22 +144,11 @@ export default function CountDown() {
     }
 
     return () => clearInterval(countdown);
-  }, [time, router, trashModalOpen]);
+  }, [time, router, trashModalOpen, navigateToHome]);
 
   useEffect(() => {
     dispatch(setIsBrightness(trashModalOpen));
   }, [trashModalOpen, dispatch]);
-
-  const navigateToHome = () => {
-    if (
-      typeof window !== 'undefined' &&
-      (window as unknown as CapacitorWindow).Capacitor
-    ) {
-      window.location.href = '/news?backTo=home';
-    } else {
-      router.push('/news?backTo=home');
-    }
-  };
 
   const cancelCountdown = () => {
     setTimeout(() => {

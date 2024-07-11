@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound } from 'next/navigation';
+import { notFound, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import Loading from '../Loading';
 import AttacksWithDates from '../AttacksWithDates';
@@ -14,6 +14,8 @@ import styles from './News.module.scss';
 
 const News = () => {
   const idFromHistory = useAppSelector(selectNewsActionId);
+  const searchParams = useSearchParams()
+
   const [actions, setActions] = useState<IAction[]>([]);
   const [actionId, setActionId] = useState('');
   const [action, setAction] = useState<IAction | undefined>();
@@ -31,13 +33,22 @@ const News = () => {
   }, [JSON.stringify(action), actionId]);
 
   useEffect(() => {
+    console.log("actionDebug: news.triggered")
     if (!actions) return;
+    console.log("actionDebug: isFromHistory = " + idFromHistory)
 
-    const actionId = idFromHistory ? idFromHistory : String(actions[0]?.id);
+    const paramsActionId = searchParams?.get('id')
+    var actionId: string = String(actions[0]?.id)
+
+    if(idFromHistory) {
+      actionId = idFromHistory
+    } else if(paramsActionId) {
+      actionId = paramsActionId
+    }
     console.log('actions[0]?.id', actionId);
 
     setActionId(actionId);
-  }, [JSON.stringify(actions)]);
+  }, [JSON.stringify(actions), searchParams]);
 
   console.log('action', action);
 
