@@ -37,6 +37,7 @@ export const metadata: Metadata = {
 
 import localFont from '@next/font/local';
 import { WebSocketProvider } from '../contexts/WebSocketContext';
+import { NTPProvider } from '../contexts/NTPDateContext';
 
 const lakes = localFont({
   src: [
@@ -64,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${lakes.variable} font-sans`}>
       <body>
+        <NTPProvider>
         <Suspense fallback={<Loading />}>
           <WebSocketProvider>
             <ReduxProvider>
@@ -73,6 +75,7 @@ export default function RootLayout({
             </ReduxProvider>
           </WebSocketProvider>
         </Suspense>
+        </NTPProvider>
       </body>
     </html>
   );

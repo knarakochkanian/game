@@ -221,7 +221,8 @@ export const getItemFromStorage = (item: string, window: Window & typeof globalT
   }
 };
 
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | null) => {
+  if(date === null) return ''
   // Pad function to ensure two digits for day, month, hours, and minutes
   const pad = (num: number) => String(num).padStart(2, '0');
 

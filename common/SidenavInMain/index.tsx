@@ -92,7 +92,6 @@ function SidenavInMain({
   const [day, setDay] = useState(false);
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState(new Date());
   const confirmButtonRef = useRef<HTMLAnchorElement>(null); // Update ref type to HTMLDivElement
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);

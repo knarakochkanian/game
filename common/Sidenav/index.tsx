@@ -34,6 +34,7 @@ import { SxProps, Theme } from '@mui/system';
 import { useSelector } from 'react-redux';
 import SummaryOnBoarding from '../../app/summary-onboarding/page';
 import CountDownOnboarding from '../../app/count-down-onboarding/page';
+import { useNTP } from '../../contexts/NTPDateContext';
 interface SidenavProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -94,6 +95,7 @@ function Sidenav({
   const [currentDate, setCurrentDate] = useState('');
   const [futureTime, setFutureTime] = useState("");
   const [opacityConfirm, setOpacityConfirm] = useState('1');
+  const { getDate } = useNTP()
 
   useEffect(() => {
     console.log(removeModalDate);
@@ -107,45 +109,52 @@ function Sidenav({
   }, [removeModalDate, delayed])
 
   useEffect(() => {
-    const now = new Date();
-    const dateString = new Intl.DateTimeFormat('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }).format(now);
-    setCurrentDate(dateString);
-  }, [])
-  useEffect(() => {
-    function updateDateTime() {
-      const now = new Date();
-      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
-      const timeString = new Intl.DateTimeFormat('ru-RU', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(futureTime);
-      setFutureTime(timeString);
-    }
-    const timerId = setInterval(updateDateTime, 1000);
-    return () => {
-      clearInterval(timerId);
-      const now = new Date();
-      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
-      const timeString = new Intl.DateTimeFormat('ru-RU', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(futureTime);
+    const now = getDate();
+    if(now !== null) {
       const dateString = new Intl.DateTimeFormat('ru-RU', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
       }).format(now);
-      dispatch(setAttackTime({
-        date: dateString,
-        time: timeString,
-      }));
+      setCurrentDate(dateString);
+    }
+  }, [getDate])
+
+  useEffect(() => {
+    function updateDateTime() {
+      const now = getDate();
+      if (now !== null) {
+        const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+        const timeString = new Intl.DateTimeFormat('ru-RU', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }).format(futureTime);
+        setFutureTime(timeString);
+      }
+    }
+    const timerId = setInterval(updateDateTime, 1000);
+    return () => {
+      clearInterval(timerId);
+      const now = getDate();
+      if (now !== null) {
+        const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+        const timeString = new Intl.DateTimeFormat('ru-RU', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }).format(futureTime);
+        const dateString = new Intl.DateTimeFormat('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        }).format(now);
+        dispatch(setAttackTime({
+          date: dateString,
+          time: timeString,
+        }));
+      }
       console.log('component Sidenav unmounted')
     };
-  }, [])
+  }, [getDate])
 
   return (
     <>

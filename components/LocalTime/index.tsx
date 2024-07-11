@@ -9,6 +9,7 @@ import { selectBlur, selectLocalTimeBlur, selectOnboardingBlur } from '../../red
 import { useAppSelector } from '../../redux/hooks';
 import useGetPage from '../../hooks/useGetPage';
 import { useSelector } from 'react-redux';
+import { useNTP } from '../../contexts/NTPDateContext';
 const Index: React.FC = () => {
   const [dateTime, setDateTime] = useState<string>('');
   const [timeBlur, setTimeBlur] = useState('blur(22px)');
@@ -19,6 +20,9 @@ const Index: React.FC = () => {
   );
   const onBoardingBlur = useSelector(selectOnboardingBlur);
   const localTimeBlur = useSelector(selectLocalTimeBlur);
+
+  const {getDate} = useNTP()
+
   useEffect(() => {
     if (localTimeBlur === true) {
       setTimeBlur('blur(22px)')
@@ -30,7 +34,13 @@ const Index: React.FC = () => {
   
   useEffect(() => {
     const updateDateTime = () => {
-      const now = new Date();
+      const now = getDate();
+
+      if(now === null) {
+        setDateTime("...");
+        return
+      }
+
       const timeString = new Intl.DateTimeFormat('ru-RU', {
         hour: '2-digit',
         minute: '2-digit',
@@ -55,7 +65,7 @@ const Index: React.FC = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, []);
+  }, [getDate]);
 
   return (
     <span

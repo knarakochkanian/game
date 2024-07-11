@@ -1,6 +1,7 @@
-const timeAgo = (dateStr: string): string => {
+const timeAgo = (now: Date | null, dateStr: string): string => {
   if (!dateStr) return '';
-  const now = new Date();
+  if(now === null) return '';
+  
   const [datePart, timePart] = dateStr.split(' ');
   const [day, month, year] = datePart.split('.').map(Number);
   const [hours, minutes] = timePart.split(':').map(Number);
