@@ -12,13 +12,16 @@ body {
   background-color: $main-dark;
   font-variant-numeric: slashed-zero;
   font-family: var(--font-lakes), 'TT Lakes Neue Trial', sans-serif;
+
 }
 
 :root {
   background-color: $main-dark;
   font-family: var(--font-lakes), 'TT Lakes Neue Trial', sans-serif;
 }
-
+.brightness-adjusted {
+  filter: brightness(0.5);
+}
 .container {
   display: flex;
   max-width: 2752px;

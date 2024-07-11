@@ -24,6 +24,7 @@ import {
   selectCurrentAction,
   selectIsAttacking,
   setDamageLevel,
+  setIsBrightness,
 } from '../../redux/features/generalSlice';
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
@@ -35,6 +36,7 @@ import {
 
 import styles from './count-down.module.scss';
 import TrashModal from '../../common/TrashModal';
+import { controllerServerAddress } from '../static_variables';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -85,6 +87,22 @@ export default function CountDown() {
   }, []);
 
   useEffect(() => {
+    const socket = new WebSocket('ws://' + controllerServerAddress);
+
+    socket.onmessage = (event) => {
+      if (event.data === 'cancel pressed') {
+        cancelCountdown();
+      }
+    };
+
+    setSocket(socket);
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+  useEffect(() => {
     let countdown: NodeJS.Timeout;
 
     if (!fromOnboarding && !trashModalOpen) {
@@ -123,6 +141,10 @@ export default function CountDown() {
 
     return () => clearInterval(countdown);
   }, [time, router, trashModalOpen]);
+
+  useEffect(() => {
+    dispatch(setIsBrightness(trashModalOpen));
+  }, [trashModalOpen, dispatch]);
 
   const navigateToHome = () => {
     if (

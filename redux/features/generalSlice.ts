@@ -26,6 +26,7 @@ export interface IInitialState {
   places: IPlace[];
   sideNavIsOpen: boolean;
   activeBlocks: string[];
+  isBrightness: boolean;
   totalPopulationRegionsAffected: number;
   totalPopulationRegions: number;
   formattedFinancialLosses: string;
@@ -40,6 +41,7 @@ const initialState: IInitialState = {
   comfirmedFromOnboarding: false,
   activeBlocks: [],
   currentAction: null,
+  isBrightness: false,
   isAttacking: true,
   firstClick: true,
   isOnboardingPassed: false,
@@ -173,6 +175,9 @@ const generalSlice = createSlice({
     },
     setIsAttacking(state, { payload }) {
       state.isAttacking = payload;
+    },
+    setIsBrightness(state, { payload }) {
+      state.isBrightness = payload;
     },
     setSideNavIsOpen(state, { payload }) {
       state.sideNavIsOpen = payload;
@@ -344,10 +349,13 @@ export const {
   setAttackTime,
   setClickOnboardingSummary,
   setClickOnboardingCount,
+  setIsBrightness,
 } = generalSlice.actions;
 
 export const selectIsAttacking = (state: RootState) =>
   state.generalReducer.isAttacking;
+export const selectIsBrightness = (state: RootState) =>
+  state.generalReducer.isBrightness;
 export const selectPlaceName = (state: RootState) =>
   state.generalReducer.placeName;
 export const selectBlur = (state: RootState) => state.generalReducer.blur;
