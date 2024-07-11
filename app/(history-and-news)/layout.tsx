@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import Loading from '../../components/Loading';
 import BackButton from '../../common/BackButton';
@@ -20,13 +20,18 @@ export default function HistoryAndNewsLayout({
 }>) {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  
+  const searchParams = useSearchParams();
+
   const onBack = () => {
     setTimeout(() => {
       dispatch(resetGeneralState());
     }, 10);
 
-    router.back();
+    if("home" === searchParams?.get('backTo')) {
+      router.replace('/')
+    } else {
+      router.back();
+    }
   };
 
   return (

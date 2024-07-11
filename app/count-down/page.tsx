@@ -151,9 +151,9 @@ export default function CountDown() {
       typeof window !== 'undefined' &&
       (window as unknown as CapacitorWindow).Capacitor
     ) {
-      window.location.href = '/';
+      window.location.href = '/news?backTo=home';
     } else {
-      router.push('/');
+      router.push('/news?backTo=home');
     }
   };
 
