@@ -32,3 +32,6 @@ dialog.searchResult {
 .searchResult.displayNone {
   display: none;
 }
+.searchResult.keyboardOpened {
+  max-height: $search-results-height-on-keyboard-opened;
+}

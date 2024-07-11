@@ -15,7 +15,7 @@ const SearchResult = ({ searchInput, showKeyboard, children }: ISearchResultProp
     <dialog
       className={`${styles.searchResult} ${
         showKeyboard || searchInput ? '' : styles.displayNone
-      }`}
+      } ${showKeyboard ? styles.keyboardOpened : ''}`}
     >
       <h5>результаты поиска</h5>
       <Image
