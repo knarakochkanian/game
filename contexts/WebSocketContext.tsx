@@ -54,14 +54,14 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (socket && socket.readyState === WebSocket.OPEN) {
-            socket.send('cancel');
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (socket && socket.readyState === WebSocket.OPEN) {
-            socket.send('ping');
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send('ping');
           }
         }
       });
@@ -70,8 +70,8 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
-      if (socket) {
-        socket.close();
+      if (ws) {
+        ws.close();
       }
     };
   }, []);
