@@ -3,7 +3,13 @@
 .blur {
   @include blurDivStyles;
 }
-
+.trashModalOpen{
+  position: absolute;
+  z-index: 99;
+  width: 400px;
+  top: 40%;
+  right: 29%;
+}
 .countdownContainer {
   padding-top: 328px;
   padding-left: 76px;
@@ -17,6 +23,7 @@
     letter-spacing: 0.03em;
     text-align: left;
   }
+
   .timerAndAttackCtn {
     display: flex;
     gap: 206px;

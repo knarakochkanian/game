@@ -11,6 +11,7 @@
   left: 518px;
   height: fit-content;
   background-color: $pre-black;
+  z-index: 99;
   &Counter {
     @include flex-between;
     width: 100%;

@@ -6,6 +6,41 @@
   top: 175px;
   left: 422px;
 
+  > img {
+    position: absolute;
+  }
+
+  > .smallCircle {
+    top: 120px;
+    left: 123px;
+    animation: rotate-cw linear 4s infinite;
+  }
+  > .mediumCircle {
+    top: 54px;
+    left: 55px;
+    animation: rotate-ccw linear 5s infinite;
+  }
+  > .bigCircle {
+    top: 7px;
+    animation: rotate-cw linear 6s infinite;
+  }
+  > .light {
+    top: -300px;
+    right: 1112px;
+  }
+  > .target {
+    top: 120px;
+    left: 114px;
+  }
+
+  &.loaderStop {
+    > .smallCircle,
+    > .mediumCircle,
+    > .bigCircle {
+      animation: none;
+    }
+  }
+
   @keyframes rotate-cw {
     to {
       transform: rotate(360deg);
@@ -16,38 +51,5 @@
     to {
       transform: rotate(-360deg);
     }
-  }
-
-  > img:nth-child(1) {
-    animation: rotate-cw linear 4s infinite;
-  }
-  > img:nth-child(2) {
-    animation: rotate-ccw linear 5s infinite;
-  }
-  > img:nth-child(3) {
-    top: 185px;
-    animation: rotate-cw linear 6s infinite;
-  }
-  .mediumCircle,
-  .smallCircle {
-    position: absolute;
-  }
-  .smallCircle {
-    top: 120px;
-    left: 123px;
-  }
-  .mediumCircle {
-    left: 55px;
-    top: 54px;
-  }
-  .light {
-    position: absolute;
-    top: -300px;
-    right: 1112px;
-  }
-  .target {
-    position: absolute;
-    top: 120px;
-    left: 114px;
   }
 }

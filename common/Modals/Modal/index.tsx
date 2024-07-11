@@ -29,7 +29,6 @@ const Modal: React.FC<ModalProps> = ({
     setIsBrowser(true);
   }, []);
 
-  // Close modal on outside click
   const handleOutsideClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -67,10 +66,9 @@ const Modal: React.FC<ModalProps> = ({
                 />
               </button>
             )}
-            {!isTrashModal &&
-              (!withClose && (
-                <span className={styles.modalCounter_number}>{counter}/12</span>
-              ))}
+            {!isTrashModal && !withClose && (
+              <span className={styles.modalCounter_number}>{counter}/12</span>
+            )}
           </div>
           <div className={styles.modalMain}>{children}</div>
         </div>

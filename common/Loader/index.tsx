@@ -13,11 +13,17 @@ import {
 
 import styles from './Loader.module.scss';
 
-const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
+const Loader = ({
+  isAttacking,
+  stopRotate,
+}: {
+  isAttacking: boolean;
+  stopRotate: boolean;
+}) => {
   return (
-    <div className={styles.loader}>
+    <div className={`${styles.loader} ${stopRotate ? styles.loaderStop : ''}`}>
       <Image
-        className={styles.smallCircle}
+        className={`${styles.smallCircle}`}
         src={isAttacking ? smallCircle : smallCircleBlue}
         alt="smallCircle"
         width={243}
@@ -25,7 +31,7 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         priority
       />
       <Image
-        className={styles.mediumCircle}
+        className={`${styles.mediumCircle}`}
         src={isAttacking ? mediumCircle : mediumCircleBlue}
         alt="mediumCircle"
         width={373}
@@ -33,7 +39,7 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
         priority
       />
       <Image
-        className={styles.bigCircle}
+        className={`${styles.bigCircle}`}
         src={isAttacking ? bigCircle : bigCircleBlue}
         alt="bigCircle"
         width={478}
@@ -60,5 +66,4 @@ const Loader = ({ isAttacking }: { isAttacking: boolean }) => {
     </div>
   );
 };
-
 export default Loader;

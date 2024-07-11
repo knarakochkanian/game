@@ -1,6 +1,5 @@
 'use client';
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,10 +28,13 @@ import {
 import { getItemFromStorage, getNextActionName } from '../../helpers';
 import proccessActionsToSave from '../../helpers/proccessActionsToSave';
 import Modal from '../../common/Modals/Modal';
-import { controllerServerAddress } from '../static_variables';
+import {
+  setCloseSelectionIfChanged,
+  setResetMapIfChanged,
+} from '../../redux/features/helpersSlice';
 
 import styles from './count-down.module.scss';
-import { useWebSocket } from '../../contexts/WebSocketContext';
+import TrashModal from '../../common/TrashModal';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -50,9 +52,11 @@ export default function CountDown() {
   >();
 
   const [name, setName] = useState('');
-
   const [actionCompleted, setActionCompleted] = useState(false);
   const [actionCanceled, setActionCanceled] = useState(false);
+  const [trashModalOpen, setTrashModalOpen] = useState(false);
+
+  const closeModal = () => setTrashModalOpen(false);
 
   useEffect(() => {
     const name = lastActionName
@@ -64,7 +68,6 @@ export default function CountDown() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const lastActionName = window.localStorage.getItem('lastActionName');
-
       setLastActionName(lastActionName);
     }
   }, []);
@@ -82,8 +85,10 @@ export default function CountDown() {
   }, []);
 
   useEffect(() => {
-    if (!fromOnboarding) {
-      const countdown = setInterval(() => {
+    let countdown: NodeJS.Timeout;
+
+    if (!fromOnboarding && !trashModalOpen) {
+      countdown = setInterval(() => {
         if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
           setActionCompleted(true);
           clearInterval(countdown);
@@ -114,9 +119,10 @@ export default function CountDown() {
           setTime({ ...time, hours: time.hours - 1, minutes: 59, seconds: 59 });
         }
       }, 1000);
-      return () => clearInterval(countdown);
     }
-  }, [time, router]);
+
+    return () => clearInterval(countdown);
+  }, [time, router, trashModalOpen]);
 
   const navigateToHome = () => {
     if (
@@ -134,25 +140,9 @@ export default function CountDown() {
       dispatch(resetGeneralState());
     }, 10);
     dispatch(setDamageLevel(null));
-    setTime({ ...time, hours: 0, minutes: 0, seconds: 0 });
-    navigateToHome();
+    // setTime({ hours: 0, minutes: 0, seconds: 0 });
+    setTrashModalOpen(true);
   };
-
-  useEffect(() => {
-    const socket = new WebSocket('ws://' + controllerServerAddress);
-    
-    socket.onmessage = (event) => {
-      if (event.data === 'cancel pressed') {
-        cancelCountdown();
-      }
-    };
-
-    setSocket(socket);
-
-    return () => {
-      socket.close();
-    };
-  }, []);
 
   return (
     <>
@@ -193,10 +183,25 @@ export default function CountDown() {
           </div>
         </div>
       </div>
-
+      {trashModalOpen && (
+        <div className={styles.trashModalOpen}>
+          <TrashModal
+            fromCountDown={true}
+            closeModal={closeModal}
+            name="trashInCountDown"
+            trashCallBack={() => {
+              dispatch(setResetMapIfChanged());
+              dispatch(resetGeneralState());
+              dispatch(setCloseSelectionIfChanged());
+              closeModal();
+            }}
+            trashModalOpen={trashModalOpen}
+          />
+        </div>
+      )}
       <Grid />
       <SideLines />
-      <Loader isAttacking={isAttacking} />
+      <Loader isAttacking={isAttacking} stopRotate={trashModalOpen} />
       <Slashes />
 
       <Footer cancelCountdown={cancelCountdown} />
