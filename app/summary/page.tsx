@@ -31,6 +31,7 @@ import {
 import styles from './summary.module.scss';
 import proccessNewsData from '../../helpers/proccessNewsData';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
+import { useNTP } from '../../contexts/NTPDateContext';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,
@@ -49,6 +50,8 @@ const Summary = () => {
   const webSocketContext = useContext(
     WebSocketContext
   ) as WebSocketContextProps;
+
+  const { getDate } = useNTP()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -77,7 +80,7 @@ const Summary = () => {
 
         break;
       case null:
-        const currentDate = formatDate(new Date());
+        const currentDate = formatDate(getDate());
         dispatch(setCurrentActionDate(currentDate));
         const { selectedCountries, industrySectors } = currentAction;
         const selectedCountryNames = selectedCountries
