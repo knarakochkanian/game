@@ -51,14 +51,14 @@ export const regions: Region[] = [
           { id: 'НАТО', name: 'НАТО', members: nato },
           { id: 'США', name: 'США', members: USA },
           { id: 'ЕВРОСОЮЗ', name: 'ЕВРОСОЮЗ', members: european_union },
-          { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
+          //{ id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
         ],
         optionsForProtection: [
           { id: 'РОССИЯ', name: 'РОССИЯ', members: Russia },
           { id: 'БЕЛОРУССИЯ', name: 'БЕЛОРУССИЯ', members: Belarus },
           { id: 'СНГ', name: 'СНГ', members: SNG },
           { id: 'ОДКБ', name: 'ОДКБ', members: ODKB },
-          { id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
+          //{ id: 'ВЕСЬ МИР', name: 'ВЕСЬ МИР', members: wholeWorld },
         ],
       },
       {
