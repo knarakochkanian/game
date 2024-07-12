@@ -165,7 +165,9 @@ export default function CountDown() {
   };
 
   return (
-    <>
+    <div
+    // style={{ filter: trashModalOpen ? 'brightness(0.5)' : 'brightness(1)' }}
+    >
       <div className={styles.countdownContainer}>
         <h5>запуск</h5>
 
@@ -244,6 +246,6 @@ export default function CountDown() {
           </Link>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
