@@ -36,7 +36,7 @@ $protect-map-default: #585966;
 $unvisible: rgba(0, 0, 0, 0);
 
 // total height - keyboard height - fixed top height
-$search-results-height-on-keyboard-opened: calc(100vh - 378px - 138px);//250px; // 452px
+$search-results-height-on-keyboard-opened: 300px;//calc(100vh - 378px - 138px);//250px; // 452px
 // mixins
 @mixin set-font-size-weight($fontSize, $fontWeight) {
   font-size: $fontSize;

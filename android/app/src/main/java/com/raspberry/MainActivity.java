@@ -23,8 +23,8 @@ public class MainActivity extends BridgeActivity {
         jsBridge.clearPassword();
 
         ntpManager = new NTPManager(jsBridge,
-                //"10.99.13.10" -- replace for volna environment
-                "time.google.com"
+                "10.99.13.10"// -- replace for volna environment
+                //"time.google.com"
         );
         ntpManager.start();
     }

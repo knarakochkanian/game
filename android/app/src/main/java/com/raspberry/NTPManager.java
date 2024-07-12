@@ -60,9 +60,10 @@ public class NTPManager {
 
         bridge.sendNTPTime(raw, result -> {
             Log.v(TAG, "sendNTPTime.result = " + result);
-            if (!"\"ok\"".equals(result)) {
-                restart();
-            }
+            restart();
+//            if (!"\"ok\"".equals(result)) {
+//
+//            }
         });
         return true;
     }

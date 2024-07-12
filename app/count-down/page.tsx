@@ -11,6 +11,7 @@ import SideLines from '../../common/SideLines';
 import Grid from '../../common/Grid';
 import {
   ACTIONS_IN_QUEUE,
+  ATTACK,
   A_TTACK,
   COMPLETED_ACTIONS,
   LAST_ACTION_NAME,
@@ -102,8 +103,12 @@ export default function CountDown() {
     };
   }, []);
 
-  const navigateToHome = useCallback(() => {
-    router.push('/news?backTo=home&id=' + currentAction.id);
+  const navigateToHome = useCallback((action: IAction) => {
+    var url = '/'
+    if(action.actionType === ATTACK) {
+      url = '/news?backTo=home&id=' + currentAction.id
+    }
+    router.push(url);
   }, [currentAction])
 
   useEffect(() => {
@@ -131,8 +136,8 @@ export default function CountDown() {
             );
           }
 
+          navigateToHome(currentAction);
           dispatch(resetGeneralState());
-          navigateToHome();
         } else if (time.seconds > 0) {
           setTime({ ...time, seconds: time.seconds - 1 });
         } else if (time.minutes > 0) {
