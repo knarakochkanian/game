@@ -93,6 +93,7 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [readyIsSend, setReadyIsSend] = useState(false);
   const confirmButtonRef = useRef<HTMLAnchorElement>(null); // Update ref type to HTMLDivElement
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
@@ -242,14 +243,16 @@ function SidenavInMain({
       !pingFailed &&
       socket?.readyState === WebSocket.OPEN
     ) {
+      setReadyIsSend(true);
       socket.send('ready');
     } else if (
-      numberOfSelectedSectors === null &&
-      damageLevel === null &&
-      selectedCountries.length === 0 &&
-      socket?.readyState === WebSocket.OPEN
+        (numberOfSelectedSectors === null || damageLevel === null || selectedCountries.length === 0) 
+        && socket?.readyState === WebSocket.OPEN
+        && readyIsSend
     ) {
+      setReadyIsSend(false);
       socket.send('cancel');
+      socket.send('ping');
     } else if (socket?.readyState !== WebSocket.OPEN) {
       socket?.addEventListener('open', () => {
         if (
