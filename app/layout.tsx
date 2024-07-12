@@ -4,8 +4,10 @@ import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
 import ReduxProvider from '../redux/provider';
+import { BrightnessProvider } from '../contexts/BrightnessContext';
 import './globals.scss';
 import { Keyboard } from '@capacitor/keyboard';
+
 const APP_NAME = 'MAP';
 const APP_DEFAULT_TITLE = 'MAP';
 const APP_TITLE_TEMPLATE = 'MAP';

@@ -173,7 +173,7 @@ function SidenavInMain({
     );
 
     let calculatedCitiesUnderAttack = Math.ceil(
-      (totalSettlementsCount / selectedOptionsN) * damageLevelCount() * 0.75
+      totalSettlementsCount * (selectedOptionsN / 399.5) * damageLevelCount()
     );
 
     const citiesUnderAttack =
@@ -243,6 +243,13 @@ function SidenavInMain({
       socket?.readyState === WebSocket.OPEN
     ) {
       socket.send('ready');
+    } else if (
+      numberOfSelectedSectors === null &&
+      damageLevel === null &&
+      selectedCountries.length === 0 &&
+      socket?.readyState === WebSocket.OPEN
+    ) {
+      socket.send('cancel');
     } else if (socket?.readyState !== WebSocket.OPEN) {
       socket?.addEventListener('open', () => {
         if (
@@ -252,6 +259,12 @@ function SidenavInMain({
           !pingFailed
         ) {
           socket.send('ready');
+        } else if (
+          numberOfSelectedSectors === null &&
+          damageLevel === null &&
+          selectedCountries.length === 0
+        ) {
+          socket.send('cancel');
         }
       });
     }
@@ -312,9 +325,7 @@ function SidenavInMain({
             </button>
           </div>
 
-          <div
-            className={`${'AccordionsWrap'} ${styles.sidenavAccordionsWrap}`}
-          >
+          <div className={`AccordionsWrap ${styles.sidenavAccordionsWrap}`}>
             <RegionAccordion
               selectedCountries={selectedCountries}
               setWithOutFlag={true}
@@ -376,7 +387,7 @@ function SidenavInMain({
               <ModalContainer
                 setModalClose={() => setModalVisibleSystem(false)}
               >
-                <SystemState isOn={pingFailed} />
+                <SystemState isOn={!pingFailed} />
               </ModalContainer>
             </Box>
           )}
