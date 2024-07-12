@@ -43,7 +43,8 @@
   }
   &ModalBottomRight {
     display: flex;
-    width: 200px;
+    max-width: 210px;
+    width: 100%;
     right: -45%;
     gap: 22px;
     flex-direction: column;
