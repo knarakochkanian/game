@@ -64,15 +64,13 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {/* {isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : isPasswordPassed ? (
         <MainScreen />
       ) : (
         <Password setIsPasswordPassed={setIsPasswordPassed} />
-      )} */}
-
-      <MainScreen />
+      )}
     </main>
   );
 }

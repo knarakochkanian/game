@@ -60,7 +60,7 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
         from="Summary"
         buttonInfo={buttonInfo}
         buttonRef={buttonRef}
-        // sx={{ pointerEvents: 'none' }}
+        sx={{ pointerEvents: 'none' }}
       />
     </footer>
   );

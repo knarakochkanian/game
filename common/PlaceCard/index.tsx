@@ -50,6 +50,7 @@ const PlaceCard = ({
   } ${isCountry ? styles.isCountry : ''} ${
     isSelected && fromLeftSideNav ? styles.selected : ''
   } ${!isAttacking ? styles.isProtecting : ''}`;
+
   const onClick = () => {
     if (withRegions) return;
     console.log('Button clicked:', place?.name);
@@ -71,7 +72,12 @@ const PlaceCard = ({
         <h4>{place?.name}</h4>
         {isSelected && fromLeftSideNav && isCountry && <GreenLineBorders />}
         {fromSideNav && (
-          <button onClick={onClick}>
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              onClick();
+            }}
+          >
             <Image
               className={styles.minusSign}
               src={withRegions ? 'onboarding/arrow.svg' : minusSign}
