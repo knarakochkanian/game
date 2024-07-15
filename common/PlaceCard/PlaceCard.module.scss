@@ -2,6 +2,7 @@
 
 .placeCard {
   width: 100%;
+  max-width: 310px;
   padding: 12px 8px;
   display: flex;
   gap: 12px;
@@ -44,13 +45,14 @@
 }
 
 .placeCard.withRegions {
-  position: relative;
+  max-width: unset;
   padding: 0;
   @include set-width-height(299px, 48px);
   padding-left: 8px;
 }
 
-.placeCard.withRegions.selected {
+.placeCard.selected.isCountry {
+  position: relative;
   border-right: 1px solid $attack-green;
   border-left: 1px solid $attack-green;
 }

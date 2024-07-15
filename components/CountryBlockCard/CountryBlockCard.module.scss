@@ -1,50 +1,24 @@
 @import '/app/variables.module.scss';
 
-.SecondarySmall {
-  border-right: 2px solid #787878;
-  border-left: 2px solid #787878;
-  position: relative;
-  cursor: pointer;
-  padding: 8px 15px;  
-  @include TypoBodyBig;  
+.SecondarySmall.selected {
+  .helper_1,
+  .helper_2 {
+    background: $attack-green;
+  }
   &::after {
-    content: '';
-    width: 16px;
-    position: absolute;
-    height: 2px;
-    background: #787878;
-    bottom: 0;
-    left: 0;
+    background: $attack-green;
   }
   &::before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 2px;
-    background: #787878;
-    bottom: 0;
-    right: 0;
+    background: $attack-green;
   }
   > span {
     &::before {
-      content: '';
-      width: 16px;
-      position: absolute;
-      height: 2px;
-      background: #787878;
-      top: 0;
-      left: 0;
+      background: $attack-green;
     }
   }
   > span {
     &::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 2px;
-      background: #787878;
-      top: 0;
-      right: 0;
+      background: $attack-green;
     }
   }
 }
@@ -52,8 +26,8 @@
 .container {
   flex-wrap: wrap;
   gap: 10px;
-  .SecondarySmallDisable{
-    border: 2px solid #FFF;
+  .SecondarySmallDisable {
+    border: 2px solid #fff;
     width: 104px;
     font-size: 13.18px;
     font-weight: 500;
@@ -64,6 +38,12 @@
   }
   .secondarySmallDisable.selected {
     background-color: $attack-dark-green-select-60;
+    border-color: $attack-green;
+    .nameAndCloseIcon {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
     .optionName {
       color: $attack-green;
     }

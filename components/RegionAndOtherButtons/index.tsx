@@ -178,7 +178,7 @@ const RegionAndOtherButtons = ({
               case COUNTRIES:
                 return (
                   <AccordionWrapper
-                    styles={{ accordionDetailsHeight: '510px' }}
+                    styles={{ accordionDetailsHeight: '275px' }}
                     expanded={expanded}
                     handleExpansion={handleExpansion}
                     data={region}
@@ -196,7 +196,7 @@ const RegionAndOtherButtons = ({
                 return (
                   isAttacking && (
                     <AccordionWrapper
-                      styles={{ accordionDetailsHeight: '510px' }}
+                      styles={{ accordionDetailsHeight: '275px' }}
                       expanded={expanded}
                       handleExpansion={handleExpansion}
                       data={region}
