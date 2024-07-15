@@ -47,14 +47,14 @@ const PlaceCard = ({
     selectedCountComponent ? styles.withCount : ''
   } ${fromSideNav ? styles.fromSideNav : ''} ${
     place?.regions ? styles.withRegions : ''
-  } ${isSelected && fromLeftSideNav ? styles.selected : ''} ${
-    !isAttacking ? styles.isProtecting : ''
-  }`;
+  } ${isCountry ? styles.isCountry : ''} ${
+    isSelected && fromLeftSideNav ? styles.selected : ''
+  } ${!isAttacking ? styles.isProtecting : ''}`;
   const onClick = () => {
     if (withRegions) return;
     console.log('Button clicked:', place?.name);
     dispatch(setPlaceName(place?.name));
-  };  
+  };
 
   return (
     <>
@@ -69,9 +69,7 @@ const PlaceCard = ({
           </div>
         )}
         <h4>{place?.name}</h4>
-        {isSelected && fromLeftSideNav && place?.regions && (
-          <GreenLineBorders />
-        )}
+        {isSelected && fromLeftSideNav && isCountry && <GreenLineBorders />}
         {fromSideNav && (
           <button onClick={onClick}>
             <Image
@@ -86,9 +84,12 @@ const PlaceCard = ({
         )}
         {selectedCountComponent}
       </button>
-      {isCountry && placeFirstLetterChanged && places && (Boolean(i) || i === 0) && (
-        <AlphabetLetter letter={places[(i as number) + 1]?.name[0]} />
-      )}
+      {isCountry &&
+        placeFirstLetterChanged &&
+        places &&
+        (Boolean(i) || i === 0) && (
+          <AlphabetLetter letter={places[(i as number) + 1]?.name[0]} />
+        )}
     </>
   );
 };

@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import Image from 'next/image';
+
 import { RESET, SELECT_ALL } from '../../constants';
 import { Option } from '../../data/attackRegionsData';
 import {
@@ -9,6 +11,7 @@ import {
   setPlaceName,
 } from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import closeUsa from '../../public/onboarding/onboarding-usa-close.svg';
 
 import styles from './CountryBlockCard.module.scss';
 
@@ -17,6 +20,10 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const pickedCountries = useAppSelector(selectPickedCountries);
   const activeBlocks = useAppSelector(selectActiveBlocks);
+  const isSelected =
+    activeBlocks.includes(option.name) ||
+    (pickedCountries.includes(option.name) &&
+      !activeBlocks.includes('ВЕСЬ МИР'));
 
   useEffect(() => {
     if (pickedCountries.includes(option.name)) {
@@ -34,22 +41,34 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   return (
     <div className={styles.container}>
       <button
-        className={`AccordionNested ${styles.secondarySmallDisable} ${
-          activeBlocks.includes(option.name) ||
-          pickedCountries.includes(option.name) && !activeBlocks.includes('ВЕСЬ МИР')
-            ? styles.selected
-            : ''
+        className={`AccordionNested ${styles.SecondarySmall}  ${styles.secondarySmallDisable} ${
+          isSelected ? styles.selected : ''
         } ${!isAttacking ? styles.isProtecting : ''}`}
         onClick={onClick}
         style={{ opacity: 'unset' }}
       >
-        <div className={'AccordionNested-helper-1'}></div>
-        <div className={'AccordionNested-helper-2'}></div>
-        <span>
-          <span className={styles.optionName}>
-            <button>{option.name}</button>
+        <div className={`AccordionNested-helper-1 ${styles.helper_1}`}></div>
+        <div className={`AccordionNested-helper-2 ${styles.helper_2}`}></div>
+
+        <div className={styles.nameAndCloseIcon}>
+          <span>
+            <span className={styles.optionName}>
+              <button>{option.name}</button>
+            </span>
           </span>
-        </span>
+
+          {isSelected && (
+            <Image
+              src={closeUsa}
+              alt={'close cross'}
+              width={11.3}
+              height={11.3}
+              style={{
+                opacity: '1',
+              }}
+            />
+          )}
+        </div>
       </button>
     </div>
   );
