@@ -20,13 +20,13 @@ export default function Home() {
 
   const hideSplash = useCallback(() => {
     const timeoutId = setTimeout(() => {
-
-      const passwordPassed = window.localStorage.getItem('isPasswordPassed') === 'true';
+      const passwordPassed =
+        window.localStorage.getItem('isPasswordPassed') === 'true';
       setIsPasswordPassed(passwordPassed);
-      setLoading(false)
-      return () => clearTimeout(timeoutId)
+      setLoading(false);
+      return () => clearTimeout(timeoutId);
     }, 2000);
-  }, [setLoading, setIsPasswordPassed])
+  }, [setLoading, setIsPasswordPassed]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

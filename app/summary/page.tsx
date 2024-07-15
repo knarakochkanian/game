@@ -27,11 +27,11 @@ import {
   WebSocketContext,
   WebSocketContextProps,
 } from '../../contexts/WebSocketContext';
-
-import styles from './summary.module.scss';
 import proccessNewsData from '../../helpers/proccessNewsData';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { useNTP } from '../../contexts/NTPDateContext';
+
+import styles from './summary.module.scss';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,
