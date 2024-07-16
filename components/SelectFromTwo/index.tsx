@@ -136,13 +136,14 @@ const SelectFromTwo = ({
     totalPopulationRegions > 0 && selectedOptionsN > 0
       ? Math.ceil(
           totalPopulationRegions *
+            (selectedOptionsN / 399.5) *
             damageLevelCount() *
-            (selectedOptionsN / 100) *
-            0.912
+            2.5
         )
       : 0;
   dispatch(setTotalPopulationRegionsAffected(affectedRegions));
 
+  // @ts-ignore
   return (
     <div className={`${styles.selectFromTwo} ${name ? styles[name] : ''}`}>
       <div className={styles.selectFromTwoAttack}>
@@ -163,7 +164,13 @@ const SelectFromTwo = ({
             ) : (
               <div>сохранено финансов</div>
             )}
-            <h3>{formattedFinancialLosses} млрд $</h3>
+            <h3>
+              {
+                // @ts-ignore
+                formatNumberWithSpaces(formattedFinancialLosses)
+              }{' '}
+              млрд $
+            </h3>
           </div>
         )}
         <button
