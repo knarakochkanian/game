@@ -9,6 +9,7 @@ import React, {
 import { controllerServerAddress, pingServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
 import useWebSocket, { ReadyState, SendMessage } from 'react-use-websocket';
+import { resolve } from 'path';
 
 export interface WebSocketContextProps {
   lastMessage: WebSocketEventMap['message'] | null;
@@ -100,7 +101,11 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [modalVisible, setModalHidden]);
 
-  const pingAddress = async (address: string) => {
+  const pingAddress = async (address: string | null) => {
+    if(address === null) {
+      return true
+    }
+    
     try {
       const options = {
         url: `http://${address}`,
@@ -114,7 +119,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const pingAddressWithTimeout = (address: string, timeout: number) => {
+  const pingAddressWithTimeout = (address: string | null, timeout: number) => {
     return Promise.race([
       pingAddress(address),
       new Promise<boolean>((resolve) =>
