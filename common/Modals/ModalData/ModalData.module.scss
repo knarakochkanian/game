@@ -3,6 +3,7 @@
 .modalData {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   .key,
   .value {
     @include TypoBodyBig_2;
@@ -17,9 +18,10 @@
   .value {
     font-size: 19px;
     letter-spacing: unset;
-  }
 
-  .value {
-    width: 130px;
   }
+ .key{
+   max-width: 180px;
+   width: 100%;
+ }
 }
