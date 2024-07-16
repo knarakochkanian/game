@@ -1,7 +1,8 @@
 'use client';
 import Modal from '../Modals/Modal';
-import { useWebSocket } from '../../contexts/WebSocketContext';
 import Link from 'next/link';
+import { useDeviceConnection } from '../../contexts/WebSocketContext';
+import { useCallback } from 'react';
 
 type TTrashModalProps = {
   name: string;
@@ -12,50 +13,33 @@ type TTrashModalProps = {
 };
 
 const TrashModal = ({
-                      closeModal,
-                      name,
-                      trashCallBack,
-                      trashModalOpen,
-                      fromCountDown,
-                    }: TTrashModalProps) => {
-  const webSocketContext = useWebSocket();
+  closeModal,
+  name,
+  trashCallBack,
+  trashModalOpen,
+  fromCountDown,
+}: TTrashModalProps) => {
 
-  if (!webSocketContext) {
-    return null;
-  }
+  const { send } = useDeviceConnection()!;
 
-  const { socket } = webSocketContext;
+  const handleDelete = useCallback(() => {
+    send('cancel');
+    send('ping');
 
-  const handleDelete = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send('cancel');
-      setTimeout(() => {
-        if (socket.readyState === WebSocket.OPEN) {
-          socket.send('ping');
-        }
-      }, 1000);
-    }
     trashCallBack();
-  };
+  }, [send, trashCallBack]);
 
-  const handleDeleteInCountDown = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send('yep');
-    }
+  const handleDeleteInCountDown = useCallback(() => {
+    send('yep');
     trashCallBack();
-  };
+  }, [send, trashCallBack]);
 
-  const handleCancelInCountDown = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send('nope');
-      setTimeout(() => {
-        if (socket.readyState === WebSocket.OPEN) {
-          socket.send('ping');
-        }
-      }, 1000);
-    }
+  const handleCancelInCountDown = useCallback(() => {
+    send('nope')
+    send('ping')
+    
     closeModal();
-  };
+  },[send, closeModal]);
 
   return (
       <Modal

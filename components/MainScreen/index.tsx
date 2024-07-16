@@ -41,7 +41,7 @@ import SimCards from '../../common/SimCards';
 import { simCards, waves } from '../../data/connectionData';
 import Waves from '../../common/Waves';
 import SystemState from '../../common/SystemState';
-import { useWebSocket } from '../../contexts/WebSocketContext';
+import { useDeviceConnection } from '../../contexts/WebSocketContext';
 
 import styles from './MainScreen.module.scss';
 import Box from '@mui/material/Box';
@@ -58,30 +58,23 @@ const MainScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleWave, setModalVisibleWave] = useState(false);
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
-  const { socket, pingFailed } = useWebSocket()!;
+  const { lastMessage, pingFailed } = useDeviceConnection()!;
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
   useEffect(() => {
-    if (!socket) return;
-    const handleSocketMessage = (event: MessageEvent) => {
-      if (event.data === 'sim pressed') {
-        setModalVisible(true);
-      }
-      if (event.data === 'wave pressed') {
-        setModalVisibleWave(true);
-      }
-      if (event.data === 'ready pressed') {
-        setModalVisibleSystem(true);
-      }
-    };
+    if(lastMessage?.data === 'sim pressed') {
+      setModalVisible(true);
+    }
 
-    socket.addEventListener('message', handleSocketMessage);
+    if(lastMessage?.data === 'wave pressed') {
+      setModalVisibleWave(true);
+    }
 
-    return () => {
-      socket.removeEventListener('message', handleSocketMessage);
-    };
-  }, [socket]);
+    if(lastMessage?.data === 'ready pressed') {
+      setModalVisibleSystem(true);
+    }
+  }, [lastMessage]);
 
   return (
     <main className={styles.mainScreen}>

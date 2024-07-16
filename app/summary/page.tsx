@@ -111,10 +111,10 @@ const Summary = () => {
     }, 10);
 
     if (
-      webSocketContext?.socket &&
-      webSocketContext.socket.readyState === WebSocket.OPEN
+      !webSocketContext.pingFailed
     ) {
-      webSocketContext.socket.send('cancel');
+      webSocketContext.send('cancel');
+      webSocketContext.send('ping');
     }
 
     router.back();

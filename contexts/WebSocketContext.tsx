@@ -6,13 +6,15 @@ import React, {
   useState,
   ReactNode,
 } from 'react';
-import { controllerServerAddress } from '../app/static_variables';
+import { controllerServerAddress, pingServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
+import useWebSocket, { ReadyState, SendMessage } from 'react-use-websocket';
 
 export interface WebSocketContextProps {
-  socket: WebSocket | null;
+  lastMessage: WebSocketEventMap['message'] | null;
   pingFailed: boolean;
   modalVisible?: boolean;
+  send: SendMessage;
 }
 
 export const WebSocketContext = createContext<WebSocketContextProps | null>(
@@ -22,69 +24,81 @@ export const WebSocketContext = createContext<WebSocketContextProps | null>(
 export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+
+  const {sendMessage, readyState, lastMessage, getWebSocket} = useWebSocket(
+    `ws://${controllerServerAddress}`,{
+      shouldReconnect: () => true,
+      reconnectAttempts: Number.MAX_SAFE_INTEGER, // always reconnect
+      reconnectInterval: 2000
+    }
+  )
+
+  const [volnaReachable, setVolnaReachable] = useState(false)
+  const [deviceReachable, setDeviceReachable] = useState(false)
+  const [lastPingTimestamp, setLastPingTimestamp] = useState(0);
+
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalHidden, setModalHidden] = useState(false);
 
+  // Check device websocket connection
   useEffect(() => {
-    const protocol = 'ws';
-    const socketUrl = `${protocol}://${controllerServerAddress}`;
-    const ws = new WebSocket(socketUrl);
-    console.log(`Attempting to connect WebSocket to ${socketUrl}`);
+    const isOpened = readyState === ReadyState.OPEN
+    setDeviceReachable(isOpened)
+  },[readyState, setDeviceReachable])
 
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-      setPingFailed(true);
-      setModalVisible(true);
-    };
-
-    setSocket(ws);
-
+  // Check Volna network
+  useEffect(() => {
     const pingInterval = setInterval(() => {
-      pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
-        console.log(`Ping result for 10.99.2.5: ${isReachable}`);
-        if (!isReachable) {
-          setPingFailed(true);
-          setModalVisible(true);
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send('cancel');
-          }
-        } else {
-          setPingFailed(false);
-          setModalVisible(false);
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
-          }
-        }
+      pingAddressWithTimeout(pingServerAddress, 5000).then((isReachable) => {
+        console.log(`Ping result for ${pingServerAddress}: ${isReachable}`);
+        setVolnaReachable(isReachable)
+        setLastPingTimestamp(new Date().getTime())
       });
     }, 5000);
 
     return () => {
-      console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
-      if (ws) {
-        ws.close();
-      }
     };
-  }, []);
+  }, [setVolnaReachable, setLastPingTimestamp]);
+
+  // Actual ping & modal setup
+  useEffect(() => {
+    const isReachable = volnaReachable && deviceReachable
+
+    if(!isReachable && !modalHidden && !modalVisible) {
+      setModalVisible(true)
+    }
+
+    if(isReachable) {
+      setModalVisible(false)
+      setModalHidden(false)
+    }
+    setPingFailed(!isReachable)
+    
+  },[volnaReachable, deviceReachable, setPingFailed, modalVisible, setModalVisible, modalHidden, setModalHidden])
+
+  // Send ping when both volna & device connected
+  useEffect(() => {
+      if(volnaReachable && deviceReachable) {
+        sendMessage('ping')
+      }
+      else if(!volnaReachable && deviceReachable) {
+        sendMessage('cancel')
+      }
+  }, [volnaReachable, deviceReachable, sendMessage, lastPingTimestamp])
+
 
   useEffect(() => {
     if (modalVisible) {
       const timer = setTimeout(() => {
         console.log('Automatically hiding modal after 5 seconds');
+        setModalHidden(true)
         setModalVisible(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [modalVisible]);
+  }, [modalVisible, setModalHidden]);
 
   const pingAddress = async (address: string) => {
     try {
@@ -111,13 +125,18 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <WebSocketContext.Provider
-      value={{ socket: socket!, pingFailed, modalVisible }}
+      value={{ 
+        lastMessage: lastMessage, 
+        pingFailed: pingFailed,
+        modalVisible, 
+        send: sendMessage
+      }}
     >
       {children}
     </WebSocketContext.Provider>
   );
 };
 
-export const useWebSocket = () => {
+export const useDeviceConnection = () => {
   return useContext(WebSocketContext);
 };

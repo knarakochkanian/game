@@ -38,7 +38,7 @@ import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -56,7 +56,7 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
-import { useWebSocket } from '../../contexts/WebSocketContext';
+import { useDeviceConnection } from '../../contexts/WebSocketContext';
 import ModalContainer from '../Modals/ModalContainer';
 import SystemState from '../SystemState';
 import { ILaunchConsequences } from '../../data/launchConsequences';
@@ -82,7 +82,7 @@ function SidenavInMain({
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
-  const { socket, pingFailed } = useWebSocket()!;
+  const { lastMessage, pingFailed, send } = useDeviceConnection()!;
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
   const [lastActionName, setLastActionName] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -112,7 +112,12 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
-  const [isReadyPressed, setIsReadyPressed] = useState(false);
+      
+  const isStateReady = useMemo(() => {
+    return numberOfSelectedSectors !== null &&
+    damageLevel &&
+    selectedCountries.length !== 0
+  }, [numberOfSelectedSectors, damageLevel, selectedCountries])
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -220,64 +225,22 @@ function SidenavInMain({
   };
 
   useEffect(() => {
-    if (!socket) return;
-    const handleSocketClick = (event: MessageEvent) => {
-      if (event.data === 'ready pressed') {
-        setIsReadyPressed(true);
-      }
-      if (event.data === 'accept pressed' && confirmButtonRef.current) {
-        confirmButtonRef.current.click();
-      }
-    };
-    socket.addEventListener('message', handleSocketClick);
-    return () => {
-      socket.removeEventListener('message', handleSocketClick);
-    };
-  }, [socket]);
+    if(lastMessage?.data === 'accept pressed' && confirmButtonRef.current) {
+      confirmButtonRef.current.click();
+    }
+  }, [lastMessage])
 
   useEffect(() => {
-    if (
-      numberOfSelectedSectors !== null &&
-      damageLevel &&
-      selectedCountries.length !== 0 &&
-      !pingFailed &&
-      socket?.readyState === WebSocket.OPEN
-    ) {
-      setReadyIsSend(true);
-      socket.send('ready');
-    } else if (
-        (numberOfSelectedSectors === null || damageLevel === null || selectedCountries.length === 0) 
-        && socket?.readyState === WebSocket.OPEN
-        && readyIsSend
-    ) {
-      setReadyIsSend(false);
-      socket.send('cancel');
-      socket.send('ping');
-    } else if (socket?.readyState !== WebSocket.OPEN) {
-      socket?.addEventListener('open', () => {
-        if (
-          numberOfSelectedSectors !== null &&
-          damageLevel &&
-          selectedCountries.length !== 0 &&
-          !pingFailed
-        ) {
-          socket.send('ready');
-        } else if (
-          numberOfSelectedSectors === null &&
-          damageLevel === null &&
-          selectedCountries.length === 0
-        ) {
-          socket.send('cancel');
-        }
-      });
+
+    if(isStateReady && !pingFailed) {
+      setReadyIsSend(true)
+      send('ready')
+    } else if(!isStateReady && !pingFailed && readyIsSend) {
+      setReadyIsSend(false)
+      send('cancel')
+      send('ping')
     }
-  }, [
-    numberOfSelectedSectors,
-    damageLevel,
-    selectedCountries,
-    pingFailed,
-    socket,
-  ]);
+  }, [pingFailed, send, isStateReady, readyIsSend, setReadyIsSend])
 
   useEffect(() => {
     setModalVisibleSystem(pingFailed);
@@ -367,7 +330,7 @@ function SidenavInMain({
                   href={delayedTime && delayedDate ? '/queue' : '/summary'}
                   onClick={onSetCurrentAction}
                   ref={confirmButtonRef}
-                  style={{ pointerEvents: 'none' }}
+                  //style={{ pointerEvents: 'none' }}
                 >
                   <span
                     className="Lead"

@@ -37,7 +37,7 @@ import {
 
 import styles from './count-down.module.scss';
 import TrashModal from '../../common/TrashModal';
-import { controllerServerAddress } from '../static_variables';
+import { useDeviceConnection } from '../../contexts/WebSocketContext';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -47,7 +47,8 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const { lastMessage } = useDeviceConnection()!
+
   const [completedActionsFromStorage, setCompletedActionsFromStorage] =
     useState<IAction[] | undefined>();
   const [actionsInQueueFromStorage, setActionsInQueueFromStorage] = useState<
@@ -87,25 +88,9 @@ export default function CountDown() {
     }
   }, []);
 
-  useEffect(() => {
-    const socket = new WebSocket('ws://' + controllerServerAddress);
-
-    socket.onmessage = (event) => {
-      if (event.data === 'cancel pressed') {
-        cancelCountdown();
-      }
-    };
-
-    setSocket(socket);
-
-    return () => {
-      socket.close();
-    };
-  }, []);
-
-  const navigateToHome = useCallback((action: IAction) => {
+  const navigateToHome = useCallback((action: IAction | null) => {
     var url = '/'
-    if(action.actionType === ATTACK) {
+    if(currentAction.actionType === ATTACK) {
       url = '/news?backTo=home&id=' + currentAction.id
     }
     router.push(url);
@@ -163,6 +148,12 @@ export default function CountDown() {
     // setTime({ hours: 0, minutes: 0, seconds: 0 });
     setTrashModalOpen(true);
   };
+
+  useEffect(() => {
+    if(lastMessage?.data === 'cancel pressed') {
+      cancelCountdown();
+    }
+  }, [lastMessage])
 
   return (
     <div
