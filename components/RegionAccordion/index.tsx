@@ -108,7 +108,7 @@ const RegionAccordion = ({
         {setWithOutFlag ? (
           <PlacesInSidenavMain places={selectedCountries} />
         ) : (
-          <Places  name={'страны'} places={selectedCountries} />
+          <Places fromRegionAccordion  name={'страны'} places={selectedCountries} />
         )}
       </AccordionDetails>
     </Accordion>

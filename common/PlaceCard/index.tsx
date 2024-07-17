@@ -27,6 +27,7 @@ interface IPlaceCardProps {
   withRegions?: boolean;
   selectedCountComponent?: ReactNode;
   fromRegionAccordion?: boolean;
+  withRegionsFormLeft?: boolean;
 }
 
 const PlaceCard = ({
@@ -39,16 +40,19 @@ const PlaceCard = ({
   fromLeftSideNav,
   withRegions,
   selectedCountComponent,
-  fromRegionAccordion
+  fromRegionAccordion,
+  withRegionsFormLeft,
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);
   const isAttacking = useAppSelector(selectIsAttacking);
   const isSelected = pickedCountries.includes(place?.name) && !fromSideNav;
   const className = `${styles.placeCard} ${
-    selectedCountComponent ? styles.withCount : ''
-  } ${fromSideNav ? styles.fromSideNav : ''} ${
-    place?.regions ? styles.withRegions : ''
+    withRegionsFormLeft ? styles.withRegionsFormLeft : ''
+  } ${selectedCountComponent ? styles.withCount : ''} ${
+    fromSideNav ? styles.fromSideNav : ''
+  } ${place?.regions ? styles.withRegions : ''} ${
+    fromRegionAccordion ? styles.fromRegionAccordion : ''
   } ${isCountry ? styles.isCountry : ''} ${
     isSelected && fromLeftSideNav ? styles.selected : ''
   } ${!isAttacking ? styles.isProtecting : ''}`;

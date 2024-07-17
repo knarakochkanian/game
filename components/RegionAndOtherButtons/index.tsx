@@ -207,7 +207,6 @@ const RegionAndOtherButtons = ({
                       key={index}
                     >
                       <Places
-                        fromRegionAccordion
                         fromLeftSideNav
                         name={region.title}
                         places={placesInSwitch}

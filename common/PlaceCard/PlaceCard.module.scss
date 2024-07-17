@@ -51,6 +51,16 @@
   padding-left: 8px;
 }
 
+.placeCard.withRegionsFormLeft {
+  position: relative;
+  right: 0px;
+  // width: 282px;
+}
+
+.placeCard.withRegions.fromRegionAccordion {
+  width: 278px;
+}
+
 .placeCard.selected.isCountry {
   position: relative;
   border-right: 1px solid $attack-green;

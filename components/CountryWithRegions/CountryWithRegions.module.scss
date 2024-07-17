@@ -1,7 +1,7 @@
 @import '/app/variables.module.scss';
 
 .placesAccordionSummary {
-  @include AccordionSummary;
+  @include AccordionSummary;  
   span.countSelected {
     position: relative;
     max-height: 22.2px;
@@ -21,3 +21,4 @@
     border-color: $protect-blue;
   }
 }
+
