@@ -246,9 +246,11 @@ function SidenavInMain({
       setReadyIsSend(true);
       socket.send('ready');
     } else if (
-        (numberOfSelectedSectors === null || damageLevel === null || selectedCountries.length === 0) 
-        && socket?.readyState === WebSocket.OPEN
-        && readyIsSend
+      (numberOfSelectedSectors === null ||
+        damageLevel === null ||
+        selectedCountries.length === 0) &&
+      socket?.readyState === WebSocket.OPEN &&
+      readyIsSend
     ) {
       setReadyIsSend(false);
       socket.send('cancel');
@@ -278,6 +280,17 @@ function SidenavInMain({
     pingFailed,
     socket,
   ]);
+
+  useEffect(() => {
+    if (
+      socket?.readyState === WebSocket.OPEN &&
+      numberOfSelectedSectors == null &&
+      damageLevel == null &&
+      selectedCountries.length == 0
+    ) {
+      socket.send('cancel');
+    }
+  }, [numberOfSelectedSectors, damageLevel, selectedCountries, socket]);
 
   useEffect(() => {
     setModalVisibleSystem(pingFailed);

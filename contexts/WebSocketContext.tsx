@@ -26,7 +26,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
+  const connectWebSocket = () => {
     const protocol = 'ws';
     const socketUrl = `${protocol}://${controllerServerAddress}`;
     const ws = new WebSocket(socketUrl);
@@ -37,7 +37,10 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     ws.onclose = () => {
-      console.log('WebSocket connection closed');
+      console.log('WebSocket connection closed. Attempting to reconnect...');
+      setTimeout(() => {
+        connectWebSocket();
+      }, 1000);
     };
 
     ws.onerror = (error) => {
@@ -47,6 +50,10 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     setSocket(ws);
+  };
+
+  useEffect(() => {
+    connectWebSocket();
 
     const pingInterval = setInterval(() => {
       pingAddressWithTimeout('10.99.2.5', 5000).then((isReachable) => {
@@ -54,14 +61,14 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         if (!isReachable) {
           setPingFailed(true);
           setModalVisible(true);
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send('cancel');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('cancel');
           }
         } else {
           setPingFailed(false);
           setModalVisible(false);
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send('ping');
           }
         }
       });
@@ -70,8 +77,8 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     return () => {
       console.log('Cleaning up WebSocket and intervals');
       clearInterval(pingInterval);
-      if (ws) {
-        ws.close();
+      if (socket) {
+        socket.close();
       }
     };
   }, []);

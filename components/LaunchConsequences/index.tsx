@@ -22,15 +22,14 @@ import {
   populationSuffering as populationSufferingName,
   wholeDamage as wholeDamageName,
 } from '../../constants';
-import {
-  selectComfirmedFromOnboarding,
-} from '../../redux/features/generalSlice';
+import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
 import TopCapitalParagraphs from './TopCapitalParagraphs';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -174,7 +173,10 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
             <ModalData
               from={LAUNCH_CONSEQUENCES}
               name={wholeDamageName}
-              value={`${wholeDamage} млрд $`}
+              value={`${
+                // @ts-ignore
+                formatNumberWithSpaces(wholeDamage)
+              } млрд $`}
             />
           </div>
         </div>
