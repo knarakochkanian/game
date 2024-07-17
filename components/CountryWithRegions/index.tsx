@@ -65,65 +65,68 @@ const CountryWithRegions = ({
       {i === 0 && !fromSideNav && (
         <AlphabetLetter firstChild letter={place.name[0]} />
       )}
-      <Accordion
-        key={i}
-        sx={{
-          backgroundColor: '#080808 !important',
-          color: '#FFF',
-          // marginBottom: '10px',
-          padding: '1px 0',
-          // position: 'relative',
-          // right: `${
-          //   fromLeftSideNav && !fromSearchResult ? '17px !important' : '0'
-          // }`,
-        }}
-        expanded={isAccordionExpanded}
-        onChange={handleAccordionChange}
+      <div
+        className={`${fromLeftSideNav && !fromSearchResult ? styles.withRegionsFormLeft : ''}`}
       >
-        <AccordionSummary
-          key={place.code}
-          aria-expanded={isAccordionExpanded}
-          expandIcon={
-            !fromSideNav && (
-              <Image
-                src={'/onboarding/arrow.svg'}
-                alt={'arrow'}
-                width={11}
-                height={11}
-              />
-            )
-          }
-          sx={{ maxWidth: '566px' }}
-          aria-controls="panel2-content"
-          id="panel2-header"
+        <Accordion
+          key={i}
+          sx={{
+            backgroundColor: '#080808 !important',
+            color: '#FFF',
+            padding: '1px 0',
+          }}
+          expanded={isAccordionExpanded}
+          onChange={handleAccordionChange}
         >
-          <div
-            className={styles.placesAccordionSummary}
+          <AccordionSummary
+            key={place.code}
+            aria-expanded={isAccordionExpanded}
+            expandIcon={
+              !fromSideNav && (
+                <Image
+                  src={'/onboarding/arrow.svg'}
+                  alt={'arrow'}
+                  width={11}
+                  height={11}
+                />
+              )
+            }
+            sx={{ maxWidth: '566px' }}
+            aria-controls="panel2-content"
+            id="panel2-header"
           >
-            <PlaceCard
-              withRegionsFormLeft={fromLeftSideNav && !fromSearchResult}
-              fromRegionAccordion={fromRegionAccordion}
-              withRegions
-              fromLeftSideNav={fromLeftSideNav}
-              fromSideNav={fromSideNav}
-              isCountry
-              place={place}
-              selectedCountComponent={selectedCountComponent}
-            />
-          </div>
-        </AccordionSummary>
-        <AccordionDetails>
-          {fromLeftSideNav && (
-            <ResetOrSelectAll
-              setSelectedCount={setSelectedCount}
-              places={place?.regions}
-              withCount
-            />
-          )}
+            <div className={styles.placesAccordionSummary}>
+              <PlaceCard
+                fromRegionAccordion={fromRegionAccordion}
+                withRegions
+                fromLeftSideNav={fromLeftSideNav}
+                fromSideNav={fromSideNav}
+                isCountry
+                place={place}
+                selectedCountComponent={selectedCountComponent}
+              />
+            </div>
+          </AccordionSummary>
+          <AccordionDetails>
+            {fromLeftSideNav && (
+              <ResetOrSelectAll
+                setSelectedCount={setSelectedCount}
+                places={place?.regions}
+                withCount
+              />
+            )}
 
-          {place?.regions?.map((region, i) =>
-            fromSideNav ? (
-              pickedCountries.includes(region.name) && (
+            {place?.regions?.map((region, i) =>
+              fromSideNav ? (
+                pickedCountries.includes(region.name) && (
+                  <PlaceCard
+                    fromLeftSideNav={fromLeftSideNav}
+                    fromSideNav={fromSideNav}
+                    key={i}
+                    place={region}
+                  />
+                )
+              ) : (
                 <PlaceCard
                   fromLeftSideNav={fromLeftSideNav}
                   fromSideNav={fromSideNav}
@@ -131,17 +134,11 @@ const CountryWithRegions = ({
                   place={region}
                 />
               )
-            ) : (
-              <PlaceCard
-                fromLeftSideNav={fromLeftSideNav}
-                fromSideNav={fromSideNav}
-                key={i}
-                place={region}
-              />
-            )
-          )}
-        </AccordionDetails>
-      </Accordion>
+            )}
+          </AccordionDetails>
+        </Accordion>
+      </div>
+
       {placeFirstLetterChanged && !fromSideNav && (
         <AlphabetLetter letter={places[i + 1]?.name[0]} />
       )}
