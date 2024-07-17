@@ -21,6 +21,8 @@ interface ICountryWithRegionsProps {
   placeFirstLetterChanged: boolean;
   fromSideNav: boolean | undefined;
   fromLeftSideNav?: boolean;
+  fromSearchResult?: boolean;
+  fromRegionAccordion?: boolean;
 }
 
 const CountryWithRegions = ({
@@ -30,6 +32,8 @@ const CountryWithRegions = ({
   placeFirstLetterChanged,
   places,
   fromLeftSideNav,
+  fromSearchResult,
+  fromRegionAccordion,
 }: ICountryWithRegionsProps) => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
@@ -52,7 +56,7 @@ const CountryWithRegions = ({
         }`}
       >
         {selectedCount}
-        <GreenLineBorders width={4}/>
+        <GreenLineBorders width={4} />
       </span>
     );
 
@@ -66,7 +70,12 @@ const CountryWithRegions = ({
         sx={{
           backgroundColor: '#080808 !important',
           color: '#FFF',
-          marginBottom: '10px',
+          // marginBottom: '10px',
+          padding: '1px 0',
+          position: 'relative',
+          right: `${
+            fromLeftSideNav && !fromSearchResult ? '17px !important' : '0'
+          }`,
         }}
         expanded={isAccordionExpanded}
         onChange={handleAccordionChange}
@@ -90,6 +99,7 @@ const CountryWithRegions = ({
         >
           <div className={styles.placesAccordionSummary}>
             <PlaceCard
+              fromRegionAccordion={fromRegionAccordion}
               withRegions
               fromLeftSideNav={fromLeftSideNav}
               fromSideNav={fromSideNav}

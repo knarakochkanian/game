@@ -151,7 +151,11 @@ const RegionAndOtherButtons = ({
         />
 
         <SearchResult searchInput={searchInput} showKeyboard={showKeyboard}>
-          <Places fromLeftSideNav places={search(searchInput)} />
+          <Places
+            fromLeftSideNav
+            fromSearchResult
+            places={search(searchInput)}
+          />
         </SearchResult>
 
         <div
@@ -203,6 +207,7 @@ const RegionAndOtherButtons = ({
                       key={index}
                     >
                       <Places
+                        fromRegionAccordion
                         fromLeftSideNav
                         name={region.title}
                         places={placesInSwitch}

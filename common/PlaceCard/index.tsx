@@ -26,6 +26,7 @@ interface IPlaceCardProps {
   fromLeftSideNav?: boolean;
   withRegions?: boolean;
   selectedCountComponent?: ReactNode;
+  fromRegionAccordion?: boolean;
 }
 
 const PlaceCard = ({
@@ -38,6 +39,7 @@ const PlaceCard = ({
   fromLeftSideNav,
   withRegions,
   selectedCountComponent,
+  fromRegionAccordion
 }: IPlaceCardProps) => {
   const dispatch = useAppDispatch();
   const pickedCountries = useAppSelector(selectPickedCountries);

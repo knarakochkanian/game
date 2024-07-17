@@ -16,6 +16,8 @@ interface IPlacesProps {
   name?: string;
   fromSideNav?: boolean;
   fromLeftSideNav?: boolean;
+  fromSearchResult?: boolean;
+  fromRegionAccordion?: boolean;
 }
 
 const Places = ({
@@ -23,6 +25,8 @@ const Places = ({
   name,
   fromSideNav,
   fromLeftSideNav,
+  fromSearchResult,
+  fromRegionAccordion
 }: IPlacesProps) => {
   const letters = Array.from(
     new Set(places?.map((place) => place.name[0].toUpperCase()))
@@ -110,6 +114,7 @@ const Places = ({
                 <>
                   {i === 0 && <div id={firstLetter} />}
                   <CountryWithRegions
+                    fromSearchResult={fromSearchResult}
                     fromLeftSideNav={fromLeftSideNav}
                     fromSideNav={fromSideNav}
                     i={i}

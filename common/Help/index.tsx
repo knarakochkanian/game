@@ -8,7 +8,6 @@ import styles from './Help.module.scss';
 
 const Help = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,7 +18,7 @@ const Help = () => {
   }, []);
 
   const closeModal = () => {
-    setModalVisible(false);
+    setModalOpen(false);
   };
   return (
     <div className={styles.helpWrraperIcon}>
