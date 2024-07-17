@@ -72,10 +72,10 @@ const CountryWithRegions = ({
           color: '#FFF',
           // marginBottom: '10px',
           padding: '1px 0',
-          position: 'relative',
-          right: `${
-            fromLeftSideNav && !fromSearchResult ? '17px !important' : '0'
-          }`,
+          // position: 'relative',
+          // right: `${
+          //   fromLeftSideNav && !fromSearchResult ? '17px !important' : '0'
+          // }`,
         }}
         expanded={isAccordionExpanded}
         onChange={handleAccordionChange}
@@ -97,8 +97,11 @@ const CountryWithRegions = ({
           aria-controls="panel2-content"
           id="panel2-header"
         >
-          <div className={styles.placesAccordionSummary}>
+          <div
+            className={styles.placesAccordionSummary}
+          >
             <PlaceCard
+              withRegionsFormLeft={fromLeftSideNav && !fromSearchResult}
               fromRegionAccordion={fromRegionAccordion}
               withRegions
               fromLeftSideNav={fromLeftSideNav}

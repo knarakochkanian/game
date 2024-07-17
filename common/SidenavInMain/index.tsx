@@ -330,7 +330,7 @@ function SidenavInMain({
                   href={delayedTime && delayedDate ? '/queue' : '/summary'}
                   onClick={onSetCurrentAction}
                   ref={confirmButtonRef}
-                  //style={{ pointerEvents: 'none' }}
+                  style={{ pointerEvents: 'none' }}
                 >
                   <span
                     className="Lead"
