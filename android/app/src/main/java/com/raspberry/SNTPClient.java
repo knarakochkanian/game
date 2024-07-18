@@ -1,4 +1,5 @@
 package com.raspberry;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -6,6 +7,8 @@ import android.os.SystemClock;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -162,15 +165,17 @@ public class SNTPClient {
 
     public static void getDate(
             String _host,
+            String _pingHost,
             TimeZone _timeZone,
             Listener _listener
     ) {
 
         new Thread(() -> {
-
             SNTPClient sntpClient = new SNTPClient(_listener);
-
-            if (sntpClient.requestTime(_host, 5000)) {
+            if(!ping(_pingHost, 80)) {
+                new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(null, null, new Exception("No ping")));
+            }
+            else if (sntpClient.requestTime(_host, 5000)) {
 
                 long nowAsPerDeviceTimeZone = sntpClient.getNtpTime();
 
@@ -185,5 +190,20 @@ public class SNTPClient {
                 }
             }
         }).start();
+    }
+
+    public static boolean ping(String host, int port) {
+        try {
+            String hostAddress = InetAddress.getByName(
+                    host
+            ).getHostAddress();
+
+            Socket socket = new Socket(hostAddress, port);
+            socket.close();
+            return true;
+        }
+        catch (Exception ex) {
+            return false;
+        }
     }
 }

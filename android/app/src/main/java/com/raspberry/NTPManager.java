@@ -10,17 +10,23 @@ import java.util.TimeZone;
 public class NTPManager {
     private final JSBridge jsBridge;
     private final String host;
+    private final String pingHost;
     private final TimeZone timeZone;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    public NTPManager(JSBridge jsBridge, String host) {
-        this(jsBridge, host, DEFAULT_TIME_ZONE);
+    public NTPManager(
+            JSBridge jsBridge,
+            String host,
+            String pingHost
+    ) {
+        this(jsBridge, host, pingHost, DEFAULT_TIME_ZONE);
     }
 
-    public NTPManager(JSBridge jsBridge, String host, TimeZone timeZone) {
+    public NTPManager(JSBridge jsBridge, String host, String pingHost, TimeZone timeZone) {
         this.jsBridge = jsBridge;
         this.host = host;
+        this.pingHost = pingHost;
         this.timeZone = timeZone;
     }
 
@@ -34,7 +40,9 @@ public class NTPManager {
 
     private void syncNTPTime() {
         Log.v(TAG, "syncNTPTime()");
-        SNTPClient.getDate(host,
+        SNTPClient.getDate(
+                host,
+                pingHost,
                 timeZone,
                 this::onNTPResult
         );
