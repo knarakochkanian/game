@@ -72,6 +72,21 @@ function Sidenav({
   //   }
   // };
   function goOnboardingSummary() {
+      const now = new Date();
+      const futureTime = new Date(now.getTime() + 10 * 60000); // Добавляем 10 минут (10 * 60 * 1000 миллисекунд)
+      const timeString = new Intl.DateTimeFormat('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(futureTime);
+      const dateString = new Intl.DateTimeFormat('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }).format(now);
+      dispatch(setAttackTime({
+        date: dateString,
+        time: timeString,
+      }));
     dispatch(setClickOnboardingSummary(true));
   }
   const onSetCurrentAction = () => {
