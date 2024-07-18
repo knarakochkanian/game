@@ -1,9 +1,12 @@
 package com.raspberry;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 
+import java.lang.ref.WeakReference;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -164,6 +167,7 @@ public class SNTPClient {
     }
 
     public static void getDate(
+            Context context,
             String _host,
             String _pingHost,
             TimeZone _timeZone,
@@ -172,19 +176,28 @@ public class SNTPClient {
 
         new Thread(() -> {
             SNTPClient sntpClient = new SNTPClient(_listener);
-            if(!ping(_pingHost, 80)) {
+            if (!ping(_pingHost, 80)) {
                 new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(null, null, new Exception("No ping")));
-            }
-            else if (sntpClient.requestTime(_host, 5000)) {
+            } else if (sntpClient.requestTime(_host, 5000)) {
 
                 long nowAsPerDeviceTimeZone = sntpClient.getNtpTime();
-
                 SIMPLE_DATE_FORMAT.setTimeZone(_timeZone);
                 String rawDate = SIMPLE_DATE_FORMAT.format(nowAsPerDeviceTimeZone);
 
                 try {
                     Date date = SIMPLE_DATE_FORMAT.parse(rawDate);
-                    new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(rawDate, date, null));
+                    new Handler(Looper.getMainLooper()).post(() -> {
+
+                        SharedPreferences prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+                        long lastTime = prefs.getLong("lastTime", -1);
+
+                        if (nowAsPerDeviceTimeZone > lastTime) {
+                            prefs.edit().putLong("lastTime", nowAsPerDeviceTimeZone).apply();
+                            _listener.onTimeResponse(rawDate, date, null);
+                        } else {
+                            _listener.onTimeResponse(null, null, new Exception("Wrong time"));
+                        }
+                    });
                 } catch (ParseException e) {
                     new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(null, null, e));
                 }
@@ -201,8 +214,7 @@ public class SNTPClient {
             Socket socket = new Socket(hostAddress, port);
             socket.close();
             return true;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return false;
         }
     }

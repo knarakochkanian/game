@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import PasswordError from '../../common/PasswordError';
 import MainScreen from '../MainScreen';
-
+import LocalTime from '../../components/LocalTime';
 import styles from './Password.module.scss';
 
 interface PasswordProps {
@@ -39,6 +39,7 @@ export default function Password({ setIsPasswordPassed }: PasswordProps) {
 
   return (
     <>
+    <LocalTime/>
       <section
         className={`${styles.passwordWrraper} ${
           showError ? styles.withError : ''

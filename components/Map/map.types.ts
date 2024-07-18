@@ -9,6 +9,7 @@ export interface EarthParameters {
   isNotInteractive?: boolean
   countryColor?: string
   contourColor?: string
+  setLoaded?: (isLoaded: boolean) => void
 }
 
 export interface UseMapProps {

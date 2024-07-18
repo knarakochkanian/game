@@ -40,6 +40,7 @@ export const metadata: Metadata = {
 import localFont from '@next/font/local';
 import { WebSocketProvider } from '../contexts/WebSocketContext';
 import { NTPProvider } from '../contexts/NTPDateContext';
+import { MapProvider } from '../contexts/MapContext';
 
 const lakes = localFont({
   src: [
@@ -68,7 +69,8 @@ export default function RootLayout({
     <html lang="en" className={`${lakes.variable} font-sans`}>
       <body>
         <NTPProvider>
-        <Suspense fallback={<Loading />}>
+        <MapProvider>
+        <Suspense fallback={<div></div>}>
           <WebSocketProvider>
             <ReduxProvider>
               <TopBottomLines />
@@ -77,6 +79,7 @@ export default function RootLayout({
             </ReduxProvider>
           </WebSocketProvider>
         </Suspense>
+        </MapProvider>
         </NTPProvider>
       </body>
     </html>

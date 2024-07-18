@@ -1,5 +1,6 @@
 package com.raspberry;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class NTPManager {
+    private final Context context;
     private final JSBridge jsBridge;
     private final String host;
     private final String pingHost;
@@ -16,18 +18,26 @@ public class NTPManager {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     public NTPManager(
+            Context context,
             JSBridge jsBridge,
             String host,
             String pingHost
     ) {
-        this(jsBridge, host, pingHost, DEFAULT_TIME_ZONE);
+        this(context, jsBridge, host, pingHost, DEFAULT_TIME_ZONE);
     }
 
-    public NTPManager(JSBridge jsBridge, String host, String pingHost, TimeZone timeZone) {
+    public NTPManager(
+            Context context,
+            JSBridge jsBridge,
+            String host,
+            String pingHost,
+            TimeZone timeZone
+    ) {
         this.jsBridge = jsBridge;
         this.host = host;
         this.pingHost = pingHost;
         this.timeZone = timeZone;
+        this.context = context;
     }
 
     void start() {
@@ -41,6 +51,7 @@ public class NTPManager {
     private void syncNTPTime() {
         Log.v(TAG, "syncNTPTime()");
         SNTPClient.getDate(
+                context,
                 host,
                 pingHost,
                 timeZone,

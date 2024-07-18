@@ -71,6 +71,7 @@ export class Earth implements IEarth {
     onCountryClick,
     countryColor = DEFAULT_COLOR,
     contourColor = DEFAULT_CONTOUR_COLOR,
+    setLoaded
   }: EarthParameters) {
     this.contourColor = contourColor;
     this.countryColor = countryColor;
@@ -122,8 +123,10 @@ export class Earth implements IEarth {
     const noiseMaterial = new MeshBasicMaterial({ map: noiseTexture, transparent: true, side: FrontSide, depthWrite: false, });
 
     const innerGlobeMaterial = new MeshBasicMaterial({ side: FrontSide, color: 'black' });
+    console.log("GlobeDebug", "onInitialized")
+    setLoaded && setLoaded(false);
 
-    const globe = Globe({ animateIn: false })
+    const globe = Globe({ animateIn: false, waitForGlobeReady: true })
       .globeMaterial(innerGlobeMaterial)
       .polygonsData(polygonsData)
       .polygonCapCurvatureResolution(10)
@@ -131,6 +134,12 @@ export class Earth implements IEarth {
       .polygonAltitude(() => 0.015)
       .polygonSideColor(() => 'rgba(0, 0, 0, 0)') // hidden
       .backgroundColor(`${BACKGROUND_COLOR}77`)
+      .onGlobeReady(() => {
+        console.log("GlobeDebug", "onReady")
+        setTimeout(() => {
+          setLoaded && setLoaded(true);
+        }, 1000)
+      })
       .pointerEventsFilter(obj => {
         if ("isInteractive" in obj.userData) {
           return !!obj.userData.isInteractive

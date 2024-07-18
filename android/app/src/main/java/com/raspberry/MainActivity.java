@@ -2,6 +2,7 @@ package com.raspberry;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 
 import androidx.appcompat.app.ActionBar;
 
@@ -22,7 +23,10 @@ public class MainActivity extends BridgeActivity {
         jsBridge = new JSBridge(getBridge());
         jsBridge.clearPassword();
 
+        getBridge().getWebView().setOverScrollMode(View.OVER_SCROLL_NEVER);
+        WebSettings settings = getBridge().getWebView().getSettings();
         ntpManager = new NTPManager(
+                this,
                 jsBridge,
                 "10.99.13.10",
                 "10.99.2.5"

@@ -4,6 +4,7 @@ import { MapType, UseMapProps } from "./map.types";
 import { Earth } from "./sphere-earth/earth";
 import { IEarth } from "./IEarth";
 import { countries } from "../../data/countries";
+import { useMapContext } from "../../contexts/MapContext";
 
 const countriesNamesList = countries.map(country => country.name)
 
@@ -19,6 +20,7 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
   const onRotateEnd = useRef<() => void>()
   const onWindowResize = useRef<() => void>()
 
+  const {setLoaded} = useMapContext()
   useEffect(() => {
     if (ref.current === null) {
       return;
@@ -26,7 +28,7 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
 
     const earth: IEarth = mapType === MapType.plane
       ? new FlatEarth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive }) 
-      : new Earth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive })
+      : new Earth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded })
 
     earth.render(ref.current)
 

@@ -3,25 +3,29 @@
 import { useState, useEffect, useCallback } from 'react';
 import Loading from '../components/Loading';
 import Password from '../components/Password';
-import MainScreen from '../components/MainScreen';
-
-import styles from './page.module.css';
+//import MainScreen from '../components/MainScreen';
+const MainScreen = dynamic(() => import('../components/MainScreen'), {
+  ssr: false,
+})
+import styles from './page.module.scss';
 import { useDispatch } from 'react-redux';
 import {
   setLocalTimeBlur,
   setOnBoardingBlur,
 } from '../redux/features/generalSlice';
+import { useMapContext } from '../contexts/MapContext';
+import dynamic from 'next/dynamic';
 
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const [onboardingPassed, setOnboardingPassed] = useState(false);
-  const [isPasswordPassed, setIsPasswordPassed] = useState(false);
+  const [isPasswordPassed, setIsPasswordPassed] = useState<boolean | null>(null);
   const dispatch = useDispatch();
+  const {isMapLoaded} = useMapContext();
 
   const hideSplash = useCallback(() => {
     const timeoutId = setTimeout(() => {
-      const passwordPassed =
-        window.localStorage.getItem('isPasswordPassed') === 'true';
+      const passwordPassed = window.localStorage.getItem('isPasswordPassed') === 'true';
       setIsPasswordPassed(passwordPassed);
       setLoading(false);
       return () => clearTimeout(timeoutId);
@@ -62,15 +66,16 @@ export default function Home() {
     }
   }, [dispatch, hideSplash]);
 
+  const loading = <div className={styles.fullscreenWrapper} style={{ zIndex: 100}}><Loading/></div>
+  const password = <div className={styles.fullscreenWrapper} style={{zIndex: 101}}><Password setIsPasswordPassed={setIsPasswordPassed} /> </div>
+
   return (
-    <main className={styles.main}>
-      {isLoading ? (
-        <Loading />
-      ) : isPasswordPassed ? (
-        <MainScreen />
-      ) : (
-        <Password setIsPasswordPassed={setIsPasswordPassed} />
-      )}
+    <main className={styles.main} style={{position: 'relative'}}>
+      <>
+      {(!isMapLoaded || isPasswordPassed === null) && loading}
+      {isPasswordPassed === false && password}
+      <MainScreen/>
+      </>
     </main>
   );
 }
