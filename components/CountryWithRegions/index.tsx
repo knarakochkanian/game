@@ -91,7 +91,7 @@ const CountryWithRegions = ({
                 />
               )
             }
-            sx={{ maxWidth: '566px' }}
+            sx={{ maxWidth: '566px', paddingLeft: fromSearchResult ? '20px' : '0', paddingRight: '16px' }}
             aria-controls="panel2-content"
             id="panel2-header"
           >
