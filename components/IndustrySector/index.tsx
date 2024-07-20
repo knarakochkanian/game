@@ -3,6 +3,8 @@ import AccordionWrapper from '../../common/AccordionWrapper';
 import SectorOptions from '../SectorOptions';
 import { INDUSTRY } from '../../constants';
 
+import styles from './IndustrySector.module.scss';
+
 interface IIndustrySectorProps {
   sector: ISector;
   expanded: number;
@@ -26,20 +28,22 @@ const IndustrySector = ({
   }, [JSON.stringify(sector.options)]);
 
   return (
-    <AccordionWrapper
-      from={INDUSTRY}
-      selectedOtionsCount={selectedOtions.length}
-      titleHighlighted={titleHighlighted}
-      styles={{
-        accordionDetailsHeight: 'unset',
-        accordionDetailsMaxHeight: '532px',
-      }}
-      expanded={expanded}
-      handleExpansion={handleExpansion}
-      data={sector}
-    >
-      <SectorOptions fromLeftSideNav sectorOptions={sector.options} />
-    </AccordionWrapper>
+    <div className={styles.sectorCtn}>
+      <AccordionWrapper
+        from={INDUSTRY}
+        selectedOtionsCount={selectedOtions.length}
+        titleHighlighted={titleHighlighted}
+        styles={{
+          accordionDetailsHeight: 'unset',
+          accordionDetailsMaxHeight: '532px',
+        }}
+        expanded={expanded}
+        handleExpansion={handleExpansion}
+        data={sector}
+      >
+        <SectorOptions fromLeftSideNav sectorOptions={sector.options} />
+      </AccordionWrapper>
+    </div>
   );
 };
 

@@ -28,7 +28,9 @@ const SectorOptions = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${fromSideNav ? styles.fromSideNav : ''}`}
+    >
       {sectorOptions.map((option, i) => (
         <div
           key={i}
@@ -45,7 +47,11 @@ const SectorOptions = ({
               option.selected && fromLeftSideNav ? styles.selected : ''
             } ${!option.selected && !fromLeftSideNav ? styles.displayNone : ''}
             ${!isAttacking ? styles.isProtecting : ''}
-           ${(option.src && option.selected) || fromLeftSideNav ? styles.hasImage : ''}
+           ${
+             (option.src && option.selected) || fromLeftSideNav
+               ? styles.hasImage
+               : ''
+           }
            `}
           >
             {option.src && (

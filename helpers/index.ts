@@ -51,8 +51,11 @@ export function countSelectedOptions(
   selected: string
 ): number {
   return sectors.reduce((count, sector) => {
+    const incrementNum = sector.options.some((option) => option.selected)
+      ? 1
+      : 0;
     // @ts-ignore
-    return count + sector.options.filter((option) => option[selected]).length;
+    return count + incrementNum;
   }, 0);
 }
 
@@ -74,35 +77,31 @@ export const findFirstSectorWithSelectedOption = (sectors: ISector[]) => {
   };
 };
 
-export function searchSectors(
-  q: string, sectors: ISector[]
-): ISector[] {
+export function searchSectors(q: string, sectors: ISector[]): ISector[] {
   if (q == null || q.length == 0) {
-    return []
+    return [];
   }
-  const query = q.toLocaleLowerCase()
-  const result = Array<ISector>()
+  const query = q.toLocaleLowerCase();
+  const result = Array<ISector>();
 
   sectors.forEach((s) => {
     if (s.title.toLocaleLowerCase().includes(query)) {
-      result.push(s)
-    }
-    else {
+      result.push(s);
+    } else {
       const options = s.options.filter((option) => {
-        return option.name.toLocaleLowerCase().includes(query)
-      })
+        return option.name.toLocaleLowerCase().includes(query);
+      });
 
       if (options.length > 0) {
         result.push({
-          ...s, options: options
-        }
-        )
+          ...s,
+          options: options,
+        });
       }
     }
-
-  })
-  console.log("searchSectors.result", result)
-  return result
+  });
+  console.log('searchSectors.result', result);
+  return result;
 }
 
 export const addToPickedCountryObjects = (
@@ -211,8 +210,10 @@ export const getNextActionName = (name: string) => {
   return `#${newLeft}-${newRight}`;
 };
 
-export const getItemFromStorage = (item: string, window: Window & typeof globalThis) => {
-  
+export const getItemFromStorage = (
+  item: string,
+  window: Window & typeof globalThis
+) => {
   if (
     typeof window !== 'undefined' &&
     typeof window.localStorage.getItem(item) === 'string'
@@ -222,7 +223,7 @@ export const getItemFromStorage = (item: string, window: Window & typeof globalT
 };
 
 export const formatDate = (date: Date | null) => {
-  if(date === null) return ''
+  if (date === null) return '';
   // Pad function to ensure two digits for day, month, hours, and minutes
   const pad = (num: number) => String(num).padStart(2, '0');
 

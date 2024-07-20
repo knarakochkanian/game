@@ -17,6 +17,7 @@ import {
   selectSectors,
 } from '../../redux/features/generalSlice';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
+import { setEventModalId } from '../../redux/features/helpersSlice';
 
 import styles from './SelectFromTwo.module.scss';
 
@@ -48,6 +49,7 @@ const SelectFromTwo = ({
     if (name === ATTACK_OR_PROTECT) {
       if (!isAttacking) {
         dispatch(resetGeneralState());
+        dispatch(setEventModalId(-1));
         dispatch(setIsAttacking(true));
       }
     } else {
@@ -60,6 +62,7 @@ const SelectFromTwo = ({
     if (name === ATTACK_OR_PROTECT) {
       if (isAttacking) {
         dispatch(resetGeneralState());
+        dispatch(setEventModalId(-1));
         dispatch(setIsAttacking(false));
       }
     } else {

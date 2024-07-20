@@ -77,6 +77,7 @@ interface ISector {
   id: number;
   title: string;
   options: ISectorOption[];
+  event?: string | null | undefined;
 }
 
 interface IIndustry {

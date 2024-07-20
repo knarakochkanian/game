@@ -16,6 +16,7 @@ export interface RegionCategory {
   title?: string;
   options?: (Option | IPlace)[];
   optionsForProtection?: (Option | IPlace)[];
+  event?: string | null;
 }
 
 export interface Region {

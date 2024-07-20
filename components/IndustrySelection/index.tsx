@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { RESET, SELECT_ALL } from '../../constants';
 import { searchSectors } from '../../helpers';
 import {
@@ -11,6 +12,7 @@ import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
 
 import styles from './IndustrySelection.module.scss';
+import { selectEventModalId } from '../../redux/features/helpersSlice';
 
 interface IIndustrySelectionProps extends ISearchInputProps {
   showKeyboard: boolean;
@@ -35,6 +37,7 @@ const IndustrySelection = ({
   const showReset = industrySectors.some((i) =>
     i.options.some((option) => option.selected)
   );
+  const eventModalIsOpen = useAppSelector(selectEventModalId) !== -1;
 
   const onResetOrSelectAll = () => {
     if (showReset) {
@@ -70,8 +73,8 @@ const IndustrySelection = ({
 
       <div
         className={`${styles.sectorsCtn} ${
-          showKeyboard || searchInput ? styles.hideSelectionPanel : ''
-        }`}
+          eventModalIsOpen ? styles.eventModalOpen : ''
+        } ${showKeyboard || searchInput ? styles.hideSelectionPanel : ''}`}
       >
         <header className={styles.industryHeader}>
           <h2>отрасли</h2>

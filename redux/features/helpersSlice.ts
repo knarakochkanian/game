@@ -6,6 +6,7 @@ export interface IInitialState {
   keyboardInput: string;
   closeSelectionIfChanged: boolean;
   newsActionId: string;
+  eventModalId: number;
 }
 
 const initialState: IInitialState = {
@@ -14,6 +15,7 @@ const initialState: IInitialState = {
   allSectorsSelected: false,
   keyboardInput: '',
   newsActionId: '',
+  eventModalId: -1,
 };
 
 const helpersSlice = createSlice({
@@ -32,6 +34,13 @@ const helpersSlice = createSlice({
     setNewsActionId(state, { payload }: { payload: string }) {
       state.newsActionId = payload;
     },
+    setEventModalId(state, { payload }: { payload: number }) {
+      if (payload === state.eventModalId) {
+        state.eventModalId = -1;
+      } else {
+        state.eventModalId = payload;
+      }
+    },
     setAllSectorsSelected(state) {
       state.allSectorsSelected = !state.allSectorsSelected;
     },
@@ -39,11 +48,12 @@ const helpersSlice = createSlice({
 });
 
 export const {
+  setEventModalId,
   setCloseSelectionIfChanged,
   setResetMapIfChanged,
   setAllSectorsSelected,
   setKeyboardInput,
-  setNewsActionId
+  setNewsActionId,
 } = helpersSlice.actions;
 
 export const selectResetMapIfChanged = (state: RootState) =>
@@ -56,5 +66,7 @@ export const selectCloseSelectionIfChanged = (state: RootState) =>
   state.helpersReducer.closeSelectionIfChanged;
 export const selectNewsActionId = (state: RootState) =>
   state.helpersReducer.newsActionId;
+export const selectEventModalId = (state: RootState) =>
+  state.helpersReducer.eventModalId;
 
 export default helpersSlice.reducer;

@@ -120,6 +120,18 @@ const generalSlice = createSlice({
 
       targetOption.selected = !targetOption.selected;
     },
+    setIndustryEvent(
+      state,
+      {
+        payload: { eventName, industryName },
+      }: { payload: { eventName: string | null; industryName: string } }
+    ) {
+      const targetSector = state.sectors.find(
+        (sector) => sector.title === industryName
+      );
+
+      (targetSector as ISector).event = eventName;
+    },
     resetGeneralState(state) {
       const initialStateCopy = { ...initialState };
       initialStateCopy.isAttacking = state.isAttacking;
@@ -320,6 +332,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setIndustryEvent,
   setCurrentActionNews,
   proccessActiveBlocks,
   setSideNavIsOpen,

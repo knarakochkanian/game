@@ -6,7 +6,10 @@ import { countSelectedOptions } from '../../helpers';
 import React, { useState } from 'react';
 import useDefaultExpandedSector from '../../hooks/useDefaultExpandedSector';
 import { arrowDown, arrowDownGray } from '../../public/summary';
-import { pagesWhereAccordionIsLikeInSummary, pagesWhereDropdownDisabled } from '../../constants';
+import {
+  pagesWhereAccordionIsLikeInSummary,
+  pagesWhereDropdownDisabled,
+} from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import {
   card,
@@ -41,6 +44,13 @@ const IndustryAccordion = ({
   const isAttacking = useAppSelector(selectIsAttacking);
 
   const [expanded, setExpanded] = useState(industrySectors[0].id);
+  const defaultStylesInSideNav = {
+    ...defaultStyles,
+    overflowY: 'auto',
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+    maxHeight: '480px',
+  };
 
   // @ts-ignore
   const handleExpansion = (panel) => (event, isExpanded) => {
@@ -108,6 +118,8 @@ const IndustryAccordion = ({
             currentPage || 'undefined'
           )
             ? detailsStylesInSummery
+            : fromSideNav
+            ? defaultStylesInSideNav
             : defaultStyles
         }
       >
@@ -125,10 +137,12 @@ const IndustryAccordion = ({
                 accordionDetailsMaxHeight: '532px',
                 accordionBackground: card,
               }}
+              from="industryAccordion"
               expanded={expanded}
               handleExpansion={handleExpansion}
               data={sector}
               key={index}
+              fromSideNav={fromSideNav}
             >
               <SectorOptions
                 fromSideNav={fromSideNav}

@@ -11,6 +11,8 @@
   padding-top: 60px;
   height: 100%;
   top: 20px;
+  &AccordionsWrap {
+  }
   &Title {
     @include flex-between;
     padding: 0 16px;
