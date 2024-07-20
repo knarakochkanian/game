@@ -29,13 +29,3 @@
 .css-14knw26-MuiPaper-root-MuiAccordion-root {
   box-shadow: none !important;
 }
-
-.css-1o055bu-MuiPaper-root-MuiAccordion-root.Mui-expanded {
-  overflow-y: auto !important;
-  -ms-overflow-style: none !important; /* Internet Explorer 10+ */
-  scrollbar-width: none !important; /* Firefox */
-}
-
-.css-1o055bu-MuiPaper-root-MuiAccordion-root.Mui-expanded::-webkit-scrollbar {
-  display: none !important; /* Safari and Chrome */
-}

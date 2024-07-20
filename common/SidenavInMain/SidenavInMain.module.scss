@@ -12,12 +12,17 @@
   height: 100%;
   top: 20px;
   &AccordionsWrap {
+    @include hideScrollBar;
+    align-items: center !important;
+  }
+  &AccordionsWrap::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
   &Title {
     @include flex-between;
     padding: 0 16px;
   }
-  &ArrowSVG{
+  &ArrowSVG {
     position: absolute;
     right: 20px;
   }
@@ -84,18 +89,18 @@
       top: 10px;
     }
   }
-  &TimePiker{
+  &TimePiker {
     position: absolute;
     left: -200px;
     bottom: 300px;
     background-color: $black-60;
   }
-  &DelayedDate{
+  &DelayedDate {
     position: absolute !important;
     border: none !important;
   }
 }
-.sidenavDelayedDate{
+.sidenavDelayedDate {
   background-color: black;
   color: white;
   font-size: 19px;

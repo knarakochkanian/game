@@ -23,6 +23,7 @@ import {
 } from '../../redux/features/generalSlice';
 
 import styles from './IndustryAccordion.module.scss';
+import IndustryCard from '../../common/IndustryCard';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;
@@ -50,6 +51,10 @@ const IndustryAccordion = ({
     scrollbarWidth: 'none',
     msOverflowStyle: 'none',
     maxHeight: '480px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+    padding: '0', 
   };
 
   // @ts-ignore
@@ -129,6 +134,10 @@ const IndustryAccordion = ({
           ).length;
 
           if (selectedOptionsLength === 0) return;
+
+          if (sector.options.every((s) => s.selected) && fromSideNav) {
+            return <IndustryCard title={sector.title} key={index} />;
+          }
 
           return (
             <AccordionWrapper

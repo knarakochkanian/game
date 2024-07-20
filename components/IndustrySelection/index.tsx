@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { RESET, SELECT_ALL } from '../../constants';
 import { searchSectors } from '../../helpers';
 import {
@@ -10,9 +9,9 @@ import IndustrySector from '../IndustrySector';
 import SearchInput, { ISearchInputProps } from '../SearchInput';
 import SearchResult from '../SearchResult';
 import SectorOptions from '../SectorOptions';
+import { selectEventModalId } from '../../redux/features/helpersSlice';
 
 import styles from './IndustrySelection.module.scss';
-import { selectEventModalId } from '../../redux/features/helpersSlice';
 
 interface IIndustrySelectionProps extends ISearchInputProps {
   showKeyboard: boolean;

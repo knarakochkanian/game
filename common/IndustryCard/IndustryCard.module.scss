@@ -1,0 +1,11 @@
+@import '/app/variables.module.scss';
+
+.industryCard {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 11.297px;
+  h3 {
+    @include text-color-letter-spacing-etc($white, unset);
+    @include set-font-size-weight(19px, 500);
+  }
+}
