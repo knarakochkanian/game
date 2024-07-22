@@ -37,7 +37,7 @@ const Index: React.FC = () => {
       const now = getDate();
 
       if(now === null) {
-        setDateTime("...");
+        setDateTime("");
         return
       }
 
