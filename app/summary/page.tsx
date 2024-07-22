@@ -120,10 +120,6 @@ const Summary = () => {
     router.back();
   };
 
-  const onForward = () => {
-    console.log('onForward');
-  };
-
   return (
     <main className={styles.main}>
       <div className={styles.imgCtn}>
@@ -141,7 +137,7 @@ const Summary = () => {
           action={currentAction as IAction}
         />
       </div>
-      <BackAndForwardBtns onBack={onBack} onForward={onForward} />
+      <BackAndForwardBtns onBack={onBack} />
       <Grid />
       <SideLines />
 

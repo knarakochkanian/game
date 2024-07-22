@@ -9,7 +9,6 @@ import Grid from '../../common/Grid';
 import { attack } from '../../public/count-down';
 import SideLines from '../../common/SideLines';
 import SummaryFooter from '../../components/SummaryFooter';
-import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
@@ -227,7 +226,6 @@ const SummaryOnBoarding = () => {
           />
         </button>
       </div>
-      {/* <BackAndForwardBtns onBack={onBack} onForward={onForward} /> */}
       <Grid />
       <SideLines />
 

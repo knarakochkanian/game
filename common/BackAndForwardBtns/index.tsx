@@ -3,7 +3,7 @@ import ForwardButton from '../ForwardButton';
 
 interface IBackAndForwardBtnsProps {
   onBack: () => void;
-  onForward: () => void;
+  onForward?: () => void;
 }
 
 const BackAndForwardBtns = ({
@@ -13,7 +13,7 @@ const BackAndForwardBtns = ({
   return (
     <>
       <BackButton onBack={onBack} />
-      <ForwardButton onForward={onForward} />
+      {onForward && <ForwardButton onForward={onForward} />}
     </>
   );
 };
