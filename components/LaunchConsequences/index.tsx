@@ -68,9 +68,9 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   const [onboardingPassed, setOnboardingPassed] = useState(false);
   const [isCountDownComponent, setIsCountDownComponent] = useState(false);
   const { citiesUnderAttack, wholeDamage, populationSuffering } =
-    action?.launchConsequences;
+    action?.launchConsequences || {};
 
-  const consequencesData = getConsequencesData(action.industrySectors);
+  const consequencesData = getConsequencesData(action?.industrySectors || []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -79,8 +79,6 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       setOnboardingPassed(isOnboardingPassed);
     }
   }, []);
-
-  if (!action) return null;
 
   const completeOnboarding = () => {
     if (typeof window !== 'undefined') {
@@ -103,7 +101,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       return <p>No consequences data available</p>;
     }
 
-    const selectedSectorNames = action.industrySectors
+    const selectedSectorNames = (action?.industrySectors || [])
       .filter((s) => s.options.some((o) => o.selected))
       .map((s) => getIndustryNameInEnglish(s.title));
 
@@ -150,14 +148,14 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       >
         <div
           className={`${styles.info} ${
-            action.actionType === PROTECTION ? styles.protectMode : ''
+            action?.actionType === PROTECTION ? styles.protectMode : ''
           }`}
         >
           <h3 className={styles.title}>Последствия запуска</h3>
           <Paragraph
             isOpen={fromOnboarding ? false : paragraphIsOpen}
             setIsOpen={setParagraphIsOpen}
-            content={renderConsequences(consequencesData, action.damageLevel)}
+            content={renderConsequences(consequencesData, action?.damageLevel)}
           />
           <div className={styles.dataContainer}>
             <ModalData
@@ -175,7 +173,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
               name={wholeDamageName}
               value={`${
                 // @ts-ignore
-                formatNumberWithSpaces(wholeDamage)
+                wholeDamage && formatNumberWithSpaces(wholeDamage)
               } млрд $`}
             />
           </div>
@@ -227,7 +225,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
                   height: '542px !important',
                 }}
               >
-                <StaticMap pickedCountries={action.pickedCountries} />
+                <StaticMap pickedCountries={action?.pickedCountries || []} />
               </div>
             )}
           </div>
