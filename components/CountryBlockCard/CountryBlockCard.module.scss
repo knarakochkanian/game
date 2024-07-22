@@ -23,6 +23,29 @@
   }
 }
 
+.SecondarySmall.selected.isProtecting {
+  .helper_1,
+  .helper_2 {
+    background: $protect-blue;
+  }
+  &::after {
+    background: $protect-blue;
+  }
+  &::before {
+    background: $protect-blue;
+  }
+  > span {
+    &::before {
+      background: $protect-blue;
+    }
+  }
+  > span {
+    &::after {
+      background: $protect-blue;
+    }
+  }
+}
+
 .container {
   flex-wrap: wrap;
   gap: 10px;
@@ -53,5 +76,6 @@
       color: $protect-blue;
     }
     background-color: $protect-dark-blue-select;
+    border-color: $protect-blue;
   }
 }

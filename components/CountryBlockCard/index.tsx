@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import closeUsa from '../../public/onboarding/onboarding-usa-close.svg';
 
 import styles from './CountryBlockCard.module.scss';
+import { closeXProtect } from '../../public/ui_kit';
 
 const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   const dispatch = useAppDispatch();
@@ -41,9 +42,11 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   return (
     <div className={styles.container}>
       <button
-        className={`AccordionNested ${styles.SecondarySmall}  ${styles.secondarySmallDisable} ${
-          isSelected ? styles.selected : ''
-        } ${!isAttacking ? styles.isProtecting : ''}`}
+        className={`AccordionNested ${styles.SecondarySmall}  ${
+          styles.secondarySmallDisable
+        } ${isSelected ? styles.selected : ''} ${
+          !isAttacking ? styles.isProtecting : ''
+        }`}
         onClick={onClick}
         style={{ opacity: 'unset' }}
       >
@@ -59,7 +62,7 @@ const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
 
           {isSelected && (
             <Image
-              src={closeUsa}
+              src={isAttacking ? closeUsa : closeXProtect}
               alt={'close cross'}
               width={11.3}
               height={11.3}

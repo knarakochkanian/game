@@ -1,4 +1,14 @@
 import { ConsequenceLevels } from '../components/LaunchConsequences';
+import {
+  closeEventIcon,
+  closeEventIconProtect,
+  closeIconActiveAttack,
+  closeIconActiveProtect,
+  plusIconActiveAttack,
+  plusIconActiveProtect,
+  plusIconNotActive,
+  plusIconNotActiveProtect,
+} from '../public/ui_kit';
 import getIndustryNameInEnglish from './getIndustryNameInEnglish';
 import { joinStrings } from './helpers_1';
 
@@ -53,7 +63,7 @@ export const proccessParagraphByDamageLevel = (
   damageLevel: string,
   consequence: ConsequenceLevels
 ) => {
-    if(!consequence) return '';
+  if (!consequence) return '';
 
   switch (damageLevel) {
     case 'Критический':
@@ -71,16 +81,50 @@ export const proccessParagraphByDamageLevel = (
 };
 
 export const copyFirstFourElements = (arr: INews[]) => {
-  // Create a new array to hold the result
   let result = [];
 
-  // Loop through the first four elements of the input array
   for (let i = 0; i < 4; i++) {
-    // If the element is defined, add it to the result array
     if (arr[i] !== undefined) {
       result.push(arr[i]);
     }
   }
 
   return result;
-}
+};
+
+export const getModalCloseValue = (
+  statusDataType: string | number | boolean | undefined
+) => {
+  switch (typeof statusDataType) {
+    case 'string':
+      return '';
+
+    case 'number':
+      return -1;
+
+    case 'boolean':
+      return false;
+  }
+};
+
+export const proccessPlusOrCloseIconSrc = (
+  eventModalIsOpen: boolean,
+  isAttacking: boolean,
+  eventIsSelected: boolean
+) => {
+  return eventModalIsOpen
+    ? isAttacking
+      ? eventIsSelected
+        ? closeIconActiveAttack
+        : closeEventIcon
+      : eventIsSelected
+      ? closeIconActiveProtect
+      : closeEventIconProtect
+    : isAttacking
+    ? eventIsSelected
+      ? plusIconActiveAttack
+      : plusIconNotActive
+    : eventIsSelected
+    ? plusIconActiveProtect
+    : plusIconNotActiveProtect;
+};

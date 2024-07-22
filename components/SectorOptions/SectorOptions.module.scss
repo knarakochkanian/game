@@ -1,12 +1,26 @@
 @import '/app/variables.module.scss';
 
+.container.fromSideNav {
+  overflow-y: visible;
+  max-height: unset;
+  gap: 15px;
+  .option {
+    @include text-color-letter-spacing-etc($white, unset);
+    @include set-font-size-weight(19px, 500);
+    padding: 0px 11.297px 0px 33.891px;
+    color: $white;
+    opacity: unset;
+    text-transform: unset;
+  }
+}
+
 .container {
   width: 100%;
   max-height: 214px;
   @include flex-column(2px);
   @include hideScrollBar;
   .option {
-    width: 90%;
+    width: 330px;
     opacity: 0.6;
     display: block;
     padding: 12px 18px 12px 42px;
@@ -17,9 +31,8 @@
     letter-spacing: 0.34px;
     text-transform: uppercase;
     text-align: start;
-    &ContainerSideNav{
+    &ContainerSideNav {
       @include flex-between;
-
     }
   }
   .option.selected {
@@ -33,15 +46,14 @@
   .option.displayNone {
     display: none;
   }
-
 }
-.hasImage{
+.hasImage {
   opacity: 1 !important;
   display: flex !important;
   align-items: center;
   gap: 10px;
   padding: 10px;
-  >img{
+  > img {
     margin-right: 20px;
   }
 }

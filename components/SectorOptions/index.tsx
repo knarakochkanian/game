@@ -26,10 +26,15 @@ const SectorOptions = ({
   const onClick = (name: string, parent: string) => {
     dispatch(setSelectedIndusties({ name, parent }));
   };
+  const sectorsToRender = fromLeftSideNav
+    ? sectorOptions
+    : sectorOptions.filter((o) => o.selected);
 
   return (
-    <div className={styles.container}>
-      {sectorOptions.map((option, i) => (
+    <div
+      className={`${styles.container} ${fromSideNav ? styles.fromSideNav : ''}`}
+    >
+      {sectorsToRender.map((option, i) => (
         <div
           key={i}
           className={
@@ -43,9 +48,13 @@ const SectorOptions = ({
             onClick={() => onClick(option.name, option.parent)}
             className={`${styles.option} ${
               option.selected && fromLeftSideNav ? styles.selected : ''
-            } ${!option.selected && !fromLeftSideNav ? styles.displayNone : ''}
+            } 
             ${!isAttacking ? styles.isProtecting : ''}
-           ${(option.src && option.selected) || fromLeftSideNav ? styles.hasImage : ''}
+           ${
+             (option.src && option.selected) || fromLeftSideNav
+               ? styles.hasImage
+               : ''
+           }
            `}
           >
             {option.src && (

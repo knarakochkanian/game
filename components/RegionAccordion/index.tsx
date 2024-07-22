@@ -27,12 +27,14 @@ interface IRegionAccordionProps {
   delayed?: boolean | undefined;
   selectedCountries: IPlace[];
   setWithOutFlag?: boolean;
+  fromSideNav?: boolean;
 }
 
 const RegionAccordion = ({
   delayed,
   selectedCountries,
   setWithOutFlag,
+  fromSideNav,
 }: IRegionAccordionProps) => {
   const currentPage = useGetPage();
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -49,11 +51,14 @@ const RegionAccordion = ({
 
   return (
     <Accordion
+      disableGutters
       style={{ color: delayed ? '#0F0F0F' : 'none' }}
       defaultExpanded={false}
       disabled={disable}
       sx={(theme) => ({
-        backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
+        backgroundColor: `${
+          fromSideNav ? 'transparent' : 'rgba(0, 0, 0, 0.87)'
+        } !important`,
         color: '#FFF',
         marginBottom: '10px',
         maxWidth: '314.33px',
@@ -108,7 +113,11 @@ const RegionAccordion = ({
         {setWithOutFlag ? (
           <PlacesInSidenavMain places={selectedCountries} />
         ) : (
-          <Places fromRegionAccordion  name={'страны'} places={selectedCountries} />
+          <Places
+            fromRegionAccordion
+            name={'страны'}
+            places={selectedCountries}
+          />
         )}
       </AccordionDetails>
     </Accordion>

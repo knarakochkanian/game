@@ -36,7 +36,7 @@ $protect-map-default: #585966;
 $unvisible: rgba(0, 0, 0, 0);
 
 // total height - keyboard height - fixed top height
-$search-results-height-on-keyboard-opened: 300px;//calc(100vh - 378px - 138px);//250px; // 452px
+$search-results-height-on-keyboard-opened: 300px; //calc(100vh - 378px - 138px);//250px; // 452px
 // mixins
 @mixin set-font-size-weight($fontSize, $fontWeight) {
   font-size: $fontSize;
@@ -45,6 +45,13 @@ $search-results-height-on-keyboard-opened: 300px;//calc(100vh - 378px - 138px);/
 @mixin set-width-height($width, $height) {
   width: $width;
   height: $height;
+}
+@mixin text-color-letter-spacing-etc ($color, $letterSpacing) {
+  color: $color;
+  font-variant-numeric: slashed-zero;
+  font-family: 'TT Lakes';
+  line-height: 120%;
+  letter-spacing: $letterSpacing;
 }
 @mixin flex-column($gap) {
   display: flex;
@@ -261,7 +268,7 @@ $search-results-height-on-keyboard-opened: 300px;//calc(100vh - 378px - 138px);/
 
 @mixin afterLine {
   position: absolute;
-  content: "";
+  content: '';
   left: 16px;
   top: 0;
   width: 23px;

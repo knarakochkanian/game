@@ -1,0 +1,57 @@
+@import '/app/variables.module.scss';
+
+.eventModal {
+  position: absolute;
+  left: 406px;
+  top: 0;
+  width: 307px;
+  padding: 11.297px 11.297px 15.063px 11.297px;
+  @include flex-column(26px);
+  background-color: $card;
+  z-index: 1;
+  border: none;
+  .header {
+    .attackSpan,
+    .protectSpan {
+      position: absolute;
+      top: 23px;
+      left: -10px;
+      width: 10px;
+      height: 1px;
+    }
+    .attackSpan {
+      background-color: $attack-green;
+    }
+    .protectSpan {
+      background-color: $protect-blue;
+    }
+    h2 {
+      @include text-color-letter-spacing-etc($white, 0.48px);
+      text-transform: uppercase;
+      @include set-font-size-weight(16px, 600);
+    }
+    p {
+      margin-top: 11px;
+      @include text-color-letter-spacing-etc($mid-gray, 0.169px);
+      @include set-font-size-weight(17px, 500);
+    }
+  }
+  .eventOptions {
+    @include flex-column(23px);
+    padding: 0px 3.766px;
+    .eventOption {
+      @include text-color-letter-spacing-etc($white, 0.16px);
+      text-transform: uppercase;
+      @include set-font-size-weight(16px, 500);
+      text-align: start;
+    }
+    .eventOption.selected {
+      color: $attack-green;
+      background-color: $attack-dark-green-select;
+    }
+    .eventOption.selected.isProtecting {
+      color: $protect-blue;
+      background-color: $protect-dark-blue-select;
+    }
+  }
+}

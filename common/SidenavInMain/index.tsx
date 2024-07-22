@@ -114,12 +114,14 @@ function SidenavInMain({
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
       : null;
-      
+
   const isStateReady = useMemo(() => {
-    return numberOfSelectedSectors !== null &&
-    damageLevel &&
-    selectedCountries.length !== 0
-  }, [numberOfSelectedSectors, damageLevel, selectedCountries])
+    return (
+      numberOfSelectedSectors !== null &&
+      damageLevel &&
+      selectedCountries.length !== 0
+    );
+  }, [numberOfSelectedSectors, damageLevel, selectedCountries]);
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -239,16 +241,15 @@ function SidenavInMain({
   }, [lastDeviceEvent])
 
   useEffect(() => {
-
-    if(isStateReady && !pingFailed) {
-      setReadyIsSend(true)
-      send('ready')
-    } else if(!isStateReady && !pingFailed && readyIsSend) {
-      setReadyIsSend(false)
-      send('cancel')
-      send('ping')
+    if (isStateReady && !pingFailed) {
+      setReadyIsSend(true);
+      send('ready');
+    } else if (!isStateReady && !pingFailed && readyIsSend) {
+      setReadyIsSend(false);
+      send('cancel');
+      send('ping');
     }
-  }, [pingFailed, send, isStateReady, readyIsSend, setReadyIsSend])
+  }, [pingFailed, send, isStateReady, readyIsSend, setReadyIsSend]);
 
   useEffect(() => {
     setModalVisibleSystem(pingFailed);
@@ -301,6 +302,7 @@ function SidenavInMain({
 
           <div className={`AccordionsWrap ${styles.sidenavAccordionsWrap}`}>
             <RegionAccordion
+              fromSideNav
               selectedCountries={selectedCountries}
               setWithOutFlag={true}
             />
@@ -312,8 +314,8 @@ function SidenavInMain({
           </div>
           {numberOfSelectedSectors !== null &&
             damageLevel &&
-            selectedCountries.length !== 0 &&
-            !pingFailed && (
+            selectedCountries.length !== 0 && (
+              !pingFailed &&
               <div className={styles.sidenavAddConfirm}>
                 <Image
                   src={

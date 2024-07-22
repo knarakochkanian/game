@@ -1,0 +1,20 @@
+@import '/app/variables.module.scss';
+
+.industryCard {
+  .titleAndMinusIcon {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 11.297px;
+    padding-right: 8px;
+    h3 {
+      @include text-color-letter-spacing-etc($white, unset);
+      @include set-font-size-weight(19px, 500);
+      margin-right: 5px;
+    }
+  }
+  p.eventName {
+    @include text-color-letter-spacing-etc($mid-gray, unset);
+    @include set-font-size-weight(19px, 500);
+    padding-left: 11.297px;
+  }
+}

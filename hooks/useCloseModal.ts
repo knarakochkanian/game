@@ -1,11 +1,21 @@
 import { useEffect } from 'react';
+import { useAppDispatch } from '../redux/hooks';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { getModalCloseValue } from '../helpers/helpers_2';
 
 const useCloseModal = (
   modalIsOpen: boolean,
-  setModalIsOpen: TSetBoolean,
+  setModalIsOpen?: TSetBoolean,
   tag: string = 'aside',
-  ignoringElement?: string
+  ignoringElement?: string,
+  statusDataType?: string | number | boolean,
+  dispatchModalIsOpen?: (
+    payload: number
+  ) => PayloadAction<string | number | boolean | undefined, string>
 ) => {
+  const dispatch = useAppDispatch();
+  let modalCloseValue = getModalCloseValue(statusDataType);
+
   const handleDocumentClick = (event: MouseEvent) => {
     if (modalIsOpen && !(event.target as Element).closest(tag)) {
       if (
@@ -17,7 +27,11 @@ const useCloseModal = (
         return;
       }
 
-      setModalIsOpen(false);
+      if (setModalIsOpen) {
+        setModalIsOpen(false);
+      } else if (dispatchModalIsOpen && statusDataType === 'number') {
+        dispatch(dispatchModalIsOpen(-1));
+      }
     }
   };
 
