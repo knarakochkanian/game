@@ -24,14 +24,14 @@ import { ACTIONS_IN_QUEUE, COUNT_DOWN, top_capitalization } from '../../constant
 import { formatDate, getItemFromStorage } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
 import {
-  WebSocketContext,
-  WebSocketContextProps,
+  useDeviceConnection,
 } from '../../contexts/WebSocketContext';
 import proccessNewsData from '../../helpers/proccessNewsData';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { useNTP } from '../../contexts/NTPDateContext';
 
 import styles from './summary.module.scss';
+import ConnectionLostModal from '../../common/ConnectionLostModal';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,
@@ -47,9 +47,7 @@ const Summary = () => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
-  const webSocketContext = useContext(
-    WebSocketContext
-  ) as WebSocketContextProps;
+  const {pingFailed, send} = useDeviceConnection();
 
   const { getDate } = useNTP()
 
@@ -111,10 +109,10 @@ const Summary = () => {
     }, 10);
 
     if (
-      !webSocketContext.pingFailed
+      !pingFailed
     ) {
-      webSocketContext.send('cancel');
-      webSocketContext.send('ping');
+      send('cancel');
+      send('ping');
     }
 
     router.back();
@@ -140,14 +138,12 @@ const Summary = () => {
       <BackAndForwardBtns onBack={onBack} />
       <Grid />
       <SideLines />
-
       <SummaryFooter onClick={onStartAction} />
       {fromOnboarding && (
         <div
           className={`${styles.blur} ${learningStart ? styles.z_15 : ''}`}
         ></div>
       )}
-
       <Modal name="learningStart" isOpen={learningStart} counter={11}>
         <p>
           Для запуска задачи нужно нажать физическую кнопку “Пуск”,
@@ -168,6 +164,7 @@ const Summary = () => {
           </Link>
         </div>
       </Modal>
+      <ConnectionLostModal/>
     </main>
   );
 };
