@@ -104,16 +104,16 @@ const Summary = () => {
   };
 
   const onBack = () => {
-    setTimeout(() => {
-      dispatch(resetGeneralState());
-    }, 10);
+    // setTimeout(() => {
+    //   dispatch(resetGeneralState());
+    // }, 10);
 
-    if (
-      !pingFailed
-    ) {
-      send('cancel');
-      send('ping');
-    }
+    // if (
+    //   !pingFailed
+    // ) {
+    //   send('cancel');
+    //   send('ping');
+    // }
 
     router.back();
   };
