@@ -24,7 +24,8 @@ public class MainActivity extends BridgeActivity {
         jsBridge.clearPassword();
 
         getBridge().getWebView().setOverScrollMode(View.OVER_SCROLL_NEVER);
-        WebSettings settings = getBridge().getWebView().getSettings();
+        getBridge().getWebView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
         ntpManager = new NTPManager(
                 this,
                 jsBridge,
