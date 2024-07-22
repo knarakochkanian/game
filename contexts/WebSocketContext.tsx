@@ -55,7 +55,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [modalHidden, setModalHidden] = useState(false);
 
-  const [lastDeviceEvent, setLastDeviceEvent] = useState<DeviceEvent | null>()
+  const [lastDeviceEvent, setLastDeviceEvent] = useState<DeviceEvent>()
 
   // Handle messages as device events to prevent double consuming
   useEffect(() => {
