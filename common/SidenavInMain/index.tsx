@@ -56,7 +56,7 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
-import { useDeviceConnection } from '../../contexts/WebSocketContext';
+import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
 import ModalContainer from '../Modals/ModalContainer';
 import SystemState from '../SystemState';
 import { ILaunchConsequences } from '../../data/launchConsequences';
@@ -82,7 +82,7 @@ function SidenavInMain({
   const [trashModalOpen, setTrashModalOpen] = useState(false);
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
-  const { lastMessage, pingFailed, send } = useDeviceConnection()!;
+  const { lastDeviceEvent, pingFailed, send } = useDeviceConnection()!;
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
   const [lastActionName, setLastActionName] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -107,6 +107,8 @@ function SidenavInMain({
     selectFormattedFinancialLosses
   ); //wholeDamage
   const pickedCountries = useAppSelector(selectPickedCountries);
+
+  const [lastAcceptTime, setLastAcceptTime] = useState(0)
 
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
@@ -225,10 +227,16 @@ function SidenavInMain({
   };
 
   useEffect(() => {
-    if(lastMessage?.data === 'accept pressed' && confirmButtonRef.current) {
+    if(
+      lastDeviceEvent && 
+      lastDeviceEvent.eventId === DeviceEventId.AcceptPressed && 
+      !lastDeviceEvent.consumed &&
+      confirmButtonRef.current
+    ) {
+      lastDeviceEvent.consumed = true
       confirmButtonRef.current.click();
     }
-  }, [lastMessage])
+  }, [lastDeviceEvent])
 
   useEffect(() => {
 

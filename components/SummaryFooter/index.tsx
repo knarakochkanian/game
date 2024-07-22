@@ -4,7 +4,7 @@ import FooterButton from '../../common/FooterButton';
 import { START, startAttackTitle } from '../../constants';
 import { summaryFooterForm, summaryFooterGradient } from '../../public/summary';
 import styles from './SummaryFooter.module.scss';
-import { useDeviceConnection } from '../../contexts/WebSocketContext';
+import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
 
 const buttonInfo = (
   <p>
@@ -14,15 +14,19 @@ const buttonInfo = (
 );
 
 const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
-  const { lastMessage, send } = useDeviceConnection()!;
+  const { lastDeviceEvent, send } = useDeviceConnection()!;
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    console.log("debug.lastMessage", lastMessage?.data)
-    if (lastMessage?.data === 'start pressed' && buttonRef.current) {
+    if (
+      lastDeviceEvent?.eventId == DeviceEventId.StartPressed 
+      && !lastDeviceEvent?.consumed 
+      && buttonRef.current
+    ) {
+      lastDeviceEvent.consumed = true
       buttonRef.current.click();
     }
-  }, [lastMessage]);
+  }, [lastDeviceEvent]);
 
   return (
     <footer className={styles.summaryFooter}>

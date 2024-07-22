@@ -37,7 +37,7 @@ import {
 
 import styles from './count-down.module.scss';
 import TrashModal from '../../common/TrashModal';
-import { useDeviceConnection } from '../../contexts/WebSocketContext';
+import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -47,7 +47,7 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
-  const { lastMessage } = useDeviceConnection()!
+  const { lastDeviceEvent } = useDeviceConnection()!
 
   const [completedActionsFromStorage, setCompletedActionsFromStorage] =
     useState<IAction[] | undefined>();
@@ -150,10 +150,11 @@ export default function CountDown() {
   };
 
   useEffect(() => {
-    if(lastMessage?.data === 'cancel pressed') {
+    if(lastDeviceEvent?.eventId == DeviceEventId.CancelPressed && !lastDeviceEvent.consumed){
+      lastDeviceEvent.consumed = true
       cancelCountdown();
     }
-  }, [lastMessage])
+  }, [lastDeviceEvent])
 
   return (
     <div

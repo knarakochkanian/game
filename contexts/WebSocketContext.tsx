@@ -9,13 +9,26 @@ import React, {
 import { controllerServerAddress, pingServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
 import useWebSocket, { ReadyState, SendMessage } from 'react-use-websocket';
-import { resolve } from 'path';
+
+export enum DeviceEventId {
+  AcceptPressed = 'accept pressed',
+  StartPressed = 'start pressed',
+  CancelPressed = 'cancel pressed'
+}
+
+const DeviceEventIds = Object.values(DeviceEventId)
+
+export interface DeviceEvent {
+  eventId: DeviceEventId,
+  consumed?: boolean
+}
 
 export interface WebSocketContextProps {
   lastMessage: WebSocketEventMap['message'] | null;
   pingFailed: boolean;
   modalVisible?: boolean;
   send: SendMessage;
+  lastDeviceEvent: DeviceEvent | undefined
 }
 
 export const WebSocketContext = createContext<WebSocketContextProps | null>(
@@ -41,6 +54,18 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   const [pingFailed, setPingFailed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalHidden, setModalHidden] = useState(false);
+
+  const [lastDeviceEvent, setLastDeviceEvent] = useState<DeviceEvent | null>()
+
+  // Handle messages as device events to prevent double consuming
+  useEffect(() => {
+    if(DeviceEventIds.includes(lastMessage?.data)) {
+      setLastDeviceEvent({
+        eventId: lastMessage?.data,
+        consumed: false
+      })
+    }
+  }, [lastMessage, setLastDeviceEvent])
 
   // Check device websocket connection
   useEffect(() => {
@@ -134,7 +159,8 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         lastMessage: lastMessage, 
         pingFailed: pingFailed,
         modalVisible, 
-        send: sendMessage
+        send: sendMessage,
+        lastDeviceEvent: lastDeviceEvent
       }}
     >
       {children}
