@@ -9,6 +9,7 @@ import React, {
 import { controllerServerAddress, pingServerAddress } from '../app/static_variables';
 import { CapacitorHttp } from '@capacitor/core';
 import useWebSocket, { ReadyState, SendMessage } from 'react-use-websocket';
+import { WebSocketMessage } from 'react-use-websocket/dist/lib/types';
 
 export enum DeviceEventId {
   AcceptPressed = 'accept pressed',
@@ -31,9 +32,13 @@ export interface WebSocketContextProps {
   lastDeviceEvent: DeviceEvent | undefined
 }
 
-export const WebSocketContext = createContext<WebSocketContextProps | null>(
-  null
-);
+const InitialState = {
+  lastMessage: null,
+  pingFailed: true,
+  send: (message: WebSocketMessage, keep?: boolean) => {},
+  lastDeviceEvent: undefined
+}
+export const WebSocketContext = createContext<WebSocketContextProps>(InitialState);
 
 export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
   children,
