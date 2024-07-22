@@ -29,7 +29,7 @@ public class MainActivity extends BridgeActivity {
         ntpManager = new NTPManager(
                 this,
                 jsBridge,
-                "10.99.13.10",
+                "10.99.12.10",
                 "10.99.2.5"
         );
 
