@@ -86,8 +86,8 @@ const PlaceCard = ({
               className={styles.minusSign}
               src={withRegions ? 'onboarding/arrow.svg' : minusSign}
               alt="minusSign"
-              width={withRegions ? 11 : 40}
-              height={withRegions ? 11 : 40}
+              width={withRegions ? 11 : 20}
+              height={withRegions ? 11 : 20}
               priority
             />
           </button>

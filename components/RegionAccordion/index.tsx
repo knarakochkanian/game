@@ -34,7 +34,7 @@ const RegionAccordion = ({
   delayed,
   selectedCountries,
   setWithOutFlag,
-  fromSideNav
+  fromSideNav,
 }: IRegionAccordionProps) => {
   const currentPage = useGetPage();
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -51,6 +51,7 @@ const RegionAccordion = ({
 
   return (
     <Accordion
+      disableGutters
       style={{ color: delayed ? '#0F0F0F' : 'none' }}
       defaultExpanded={false}
       disabled={disable}

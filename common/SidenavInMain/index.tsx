@@ -315,7 +315,7 @@ function SidenavInMain({
           {numberOfSelectedSectors !== null &&
             damageLevel &&
             selectedCountries.length !== 0 && (
-              // !pingFailed &&
+              !pingFailed &&
               <div className={styles.sidenavAddConfirm}>
                 <Image
                   src={
@@ -340,7 +340,7 @@ function SidenavInMain({
                   href={delayedTime && delayedDate ? '/queue' : '/summary'}
                   onClick={onSetCurrentAction}
                   ref={confirmButtonRef}
-                  // style={{ pointerEvents: 'none' }}
+                  style={{ pointerEvents: 'none' }}
                 >
                   <span
                     className="Lead"
