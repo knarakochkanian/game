@@ -3,10 +3,13 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Image from 'next/image';
 import { RegionCategory } from '../../data/attackRegionsData';
 import GreenLineBorders from '../GreenLineBorders';
-import { INDUSTRY, top_capitalization } from '../../constants';
+import { INDUSTRY, RESET, top_capitalization } from '../../constants';
 import ResetOrSelectAll_2 from '../ResetOrSelectAll_2';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectIsAttacking } from '../../redux/features/generalSlice';
+import {
+  proccesIndustriesByTitle,
+  selectIsAttacking,
+} from '../../redux/features/generalSlice';
 import {
   selectEventModalId,
   setEventModalId,
@@ -14,6 +17,7 @@ import {
 import useCloseModal from '../../hooks/useCloseModal';
 import EventModal from '../../components/EventModal';
 import { proccessPlusOrCloseIconSrc } from '../../helpers/helpers_2';
+import { minusSign } from '../../public/main-screen';
 
 import './AccordionWrapper.scss';
 import style from './AccordionWrapper.module.scss';
@@ -64,8 +68,8 @@ const AccordionWrapper = ({
     eventIsSelected
   );
 
-  if (selectedOtionsCount) {
-    showPlusIcon = selectedOtionsCount > 0;
+  if (selectedOtionsCount && !alwaysExpanded) {
+    showPlusIcon = selectedOtionsCount > 0 && from !== 'industryAccordion';
     allDataSelected = selectedOtionsCount === data.options?.length;
   }
 
@@ -74,6 +78,9 @@ const AccordionWrapper = ({
     maxHeight: '50px',
     marginRight: '8px',
     marginLeft: '4px',
+    marginBottom: `${
+      alwaysExpanded && (data.title?.length as number) > 27 ? '15px' : '0'
+    }`,
     borderRight: titleHighlighted
       ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
       : 'inherit',
@@ -81,12 +88,22 @@ const AccordionWrapper = ({
       ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
       : 'inherit',
     background: titleHighlighted
-      ? isAttacking
-        ? '#011A17'
-        : '#010526'
-      : showPlusIcon
-      ? '#131E1D'
-      : 'inherit',
+    ? isAttacking
+      ? '#011A17'
+      : '#010526'
+    : showPlusIcon
+    ? '#131E1D'
+    : 'inherit',
+    paddingLeft: `${alwaysExpanded ? '9px' : '16px'}`,
+  };
+
+  const onClick = () => {
+    dispatch(
+      proccesIndustriesByTitle({
+        actionType: RESET,
+        title: data.title as string,
+      })
+    );
   };
 
   const onPlusClick = (
@@ -120,6 +137,7 @@ const AccordionWrapper = ({
         />
       )}
       <Accordion
+        disableGutters
         expanded={alwaysExpanded ? true : expanded === data.id}
         onChange={handleExpansion(data.id)}
         sx={{
@@ -127,6 +145,7 @@ const AccordionWrapper = ({
             accordionBackground ? accordionBackground : 'transparent'
           } `,
           color: '#fff',
+          boxShadow: 'unset',
         }}
       >
         <AccordionSummary
@@ -165,8 +184,8 @@ const AccordionWrapper = ({
           <div className={style.titleAndCountCts}>
             <h5
               className={`${style.title} ${
-                titleHighlighted ? style.highlighted : ''
-              } ${
+                fromSideNav ? style.fromSideNav : ''
+              } ${titleHighlighted ? style.highlighted : ''} ${
                 data.title === top_capitalization ? style.topCapitalization : ''
               } ${isAttacking ? '' : style.isProtecting}`}
             >
@@ -182,13 +201,42 @@ const AccordionWrapper = ({
                 <GreenLineBorders width={4} />
               </span>
             )}
+
+            {alwaysExpanded && (
+              <button onClick={() => onClick()} className={style.minusButton}>
+                <Image
+                  src={minusSign}
+                  alt="minusSign"
+                  width={20}
+                  height={20}
+                  priority
+                />
+              </button>
+            )}
           </div>
         </AccordionSummary>
+
+        {alwaysExpanded && Boolean(selectedOtionsCount) && (
+          <>
+            {Boolean(data.event) && (
+              <p className={style.eventName}>
+                {'['}
+                {data.event}
+                {']'}
+              </p>
+            )}
+            <p className={style.subIndustryCount}>
+              Подотрасль {selectedOtionsCount}
+            </p>
+          </>
+        )}
+
         <AccordionDetails
           style={{
             flexWrap: 'wrap',
             display: 'flex',
             gap: '10px',
+            paddingBottom: fromSideNav? '4px' : '16px',
             height: fromSideNav ? 'unset' : accordionDetailsHeight,
             maxHeight: fromSideNav ? 'unset' : accordionDetailsMaxHeight,
             overflowY: fromSideNav ? 'visible' : 'auto',

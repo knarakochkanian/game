@@ -5,6 +5,7 @@ export interface Option {
   id: number | string;
   name: string;
   members?: string[];
+  selected?: boolean;
 }
 
 export interface IPlace extends Option {

@@ -16,17 +16,26 @@
 }
 
 .titleAndCountCts {
+  position: relative;
   display: flex;
   gap: 12px;
   align-items: center;
+  .minusButton {
+    position: absolute;
+    top: 0;
+    left: 274px;
+  }
   .title {
     font-variant-numeric: slashed-zero;
-    font-size: 18px;
-    font-weight: 500;
+    @include set-font-size-weight(18px, 500);
     letter-spacing: 0.179px;
     max-width: 250px;
   }
-
+  .title.fromSideNav {
+    @include text-color-letter-spacing-etc($white, 0.179px);
+    @include set-font-size-weight(18px, 500);
+    text-transform: unset;
+  }
   .title.topCapitalization {
     font-size: 16px;
   }
@@ -62,4 +71,17 @@
   position: absolute;
   right: -49px;
   top: 8px;
+}
+
+.subIndustryCount {
+  @include text-color-letter-spacing-etc($mid-dark-gray, unset);
+  @include set-font-size-weight(19px, 500);
+  padding-left: 38px;
+}
+
+.eventName {
+  @include text-color-letter-spacing-etc($mid-gray, unset);
+  @include set-font-size-weight(19px, 500);
+  padding-left: 14px;
+  margin-bottom: 10px;
 }

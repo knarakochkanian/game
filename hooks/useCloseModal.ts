@@ -30,7 +30,7 @@ const useCloseModal = (
       if (setModalIsOpen) {
         setModalIsOpen(false);
       } else if (dispatchModalIsOpen && statusDataType === 'number') {
-        dispatch(dispatchModalIsOpen(modalCloseValue as number));
+        dispatch(dispatchModalIsOpen(-1));
       }
     }
   };

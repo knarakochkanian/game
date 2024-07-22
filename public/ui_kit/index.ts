@@ -17,8 +17,10 @@ import closeEventIcon from './closeEventIcon.svg';
 import closeEventIconProtect from './closeEventIconProtect.svg';
 import closeIconActiveAttack from './closeIconActiveAttack.svg';
 import closeIconActiveProtect from './closeIconActiveProtect.svg';
+import closeXProtect from './closeXProtect.svg';
 
 export {
+  closeXProtect,
   closeIconActiveProtect,
   closeIconActiveAttack,
   closeEventIconProtect,

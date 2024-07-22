@@ -3,6 +3,15 @@
 .container.fromSideNav {
   overflow-y: visible;
   max-height: unset;
+  gap: 15px;
+  .option {
+    @include text-color-letter-spacing-etc($white, unset);
+    @include set-font-size-weight(19px, 500);
+    padding: 0px 11.297px 0px 33.891px;
+    color: $white;
+    opacity: unset;
+    text-transform: unset;
+  }
 }
 
 .container {

@@ -54,7 +54,7 @@ const IndustryAccordion = ({
     display: 'flex',
     flexDirection: 'column',
     gap: '15px',
-    padding: '0', 
+    padding: '0',
   };
 
   // @ts-ignore
@@ -71,13 +71,17 @@ const IndustryAccordion = ({
 
   return (
     <Accordion
+      disableGutters
       disabled={disable}
       style={{ color: delayed ? '#0F0F0F' : 'none', border: 'none' }}
       sx={(theme) => ({
         border: '1px solid rgba(82, 82, 82, 1)',
-        backgroundColor: 'rgba(0, 0, 0, 0.87) !important',
+        backgroundColor: `${
+          fromSideNav ? 'transparent' : 'rgba(0, 0, 0, 0.87)'
+        } !important`,
         color: '#FFF',
         marginBottom: '10px',
+        width: '100%',
         maxWidth: '314.33px',
       })}
     >
@@ -129,6 +133,9 @@ const IndustryAccordion = ({
         }
       >
         {industrySectors?.map((sector, index) => {
+          const selectedOptionscount = sector.options.filter(
+            (o) => o.selected
+          ).length;
           const selectedOptionsLength = sector.options.filter(
             (option) => option.selected
           ).length;
@@ -136,7 +143,13 @@ const IndustryAccordion = ({
           if (selectedOptionsLength === 0) return;
 
           if (sector.options.every((s) => s.selected) && fromSideNav) {
-            return <IndustryCard title={sector.title} key={index} />;
+            return (
+              <IndustryCard
+                eventName={sector.event}
+                title={sector.title}
+                key={index}
+              />
+            );
           }
 
           return (
@@ -144,7 +157,9 @@ const IndustryAccordion = ({
               styles={{
                 accordionDetailsHeight: 'unset',
                 accordionDetailsMaxHeight: '532px',
-                accordionBackground: card,
+                accordionBackground: fromSideNav
+                  ? 'transparent !important'
+                  : card,
               }}
               from="industryAccordion"
               expanded={expanded}
@@ -152,6 +167,7 @@ const IndustryAccordion = ({
               data={sector}
               key={index}
               fromSideNav={fromSideNav}
+              selectedOtionsCount={selectedOptionscount}
             >
               <SectorOptions
                 fromSideNav={fromSideNav}
