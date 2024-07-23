@@ -42,12 +42,21 @@ export function MapProvider(props: PropsWithChildren) {
     const [earth, setEarth] = useState<IEarth | null>()
 
     useEffect(() => {
-        console.log("EarthLoadingLoop.MapContext1")
+        console.log("MapContext: state reloading", {
+            earth: earth, 
+            initialLoaded: initialStateLoaded, 
+            selectedCountries: selectedCountries
+        })
+        
         if (earth && !initialStateLoaded && selectedCountries) {
-            console.log("Country color.isLoaded.c", selectedCountries)
             selectedCountries.forEach(c => {
-                earth.setCountryColor(c.name, highlightColor)
-                console.log("Country color debug MAP CONTEXT", c)
+                if(c.isSelected && !c.regions) { // set for whole country
+                    earth.setCountryColor(c.name, highlightColor)
+                } else { // set for specific regions
+                    c.regions?.filter(r => r.isSelected)?.forEach((r) => {
+                        earth.setCountryColor(r.name, highlightColor)
+                    })
+                }
             })
             setInitialStateLoaded(true)
         }

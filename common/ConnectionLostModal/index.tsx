@@ -7,7 +7,7 @@ import { stateSystemOff } from '../../constants';
 
 const ConnectionLostModal = ({ }) => {
 
-    const { pingFailed } = useDeviceConnection()!;
+    const { pingFailed, send } = useDeviceConnection()!;
     const router = useRouter();
 
     return (
@@ -37,6 +37,7 @@ const ConnectionLostModal = ({ }) => {
                     href={'launch-stopped'}
                     className="ModalButton1"
                     onClick={() => {
+                        send('cancel')
                         router.back()
                     }}
                 >
