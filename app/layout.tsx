@@ -69,17 +69,18 @@ export default function RootLayout({
     <html lang="en" className={`${lakes.variable} font-sans`}>
       <body>
         <NTPProvider>
-        <MapProvider>
+        
         <Suspense fallback={<div></div>}>
           <WebSocketProvider>
             <ReduxProvider>
+            <MapProvider>
               <TopBottomLines />
               <LocalTime />
               {children}
+              </MapProvider>
             </ReduxProvider>
           </WebSocketProvider>
         </Suspense>
-        </MapProvider>
         </NTPProvider>
       </body>
     </html>

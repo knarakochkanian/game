@@ -15,7 +15,7 @@ import {
   DEFAULT_CONTOUR_COLOR,
   PICKED_COLOR,
 } from '../theme';
-import { EarthParameters } from '../map.types';
+import { EarthParameters, MapType } from '../map.types';
 import {
   countriesNamesToCode,
   getCountryOrStateNameByCode,
@@ -175,6 +175,10 @@ export class Earth implements IEarth {
     this.setupOnCountryClick(onCountryClick);
   }
 
+  public getType(): MapType {
+    return MapType.sphere
+  }
+  
   public stopRenderLoop() {
     this.globe?.pauseAnimation()
   }

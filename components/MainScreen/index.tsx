@@ -51,7 +51,11 @@ const WorldMap = dynamic(
   { ssr: false }
 );
 
-const MainScreen = () => {
+interface MainScreenProps {
+  isVisible: boolean;
+}
+
+const MainScreen = ({isVisible}: MainScreenProps) => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [globeActive, setGlobeActive] = useState(true);
@@ -109,7 +113,7 @@ const MainScreen = () => {
 
       <Target />
       <WorldMap mapType={globeActive ? MapType.sphere : MapType.plane} />
-      <Help />
+      {isVisible && <Help />}
       <SelectFromTwo
         setFirstActive={setGlobeActive}
         button_1={GLOBE}

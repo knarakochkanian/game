@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FlatEarth } from "./flat-earth/flat-earth";
 import { MapType, UseMapProps } from "./map.types";
 import { Earth } from "./sphere-earth/earth";
@@ -21,14 +21,23 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
   const onWindowResize = useRef<() => void>()
 
   const {setLoaded} = useMapContext()
+
+  const [isLoadedEarth, setLoadedEarth] = useState(false);
+  const earthRef = useRef<IEarth>()
+
+  useEffect(() => {
+    console.log("EarthLoadingLoop.useMapHook", isLoadedEarth, earthRef.current)
+    setLoaded(isLoadedEarth, earthRef.current || null, mapType)
+  }, [isLoadedEarth, earthRef, setLoaded])
+
   useEffect(() => {
     if (ref.current === null) {
       return;
     }
-
+    console.log("EarthLoadingLoop.createNewEarth")
     const earth: IEarth = mapType === MapType.plane
-      ? new FlatEarth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive }) 
-      : new Earth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded })
+      ? new FlatEarth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded: setLoadedEarth }) 
+      : new Earth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded: setLoadedEarth })
 
     earth.render(ref.current)
 
@@ -41,6 +50,8 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     onRotateEnd.current = earth.onRotateEnd.bind(earth)
     onWindowResize.current = earth.onWindowResize.bind(earth)
 
+    earthRef.current = earth
+    
     const onResize = () => {
       earth.onWindowResize()
     }

@@ -7,6 +7,7 @@ import {
   selectIsAttacking,
   selectPickedCountries,
   selectPlaceName,
+  setPlaceName,
   setSingleRegionStatus,
 } from '../redux/features/generalSlice';
 import {
@@ -55,14 +56,19 @@ const useManagePlaceClick = (
   const clickedPlaceName = useAppSelector(selectPlaceName);
 
   useEffect(() => {
+    if(clickedPlaceName === '') {
+      return
+    }
     const handleTerritoryHighlighing = (name: string) => {
       if (pickedCountries.includes(name)) {
         setCountryColor(name, DEFAULT_COLOR);
         dispatch(removeFromPickedCountries(name));
+        dispatch(setPlaceName(''))
       } else {
         setCountryColor(name, highlightColor);
         focusOnCountry(name);
         dispatch(addToPickedCountries(name));
+        dispatch(setPlaceName(''))
       }
     };
 

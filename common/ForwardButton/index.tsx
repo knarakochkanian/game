@@ -12,7 +12,7 @@ import { COUNT_DOWN } from '../../constants';
 
 import styles from './ForwardButton.module.scss';
 
-const ForwardButton = ({ onForward }: { onForward: () => void }) => {
+const ForwardButton = ({ onForward }: { onForward?: () => void }) => {
   const isAttacking = useAppSelector(selectIsAttacking);
 
   return (

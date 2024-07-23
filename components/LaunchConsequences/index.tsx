@@ -9,8 +9,6 @@ import CountOnboarding from '../Count-onboarding';
 import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
 import useGetPage from '../../hooks/useGetPage';
-import { UseMap } from '../Map/use-map.hook';
-import { MapType } from '../Map/map.types';
 import { StaticMap } from '../Map/StaticMap.component';
 import { ConsequencesParagraph as getConsequencesData } from '../../data/consequencesParagraph';
 import {
@@ -130,12 +128,6 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       );
     });
   };
-
-  const notInteractiveMap = UseMap({
-    onCountryPicked: () => {},
-    mapType: MapType.plane,
-    isNotInteractive: true,
-  });
 
   return isCountDownComponent ? (
     <CountOnboarding />
