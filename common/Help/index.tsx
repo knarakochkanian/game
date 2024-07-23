@@ -7,14 +7,22 @@ import Modal from '../../common/Modals/Modal';
 import styles from './Help.module.scss';
 
 const Help = () => {
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setModalOpen(false);
-    }, 5000);
+    if (typeof window !== 'undefined') {
+      const isOnboardingModalShowed = window.localStorage.getItem('isOnboardingModalShowed') === 'true';
+      window.localStorage.setItem('isOnboardingModalShowed', 'true');
+      
+      setModalOpen(!isOnboardingModalShowed)
 
-    return () => clearTimeout(timer);
+      if (!isOnboardingModalShowed) {
+        const timer = setTimeout(() => {
+          setModalOpen(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+      }
+    }
   }, []);
 
   const closeModal = () => {

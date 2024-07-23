@@ -17,11 +17,17 @@ public class JSBridge {
             Log.v(TAG, "clearPassword(): " + result);
         });
     }
+    public void clearOnboardingModalState() {
+        bridge.eval(CLEAR_ONBOARDING_MODAL, result -> {
+            Log.v(TAG, "clearPassword(): " + result);
+        });
+    }
 
     public void sendNTPTime(String rawDate, ValueCallback<String> callback) {
         bridge.eval("window.onNTPDateReceived(\"" + rawDate + "\");", callback);
     }
 
     private static final String CLEAR_PASS_JS_REQUEST = "window.localStorage.removeItem('isPasswordPassed')";
+    private static final String CLEAR_ONBOARDING_MODAL = "window.localStorage.removeItem('isOnboardingModalShowed')";
     private static final String TAG = "JSBridge";
 }

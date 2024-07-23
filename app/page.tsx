@@ -74,7 +74,7 @@ export default function Home() {
       <>
       {(!isMapLoaded || isPasswordPassed === null) && loading}
       {isPasswordPassed === false && password}
-      <MainScreen/>
+      <MainScreen isVisible={isPasswordPassed === true && isMapLoaded === true}/>
       </>
     </main>
   );

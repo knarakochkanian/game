@@ -22,6 +22,7 @@ public class MainActivity extends BridgeActivity {
 
         jsBridge = new JSBridge(getBridge());
         jsBridge.clearPassword();
+        jsBridge.clearOnboardingModalState();
 
         getBridge().getWebView().setOverScrollMode(View.OVER_SCROLL_NEVER);
         getBridge().getWebView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
