@@ -13,7 +13,7 @@ const BackAndForwardBtns = ({
   return (
     <>
       <BackButton onBack={onBack} />
-      {onForward && <ForwardButton onForward={onForward} />}
+      <ForwardButton onForward={onForward} />
     </>
   );
 };
