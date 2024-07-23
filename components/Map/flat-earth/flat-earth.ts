@@ -5,7 +5,7 @@ import { State } from "./state";
 import { PICKED_COLOR, DEFAULT_COLOR, DEFAULT_CONTOUR_COLOR, BACKGROUND_COLOR } from "../theme";
 import { ComplexCountry } from "./complex-country";
 import { countriesNamesToCode, getCountryOrStateNameByCode } from "../geodata/countries-names-to-code";
-import { EarthParameters } from '../map.types';
+import { EarthParameters, MapType } from '../map.types';
 import { complexCountriesNames } from "../geodata/complex-countries";
 import { VignetteShader } from '../utils/VignetteShader';
 import { IEarth } from '../IEarth';
@@ -46,11 +46,15 @@ export class FlatEarth implements IEarth {
 
   private vignetteShaderPass: ShaderPass | undefined
 
-  constructor({ countries, onCountryClick, isNotInteractive, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR }: EarthParameters) {
+  constructor({ countries, onCountryClick, isNotInteractive, countryColor = DEFAULT_COLOR, contourColor = DEFAULT_CONTOUR_COLOR, setLoaded }: EarthParameters) {
     this.onCountryClick = onCountryClick
     this.isNotInteractive = !!isNotInteractive
     this.contourColor = contourColor
     this.countryColor = countryColor
+
+    if(!isNotInteractive) {
+      setLoaded && setLoaded(false);
+    }
 
     const scene = createScene();
     this.scene = scene
@@ -122,8 +126,15 @@ export class FlatEarth implements IEarth {
     setTimeout(() => {
       this._render();
       this.setCameraPositionOnMap(new Vector3((MAX_X + MIN_X) / 2, DEFAULT_ZOOM, (MAX_Z + MIN_Z) / 2), DEFAULT_ZOOM, true, 100)
+      if(!isNotInteractive) {
+        setLoaded && setLoaded(true);
+      }
   }, 300) // костыль чтобы дождаться загрузки текстур (иначе не видно текстуру "шума")
   }
+
+  public getType() : MapType {
+    return MapType.plane
+  } 
 
   public stopRenderLoop() {
     this.renderer?.setAnimationLoop(null)

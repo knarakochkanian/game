@@ -1,4 +1,8 @@
+import { MapType } from "./map.types"
+
 export interface IEarth {
+
+  getType: () => MapType
   /**
    * Sets html element where map will be rendered
    */

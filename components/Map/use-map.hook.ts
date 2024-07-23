@@ -27,7 +27,7 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
 
   useEffect(() => {
     console.log("EarthLoadingLoop.useMapHook", isLoadedEarth, earthRef.current)
-    setLoaded(isLoadedEarth, earthRef.current || null)
+    setLoaded(isLoadedEarth, earthRef.current || null, mapType)
   }, [isLoadedEarth, earthRef, setLoaded])
 
   useEffect(() => {
@@ -36,12 +36,9 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     }
     console.log("EarthLoadingLoop.createNewEarth")
     const earth: IEarth = mapType === MapType.plane
-      ? new FlatEarth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive }) 
+      ? new FlatEarth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded: setLoadedEarth }) 
       : new Earth({ countries: countriesNamesList, onCountryClick: onCountryPicked, isNotInteractive, setLoaded: setLoadedEarth })
 
-    if(mapType === MapType.sphere) {
-      earthRef.current = earth
-    }
     earth.render(ref.current)
 
     setCountryColor.current = earth.setCountryColor.bind(earth)
@@ -53,6 +50,8 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
     onRotateEnd.current = earth.onRotateEnd.bind(earth)
     onWindowResize.current = earth.onWindowResize.bind(earth)
 
+    earthRef.current = earth
+    
     const onResize = () => {
       earth.onWindowResize()
     }
