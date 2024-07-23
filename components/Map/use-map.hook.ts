@@ -13,7 +13,7 @@ export const UseMap = ({ onCountryPicked, mapType, isNotInteractive = false }: U
 
   const setCountryColor = useRef<(name: string | string[], color?: string) => void>()
   const setCountryContourVisibility = useRef<(name: string | string[], visible: boolean) => void>()
-  const focusOnCountry = useRef<(name: string, animationDurationMs?: number, zoomOnCountry?: boolean, extendBbox?: number) => void>()
+  const focusOnCountry = useRef<(name: string | string[], animationDurationMs?: number, zoomOnCountry?: boolean, extendBbox?: number) => void>()
   const resetColors = useRef<() => void>()
   const resetContours = useRef<() => void>()
   const onRotateStart = useRef<(direction: "left" | "right", speed?: number) => void>()

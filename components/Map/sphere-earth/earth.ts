@@ -230,11 +230,14 @@ export class Earth implements IEarth {
   }
 
   public moveCameraToCountry(
-    name: string,
+    name: string | string[],
     animationDurationMs = 500,
     zoomOnCountry = false,
     _extendBbox?: number
   ) {
+    if (Array.isArray(name)) {
+      name = name[0];
+    }
     const code = countriesNamesToCode[name];
     if (!code) {
       console.error(`no code for ${name}`);
