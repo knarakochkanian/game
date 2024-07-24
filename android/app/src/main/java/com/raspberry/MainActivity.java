@@ -2,6 +2,7 @@ package com.raspberry;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebSettings;
 
 import androidx.appcompat.app.ActionBar;
@@ -15,6 +16,7 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);

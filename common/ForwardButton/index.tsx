@@ -16,7 +16,7 @@ const ForwardButton = ({ onForward }: { onForward?: () => void }) => {
   const isAttacking = useAppSelector(selectIsAttacking);
 
   return (
-    <Link href={COUNT_DOWN} onClick={onForward}>
+    <Link href={COUNT_DOWN} onClick={onForward} style={onForward ? {} : {pointerEvents: 'none'}}>
       <Image
         src={isAttacking ? forwardArrow : forwardArrowProtect}
         className={styles.forwardArrow}

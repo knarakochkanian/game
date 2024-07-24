@@ -30,7 +30,6 @@ const Footer: React.FC<FooterProps> = ({ cancelCountdown }) => {
       />
 
       <FooterButton
-        onClick={cancelCountdown}
         order={CANCEL}
         title={cancelAttackTitle}
       />
