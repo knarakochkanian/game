@@ -69,6 +69,7 @@ const PlacesInSidenavMain = ({ places, name, fromSideNav }: IPlacesProps) => {
                 <>
                   {i === 0 && <div id={firstLetter} />}
                   <CountryWithRegions
+                    fromRegionAccordion
                     fromSideNav={true}
                     i={i}
                     place={place}

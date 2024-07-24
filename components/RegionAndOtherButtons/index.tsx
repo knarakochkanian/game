@@ -227,6 +227,7 @@ const RegionAndOtherButtons = ({
                 expanded={expanded}
                 handleExpansion={handleExpansion}
                 data={region}
+                from='leftSideNav'
               >
                 <CountryBlocks
                   options={

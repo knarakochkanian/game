@@ -25,7 +25,7 @@
 .fromSideNav {
   @include flex-between;
   width: 100% !important;
-  min-width: 290px;
+  min-width: 307px;
   .MuiPaper-root-MuiAccordion-root {
     padding-left: 20px;
   }
@@ -52,13 +52,24 @@
 }
 
 .placeCard.withRegions.fromRegionAccordion {
+  width: 271px;
+}
+
+.placeCard.withRegions.fromRegionAccordion.fromSideNav {
   width: 278px;
+  padding-left: 16px;
 }
 
 .placeCard.selected.isCountry {
   position: relative;
   border-right: 1px solid $attack-green;
   border-left: 1px solid $attack-green;
+}
+
+.placeCard.isRegion.fromSideNav {
+  min-width: 292px;
+  padding: 5px 8px;
+  font-family: 'TT Lakes';
 }
 
 .placeCard.withRegions.selected.withCount {
