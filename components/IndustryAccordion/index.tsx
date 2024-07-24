@@ -98,6 +98,7 @@ const IndustryAccordion = ({
         sx={{
           display: delayed ? 'none' : 'flex',
           opacity: '1 !important',
+          padding: '0px 12px',
         }}
         aria-controls="panel2-content"
         id="panel2-header"

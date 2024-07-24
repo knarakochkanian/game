@@ -269,7 +269,7 @@ $search-results-height-on-keyboard-opened: 300px; //calc(100vh - 378px - 138px);
 @mixin afterLine {
   position: absolute;
   content: '';
-  left: 16px;
+  left: 12px;
   top: 0;
   width: 23px;
   height: 4px;

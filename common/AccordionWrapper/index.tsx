@@ -88,12 +88,12 @@ const AccordionWrapper = ({
       ? `0.941px solid ${isAttacking ? '#5ED1C5' : '#6291FF'}`
       : 'inherit',
     background: titleHighlighted
-    ? isAttacking
-      ? '#011A17'
-      : '#010526'
-    : showPlusIcon
-    ? '#131E1D'
-    : 'inherit',
+      ? isAttacking
+        ? '#011A17'
+        : '#010526'
+      : showPlusIcon
+      ? '#131E1D'
+      : 'inherit',
     paddingLeft: `${alwaysExpanded ? '9px' : '16px'}`,
   };
 
@@ -236,11 +236,12 @@ const AccordionWrapper = ({
             flexWrap: 'wrap',
             display: 'flex',
             gap: '10px',
-            paddingBottom: fromSideNav? '4px' : '16px',
+            paddingBottom: fromSideNav ? '4px' : '16px',
             height: fromSideNav ? 'unset' : accordionDetailsHeight,
             maxHeight: fromSideNav ? 'unset' : accordionDetailsMaxHeight,
             overflowY: fromSideNav ? 'visible' : 'auto',
             scrollbarWidth: fromSideNav ? 'unset' : 'none',
+            paddingLeft: `${(from === 'leftSideNav' ? '22px' : '16px')}`,
           }}
         >
           {from === INDUSTRY && (

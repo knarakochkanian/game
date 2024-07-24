@@ -49,6 +49,8 @@ const RegionAccordion = ({
     selectedCountries.length === 0 ||
     fromOnboarding;
 
+  const defaultStylesInSideNav = { ...defaultStyles, paddingLeft: '8px' };
+
   return (
     <Accordion
       disableGutters
@@ -78,6 +80,7 @@ const RegionAccordion = ({
         sx={{
           display: delayed ? 'none' : 'flex',
           alignItems: 'center',
+          padding: '0px 12px',
         }}
       >
         <div
@@ -107,6 +110,8 @@ const RegionAccordion = ({
             currentPage || 'undefined'
           )
             ? detailsStylesInSummery
+            : fromSideNav
+            ? defaultStylesInSideNav
             : defaultStyles
         }
       >

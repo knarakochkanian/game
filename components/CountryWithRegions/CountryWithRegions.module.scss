@@ -22,6 +22,13 @@
   }
 }
 
+.regionsCount {
+  @include text-color-letter-spacing-etc ($mid-dark-gray, unset);
+  @include set-font-size-weight(19px, 500);
+  padding-left: 26px;
+  padding-bottom: 7px;
+}
+
 .withRegionsFormLeft {
   position: relative;
   right: 0px;
