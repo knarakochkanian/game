@@ -1,3 +1,5 @@
+@import '/app/variables.module';
+
 .styledLabel {
   display: inline-block;
   position: relative;
@@ -18,7 +20,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color:#0F0F0F ;
   transition: 0.4s;
 }
 
@@ -28,12 +30,15 @@
   height: 24px;
   width: 24px;
   bottom: -9px;
-  background-color: white;
+  background-color: #787878;
   transition: 0.4s;
 }
-
 input:checked + .switchSlider {
-  background-color: #5ED1C5;
+  background-color: $attack-green;
+}
+
+input:checked + .switchSlider:before  {
+  background-color: white;
 }
 
 input:checked + .switchSlider:before {

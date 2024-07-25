@@ -29,7 +29,7 @@
     "@types/geojson": "^7946.0.14",
     "animejs": "^3.2.2",
     "clsx": "^2.1.1",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.12",
     "geojson-bbox": "^0.0.1",
     "globe.gl": "^2.32.4",
     "mercator-projection": "^0.0.2",

@@ -1,4 +1,5 @@
 'use client';
+import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -39,14 +40,13 @@ import IndustryAccordion from '../../components/IndustryAccordion';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
-import { Dayjs } from 'dayjs';
 import 'dayjs/locale/ru';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { MultiSectionDigitalClock } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
@@ -56,12 +56,26 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
-import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
+import {
+  DeviceEventId,
+  useDeviceConnection,
+} from '../../contexts/WebSocketContext';
 import ModalContainer from '../Modals/ModalContainer';
 import SystemState from '../SystemState';
 import { ILaunchConsequences } from '../../data/launchConsequences';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import {Button} from "@mui/base";
+import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
+dayjs.locale('ru');
 interface ISidenavInMainProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -94,6 +108,7 @@ function SidenavInMain({
   const [delayedTime, setDelayedTime] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date());
   const [readyIsSend, setReadyIsSend] = useState(false);
+  const [value, setValue] = React.useState<dayjs | null>(dayjs('2022-04-17'));
   const confirmButtonRef = useRef<HTMLAnchorElement>(null); // Update ref type to HTMLDivElement
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
@@ -108,7 +123,7 @@ function SidenavInMain({
   ); //wholeDamage
   const pickedCountries = useAppSelector(selectPickedCountries);
 
-  const [lastAcceptTime, setLastAcceptTime] = useState(0)
+  const [lastAcceptTime, setLastAcceptTime] = useState(0);
 
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
@@ -132,7 +147,6 @@ function SidenavInMain({
   const handelOnDatePikerOpen = () => {
     setDay(true);
   };
-
   const handleTimeChange = (newValue: Dayjs | null) => {
     if (newValue) {
       setDelayedTime(newValue.format('HH:mm'));
@@ -190,7 +204,6 @@ function SidenavInMain({
       calculatedCitiesUnderAttack > totalSettlementsCount
         ? formatNumberWithSpaces(totalSettlementsCount)
         : formatNumberWithSpaces(calculatedCitiesUnderAttack);
-
     const launchConsequences: ILaunchConsequences = {
       citiesUnderAttack,
       populationSuffering: formatNumberWithSpaces(totalPopulationRegions),
@@ -229,16 +242,16 @@ function SidenavInMain({
   };
 
   useEffect(() => {
-    if(
-      lastDeviceEvent && 
-      lastDeviceEvent.eventId === DeviceEventId.AcceptPressed && 
+    if (
+      lastDeviceEvent &&
+      lastDeviceEvent.eventId === DeviceEventId.AcceptPressed &&
       !lastDeviceEvent.consumed &&
       confirmButtonRef.current
     ) {
-      lastDeviceEvent.consumed = true
+      lastDeviceEvent.consumed = true;
       confirmButtonRef.current.click();
     }
-  }, [lastDeviceEvent])
+  }, [lastDeviceEvent]);
 
   useEffect(() => {
     if (isStateReady && !pingFailed) {
@@ -254,6 +267,30 @@ function SidenavInMain({
   useEffect(() => {
     setModalVisibleSystem(pingFailed);
   }, [pingFailed]);
+
+  const connectionСonditions: string | boolean =
+    numberOfSelectedSectors !== null &&
+    damageLevel &&
+    selectedCountries.length !== 0;
+  // &&
+  // !pingFailed;
+
+
+
+const [open, setOpen] = React.useState(false);
+const handleClickOpen = () => {
+  setOpen(true);
+};
+
+const handleDialogClose = () => {
+  setOpen(false);
+};
+
+const handleDialogOk = () => {
+  // Handle OK button click logic
+  setOpen(false);
+};
+
 
   return (
     <>
@@ -312,52 +349,190 @@ function SidenavInMain({
             />
             <DamageLevelInfo fromSideNav damageLevel={damageLevel} />
           </div>
-          {numberOfSelectedSectors !== null &&
-            damageLevel &&
-            selectedCountries.length !== 0 && (
-              !pingFailed &&
-              <div className={styles.sidenavAddConfirm}>
+
+          <div
+            className={styles.sidenavSquare}
+            style={{ display: removeModalDate ? 'none' : 'flex', zIndex: 10 }}
+          >
+            <h5
+              style={{
+                paddingLeft: '24px',
+                color: connectionСonditions ? 'white' : '#787878',
+              }}
+            >
+              Отложенный запуск
+            </h5>
+            <Switch isOn={isSwitchOn} handleSwitchChange={handleSwitchChange} />
+          </div>
+          <div
+            className={styles.sidenavDelayedWrraper}
+            style={{ display: delayed ? 'block' : 'none' }}
+          >
+            <div>
+              <button className={styles.sidenavDelayedDateButton}>
+                <span></span>
+                <h3>Дата</h3>
+              </button>
+              <div className={styles.sidenavDelayedDateWrraper}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
+                  <Button variant="outlined" onClick={handleClickOpen}>
+                    Open Date Time Picker
+                  </Button>
+                  <Dialog open={open} onClose={handleDialogClose}>
+                    <DialogTitle>Select Date and Time</DialogTitle>
+                    <DialogContent>
+                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+                        <DemoContainer components={['MultiSectionDigitalClock']}>
+                          <MultiSectionDigitalClock
+                              ampm={false}
+                              value={value}
+                              onChange={handleTimeChange}
+                          />
+                          />
+                        </DemoContainer>
+                      </LocalizationProvider>
+                    </DialogContent>
+                    <DialogActions className="MuiDialogActions-root MuiDialogActions-spacing MuiPickersLayout-actionBar">
+                      <Button onClick={handleDialogClose}>Close</Button>
+                      <Button onClick={handleDialogOk}>OK</Button>
+                    </DialogActions>
+                  </Dialog>
+                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
+                    <div className={styles.sidenavDelayedDateCurrentDay}>
+                      {dayjs().format('DD.MM.YYYY')}
+                    </div>
+                    <DemoItem>
+                      <DateCalendar
+                        value={value}
+                        slotProps={{
+                          tabs: {
+                            hidden: false,
+                            dateIcon: <LightModeIcon />,
+                            timeIcon: <AcUnitIcon />,
+                          },
+                        }}
+                        className={styles.sidenavDelayedDateCalendar}
+                        onChange={(newValue) => setValue(newValue)}
+                        sx={{
+                          backgroundColor: 'black',
+                          color: 'white',
+                          position: 'absolute',
+                          left: '-350px',
+                          bottom: '240px',
+                          '& .MuiPickersDay-root': {
+                            color: 'white',
+                          },
+                          '& .Mui-selected': {
+                            borderRadius: '0',
+                            backgroundColor: '#5ed1c5 !important',
+                          },
+                          '& .MuiDayCalendar-weekDayLabel': {
+                            color: 'white !important',
+                          },
+                          '& .MuiSvgIcon-root': {
+                            color: '#5ed1c5 !important',
+                          },
+                          '& .MuiPickersCalendarHeader-label': {
+                            textTransform: 'uppercase',
+                          },
+                        }}
+                      />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+              <Image
+                src={'/onboarding/ToggleHorisontal.svg'}
+                alt="img"
+                width={24}
+                height={24}
+              />
+            </div>
+            <div className={styles.sidenavDelayedDateIntut}>
+              {delayedDate?.format('DD.MM.YYYY')}
+            </div>
+            <div>
+              <button
+                onClick={() => setTime(true)}
+                className={styles.sidenavDelayedDateButton}
+              >
+                <span></span>
+                <h3>Время</h3>
+              </button>
+              {time && (
+                <div>
+                  <div className={styles.sidenavTimePiker}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      locale="ru"
+                    >
+                      <DemoContainer components={['TimePicker']}>
+                        <DemoItem label="Multi section digital clock">
+                          <MultiSectionDigitalClock
+                            onChange={handleTimeChange}
+                          />
+                        </DemoItem>
+                      </DemoContainer>
+                      <button onClick={() => setTime(false)}>OK</button>
+                    </LocalizationProvider>
+                  </div>
+                </div>
+              )}
+
+              <div className="Lead">
+                {delayedTime}{' '}
                 <Image
-                  src={
-                    isAttacking
-                      ? '/onboarding/backgroundImgGreen.svg'
-                      : '/onboarding/backgroundImgBlue.svg'
-                  }
-                  width={328}
-                  height={102}
-                  alt={'backgr'}
-                  className={styles.sidenavAddConfirmImage}
-                />
+                  src={'/onboarding/ToggleHorisontal.svg'}
+                  alt={'img'}
+                  width={24}
+                  height={24}
+                />{' '}
+              </div>
+            </div>
+          </div>
+          {connectionСonditions && (
+            <div className={styles.sidenavAddConfirm}>
+              <Image
+                src={
+                  isAttacking
+                    ? '/onboarding/backgroundImgGreen.svg'
+                    : '/onboarding/backgroundImgBlue.svg'
+                }
+                width={328}
+                height={102}
+                alt={'backgr'}
+                className={styles.sidenavAddConfirmImage}
+              />
+              <span
+                className="Lead"
+                style={{ color: '#787878', paddingTop: '10px' }}
+              >
+                Для перехода к запуску <br />{' '}
+                {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
+                нажмите кнопку
+              </span>
+              <Link
+                href={delayedTime && delayedDate ? '/queue' : '/summary'}
+                onClick={onSetCurrentAction}
+                ref={confirmButtonRef}
+                style={{ pointerEvents: 'none' }}
+              >
                 <span
                   className="Lead"
-                  style={{ color: '#787878', paddingTop: '10px' }}
+                  style={{ color: 'white', padding: '10px' }}
                 >
-                  Для перехода к запуску <br />{' '}
-                  {isAttacking ? <span> атаки </span> : <span> защиты </span>}{' '}
-                  нажмите кнопку
+                  ПОДТВЕРДИТЬ
                 </span>
-                <Link
-                  href={delayedTime && delayedDate ? '/queue' : '/summary'}
-                  onClick={onSetCurrentAction}
-                  ref={confirmButtonRef}
-                  style={{ pointerEvents: 'none' }}
-                >
-                  <span
-                    className="Lead"
-                    style={{ color: 'white', padding: '10px' }}
-                  >
-                    ПОДТВЕРДИТЬ
-                  </span>
-                  <Image
-                    src={'/onboarding/arrowConfirm.svg'}
-                    alt={'arrow'}
-                    className={styles.sidenavArrowSVG}
-                    height={23}
-                    width={23}
-                  />
-                </Link>
-              </div>
-            )}
+                <Image
+                  src={'/onboarding/arrowConfirm.svg'}
+                  alt={'arrow'}
+                  className={styles.sidenavArrowSVG}
+                  height={23}
+                  width={23}
+                />
+              </Link>
+            </div>
+          )}
           {modalVisibleSystem && (
             <Box sx={{ bottom: '200px', position: 'absolute' }}>
               <ModalContainer
