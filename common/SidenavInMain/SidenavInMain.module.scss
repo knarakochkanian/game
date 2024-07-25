@@ -1,5 +1,4 @@
 @import '/app/variables.module';
-
 .sidenav {
   width: 0;
   position: fixed;
@@ -70,10 +69,11 @@
     align-items: flex-start;
     gap: 40px;
     > div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 24px;
+      @include flex-between;
+      padding: 24px;
+    }
+    >div{
+      background-color: black !important;
     }
   }
   &Wrapper {
@@ -98,13 +98,52 @@
   &DelayedDate {
     position: absolute !important;
     border: none !important;
+    width: 200px;
+    height: 40px;
+    left: -257px;
+    background-color: black;
+    color: white;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+
+    &Button {
+      color: #525252;
+      position: relative;
+      > span::after {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: -8px;
+        width: 23px;
+        height: 4px;
+        background: rgba(94, 209, 197, 0.8);
+      }
+    }
+
+    &CurrentDay{
+      position: absolute;
+      left: 24px;
+      top: 24px;
+
+    }
   }
 }
-.sidenavDelayedDate {
+.sidenavDelayedDateCalendar{
   background-color: black;
+  position: absolute;
+  left: -350px;
   color: white;
-  font-size: 19px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
+  bottom: 240px;
+
+ >button:nth-child{
+   color: white !important;
+ }
+}
+.MuiButtonBase-root .MuiPickersDay-root .MuiPickersDay-dayWithMargin .css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root{
+  color: white;
+}
+.Mui-selected:hover{
+  background-color: #5ed1c5 !important;
 }
