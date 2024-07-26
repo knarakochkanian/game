@@ -59,7 +59,8 @@ const CountryWithRegions = ({
 
   const selectedCountComponent = !isAccordionExpanded &&
     selectedCount !== 0 &&
-    notAllRegionsSelected && !fromSideNav && (
+    notAllRegionsSelected &&
+    !fromSideNav && (
       <span
         className={`${styles.countSelected} ${
           isAttacking ? '' : styles.isProtecting
@@ -133,7 +134,9 @@ const CountryWithRegions = ({
             </div>
           </AccordionSummary>
 
-          <p className={styles.regionsCount}>Регион {selectedCount}</p>
+          {fromSideNav && (
+            <p className={styles.regionsCount}>Регион {selectedCount}</p>
+          )}
 
           <AccordionDetails>
             {fromLeftSideNav && (
