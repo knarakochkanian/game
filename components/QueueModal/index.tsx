@@ -7,9 +7,12 @@ import { getItemFromStorage } from '../../helpers';
 import styles from './QueueModal.module.scss';
 
 const QueueModal = () => {
-  const actionsInQueueFromStorage = getItemFromStorage(ACTIONS_IN_QUEUE, window);
-  if(!actionsInQueueFromStorage) return <></>;
-  
+  const actionsInQueueFromStorage = getItemFromStorage(
+    ACTIONS_IN_QUEUE,
+    window
+  );
+  if (!actionsInQueueFromStorage) return <></>;
+
   return (
     <div className={styles.queueModal}>
       <h5>Очередь задач</h5>
@@ -18,13 +21,15 @@ const QueueModal = () => {
           <span
             key={num}
             className={
-              actionsInQueueFromStorage[num].actionType === ATTACK
+              actionsInQueueFromStorage[num]?.actionType === ATTACK
                 ? styles.attack
                 : styles.protection
             }
           >
-            {actionsInQueueFromStorage[num].actionType === ATTACK ? ATTACK : PROTECTION}
-            {actionsInQueueFromStorage[num].name}
+            {actionsInQueueFromStorage[num]?.actionType === ATTACK
+              ? ATTACK
+              : PROTECTION}
+            {actionsInQueueFromStorage[num]?.name}
           </span>
         ))}
       </div>

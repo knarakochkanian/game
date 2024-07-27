@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
+import { PickersLayout } from '@mui/x-date-pickers/PickersLayout';
 import {
   resetGeneralState,
   selectDamgeLevel,
@@ -72,9 +73,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import {Button} from "@mui/base";
-import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
-
 dayjs.locale('ru');
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -103,17 +101,19 @@ function SidenavInMain({
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [delayed, setDelayed] = useState(false);
   const [time, setTime] = useState(false);
-  const [day, setDay] = useState(false);
-  const [delayedDate, setDelayedDate] = useState<Dayjs | null>(null);
-  const [delayedTime, setDelayedTime] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState(new Date());
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+  const [delayedDate, setDelayedDate] = useState<string | null>('2022-04-17');
+  const [delayedTime, setDelayedTime] = useState(() => {
+    return dayjs().add(10, 'minute').format('HH:mm');
+  });
   const [readyIsSend, setReadyIsSend] = useState(false);
-  const [value, setValue] = React.useState<dayjs | null>(dayjs('2022-04-17'));
-  const confirmButtonRef = useRef<HTMLAnchorElement>(null); // Update ref type to HTMLDivElement
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const confirmButtonRef = useRef<HTMLAnchorElement>(null);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
   const industrySectors = useAppSelector(selectSectors);
+
   const totalPopulationRegions = useAppSelector(
     selectTotalPopulationRegionsAffected
   ); //populationSuffering
@@ -143,14 +143,28 @@ function SidenavInMain({
     setIsSwitchOn(checked);
     setDelayed(checked);
   };
-
-  const handelOnDatePikerOpen = () => {
-    setDay(true);
+  const closeCalendarAndTimePicker = () => {
+    setCalendarOpen(false);
+    setTime(false);
   };
   const handleTimeChange = (newValue: Dayjs | null) => {
     if (newValue) {
       setDelayedTime(newValue.format('HH:mm'));
+      closeCalendarAndTimePicker();
     }
+  };
+  const handleDateButtonClick = () => {
+    setCalendarOpen(!calendarOpen);
+    if (isTimePickerOpen) {
+      closeCalendarAndTimePicker();
+    }
+  };
+  const handleTimeButtonClick = () => {
+    setIsTimePickerOpen(true);
+    setTime(true);
+  };
+  const handleOpenDateCalendar = () => {
+    setCalendarOpen(true);
   };
 
   useEffect(() => {
@@ -169,7 +183,7 @@ function SidenavInMain({
 
   const onSetCurrentAction = () => {
     const delayedDateWithTime = getDelayedDateWithTime(
-      delayedDate,
+      delayedDate ? dayjs(delayedDate) : null,
       delayedTime
     );
 
@@ -219,8 +233,8 @@ function SidenavInMain({
       damageLevel,
       date:
         delayedDate && delayedTime
-          ? delayedDate.format('DD.MM.YYYY HH:mm')
-          : '03.02.2024 12:30',
+          ? dayjs(delayedDate).format('DD.MM.YYYY HH:mm')
+          : '03.02.2024 11:11',
       industrySectors,
       isCompleted: delayedDate && delayedTime ? false : null,
       name,
@@ -271,26 +285,13 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0;
-  // &&
-  // !pingFailed;
+    selectedCountries.length !== 0 &&
+    !pingFailed;
 
-
-
-const [open, setOpen] = React.useState(false);
-const handleClickOpen = () => {
-  setOpen(true);
-};
-
-const handleDialogClose = () => {
-  setOpen(false);
-};
-
-const handleDialogOk = () => {
-  // Handle OK button click logic
-  setOpen(false);
-};
-
+  const [startDate, setStartDate] = useState(() => {
+    const now = dayjs();
+    return now;
+  });
 
   return (
     <>
@@ -374,92 +375,60 @@ const handleDialogOk = () => {
                 <h3>Дата</h3>
               </button>
               <div className={styles.sidenavDelayedDateWrraper}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
-                  <Button variant="outlined" onClick={handleClickOpen}>
-                    Open Date Time Picker
-                  </Button>
-                  <Dialog open={open} onClose={handleDialogClose}>
-                    <DialogTitle>Select Date and Time</DialogTitle>
-                    <DialogContent>
-                      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-                        <DemoContainer components={['MultiSectionDigitalClock']}>
-                          <MultiSectionDigitalClock
-                              ampm={false}
-                              value={value}
-                              onChange={handleTimeChange}
-                          />
-                          />
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </DialogContent>
-                    <DialogActions className="MuiDialogActions-root MuiDialogActions-spacing MuiPickersLayout-actionBar">
-                      <Button onClick={handleDialogClose}>Close</Button>
-                      <Button onClick={handleDialogOk}>OK</Button>
-                    </DialogActions>
-                  </Dialog>
-                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-                    <div className={styles.sidenavDelayedDateCurrentDay}>
-                      {dayjs().format('DD.MM.YYYY')}
-                    </div>
-                    <DemoItem>
-                      <DateCalendar
-                        value={value}
-                        slotProps={{
-                          tabs: {
-                            hidden: false,
-                            dateIcon: <LightModeIcon />,
-                            timeIcon: <AcUnitIcon />,
-                          },
-                        }}
-                        className={styles.sidenavDelayedDateCalendar}
-                        onChange={(newValue) => setValue(newValue)}
-                        sx={{
-                          backgroundColor: 'black',
+                {calendarOpen && startDate && (
+                  <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
+                    <DateCalendar
+                      value={startDate}
+                      onChange={(newDate) => {
+                        setStartDate(newDate);
+                        setCalendarOpen(false);
+                      }}
+                      sx={{
+                        backgroundColor: 'black',
+                        color: 'white',
+                        position: 'absolute',
+                        left: '-350px',
+                        bottom: '240px',
+                        '& .MuiPickersDay-root': {
                           color: 'white',
-                          position: 'absolute',
-                          left: '-350px',
-                          bottom: '240px',
-                          '& .MuiPickersDay-root': {
-                            color: 'white',
-                          },
-                          '& .Mui-selected': {
-                            borderRadius: '0',
-                            backgroundColor: '#5ed1c5 !important',
-                          },
-                          '& .MuiDayCalendar-weekDayLabel': {
-                            color: 'white !important',
-                          },
-                          '& .MuiSvgIcon-root': {
-                            color: '#5ed1c5 !important',
-                          },
-                          '& .MuiPickersCalendarHeader-label': {
-                            textTransform: 'uppercase',
-                          },
-                        }}
-                      />
-                    </DemoItem>
-                  </DemoContainer>
-                </LocalizationProvider>
+                        },
+                        '& .Mui-selected': {
+                          borderRadius: '0',
+                          backgroundColor: '#5ed1c5 !important',
+                        },
+                        '& .MuiDayCalendar-weekDayLabel': {
+                          color: 'white !important',
+                        },
+                        '& .MuiSvgIcon-root': {
+                          color: '#5ed1c5 !important',
+                        },
+                        '& .MuiPickersCalendarHeader-label': {
+                          textTransform: 'uppercase',
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                )}
               </div>
+            </div>
+            <button
+              className={styles.sidenavDelayedDateCurrentDay}
+              onClick={handleDateButtonClick}
+            >
+              {dayjs(startDate).format('DD.MM.YYYY')}
               <Image
                 src={'/onboarding/ToggleHorisontal.svg'}
                 alt="img"
                 width={24}
                 height={24}
               />
-            </div>
-            <div className={styles.sidenavDelayedDateIntut}>
-              {delayedDate?.format('DD.MM.YYYY')}
-            </div>
+            </button>
             <div>
-              <button
-                onClick={() => setTime(true)}
-                className={styles.sidenavDelayedDateButton}
-              >
+              <div className={styles.sidenavDelayedDateButton}>
                 <span></span>
                 <h3>Время</h3>
-              </button>
-              {time && (
+              </div>
+              {isTimePickerOpen && ( // Updated condition
                 <div>
                   <div className={styles.sidenavTimePiker}>
                     <LocalizationProvider
@@ -467,28 +436,57 @@ const handleDialogOk = () => {
                       locale="ru"
                     >
                       <DemoContainer components={['TimePicker']}>
-                        <DemoItem label="Multi section digital clock">
+                        <DemoItem label="Выберите время">
                           <MultiSectionDigitalClock
+                            ampm={false}
                             onChange={handleTimeChange}
+                            sx={{
+                              '& .MuiList-root': {
+                                width: '150px',
+                                fontSize: '26px !important',
+                              },
+                              '& .Mui-selected': {
+                                color: '#5ED1C5',
+                                fontSize: '26px',
+                                textAlign: 'center',
+                                backgroundColor: 'transparent !important',
+                              },
+                              '& .Mui-selected:hover,  .MuiMultiSectionDigitalClockSection-item:hover, .MuiMenuItem-root:hover':
+                                {
+                                  color: '#5ED1C5',
+                                  backgroundColor: 'transparent !important',
+                                },
+                              '& .MuiButtonBase-root': {
+                                fontSize: '26px',
+                                margin: 'auto',
+                              },
+                            }}
                           />
                         </DemoItem>
                       </DemoContainer>
-                      <button onClick={() => setTime(false)}>OK</button>
+                      <button
+                        onClick={() => setIsTimePickerOpen(false)}
+                        className={styles.sidenavTimePikerButton}
+                      >
+                        <span> OK</span>
+                      </button>
                     </LocalizationProvider>
                   </div>
                 </div>
               )}
-
-              <div className="Lead">
-                {delayedTime}{' '}
-                <Image
-                  src={'/onboarding/ToggleHorisontal.svg'}
-                  alt={'img'}
-                  width={24}
-                  height={24}
-                />{' '}
-              </div>
             </div>
+            <button
+              onClick={handleTimeButtonClick} // Updated event handler
+              className={styles.sidenavDelayedDateCurrentDay}
+            >
+              <span>{delayedTime}</span>
+              <Image
+                src={'/onboarding/ToggleHorisontal.svg'}
+                alt={'img'}
+                width={24}
+                height={24}
+              />
+            </button>
           </div>
           {connectionСonditions && (
             <div className={styles.sidenavAddConfirm}>
