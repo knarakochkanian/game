@@ -91,9 +91,24 @@
   }
   &TimePiker {
     position: absolute;
-    left: -200px;
-    bottom: 300px;
-    background-color: $black-60;
+    left: -322px;
+    bottom: 240px;
+    width: 100%;
+    max-width: 300px;
+    background-color: $black;
+    &Button{
+      display: flex;
+      justify-content: end;
+      width: 100%;
+      padding: 22px;
+      >span{
+        width: 119px;
+        padding: 8px 11px;
+        border: 1px solid  #FFF;
+        font-size: 14px;
+        font-family: "TT Lakes";
+      }
+    }
   }
   &DelayedDate {
     position: absolute !important;
@@ -123,10 +138,9 @@
     }
 
     &CurrentDay{
-      position: absolute;
-      left: 24px;
-      top: 24px;
-
+      @include flex-between;
+      width: 100%;
+      padding: 0 24px;
     }
   }
 }
