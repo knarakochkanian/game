@@ -49,13 +49,15 @@ import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import 'dayjs/locale/ru';
 // import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { MultiSectionDigitalClock } from '@mui/x-date-pickers';
+import { MultiSectionDigitalClock, TimeStepOptions } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
 import {
   setCloseSelectionIfChanged,
   setResetMapIfChanged,
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
+import { IconButton } from '@mui/material';
+
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 import {
   DeviceEventId,
@@ -69,10 +71,10 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import { closeXButton } from '../../public/ui_kit';
 dayjs.locale('ru');
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -292,6 +294,11 @@ function SidenavInMain({
     const now = dayjs();
     return now;
   });
+  const timeStep: TimeStepOptions = {
+    hours: 1,
+    minutes: 1,
+    seconds: 1,
+  };
 
   return (
     <>
@@ -436,24 +443,50 @@ function SidenavInMain({
                       locale="ru"
                     >
                       <DemoContainer components={['TimePicker']}>
-                        <DemoItem label="Выберите время">
+                        <DemoItem>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <span style={{ fontSize: '26px', padding: '10px' }}>
+                              Выберите время
+                            </span>
+                            <IconButton
+                              onClick={() => setIsTimePickerOpen(false)}
+                              sx={{ marginLeft: '10px' }}
+                            >
+                              <Image
+                                src={closeXButton}
+                                alt="Close button"
+                                width={20}
+                                height={20}
+                                priority
+                              />
+                            </IconButton>
+                          </Box>
                           <MultiSectionDigitalClock
                             ampm={false}
+                            timeSteps={timeStep}
                             onChange={handleTimeChange}
                             sx={{
                               '& .MuiList-root': {
                                 width: '150px',
-                                fontSize: '26px !important',
+                                maxHeight: '185px',
+                                scrollbarWidth: 'none',
                               },
                               '& .Mui-selected': {
-                                color: '#5ED1C5',
+                                color: '#5ED1C5 !important',
                                 fontSize: '26px',
                                 textAlign: 'center',
                                 backgroundColor: 'transparent !important',
                               },
                               '& .Mui-selected:hover,  .MuiMultiSectionDigitalClockSection-item:hover, .MuiMenuItem-root:hover':
                                 {
-                                  color: '#5ED1C5',
+                                  color: '#5ED1C5 !important',
                                   backgroundColor: 'transparent !important',
                                 },
                               '& .MuiButtonBase-root': {
@@ -463,6 +496,9 @@ function SidenavInMain({
                             }}
                           />
                         </DemoItem>
+                        <div className={styles.sidenavTimePikerNumbersLine}>
+                          <span></span>
+                        </div>
                       </DemoContainer>
                       <button
                         onClick={() => setIsTimePickerOpen(false)}
