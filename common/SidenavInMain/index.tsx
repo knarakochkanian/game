@@ -233,7 +233,7 @@ function SidenavInMain({
       damageLevel,
       date:
         delayedDate && delayedTime
-          ? dayjs(delayedDate).format('DD.MM.YYYY HH:mm')
+          ? `${dayjs(startDate).format('DD.MM.YYYY')} ${delayedTime}`
           : '03.02.2024 11:11',
       industrySectors,
       isCompleted: delayedDate && delayedTime ? false : null,
@@ -428,7 +428,7 @@ function SidenavInMain({
                 <span></span>
                 <h3>Время</h3>
               </div>
-              {isTimePickerOpen && ( // Updated condition
+              {isTimePickerOpen && (
                 <div>
                   <div className={styles.sidenavTimePiker}>
                     <LocalizationProvider
@@ -476,7 +476,7 @@ function SidenavInMain({
               )}
             </div>
             <button
-              onClick={handleTimeButtonClick} // Updated event handler
+              onClick={handleTimeButtonClick}
               className={styles.sidenavDelayedDateCurrentDay}
             >
               <span>{delayedTime}</span>
@@ -510,7 +510,7 @@ function SidenavInMain({
                 нажмите кнопку
               </span>
               <Link
-                href={delayedTime && delayedDate ? '/queue' : '/summary'}
+                href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
                 style={{ pointerEvents: 'none' }}
