@@ -44,7 +44,7 @@ import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import 'dayjs/locale/ru';
 // import DatePicker from 'react-datepicker';
@@ -115,7 +115,6 @@ function SidenavInMain({
   const damageLevel = useAppSelector(selectDamgeLevel);
   const isAttacking = useAppSelector(selectIsAttacking);
   const industrySectors = useAppSelector(selectSectors);
-
   const totalPopulationRegions = useAppSelector(
     selectTotalPopulationRegionsAffected
   ); //populationSuffering
@@ -126,7 +125,7 @@ function SidenavInMain({
   const pickedCountries = useAppSelector(selectPickedCountries);
 
   const [lastAcceptTime, setLastAcceptTime] = useState(0);
-
+  const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
       ? countSelectedOptions(industrySectors, 'selected')
@@ -140,6 +139,17 @@ function SidenavInMain({
     );
   }, [numberOfSelectedSectors, damageLevel, selectedCountries]);
 
+  const [tempSelectedDate, setTempSelectedDate] = useState<Dayjs | null>(null);
+  const handleDateChange = (newDate: Dayjs | null) => {
+    setTempSelectedDate(newDate);
+  };
+
+  const handleOkButtonClick = () => {
+    if (tempSelectedDate) {
+      setStartDate(tempSelectedDate);
+      setCalendarOpen(false);
+    }
+  };
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsSwitchOn(checked);
@@ -149,12 +159,15 @@ function SidenavInMain({
     setCalendarOpen(false);
     setTime(false);
   };
-  const handleTimeChange = (newValue: Dayjs | null) => {
+
+  const handleTimeChangeInternal = (newValue: Dayjs | null) => {
     if (newValue) {
+      setSelectedTime(newValue);
       setDelayedTime(newValue.format('HH:mm'));
       closeCalendarAndTimePicker();
     }
   };
+
   const handleDateButtonClick = () => {
     setCalendarOpen(!calendarOpen);
     if (isTimePickerOpen) {
@@ -384,12 +397,7 @@ function SidenavInMain({
               <div className={styles.sidenavDelayedDateWrraper}>
                 {calendarOpen && startDate && (
                   <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
-                    <DateCalendar
-                      value={startDate}
-                      onChange={(newDate) => {
-                        setStartDate(newDate);
-                        setCalendarOpen(false);
-                      }}
+                    <Box
                       sx={{
                         backgroundColor: 'black',
                         color: 'white',
@@ -398,6 +406,17 @@ function SidenavInMain({
                         bottom: '240px',
                         '& .MuiPickersDay-root': {
                           color: 'white',
+                          '&.Mui-disabled:not(.Mui-selected)': {
+                            color: '#525252 !important',
+                          },
+                        },
+                        '& .MuiPickersDay-today': {
+                          border: '1px solid  #5ED1C5',
+                          color: '#5ED1C5',
+                          borderRadius: '0',
+                        },
+                        '& .MuiDateCalendar-root': {
+                          maxHeight: '310px',
                         },
                         '& .Mui-selected': {
                           borderRadius: '0',
@@ -412,8 +431,37 @@ function SidenavInMain({
                         '& .MuiPickersCalendarHeader-label': {
                           textTransform: 'uppercase',
                         },
+                        '& .MuiPickersCalendarHeader-root': {
+                          maxWidth: '290px',
+                        },
+                        '& .MuiPickersMonth-root .Mui-disabled': {
+                          color: '#525252 !important',
+                        },
                       }}
-                    />
+                    >
+                      <Box sx={{ right: '8px', position: 'absolute' }}>
+                        <IconButton onClick={() => setCalendarOpen(false)}>
+                          <Image
+                            src={closeXButton}
+                            alt="Close button"
+                            width={20}
+                            height={20}
+                          />
+                        </IconButton>
+                      </Box>
+                      <DateCalendar
+                        views={['month', 'day']}
+                        disablePast={true}
+                        value={tempSelectedDate}
+                        onChange={handleDateChange}
+                      />
+                      <button
+                        onClick={handleOkButtonClick}
+                        className={styles.sidenavDatePikerButton}
+                      >
+                        <span>OK</span>
+                      </button>
+                    </Box>
                   </LocalizationProvider>
                 )}
               </div>
@@ -442,69 +490,73 @@ function SidenavInMain({
                       dateAdapter={AdapterDayjs}
                       locale="ru"
                     >
-                      <DemoContainer components={['TimePicker']}>
-                        <DemoItem>
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              width: '100%',
-                            }}
-                          >
-                            <span style={{ fontSize: '26px', padding: '10px' }}>
-                              Выберите время
-                            </span>
-                            <IconButton
-                              onClick={() => setIsTimePickerOpen(false)}
-                              sx={{ marginLeft: '10px' }}
-                            >
-                              <Image
-                                src={closeXButton}
-                                alt="Close button"
-                                width={20}
-                                height={20}
-                                priority
-                              />
-                            </IconButton>
-                          </Box>
-                          <MultiSectionDigitalClock
-                            ampm={false}
-                            timeSteps={timeStep}
-                            onChange={handleTimeChange}
-                            sx={{
-                              '& .MuiList-root': {
-                                width: '150px',
-                                maxHeight: '185px',
-                                scrollbarWidth: 'none',
-                              },
-                              '& .Mui-selected': {
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                        }}
+                      >
+                        <span style={{ fontSize: '26px', padding: '10px' }}>
+                          Выберите время
+                        </span>
+                        <IconButton
+                          onClick={() => setIsTimePickerOpen(false)}
+                          sx={{ marginLeft: '10px' }}
+                        >
+                          <Image
+                            src={closeXButton}
+                            alt="Close button"
+                            width={20}
+                            height={20}
+                          />
+                        </IconButton>
+                      </Box>
+                      <Box>
+                        <MultiSectionDigitalClock
+                          ampm={false}
+                          timeSteps={timeStep}
+                          onChange={handleTimeChangeInternal}
+                          sx={{
+                            '& .MuiList-root': {
+                              width: '150px',
+                              maxHeight: '175px',
+                              scrollbarWidth: 'none',
+                            },
+                            '& .Mui-selected': {
+                              color: '#5ED1C5 !important',
+                              fontSize: '32px', // Increased font size
+                              textAlign: 'center',
+                              backgroundColor: 'transparent !important',
+                            },
+                            '& .Mui-selected:hover, .MuiMultiSectionDigitalClockSection-item:hover, .MuiMenuItem-root:hover':
+                              {
                                 color: '#5ED1C5 !important',
-                                fontSize: '26px',
-                                textAlign: 'center',
                                 backgroundColor: 'transparent !important',
                               },
-                              '& .Mui-selected:hover,  .MuiMultiSectionDigitalClockSection-item:hover, .MuiMenuItem-root:hover':
-                                {
-                                  color: '#5ED1C5 !important',
-                                  backgroundColor: 'transparent !important',
-                                },
-                              '& .MuiButtonBase-root': {
-                                fontSize: '26px',
-                                margin: 'auto',
-                              },
-                            }}
-                          />
-                        </DemoItem>
+                            '& .MuiButtonBase-root': {
+                              fontSize: '26px',
+                              margin: 'auto',
+                            },
+                          }}
+                        />
                         <div className={styles.sidenavTimePikerNumbersLine}>
                           <span></span>
                         </div>
-                      </DemoContainer>
+                        <Image
+                          src={'home/colon.svg'}
+                          alt="colon"
+                          width={36}
+                          height={23}
+                          className={styles.sidenavTimePikerNumbersColon}
+                        />
+                      </Box>
                       <button
                         onClick={() => setIsTimePickerOpen(false)}
                         className={styles.sidenavTimePikerButton}
                       >
-                        <span> OK</span>
+                        <span>OK</span>
                       </button>
                     </LocalizationProvider>
                   </div>

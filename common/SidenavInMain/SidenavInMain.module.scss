@@ -89,6 +89,19 @@
       top: 10px;
     }
   }
+  &DatePikerButton{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    padding: 0 18px 18px 0;
+    >span{
+      width: 119px;
+      padding: 8px 11px;
+      border: 1px solid  #FFF;
+      font-size: 14px;
+      font-family: "TT Lakes", sans-serif;
+    }
+  }
   &TimePiker {
     position: absolute;
     left: -322px;
@@ -106,15 +119,16 @@
         padding: 8px 11px;
         border: 1px solid  #FFF;
         font-size: 14px;
-        font-family: "TT Lakes", Serif;
+        font-family: "TT Lakes", sans-serif;
       }
     }
-    &NumbersLine{
+    &Numbers{
+    &Line{
       position: absolute;
       width: 250px;
       height: 50px;
-      top: 76px;
-      left: 10px;
+      top: 63px;
+      left: 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.4);
       border-bottom: 1px solid rgba(255, 255, 255, 0.4);
       >span{
@@ -154,6 +168,12 @@
         background: rgba(255, 255, 255, 0.4);
         bottom: 0;
         right: 0;
+      }
+    }
+      &Colon{
+      position: absolute;
+        top: 78px;
+        left: 126px;
       }
     }
   }
@@ -202,9 +222,42 @@
    color: white !important;
  }
 }
-.MuiButtonBase-root .MuiPickersDay-root .MuiPickersDay-dayWithMargin .css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root{
-  color: white;
+
+
+.sidenavTimePiker {
+  max-height: 340px;
+  overflow: auto;
 }
-.Mui-selected:hover{
-  background-color: #5ed1c5 !important;
+.MuiList-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 285px;
+  text-align: center;
+  leading-trim: both;
+  text-edge: cap;
+  font-variant-numeric: slashed-zero;
+  font-family: "TT Lakes", serif;
+  font-size: 26.36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+}
+.Mui-selected {
+  color: #5ED1C5 !important;
+  font-size: 26px !important;
+  text-align: center;
+  background-color: transparent !important;
+}
+.MuiPickersMonth-monthButton.Mui-disabled{
+  color:  #525252;
+  font-variant-numeric: slashed-zero;
+  font-family: "TT Lakes";
+  font-size: 16.004px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
 }
