@@ -104,8 +104,8 @@ function SidenavInMain({
   const [delayed, setDelayed] = useState(false);
   const [time, setTime] = useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
-  const [delayedDate, setDelayedDate] = useState<string | null>('2022-04-17');
-  const [delayedTime, setDelayedTime] = useState(() => {
+  const [delayedDate, setDelayedDate] = useState<string | null>(null);
+  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
     return dayjs().add(10, 'minute').format('HH:mm');
   });
   const [readyIsSend, setReadyIsSend] = useState(false);
@@ -123,8 +123,8 @@ function SidenavInMain({
     selectFormattedFinancialLosses
   ); //wholeDamage
   const pickedCountries = useAppSelector(selectPickedCountries);
+  const [hasDelayedTimeChanged, setHasDelayedTimeChanged] = useState(false);
 
-  const [lastAcceptTime, setLastAcceptTime] = useState(0);
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
   const numberOfSelectedSectors =
     countSelectedOptions(industrySectors, 'selected') !== 0
@@ -139,17 +139,26 @@ function SidenavInMain({
     );
   }, [numberOfSelectedSectors, damageLevel, selectedCountries]);
 
-  const [tempSelectedDate, setTempSelectedDate] = useState<Dayjs | null>(null);
+  const [tempSelectedDate, setTempSelectedDate] = useState<Dayjs | null>(
+    dayjs()
+  );
   const handleDateChange = (newDate: Dayjs | null) => {
     setTempSelectedDate(newDate);
   };
 
   const handleOkButtonClick = () => {
     if (tempSelectedDate) {
-      setStartDate(tempSelectedDate);
+      setDelayedDate(tempSelectedDate.format('YYYY-MM-DD'));
+      console.log(
+        'Delayed date set to:',
+        tempSelectedDate.format('YYYY-MM-DD')
+      );
       setCalendarOpen(false);
+    } else {
+      console.log('No date selected');
     }
   };
+
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setIsSwitchOn(checked);
@@ -163,6 +172,7 @@ function SidenavInMain({
   const handleTimeChangeInternal = (newValue: Dayjs | null) => {
     if (newValue) {
       setSelectedTime(newValue);
+      setHasDelayedTimeChanged(true);
       setDelayedTime(newValue.format('HH:mm'));
       closeCalendarAndTimePicker();
     }
@@ -239,6 +249,8 @@ function SidenavInMain({
       wholeDamage: formattedFinancialLosses,
     };
 
+    const isCompleted = delayedDate && delayedTime ? false : null;
+
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
       news: [],
@@ -248,10 +260,10 @@ function SidenavInMain({
       damageLevel,
       date:
         delayedDate && delayedTime
-          ? `${dayjs(startDate).format('DD.MM.YYYY')} ${delayedTime}`
+          ? `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`
           : '03.02.2024 11:11',
       industrySectors,
-      isCompleted: delayedDate && delayedTime ? false : null,
+      isCompleted,
       name,
       selectedCountries,
     };
@@ -300,8 +312,10 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0 &&
-    !pingFailed;
+    selectedCountries.length !== 0;
+  //   &&
+  // !pingFailed;    //   &&
+  // !pingFailed;
 
   const [startDate, setStartDate] = useState(() => {
     const now = dayjs();
@@ -411,7 +425,7 @@ function SidenavInMain({
                           },
                         },
                         '& .MuiPickersDay-today': {
-                          border: '1px solid  #5ED1C5',
+                          border: '1px solid  #5ED1C5 !important',
                           color: '#5ED1C5',
                           borderRadius: '0',
                         },
@@ -453,7 +467,10 @@ function SidenavInMain({
                         views={['month', 'day']}
                         disablePast={true}
                         value={tempSelectedDate}
-                        onChange={handleDateChange}
+                        onChange={(newValue) => {
+                          console.log('Date selected:', newValue);
+                          handleDateChange(newValue);
+                        }}
                       />
                       <button
                         onClick={handleOkButtonClick}
@@ -470,7 +487,7 @@ function SidenavInMain({
               className={styles.sidenavDelayedDateCurrentDay}
               onClick={handleDateButtonClick}
             >
-              {dayjs(startDate).format('DD.MM.YYYY')}
+              {dayjs(tempSelectedDate).format('DD.MM.YYYY')}
               <Image
                 src={'/onboarding/ToggleHorisontal.svg'}
                 alt="img"
@@ -545,7 +562,7 @@ function SidenavInMain({
                           <span></span>
                         </div>
                         <Image
-                          src={'home/colon.svg'}
+                          src={`${hasDelayedTimeChanged ? 'home/colonGreen.svg' : 'home/colon.svg'}`}
                           alt="colon"
                           width={36}
                           height={23}
@@ -601,7 +618,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                style={{ pointerEvents: 'none' }}
+                // style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
