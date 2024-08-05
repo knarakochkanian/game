@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -13,7 +13,6 @@ import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
-  resetGeneralState,
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
@@ -29,9 +28,9 @@ import {
 import proccessNewsData from '../../helpers/proccessNewsData';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { useNTP } from '../../contexts/NTPDateContext';
+import ConnectionLostModal from '../../common/ConnectionLostModal';
 
 import styles from './summary.module.scss';
-import ConnectionLostModal from '../../common/ConnectionLostModal';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,

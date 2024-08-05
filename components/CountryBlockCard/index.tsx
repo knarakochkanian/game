@@ -12,9 +12,9 @@ import {
 } from '../../redux/features/generalSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import closeUsa from '../../public/onboarding/onboarding-usa-close.svg';
+import { closeXProtect } from '../../public/ui_kit';
 
 import styles from './CountryBlockCard.module.scss';
-import { closeXProtect } from '../../public/ui_kit';
 
 const CountryBlockCard = ({ option }: { option: Option | IPlace }) => {
   const dispatch = useAppDispatch();

@@ -771,14 +771,14 @@ const industry: IIndustry = {
           selected: false,
           parent: seti_svyazi,
           id: 1,
-          name: 'Телефонные',
+          name: 'Телефония',
           n: 3,
         },
         {
           selected: false,
           parent: seti_svyazi,
           id: 2,
-          name: 'Широкополосные',
+          name: 'Широкополосные сети',
           n: 4,
         },
         {
