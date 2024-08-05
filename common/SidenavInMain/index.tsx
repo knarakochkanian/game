@@ -480,6 +480,9 @@ function SidenavInMain({
                         '& .MuiPickersMonth-root .Mui-disabled': {
                           color: '#525252 !important',
                         },
+                        '& .MuiPickersYear-yearButton.Mui-disabled': {
+                          color: '#525252 !important',
+                        },
                       }}
                     >
                       <Box sx={{ right: '8px', position: 'absolute' }}>
@@ -493,7 +496,7 @@ function SidenavInMain({
                         </IconButton>
                       </Box>
                       <DateCalendar
-                        views={['month', 'day']}
+                        views={['year', 'month', 'day']}
                         disablePast={true}
                         value={tempSelectedDate}
                         onChange={(newValue) => {
