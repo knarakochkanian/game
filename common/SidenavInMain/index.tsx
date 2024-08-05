@@ -41,13 +41,9 @@ import IndustryAccordion from '../../components/IndustryAccordion';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import 'dayjs/locale/ru';
-// import DatePicker from 'react-datepicker';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import { MultiSectionDigitalClock, TimeStepOptions } from '@mui/x-date-pickers';
 import useCloseModal from '../../hooks/useCloseModal';
@@ -142,8 +138,43 @@ function SidenavInMain({
   const [tempSelectedDate, setTempSelectedDate] = useState<Dayjs | null>(
     dayjs()
   );
+
   const handleDateChange = (newDate: Dayjs | null) => {
     setTempSelectedDate(newDate);
+  };
+  const currentHour = dayjs().format('HH:mm');
+  console.log(currentHour, 'currentHour');
+  const shouldDisableTime = (
+    value: Dayjs,
+    view: 'hours' | 'minutes' | 'seconds'
+  ) => {
+    if (!tempSelectedDate) {
+      return false;
+    }
+
+    const isToday = tempSelectedDate.isSame(dayjs(), 'day');
+    if (isToday) {
+      const currentTime = dayjs();
+      if (view === 'hours' && value.hour() < currentTime.hour()) {
+        return true;
+      }
+      if (
+        view === 'minutes' &&
+        value.hour() === currentTime.hour() &&
+        value.minute() < currentTime.minute()
+      ) {
+        return true;
+      }
+      if (
+        view === 'seconds' &&
+        value.hour() === currentTime.hour() &&
+        value.minute() === currentTime.minute() &&
+        value.second() < currentTime.second()
+      ) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleOkButtonClick = () => {
@@ -312,10 +343,8 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0;
-  //   &&
-  // !pingFailed;    //   &&
-  // !pingFailed;
+    selectedCountries.length !== 0 &&
+    !pingFailed;
 
   const [startDate, setStartDate] = useState(() => {
     const now = dayjs();
@@ -535,6 +564,7 @@ function SidenavInMain({
                           ampm={false}
                           timeSteps={timeStep}
                           onChange={handleTimeChangeInternal}
+                          shouldDisableTime={shouldDisableTime}
                           sx={{
                             '& .MuiList-root': {
                               width: '150px',
@@ -543,7 +573,7 @@ function SidenavInMain({
                             },
                             '& .Mui-selected': {
                               color: '#5ED1C5 !important',
-                              fontSize: '32px', // Increased font size
+                              fontSize: '32px',
                               textAlign: 'center',
                               backgroundColor: 'transparent !important',
                             },
@@ -618,7 +648,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                // style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
