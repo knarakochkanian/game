@@ -76,7 +76,7 @@
 .subIndustryCount {
   @include text-color-letter-spacing-etc($mid-dark-gray, unset);
   @include set-font-size-weight(19px, 500);
-  padding-left: 38px;
+  padding-left: 48px;
 }
 
 .eventName {

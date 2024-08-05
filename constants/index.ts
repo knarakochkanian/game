@@ -14,6 +14,9 @@ export const ATTACK_OR_PROTECT = 'attackOrProtect';
 export const GLOBE = 'глобус';
 export const MAP = 'карта';
 
+export const consequencesPForOneIndustryStatus = 'consequencesPForOneIndustry';
+export const consequencesParagraphStatus = 'consequencesParagraph';
+
 //languages
 export const ENGLISH = 'english';
 export const RUSSIAN = 'russian';

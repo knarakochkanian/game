@@ -10,13 +10,19 @@ import Modal from '../../common/Modals/Modal';
 import Paragraph from '../../common/Paragraph';
 import useGetPage from '../../hooks/useGetPage';
 import { StaticMap } from '../Map/StaticMap.component';
-import { ConsequencesParagraph as getConsequencesData } from '../../data/consequencesParagraph';
+import {
+  ConsequencesParagraph as getConsequencesData,
+  IConsequencesParagraphBoth,
+  IParagraphBoth,
+} from '../../data/consequencesParagraph';
 import {
   LAUNCH_CONSEQUENCES,
   ONBOARDING,
   PROTECTION,
   SUMMARY,
   citiesUnderAttack as citiesUnderAttackName,
+  consequencesPForOneIndustryStatus,
+  consequencesParagraphStatus,
   populationSuffering as populationSufferingName,
   wholeDamage as wholeDamageName,
 } from '../../constants';
@@ -24,10 +30,10 @@ import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
 import TopCapitalParagraphs from './TopCapitalParagraphs';
+import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 import '../../app/globals.scss';
 import styles from './LaunchConsequences.module.scss';
-import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
 interface ILaunchConsequencesProps {
   action: IAction;
@@ -92,7 +98,7 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
   };
 
   const renderConsequences = (
-    consequences: ConsequencesParagraph,
+    consequences: IConsequencesParagraphBoth | ConsequencesParagraph,
     damageLevel: string
   ) => {
     if (!consequences) {
@@ -101,28 +107,42 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
 
     const selectedSectorNames = (action?.industrySectors || [])
       .filter((s) => s.options.some((o) => o.selected))
-      .map((s) => getIndustryNameInEnglish(s.title));
+      .map((s) => {
+        const oneIndustrySelected =
+          s.options.filter((o) => o.selected).length === 1;
 
-    return selectedSectorNames.map((key) => {
-      const consequence = consequences[key as string];
+        return {
+          oneIndustrySelected,
+          title: getIndustryNameInEnglish(s.title),
+        };
+      });
+
+    return selectedSectorNames.map(({ oneIndustrySelected, title }) => {
+      const oneOrMoreSelectedStatus = oneIndustrySelected
+        ? consequencesPForOneIndustryStatus
+        : consequencesParagraphStatus;
+      const consequence =
+        title === 'COMPANY_TOP_CAPITALIZATION'
+          ? consequences[title as string]
+          : (consequences[title as string] as IParagraphBoth)[oneOrMoreSelectedStatus];
       let paragraph = proccessParagraphByDamageLevel(
         damageLevel,
         consequence as ConsequenceLevels
       );
 
-      if (key === 'COMPANY_TOP_CAPITALIZATION') {
+      if (title === 'COMPANY_TOP_CAPITALIZATION') {
         return (
           <TopCapitalParagraphs
-            key={key}
+            key={title}
             action={action}
-            consequence={consequence}
+            consequence={consequence as TopCapitalizationLevels}
             damageLevel={damageLevel}
           />
         );
       }
 
       return (
-        <div key={key}>
+        <div key={title}>
           <p>{paragraph}</p>
         </div>
       );
