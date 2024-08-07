@@ -21,9 +21,9 @@ import {
   selectComfirmedFromOnboarding,
   selectIsAttacking,
 } from '../../redux/features/generalSlice';
+import IndustryCard from '../../common/IndustryCard';
 
 import styles from './IndustryAccordion.module.scss';
-import IndustryCard from '../../common/IndustryCard';
 
 interface IIndustryAccordionProps {
   delayed?: boolean | undefined;

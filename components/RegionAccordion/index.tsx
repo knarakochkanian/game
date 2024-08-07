@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Places from '../Places';
@@ -12,14 +11,11 @@ import { defaultStyles, detailsStylesInSummery } from '../../data/styleObjects';
 import { useAppSelector } from '../../redux/hooks';
 import {
   removeFromPickedCountries,
-  resetDamageLevel,
-  resetPickedCountries,
   selectComfirmedFromOnboarding,
   selectIsAttacking,
   selectPickedCountries,
 } from '../../redux/features/generalSlice';
 import PlacesInSidenavMain from '../PlacesInSidenavMain';
-import { minusSign } from '../../public/main-screen';
 
 import styles from './RegionAccordion.module.scss';
 
