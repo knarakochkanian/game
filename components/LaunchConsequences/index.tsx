@@ -28,7 +28,10 @@ import {
 } from '../../constants';
 import { selectComfirmedFromOnboarding } from '../../redux/features/generalSlice';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
-import { proccessParagraphByDamageLevel } from '../../helpers/helpers_2';
+import {
+  capitalizeFirstLetter,
+  proccessParagraphByDamageLevel,
+} from '../../helpers/helpers_2';
 import TopCapitalParagraphs from './TopCapitalParagraphs';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 
@@ -124,7 +127,9 @@ const LaunchConsequences: React.FC<ILaunchConsequencesProps> = ({
       const consequence =
         title === 'COMPANY_TOP_CAPITALIZATION'
           ? consequences[title as string]
-          : (consequences[title as string] as IParagraphBoth)[oneOrMoreSelectedStatus];
+          : (consequences[title as string] as IParagraphBoth)[
+              oneOrMoreSelectedStatus
+            ];
       let paragraph = proccessParagraphByDamageLevel(
         damageLevel,
         consequence as ConsequenceLevels

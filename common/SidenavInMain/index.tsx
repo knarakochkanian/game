@@ -595,7 +595,11 @@ function SidenavInMain({
                           <span></span>
                         </div>
                         <Image
-                          src={`${hasDelayedTimeChanged ? 'home/colonGreen.svg' : 'home/colon.svg'}`}
+                          src={`${
+                            hasDelayedTimeChanged
+                              ? 'home/colonGreen.svg'
+                              : 'home/colon.svg'
+                          }`}
                           alt="colon"
                           width={36}
                           height={23}
@@ -626,9 +630,7 @@ function SidenavInMain({
               />
             </button>
           </div>
-          {
-          // connectionСonditions && 
-          (
+          {connectionСonditions && (
             <div className={styles.sidenavAddConfirm}>
               <Image
                 src={
@@ -653,7 +655,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                // style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
