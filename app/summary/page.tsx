@@ -19,12 +19,14 @@ import {
   setCurrentActionDate,
   setCurrentActionNews,
 } from '../../redux/features/generalSlice';
-import { ACTIONS_IN_QUEUE, COUNT_DOWN, top_capitalization } from '../../constants';
+import {
+  ACTIONS_IN_QUEUE,
+  COUNT_DOWN,
+  top_capitalization,
+} from '../../constants';
 import { formatDate, getItemFromStorage } from '../../helpers';
 import Modal from '../../common/Modals/Modal';
-import {
-  useDeviceConnection,
-} from '../../contexts/WebSocketContext';
+import { useDeviceConnection } from '../../contexts/WebSocketContext';
 import proccessNewsData from '../../helpers/proccessNewsData';
 import getIndustryNameInEnglish from '../../helpers/getIndustryNameInEnglish';
 import { useNTP } from '../../contexts/NTPDateContext';
@@ -46,9 +48,9 @@ const Summary = () => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
-  const {pingFailed, send} = useDeviceConnection();
+  const { pingFailed, send } = useDeviceConnection();
 
-  const { getDate } = useNTP()
+  const { getDate } = useNTP();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,6 +68,7 @@ const Summary = () => {
         const actionsInQueue = [
           ...(actionsInQueueFromStorage as IAction[]),
           currentAction,
+          router.push(COUNT_DOWN),
         ];
 
         if (typeof window !== 'undefined') {
@@ -87,8 +90,10 @@ const Summary = () => {
           .filter((s) => s.options.some((o) => o.selected))
           .map((s) => s.title)
           .map((t) => getIndustryNameInEnglish(t));
-        const topCapitalizationSector = industrySectors.find(s => s.title === top_capitalization)
-          
+        const topCapitalizationSector = industrySectors.find(
+          (s) => s.title === top_capitalization
+        );
+
         let news: INews[] = proccessNewsData(
           selectedCountryNames,
           currentDate,
@@ -154,7 +159,7 @@ const Summary = () => {
           </Link>
         </div>
       </Modal>
-      <ConnectionLostModal/>
+      <ConnectionLostModal />
     </main>
   );
 };

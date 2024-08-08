@@ -37,7 +37,10 @@ import {
 
 import styles from './count-down.module.scss';
 import TrashModal from '../../common/TrashModal';
-import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
+import {
+  DeviceEventId,
+  useDeviceConnection,
+} from '../../contexts/WebSocketContext';
 
 export default function CountDown() {
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
@@ -47,7 +50,7 @@ export default function CountDown() {
   const isAttacking = useAppSelector(selectIsAttacking);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
   const router = useRouter();
-  const { lastDeviceEvent } = useDeviceConnection()!
+  const { lastDeviceEvent } = useDeviceConnection()!;
 
   const [completedActionsFromStorage, setCompletedActionsFromStorage] =
     useState<IAction[] | undefined>();
@@ -88,13 +91,20 @@ export default function CountDown() {
     }
   }, []);
 
-  const navigateToHome = useCallback((action: IAction | null) => {
-    var url = '/'
-    if(currentAction.actionType === ATTACK) {
-      url = '/news?backTo=home&id=' + currentAction.id
-    }
-    router.push(url);
-  }, [currentAction])
+  const navigateToHome = useCallback(
+    (action: IAction | null) => {
+      let url = '/';
+
+      if (currentAction.isCompleted == false) {
+        url = '/';
+      } else if (currentAction.actionType === ATTACK) {
+        url = '/news?backTo=home&id=' + currentAction.id;
+      }
+
+      router.push(url);
+    },
+    [currentAction, router]
+  );
 
   useEffect(() => {
     let countdown: NodeJS.Timeout;
@@ -150,11 +160,14 @@ export default function CountDown() {
   };
 
   useEffect(() => {
-    if(lastDeviceEvent?.eventId == DeviceEventId.CancelPressed && !lastDeviceEvent.consumed){
-      lastDeviceEvent.consumed = true
+    if (
+      lastDeviceEvent?.eventId == DeviceEventId.CancelPressed &&
+      !lastDeviceEvent.consumed
+    ) {
+      lastDeviceEvent.consumed = true;
       cancelCountdown();
     }
-  }, [lastDeviceEvent])
+  }, [lastDeviceEvent]);
 
   return (
     <div

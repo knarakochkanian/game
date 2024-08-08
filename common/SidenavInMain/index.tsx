@@ -100,7 +100,9 @@ function SidenavInMain({
   const [delayed, setDelayed] = useState(false);
   const [time, setTime] = useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
-  const [delayedDate, setDelayedDate] = useState<string | null>(null);
+  const [delayedDate, setDelayedDate] = useState<string | null>(
+    dayjs().format('YYYY-MM-DD')
+  );
   const [delayedTime, setDelayedTime] = useState<string | null>(() => {
     return dayjs().add(10, 'minute').format('HH:mm');
   });
@@ -143,7 +145,6 @@ function SidenavInMain({
     setTempSelectedDate(newDate);
   };
   const currentHour = dayjs().format('HH:mm');
-  console.log(currentHour, 'currentHour');
   const shouldDisableTime = (
     value: Dayjs,
     view: 'hours' | 'minutes' | 'seconds'
@@ -280,7 +281,7 @@ function SidenavInMain({
       wholeDamage: formattedFinancialLosses,
     };
 
-    const isCompleted = delayedDate && delayedTime ? false : null;
+    const isCompleted = delayedDate && delayedTime && isSwitchOn ? false : null;
 
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
@@ -290,7 +291,7 @@ function SidenavInMain({
       id: extractNumber(name),
       damageLevel,
       date:
-        delayedDate && delayedTime
+        (delayedDate && delayedTime) || isSwitchOn
           ? `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`
           : '03.02.2024 11:11',
       industrySectors,
@@ -299,7 +300,7 @@ function SidenavInMain({
       selectedCountries,
     };
 
-    if (delayedDate && delayedTime) {
+    if (isSwitchOn || (delayedDate && delayedTime)) {
       const actionsInQueue = JSON.parse(
         window.localStorage.getItem(ACTIONS_IN_QUEUE) || '[]'
       );
@@ -568,6 +569,7 @@ function SidenavInMain({
                           timeSteps={timeStep}
                           onChange={handleTimeChangeInternal}
                           shouldDisableTime={shouldDisableTime}
+                          value={dayjs(delayedTime, 'HH:mm')}
                           sx={{
                             '& .MuiList-root': {
                               width: '150px',

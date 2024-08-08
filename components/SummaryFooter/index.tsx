@@ -4,7 +4,10 @@ import FooterButton from '../../common/FooterButton';
 import { START, startAttackTitle } from '../../constants';
 import { summaryFooterForm, summaryFooterGradient } from '../../public/summary';
 import styles from './SummaryFooter.module.scss';
-import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
+import {
+  DeviceEventId,
+  useDeviceConnection,
+} from '../../contexts/WebSocketContext';
 
 const buttonInfo = (
   <p>
@@ -19,11 +22,11 @@ const SummaryFooter = ({ onClick }: { onClick: () => void }) => {
 
   useEffect(() => {
     if (
-      lastDeviceEvent?.eventId == DeviceEventId.StartPressed 
-      && !lastDeviceEvent?.consumed 
-      && buttonRef.current
+      lastDeviceEvent?.eventId == DeviceEventId.StartPressed &&
+      !lastDeviceEvent?.consumed &&
+      buttonRef.current
     ) {
-      lastDeviceEvent.consumed = true
+      lastDeviceEvent.consumed = true;
       buttonRef.current.click();
     }
   }, [lastDeviceEvent]);
