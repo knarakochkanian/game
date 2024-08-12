@@ -13,6 +13,7 @@ import BackAndForwardBtns from '../../common/BackAndForwardBtns';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
+  resetGeneralState,
   selectComfirmedFromOnboarding,
   selectCurrentAction,
   selectIsAttacking,
@@ -108,8 +109,16 @@ const Summary = () => {
   };
 
   const onBack = () => {
-    send('cancel');
-    send('ping');
+    setTimeout(() => {
+      dispatch(resetGeneralState());
+    }, 10);
+
+    if (
+      !pingFailed
+    ) {
+      send('cancel');
+      send('ping');
+    }
     router.back();
   };
 
