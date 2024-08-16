@@ -14,6 +14,7 @@ import { IActionCardProps } from '../ActionCard';
 import {
   ACTIONS_IN_QUEUE,
   ATTACK,
+  COMPLETED_ACTIONS,
   HISTORY,
   PROTECTION,
   QUEUE,
@@ -24,10 +25,10 @@ import { useAppDispatch } from '../../redux/hooks';
 import { resetGeneralState } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
-import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
+import { setResetMapIfChanged, setUpdateHistoryOrQueue } from '../../redux/features/helpersSlice';
+import { getItemFromStorage } from '../../helpers';
 
 import styles from './Header.module.scss';
-import { getItemFromStorage } from '../../helpers';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const page = useGetPage();
@@ -39,28 +40,41 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   useCloseModal(trashModalOpen, setTrashModalOpen);
 
   const handleTrashCallBack = () => {
-    const storedAction = getItemFromStorage(ACTIONS_IN_QUEUE, window);
-
-    if (storedAction && Array.isArray(storedAction)) {
-      const updatedActions = storedAction.filter(
-        (storedAction) => storedAction.id !== action.id
-      );
-
-      localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(updatedActions));
-    }
+    let actions = '';
+    setTrashModalOpen(false);
 
     setTimeout(() => {
       dispatch(setResetMapIfChanged());
       dispatch(resetGeneralState());
     }, 10);
 
-    if (page === SUMMARY) {
-      router.back();
+    switch (page) {
+      case SUMMARY: router.back();    
+      case QUEUE:
+        actions = ACTIONS_IN_QUEUE
+      case HISTORY:
+        actions = COMPLETED_ACTIONS
+        break;
     }
+
+    const storedActions = getItemFromStorage(actions, window);
+    
+    console.log('storedActions', storedActions);
+    
+    if (storedActions && Array.isArray(storedActions)) {
+      const updatedActions = storedActions.filter(
+        (storedAction) => storedAction.id !== action.id
+      );
+
+      console.log('updatedActions', updatedActions);
+      
+      localStorage.setItem(actions, JSON.stringify(updatedActions));
+      dispatch(setUpdateHistoryOrQueue());
+    }    
   };
 
   switch (page) {
-    case SUMMARY:
+    case SUMMARY:     
     case QUEUE:
     case HISTORY:
       trashCallBack = handleTrashCallBack;
@@ -148,9 +162,12 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
           </div>
         )}
 
-        {!isCompleted && (
+        {!trashModalOpen && (
           <button
-            onClick={() => setTrashModalOpen(true)}
+            onClick={(event) => {
+              event.stopPropagation();
+              setTrashModalOpen(true);
+            }}
             className={trashModalOpen ? styles.trashBtn : ''}
           >
             <Image
