@@ -100,7 +100,7 @@ export function searchSectors(q: string, sectors: ISector[]): ISector[] {
       }
     }
   });
-  console.log('searchSectors.result', result);
+
   return result;
 }
 
