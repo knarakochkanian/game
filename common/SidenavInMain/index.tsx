@@ -581,6 +581,7 @@ function SidenavInMain({
                             '& .MuiButtonBase-root': {
                               fontSize: '26px',
                               margin: 'auto',
+                              zIndex: '2',
                             },
                           }}
                         />

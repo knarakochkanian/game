@@ -34,6 +34,7 @@ import { useNTP } from '../../contexts/NTPDateContext';
 import ConnectionLostModal from '../../common/ConnectionLostModal';
 
 import styles from './summary.module.scss';
+import dayjs from 'dayjs';
 
 const ActionDetails = dynamic(() => import('../../components/ActionDetails'), {
   ssr: false,
@@ -50,7 +51,12 @@ const Summary = () => {
   const currentAction: IAction | null = useAppSelector(selectCurrentAction);
   const fromOnboarding = useAppSelector(selectComfirmedFromOnboarding);
   const { pingFailed, send } = useDeviceConnection();
-
+  const [delayedDate, setDelayedDate] = useState<string | null>(
+    dayjs().format('YYYY-MM-DD')
+  );
+  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
+    return dayjs().format('HH:mm');
+  });
   const { getDate } = useNTP();
 
   useEffect(() => {
@@ -81,7 +87,7 @@ const Summary = () => {
 
         break;
       case null:
-        const currentDate = formatDate(getDate());
+        const currentDate = `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`;
         dispatch(setCurrentActionDate(currentDate));
         const { selectedCountries, industrySectors } = currentAction;
         const selectedCountryNames = selectedCountries
