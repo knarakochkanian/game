@@ -66,18 +66,18 @@ const Summary = () => {
   const onStartAction = () => {
     switch (currentAction?.isCompleted) {
       case false:
-        const actionsInQueue = [
-          ...(actionsInQueueFromStorage as IAction[]),
-          currentAction,
-          router.push(COUNT_DOWN),
-        ];
+        // const actionsInQueue = [
+        //   ...(actionsInQueueFromStorage as IAction[]),
+        //   currentAction,
+        router.push(COUNT_DOWN);
+        // ];
 
-        if (typeof window !== 'undefined') {
-          window.localStorage.setItem(
-            'actionsInQueue',
-            JSON.stringify(actionsInQueue)
-          );
-        }
+        // if (typeof window !== 'undefined') {
+        //   window.localStorage.setItem(
+        //     'actionsInQueue',
+        //     JSON.stringify(actionsInQueue)
+        //   );
+        // }
 
         break;
       case null:
@@ -113,9 +113,7 @@ const Summary = () => {
       dispatch(resetGeneralState());
     }, 10);
 
-    if (
-      !pingFailed
-    ) {
+    if (!pingFailed) {
       send('cancel');
       send('ping');
     }

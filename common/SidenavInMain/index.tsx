@@ -300,17 +300,6 @@ function SidenavInMain({
       selectedCountries,
     };
 
-    if (isSwitchOn || (delayedDate && delayedTime)) {
-      const actionsInQueue = JSON.parse(
-        window.localStorage.getItem(ACTIONS_IN_QUEUE) || '[]'
-      );
-      actionsInQueue.push(currentAction);
-      window.localStorage.setItem(
-        ACTIONS_IN_QUEUE,
-        JSON.stringify(actionsInQueue)
-      );
-      window.localStorage.setItem(LAST_ACTION_NAME, name);
-    }
     dispatch(setCurrentAction(currentAction));
   };
 
@@ -344,8 +333,10 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0 &&
-    !pingFailed;
+    selectedCountries.length !== 0;
+
+  //   &&
+  // !pingFailed;
 
   const [startDate, setStartDate] = useState(() => {
     const now = dayjs();
@@ -657,7 +648,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                style={{ pointerEvents: 'none' }}
+                // style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"

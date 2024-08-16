@@ -11,7 +11,8 @@ const QueueModal = () => {
     ACTIONS_IN_QUEUE,
     window
   );
-  if (!actionsInQueueFromStorage) return <></>;
+  if (!actionsInQueueFromStorage || actionsInQueueFromStorage.length < 1)
+    return <></>;
 
   return (
     <div className={styles.queueModal}>
@@ -28,7 +29,7 @@ const QueueModal = () => {
           >
             {actionsInQueueFromStorage[num]?.actionType === ATTACK
               ? ATTACK
-              : PROTECTION}
+              : null}
             {actionsInQueueFromStorage[num]?.name}
           </span>
         ))}

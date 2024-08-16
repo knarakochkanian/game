@@ -11,17 +11,23 @@ import {
   trash,
 } from '../../public/summary';
 import { IActionCardProps } from '../ActionCard';
-import { ATTACK, PROTECTION, SUMMARY } from '../../constants';
+import {
+  ACTIONS_IN_QUEUE,
+  ATTACK,
+  HISTORY,
+  PROTECTION,
+  QUEUE,
+  SUMMARY,
+} from '../../constants';
 import useGetPage from '../../hooks/useGetPage';
 import { useAppDispatch } from '../../redux/hooks';
-import {
-  resetGeneralState,
-} from '../../redux/features/generalSlice';
+import { resetGeneralState } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
 import { setResetMapIfChanged } from '../../redux/features/helpersSlice';
 
 import styles from './Header.module.scss';
+import { getItemFromStorage } from '../../helpers';
 
 const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const page = useGetPage();
@@ -32,16 +38,32 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
   const closeModal = () => setTrashModalOpen(false);
   useCloseModal(trashModalOpen, setTrashModalOpen);
 
+  const handleTrashCallBack = () => {
+    const storedAction = getItemFromStorage(ACTIONS_IN_QUEUE, window);
+
+    if (storedAction && Array.isArray(storedAction)) {
+      const updatedActions = storedAction.filter(
+        (storedAction) => storedAction.id !== action.id
+      );
+
+      localStorage.setItem(ACTIONS_IN_QUEUE, JSON.stringify(updatedActions));
+    }
+
+    setTimeout(() => {
+      dispatch(setResetMapIfChanged());
+      dispatch(resetGeneralState());
+    }, 10);
+
+    if (page === SUMMARY) {
+      router.back();
+    }
+  };
+
   switch (page) {
     case SUMMARY:
-      trashCallBack = () => {
-        setTimeout(() => {
-          dispatch(setResetMapIfChanged());
-          dispatch(resetGeneralState());
-        }, 10);
-
-        router.back();
-      };
+    case QUEUE:
+    case HISTORY:
+      trashCallBack = handleTrashCallBack;
       break;
   }
 

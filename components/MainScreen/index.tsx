@@ -27,6 +27,7 @@ import HistoryAndNewsBtns from '../../common/HistoryAndNewsBtns';
 import QueueModal from '../QueueModal';
 import { useAppSelector } from '../../redux/hooks';
 import {
+  selectCurrentAction,
   selectIsAttacking,
   selectOnboardingBlur,
   selectPickedCountriesObjects,
@@ -55,7 +56,7 @@ interface MainScreenProps {
   isVisible: boolean;
 }
 
-const MainScreen = ({isVisible}: MainScreenProps) => {
+const MainScreen = ({ isVisible }: MainScreenProps) => {
   const sideNavIsOpen = useAppSelector(selectSideNavIsOpen);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [globeActive, setGlobeActive] = useState(true);
@@ -65,17 +66,52 @@ const MainScreen = ({isVisible}: MainScreenProps) => {
   const { lastMessage, pingFailed } = useDeviceConnection()!;
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
+  const currentAction = useAppSelector(selectCurrentAction) as IAction;
 
   useEffect(() => {
-    if(lastMessage?.data === 'sim pressed') {
+    const interval = setInterval(() => {
+      const storedActions = localStorage.getItem('actionsInQueue');
+      const actionsInQueue = storedActions ? JSON.parse(storedActions) : [];
+
+      const storedCompletedActions = localStorage.getItem('completedActions');
+      const completedActions = storedCompletedActions
+        ? JSON.parse(storedCompletedActions)
+        : [];
+
+      const now = new Date();
+
+      const remainingActions = actionsInQueue.filter((action: any) => {
+        const actionDate = new Date(action.date.split('.').reverse().join('-'));
+
+        if (now.getTime() >= actionDate.getTime()) {
+          completedActions.push({ ...action, isCompleted: true });
+          window.location.reload();
+          return false;
+        }
+
+        return true;
+      });
+
+      localStorage.setItem('actionsInQueue', JSON.stringify(remainingActions));
+      localStorage.setItem(
+        'completedActions',
+        JSON.stringify(completedActions)
+      );
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (lastMessage?.data === 'sim pressed') {
       setModalVisible(true);
     }
 
-    if(lastMessage?.data === 'wave pressed') {
+    if (lastMessage?.data === 'wave pressed') {
       setModalVisibleWave(true);
     }
 
-    if(lastMessage?.data === 'ready pressed') {
+    if (lastMessage?.data === 'ready pressed') {
       setModalVisibleSystem(true);
     }
   }, [lastMessage]);

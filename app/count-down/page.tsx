@@ -112,7 +112,6 @@ export default function CountDown() {
     if (!fromOnboarding && !trashModalOpen) {
       countdown = setInterval(() => {
         if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
-          setActionCompleted(true);
           clearInterval(countdown);
           const completedActions = proccessActionsToSave(
             currentAction,
@@ -124,11 +123,24 @@ export default function CountDown() {
             if (!actionCanceled) {
               window.localStorage.setItem(LAST_ACTION_NAME, name);
             }
-
-            window.localStorage.setItem(
-              COMPLETED_ACTIONS,
-              JSON.stringify(completedActions)
+            if (currentAction?.isCompleted === null) {
+              setActionCompleted(true);
+              window.localStorage.setItem(
+                COMPLETED_ACTIONS,
+                JSON.stringify(completedActions)
+              );
+            }
+          }
+          if (currentAction?.isCompleted === false) {
+            const actionsInQueue = JSON.parse(
+              window.localStorage.getItem(ACTIONS_IN_QUEUE) || '[]'
             );
+            actionsInQueue.push(currentAction);
+            window.localStorage.setItem(
+              ACTIONS_IN_QUEUE,
+              JSON.stringify(actionsInQueue)
+            );
+            window.localStorage.setItem(LAST_ACTION_NAME, name);
           }
 
           navigateToHome(currentAction);
