@@ -67,7 +67,6 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
-
   useEffect(() => {
     const interval = setInterval(() => {
       const storedActions = localStorage.getItem('actionsInQueue');
@@ -79,13 +78,14 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
         : [];
 
       const now = new Date();
+      let actionsCompleted = false;
 
       const remainingActions = actionsInQueue.filter((action: any) => {
         const actionDate = new Date(action.date.split('.').reverse().join('-'));
 
-        if (now.getTime() >= actionDate.getTime()) {
+        if (now.getTime() == actionDate.getTime()) {
           completedActions.push({ ...action, isCompleted: true });
-          window.location.reload();
+          actionsCompleted = true;
           return false;
         }
 
@@ -97,6 +97,10 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
         'completedActions',
         JSON.stringify(completedActions)
       );
+
+      if (actionsCompleted) {
+        window.location.reload();
+      }
     }, 60000);
 
     return () => clearInterval(interval);
