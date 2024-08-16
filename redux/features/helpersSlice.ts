@@ -7,9 +7,11 @@ export interface IInitialState {
   closeSelectionIfChanged: boolean;
   newsActionId: string;
   eventModalId: number;
+  updateHistoryOrQueue: boolean;
 }
 
 const initialState: IInitialState = {
+  updateHistoryOrQueue: false,
   closeSelectionIfChanged: false,
   resetMapIfChanged: false,
   allSectorsSelected: false,
@@ -24,6 +26,9 @@ const helpersSlice = createSlice({
   reducers: {
     setResetMapIfChanged(state) {
       state.resetMapIfChanged = !state.resetMapIfChanged;
+    },
+    setUpdateHistoryOrQueue(state) {
+      state.updateHistoryOrQueue = !state.updateHistoryOrQueue;
     },
     setCloseSelectionIfChanged(state) {
       state.closeSelectionIfChanged = !state.closeSelectionIfChanged;
@@ -54,6 +59,7 @@ export const {
   setAllSectorsSelected,
   setKeyboardInput,
   setNewsActionId,
+  setUpdateHistoryOrQueue,
 } = helpersSlice.actions;
 
 export const selectResetMapIfChanged = (state: RootState) =>
@@ -68,5 +74,7 @@ export const selectNewsActionId = (state: RootState) =>
   state.helpersReducer.newsActionId;
 export const selectEventModalId = (state: RootState) =>
   state.helpersReducer.eventModalId;
+export const selectUpdateHistoryOrQueue = (state: RootState) =>
+  state.helpersReducer.updateHistoryOrQueue;
 
 export default helpersSlice.reducer;

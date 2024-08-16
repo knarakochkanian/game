@@ -2,7 +2,7 @@
 import Modal from '../Modals/Modal';
 import Link from 'next/link';
 import { useDeviceConnection } from '../../contexts/WebSocketContext';
-import { useCallback } from 'react';
+import { MouseEvent, useCallback } from 'react';
 
 type TTrashModalProps = {
   name: string;
@@ -21,24 +21,32 @@ const TrashModal = ({
 }: TTrashModalProps) => {
   const { send } = useDeviceConnection()!;
 
-  const handleDelete = useCallback(() => {
-    send('cancel');
-    send('ping');
-
-    trashCallBack();
-  }, [send, trashCallBack]);
+  const handleDelete = useCallback(
+    (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+      send('cancel');
+      send('ping');
+      event.stopPropagation();      
+      
+      trashCallBack();
+    },
+    [send, trashCallBack]
+  );
 
   const handleDeleteInCountDown = useCallback(() => {
     send('yep');
     trashCallBack();
   }, [send, trashCallBack]);
 
-  const handleCancelInCountDown = useCallback(() => {
-    send('nope');
-    send('ping');
+  const handleCancelInCountDown = useCallback(
+    (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+      send('nope');
+      send('ping');
+      event.stopPropagation();
 
-    closeModal();
-  }, [send, closeModal]);
+      closeModal();
+    },
+    [send, closeModal]
+  );
 
   return (
     <Modal
@@ -74,16 +82,25 @@ const TrashModal = ({
             ДА
           </Link>
         ) : (
-          <button className="ModalButton1" onClick={handleDelete}>
+          <button
+            className="ModalButton1"
+            onClick={(event) => handleDelete(event)}
+          >
             удалить
           </button>
         )}
         {fromCountDown ? (
-          <button className="SecondarySmall" onClick={handleCancelInCountDown}>
+          <button
+            className="SecondarySmall"
+            onClick={(event) => handleCancelInCountDown(event)}
+          >
             <span className="TypoBodyBigLink">НЕТ</span>
           </button>
         ) : (
-          <button className="SecondarySmall" onClick={handleCancelInCountDown}>
+          <button
+            className="SecondarySmall"
+            onClick={(event) => handleCancelInCountDown(event)}
+          >
             <span className="TypoBodyBigLink">отмена</span>
           </button>
         )}

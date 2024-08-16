@@ -648,7 +648,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                // style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
