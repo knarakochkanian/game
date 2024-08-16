@@ -49,7 +49,9 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
     }, 10);
 
     switch (page) {
-      case SUMMARY: router.back();    
+      case SUMMARY: 
+      router.back();    
+      return;
       case QUEUE:
         actions = ACTIONS_IN_QUEUE
       case HISTORY:
@@ -57,16 +59,12 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
         break;
     }
 
-    const storedActions = getItemFromStorage(actions, window);
-    
-    console.log('storedActions', storedActions);
+    const storedActions = getItemFromStorage(actions, window);    
     
     if (storedActions && Array.isArray(storedActions)) {
       const updatedActions = storedActions.filter(
         (storedAction) => storedAction.id !== action.id
       );
-
-      console.log('updatedActions', updatedActions);
       
       localStorage.setItem(actions, JSON.stringify(updatedActions));
       dispatch(setUpdateHistoryOrQueue());
