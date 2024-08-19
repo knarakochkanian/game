@@ -82,8 +82,8 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
 
       const remainingActions = actionsInQueue.filter((action: any) => {
         const actionDate = new Date(action.date.split('.').reverse().join('-'));
-
-        if (now.getTime() == actionDate.getTime()) {
+        console.log(actionDate, 'actionDate');
+        if (now.getTime() >= actionDate.getTime()) {
           completedActions.push({ ...action, isCompleted: true });
           actionsCompleted = true;
           return false;
@@ -91,7 +91,7 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
 
         return true;
       });
-
+      console.log(remainingActions, 'remainingActions');
       localStorage.setItem('actionsInQueue', JSON.stringify(remainingActions));
       localStorage.setItem(
         'completedActions',

@@ -25,7 +25,10 @@ import { useAppDispatch } from '../../redux/hooks';
 import { resetGeneralState } from '../../redux/features/generalSlice';
 import TrashModal from '../../common/TrashModal';
 import useCloseModal from '../../hooks/useCloseModal';
-import { setResetMapIfChanged, setUpdateHistoryOrQueue } from '../../redux/features/helpersSlice';
+import {
+  setResetMapIfChanged,
+  setUpdateHistoryOrQueue,
+} from '../../redux/features/helpersSlice';
 import { getItemFromStorage } from '../../helpers';
 
 import styles from './Header.module.scss';
@@ -49,30 +52,31 @@ const Header = ({ action, setActionId, fromDetails }: IActionCardProps) => {
     }, 10);
 
     switch (page) {
-      case SUMMARY: 
-      router.back();    
-      return;
+      case SUMMARY:
+        router.back();
+        return;
       case QUEUE:
-        actions = ACTIONS_IN_QUEUE
+        actions = ACTIONS_IN_QUEUE;
+        break;
       case HISTORY:
-        actions = COMPLETED_ACTIONS
+        actions = COMPLETED_ACTIONS;
         break;
     }
 
-    const storedActions = getItemFromStorage(actions, window);    
-    
+    const storedActions = getItemFromStorage(actions, window);
+
     if (storedActions && Array.isArray(storedActions)) {
       const updatedActions = storedActions.filter(
         (storedAction) => storedAction.id !== action.id
       );
-      
+
       localStorage.setItem(actions, JSON.stringify(updatedActions));
       dispatch(setUpdateHistoryOrQueue());
-    }    
+    }
   };
 
   switch (page) {
-    case SUMMARY:     
+    case SUMMARY:
     case QUEUE:
     case HISTORY:
       trashCallBack = handleTrashCallBack;
