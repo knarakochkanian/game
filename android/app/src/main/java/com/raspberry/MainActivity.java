@@ -29,18 +29,18 @@ public class MainActivity extends BridgeActivity {
         getBridge().getWebView().setOverScrollMode(View.OVER_SCROLL_NEVER);
         getBridge().getWebView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-        ntpManager = new NTPManager(
-                this,
-                jsBridge,
-                "10.99.12.10",
-                "10.99.2.5"
-        );
+//         ntpManager = new NTPManager(
+//                 this,
+//                 jsBridge,
+//                 "10.99.12.10",
+//                 "10.99.2.5"
+//         );
 
-//        ntpManager = new NTPManager(
-//                jsBridge,
-//                "time.google.com",
-//                "google.com"
-//        );
+       ntpManager = new NTPManager(
+               jsBridge,
+               "time.google.com",
+               "google.com"
+       );
         ntpManager.start();
     }
 
