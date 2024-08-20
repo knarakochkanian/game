@@ -37,6 +37,7 @@ public class MainActivity extends BridgeActivity {
 //         );
 
        ntpManager = new NTPManager(
+               this,
                jsBridge,
                "time.google.com",
                "google.com"
