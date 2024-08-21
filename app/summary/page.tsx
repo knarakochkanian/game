@@ -74,9 +74,8 @@ const Summary = () => {
       currentAction?.isCompleted === null ||
       currentAction?.isCompleted === false
     ) {
-      const currentDate = `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`;
+      const currentDate = formatDate(getDate());
       dispatch(setCurrentActionDate(currentDate));
-
       const { selectedCountries, industrySectors } = currentAction;
       const selectedCountryNames = selectedCountries
         .filter((c) => c.code)
