@@ -1,10 +1,10 @@
 'use client';
 import * as React from 'react';
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/system';
+import { PickersLayout } from '@mui/x-date-pickers/PickersLayout';
 import {
   resetGeneralState,
   selectDamgeLevel,
@@ -13,18 +13,27 @@ import {
   selectPickedCountries,
   selectPickedCountriesObjects,
   selectSectors,
+  selectTotalPopulationRegions,
   selectTotalPopulationRegionsAffected,
   setCurrentAction,
 } from '../../redux/features/generalSlice';
 import Switch from '../Switch/index';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { A_TTACK, ATTACK, P_ROTECTION, PROTECTION } from '../../constants';
+import {
+  ATTACK,
+  A_TTACK,
+  PROTECTION,
+  P_ROTECTION,
+  ACTIONS_IN_QUEUE,
+  LAST_ACTION_NAME,
+} from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
 import {
   countSelectedOptions,
   extractNumber,
   formatDate,
+  getItemFromStorage,
   getNextActionName,
 } from '../../helpers';
 import DamageLevelInfo from '../DamageLevelInfo';
@@ -32,6 +41,15 @@ import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
+import {
+  ChangeEvent,
+  createContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { type DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import 'dayjs/locale/ru';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -43,7 +61,7 @@ import {
 } from '../../redux/features/helpersSlice';
 import TrashModal from '../TrashModal';
 import { IconButton } from '@mui/material';
-
+import ruLocale from 'dayjs/locale/ru';
 import { getDelayedDateWithTime } from '../../helpers/helpers_1';
 import {
   DeviceEventId,
@@ -54,12 +72,14 @@ import SystemState from '../SystemState';
 import { ILaunchConsequences } from '../../data/launchConsequences';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { closeXButton } from '../../public/ui_kit';
 import { useNTP } from '../../contexts/NTPDateContext';
-
 dayjs.locale('ru');
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -91,14 +111,15 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<string | null>(
     dayjs().format('YYYY-MM-DD')
   );
-  // const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-  //   return dayjs().add(10, 'minute').format('HH:mm');
-  // });
-  const { getDate } = useNTP();
   const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-    const currentDate = formatDate(getDate());
-    return currentDate.slice(-5);
+    return dayjs().add(10, 'minute').format('HH:mm');
   });
+  const { getDate } = useNTP();
+  // const [delayedTime, setDelayedTime] = useState<string | null>(() => {
+  //   const currentDate = formatDate(getDate());
+  //   const timePart = currentDate.slice(-5); // Extracts the last 5 characters, which should be the time '16:25'
+  //   return timePart;
+  // });
   const [readyIsSend, setReadyIsSend] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const confirmButtonRef = useRef<HTMLAnchorElement>(null);
@@ -136,6 +157,9 @@ function SidenavInMain({
 
   const handleDateChange = (newDate: Dayjs | null) => {
     setTempSelectedDate(newDate);
+    if (newDate) {
+      setTempSelectedDate(newDate.locale('ru'));
+    }
   };
   const currentHour = dayjs().format('HH:mm');
   const shouldDisableTime = (
@@ -424,7 +448,10 @@ function SidenavInMain({
               </button>
               <div className={styles.sidenavDelayedDateWrraper}>
                 {calendarOpen && startDate && (
-                  <LocalizationProvider dateAdapter={AdapterDayjs} locale="ru">
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    locale={'ru'}
+                  >
                     <Box
                       sx={{
                         backgroundColor: 'black',
