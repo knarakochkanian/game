@@ -70,47 +70,36 @@ const Summary = () => {
   }, []);
 
   const onStartAction = () => {
-    switch (currentAction?.isCompleted) {
-      case false:
-        // const actionsInQueue = [
-        //   ...(actionsInQueueFromStorage as IAction[]),
-        //   currentAction,
-        router.push(COUNT_DOWN);
-        // ];
+    if (
+      currentAction?.isCompleted === null ||
+      currentAction?.isCompleted === false
+    ) {
+      const currentDate = `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`;
+      dispatch(setCurrentActionDate(currentDate));
 
-        // if (typeof window !== 'undefined') {
-        //   window.localStorage.setItem(
-        //     'actionsInQueue',
-        //     JSON.stringify(actionsInQueue)
-        //   );
-        // }
+      const { selectedCountries, industrySectors } = currentAction;
+      const selectedCountryNames = selectedCountries
+        .filter((c) => c.code)
+        .map((c) => c.name);
 
-        break;
-      case null:
-        const currentDate = `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`;
-        dispatch(setCurrentActionDate(currentDate));
-        const { selectedCountries, industrySectors } = currentAction;
-        const selectedCountryNames = selectedCountries
-          .filter((c) => c.code)
-          .map((c) => c.name);
-        const selectedSectorsNames = industrySectors
-          .filter((s) => s.options.some((o) => o.selected))
-          .map((s) => s.title)
-          .map((t) => getIndustryNameInEnglish(t));
-        const topCapitalizationSector = industrySectors.find(
-          (s) => s.title === top_capitalization
-        );
+      const selectedSectorsNames = industrySectors
+        .filter((s) => s.options.some((o) => o.selected))
+        .map((s) => s.title)
+        .map((t) => getIndustryNameInEnglish(t));
 
-        let news: INews[] = proccessNewsData(
-          selectedCountryNames,
-          currentDate,
-          selectedSectorsNames,
-          topCapitalizationSector as ISector
-        );
+      const topCapitalizationSector = industrySectors.find(
+        (s) => s.title === top_capitalization
+      );
 
-        dispatch(setCurrentActionNews(news));
-        router.push(COUNT_DOWN);
-        break;
+      let news: INews[] = proccessNewsData(
+        selectedCountryNames,
+        currentDate,
+        selectedSectorsNames,
+        topCapitalizationSector as ISector
+      );
+
+      dispatch(setCurrentActionNews(news));
+      router.push(COUNT_DOWN);
     }
   };
 
