@@ -111,15 +111,15 @@ function SidenavInMain({
   const [delayedDate, setDelayedDate] = useState<string | null>(
     dayjs().format('YYYY-MM-DD')
   );
-  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-    return dayjs().add(10, 'minute').format('HH:mm');
-  });
-  const { getDate } = useNTP();
   // const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-  //   const currentDate = formatDate(getDate());
-  //   const timePart = currentDate.slice(-5); // Extracts the last 5 characters, which should be the time '16:25'
-  //   return timePart;
+  //   return dayjs().add(10, 'minute').format('HH:mm');
   // });
+  const { getDate } = useNTP();
+  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
+    const currentDate = formatDate(getDate());
+    const timePart = currentDate.slice(-5);
+    return timePart;
+  });
   const [readyIsSend, setReadyIsSend] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const confirmButtonRef = useRef<HTMLAnchorElement>(null);
