@@ -50,7 +50,7 @@ const Index: React.FC = () => {
         month: 'long',
       })
         .format(now)
-        .slice(0, 4);
+        .slice(0, 3);
 
       const dateString = new Intl.DateTimeFormat('ru-RU', {
         day: '2-digit',

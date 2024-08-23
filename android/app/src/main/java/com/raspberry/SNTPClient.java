@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.net.DatagramPacket;
@@ -176,10 +177,12 @@ public class SNTPClient {
 
         new Thread(() -> {
             SNTPClient sntpClient = new SNTPClient(_listener);
-            if (!ping(_pingHost, 80)) {
-                new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(null, null, new Exception("No ping")));
+            Log.v("NTPManager", "getDate(" + _host + ", " + _pingHost + ")");
+            if (_pingHost != null && !ping(_pingHost, 8766)) {
+                Log.v("NTPManager", "getDate.pingFailed: " + _pingHost);
+                new Handler(Looper.getMainLooper()).post(() -> _listener.onTimeResponse(null, null, new Exception("No ping to " + _pingHost)));
             } else if (sntpClient.requestTime(_host, 5000)) {
-
+                Log.v("NTPManager", "getDate.requesting time: " + _pingHost);
                 long nowAsPerDeviceTimeZone = sntpClient.getNtpTime();
                 SIMPLE_DATE_FORMAT.setTimeZone(_timeZone);
                 String rawDate = SIMPLE_DATE_FORMAT.format(nowAsPerDeviceTimeZone);
@@ -206,12 +209,15 @@ public class SNTPClient {
     }
 
     public static boolean ping(String host, int port) {
+        Log.v("NTPManager", "ping(" + host + ", " + port + ")");
         try {
             String hostAddress = InetAddress.getByName(
                     host
             ).getHostAddress();
 
+            Log.v("NTPManager", "ping: address received");
             Socket socket = new Socket(hostAddress, port);
+            Log.v("NTPManager", "ping: socket created received");
             socket.close();
             return true;
         } catch (Exception ex) {

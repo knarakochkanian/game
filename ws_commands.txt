@@ -1,3 +1,4 @@
 accept pressed
 start pressed
 cancel pressed
+ready pressed

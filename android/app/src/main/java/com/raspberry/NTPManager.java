@@ -20,6 +20,14 @@ public class NTPManager {
     public NTPManager(
             Context context,
             JSBridge jsBridge,
+            String host
+    ) {
+        this(context, jsBridge, host, null, DEFAULT_TIME_ZONE);
+    }
+
+    public NTPManager(
+            Context context,
+            JSBridge jsBridge,
             String host,
             String pingHost
     ) {
@@ -79,11 +87,11 @@ public class NTPManager {
 
         bridge.sendNTPTime(raw, result -> {
             Log.v(TAG, "sendNTPTime.result = " + result);
-            restart();
 //            if (!"\"ok\"".equals(result)) {
 //
 //            }
         });
+        restart();
         return true;
     }
 
@@ -92,5 +100,5 @@ public class NTPManager {
     }
 
     private static final String TAG = "NTPManager";
-    private static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("Europe/Moscow");
+    public static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("Europe/Moscow");
 }

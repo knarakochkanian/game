@@ -4,4 +4,6 @@
     <string name="title_activity_main">CyberCase</string>
     <string name="package_name">com.raspberry</string>
     <string name="custom_url_scheme">com.raspberry</string>
+    <string name="debug">Debug</string>
+    <string name="settings">Settings</string>
 </resources>

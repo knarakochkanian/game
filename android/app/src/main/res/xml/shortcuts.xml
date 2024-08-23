@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:shortcutDisabledMessage="@string/settings"
+        android:shortcutId="debug"
+        android:shortcutLongLabel="@string/settings"
+        android:shortcutShortLabel="@string/settings"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.raspberry.SettingsActivity"
+            android:targetPackage="com.raspberry" />
+    </shortcut>
+</shortcuts>

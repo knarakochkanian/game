@@ -41,7 +41,7 @@ import SimCards from '../../common/SimCards';
 import { simCards, waves } from '../../data/connectionData';
 import Waves from '../../common/Waves';
 import SystemState from '../../common/SystemState';
-import { useDeviceConnection } from '../../contexts/WebSocketContext';
+import { DeviceEventId, useDeviceConnection } from '../../contexts/WebSocketContext';
 
 import styles from './MainScreen.module.scss';
 import Box from '@mui/material/Box';
@@ -62,7 +62,7 @@ const MainScreen = ({isVisible}: MainScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleWave, setModalVisibleWave] = useState(false);
   const [modalVisibleSystem, setModalVisibleSystem] = useState(false);
-  const { lastMessage, pingFailed } = useDeviceConnection()!;
+  const { lastMessage, pingFailed, lastDeviceEvent } = useDeviceConnection()!;
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
 
@@ -74,11 +74,14 @@ const MainScreen = ({isVisible}: MainScreenProps) => {
     if(lastMessage?.data === 'wave pressed') {
       setModalVisibleWave(true);
     }
+  }, [lastMessage]);
 
-    if(lastMessage?.data === 'ready pressed') {
+  useEffect(() => {
+    if(lastDeviceEvent?.eventId == DeviceEventId.ReadyPressed && !lastDeviceEvent.consumed) {
+      lastDeviceEvent.consumed = true
       setModalVisibleSystem(true);
     }
-  }, [lastMessage]);
+  }, [lastDeviceEvent])
 
   return (
     <main className={styles.mainScreen}>
