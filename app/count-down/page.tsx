@@ -143,7 +143,9 @@ export default function CountDown() {
             window.localStorage.setItem(LAST_ACTION_NAME, name);
           }
 
-          navigateToHome(currentAction);
+          if (!trashModalOpen) {
+            navigateToHome(currentAction);
+          }
           dispatch(resetGeneralState());
         } else if (time.seconds > 0) {
           setTime({ ...time, seconds: time.seconds - 1 });
@@ -244,25 +246,6 @@ export default function CountDown() {
       <Slashes />
 
       <Footer cancelCountdown={cancelCountdown} />
-
-      {fromOnboarding && <div className={styles.blur}></div>}
-
-      <Modal name="endingOnboarding" isOpen={fromOnboarding} counter={12}>
-        <p>
-          После нажатия на кнопку “ПУСК” запустится обратный отчет, и у вас
-          будет 15 секунд для отмены. Для отмены необходимо будет нажать
-          физическую кнопку “ОТМЕНА”, расположенную правее от дисплея.
-        </p>
-        <div className="ModalButtons">
-          <Link
-            href={'/'}
-            style={{ color: 'white', padding: '20px' }}
-            className="ModalButton1"
-          >
-            завершить
-          </Link>
-        </div>
-      </Modal>
     </div>
   );
 }
