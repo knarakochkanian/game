@@ -3,13 +3,13 @@ import Modal from '../Modals/Modal';
 import Link from 'next/link';
 import { useDeviceConnection } from '../../contexts/WebSocketContext';
 import { MouseEvent, useCallback } from 'react';
-
 type TTrashModalProps = {
   name: string;
   trashModalOpen: boolean;
   closeModal: () => void;
   trashCallBack: () => void;
   fromCountDown?: boolean;
+  onResetState?: () => void; // Добавлен новый пропс
 };
 
 const TrashModal = ({
@@ -18,6 +18,7 @@ const TrashModal = ({
   trashCallBack,
   trashModalOpen,
   fromCountDown,
+  // onResetState, // Деструктурируем новый пропс
 }: TTrashModalProps) => {
   const { send } = useDeviceConnection()!;
 
@@ -25,8 +26,8 @@ const TrashModal = ({
     (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
       send('cancel');
       send('ping');
-      event.stopPropagation();      
-      
+      event.stopPropagation();
+
       trashCallBack();
     },
     [send, trashCallBack]
@@ -34,6 +35,9 @@ const TrashModal = ({
 
   const handleDeleteInCountDown = useCallback(() => {
     send('yep');
+    // if (onResetState) {
+    //   onResetState(); // Вызываем функцию сброса состояния
+    // }
     trashCallBack();
   }, [send, trashCallBack]);
 

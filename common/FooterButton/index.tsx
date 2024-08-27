@@ -23,7 +23,11 @@ const FooterButton = ({
   const classname = `from${from}`;
   return (
     <div className={`${styles.buttonContainer} ${styles[classname]}`}>
-      <button onClick={onClick} ref={buttonRef}>
+      <button
+        onClick={onClick}
+        ref={buttonRef}
+        style={onClick ? sx : { ...sx, pointerEvents: 'none' }}
+      >
         <h3>
           {title}
           <span> {`“${order}"`}</span>

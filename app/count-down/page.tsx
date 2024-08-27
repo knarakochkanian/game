@@ -165,9 +165,9 @@ export default function CountDown() {
   }, [trashModalOpen, dispatch]);
 
   const cancelCountdown = () => {
-    setTimeout(() => {
-      dispatch(resetGeneralState());
-    }, 10);
+    // setTimeout(() => {
+    //   dispatch(resetGeneralState());
+    // }, 10);
     dispatch(setDamageLevel(null));
     // setTime({ hours: 0, minutes: 0, seconds: 0 });
     setTrashModalOpen(true);
@@ -234,9 +234,8 @@ export default function CountDown() {
               dispatch(setResetMapIfChanged());
               dispatch(resetGeneralState());
               dispatch(setCloseSelectionIfChanged());
-              closeModal();
             }}
-            trashModalOpen={trashModalOpen}
+            trashModalOpen={true}
           />
         </div>
       )}

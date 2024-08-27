@@ -67,6 +67,7 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
   const isAttacking = useAppSelector(selectIsAttacking);
   const selectedCountries = useAppSelector(selectPickedCountriesObjects);
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
+
   useEffect(() => {
     const interval = setInterval(() => {
       const storedActions = localStorage.getItem('actionsInQueue');

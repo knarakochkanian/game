@@ -54,10 +54,9 @@ const Summary = () => {
   const [delayedDate, setDelayedDate] = useState<string | null>(
     dayjs().format('YYYY-MM-DD')
   );
-  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-    return dayjs().format('HH:mm');
-  });
-  const { getDate } = useNTP();
+  const [delayedTime, setDelayedTime] = useState<string | null>(
+    currentAction?.date ?? null
+  );
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -74,7 +73,7 @@ const Summary = () => {
       currentAction?.isCompleted === null ||
       currentAction?.isCompleted === false
     ) {
-      const currentDate = formatDate(getDate());
+      const currentDate = `${delayedTime}`;
       dispatch(setCurrentActionDate(currentDate));
       const { selectedCountries, industrySectors } = currentAction;
       const selectedCountryNames = selectedCountries

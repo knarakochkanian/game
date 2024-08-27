@@ -106,20 +106,19 @@ function SidenavInMain({
   const [name, setName] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [delayed, setDelayed] = useState(false);
-  const [time, setTime] = useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
-  const [delayedDate, setDelayedDate] = useState<string | null>(
-    dayjs().format('YYYY-MM-DD')
-  );
-  // const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-  //   return dayjs().add(10, 'minute').format('HH:mm');
-  // });
   const { getDate } = useNTP();
   const [delayedTime, setDelayedTime] = useState<string | null>(() => {
-    const currentDate = formatDate(getDate());
-    const timePart = currentDate.slice(-5);
-    return timePart;
+    const date = getDate();
+    console.log(date, 'date');
+    if (date) {
+      const currentDate = formatDate(date);
+      const timePart = currentDate.slice(-5);
+      return timePart;
+    }
+    return null;
   });
+  const [indelayedDate, setDelayedDate] = useState<string | null>(null);
   const [readyIsSend, setReadyIsSend] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const confirmButtonRef = useRef<HTMLAnchorElement>(null);
@@ -161,7 +160,6 @@ function SidenavInMain({
       setTempSelectedDate(newDate.locale('ru'));
     }
   };
-  const currentHour = dayjs().format('HH:mm');
   const shouldDisableTime = (
     value: Dayjs,
     view: 'hours' | 'minutes' | 'seconds'
@@ -197,11 +195,9 @@ function SidenavInMain({
 
   const handleOkButtonClick = () => {
     if (tempSelectedDate) {
-      setDelayedDate(tempSelectedDate.format('YYYY-MM-DD'));
-      console.log(
-        'Delayed date set to:',
-        tempSelectedDate.format('YYYY-MM-DD')
-      );
+      const formattedDate = tempSelectedDate.format('YYYY-MM-DD');
+      setDelayedDate(formattedDate);
+      console.log('Delayed date set to:', formattedDate);
       setCalendarOpen(false);
     } else {
       console.log('No date selected');
@@ -215,7 +211,6 @@ function SidenavInMain({
   };
   const closeCalendarAndTimePicker = () => {
     setCalendarOpen(false);
-    setTime(false);
   };
 
   const handleTimeChangeInternal = (newValue: Dayjs | null) => {
@@ -235,7 +230,6 @@ function SidenavInMain({
   };
   const handleTimeButtonClick = () => {
     setIsTimePickerOpen(true);
-    setTime(true);
   };
   const handleOpenDateCalendar = () => {
     setCalendarOpen(true);
@@ -254,13 +248,35 @@ function SidenavInMain({
       setLastActionName(actionName);
     }
   }, []);
+  useEffect(() => {
+    if (delayedTime) {
+      const monthNames: { [key: string]: string } = {
+        Jan: '01',
+        Feb: '02',
+        Mar: '03',
+        Apr: '04',
+        May: '05',
+        Jun: '06',
+        Jul: '07',
+        Aug: '08',
+        Sep: '09',
+        Oct: '10',
+        Nov: '11',
+        Dec: '12',
+      };
+
+      const parts = delayedTime.split(' ');
+
+      if (parts.length >= 4) {
+        const formattedDate = `${parts[3]}-${monthNames[parts[1]]}-${parts[2]}`;
+        setDelayedDate(formattedDate);
+      } else {
+        console.error('Unexpected date format');
+      }
+    }
+  }, [delayedTime]);
 
   const onSetCurrentAction = () => {
-    const delayedDateWithTime = getDelayedDateWithTime(
-      delayedDate ? dayjs(delayedDate) : null,
-      delayedTime
-    );
-
     const selectedOptionsN = industrySectors
       ?.flatMap((sector) => sector.options)
       .filter((option) => option.selected)
@@ -298,7 +314,8 @@ function SidenavInMain({
       wholeDamage: formattedFinancialLosses,
     };
 
-    const isCompleted = delayedDate && delayedTime && isSwitchOn ? false : null;
+    const isCompleted =
+      (tempSelectedDate || delayedTime) && isSwitchOn ? false : null;
 
     const currentAction = {
       actionType: isAttacking ? ATTACK : PROTECTION,
@@ -308,8 +325,8 @@ function SidenavInMain({
       id: extractNumber(name),
       damageLevel,
       date:
-        (delayedDate && delayedTime) || isSwitchOn
-          ? `${dayjs(delayedDate).format('DD.MM.YYYY')} ${delayedTime}`
+        tempSelectedDate || delayedTime || isSwitchOn
+          ? `${dayjs(tempSelectedDate).format('DD.MM.YYYY')} ${delayedTime || ''}`
           : '03.02.2024 11:11',
       industrySectors,
       isCompleted,
@@ -350,15 +367,9 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0;
+    selectedCountries.length !== 0 &&
+    !pingFailed;
 
-  //   &&
-  // !pingFailed;
-
-  const [startDate, setStartDate] = useState(() => {
-    const now = dayjs();
-    return now;
-  });
   const timeStep: TimeStepOptions = {
     hours: 1,
     minutes: 1,
@@ -447,7 +458,7 @@ function SidenavInMain({
                 <h3>Дата</h3>
               </button>
               <div className={styles.sidenavDelayedDateWrraper}>
-                {calendarOpen && startDate && (
+                {calendarOpen && (
                   <LocalizationProvider
                     dateAdapter={AdapterDayjs}
                     locale={'ru'}
@@ -669,7 +680,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                // style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
