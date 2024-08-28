@@ -69,45 +69,6 @@ const MainScreen = ({ isVisible }: MainScreenProps) => {
   const currentAction = useAppSelector(selectCurrentAction) as IAction;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const storedActions = localStorage.getItem('actionsInQueue');
-      const actionsInQueue = storedActions ? JSON.parse(storedActions) : [];
-
-      const storedCompletedActions = localStorage.getItem('completedActions');
-      const completedActions = storedCompletedActions
-        ? JSON.parse(storedCompletedActions)
-        : [];
-
-      const now = new Date();
-      let actionsCompleted = false;
-
-      const remainingActions = actionsInQueue.filter((action: any) => {
-        const actionDate = new Date(action.date.split('.').reverse().join('-'));
-        console.log(actionDate, 'actionDate');
-        if (now.getTime() >= actionDate.getTime()) {
-          completedActions.push({ ...action, isCompleted: true });
-          actionsCompleted = true;
-          return false;
-        }
-
-        return true;
-      });
-      console.log(remainingActions, 'remainingActions');
-      localStorage.setItem('actionsInQueue', JSON.stringify(remainingActions));
-      localStorage.setItem(
-        'completedActions',
-        JSON.stringify(completedActions)
-      );
-
-      if (actionsCompleted) {
-        window.location.reload();
-      }
-    }, 60000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     if (lastMessage?.data === 'sim pressed') {
       setModalVisible(true);
     }

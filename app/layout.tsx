@@ -4,7 +4,7 @@ import Loading from '../components/Loading';
 import TopBottomLines from '../common/TopBottomLines';
 import LocalTime from '../components/LocalTime';
 import ReduxProvider from '../redux/provider';
-import { BrightnessProvider } from '../contexts/BrightnessContext';
+
 import './globals.scss';
 import { Keyboard } from '@capacitor/keyboard';
 
@@ -41,6 +41,7 @@ import localFont from '@next/font/local';
 import { WebSocketProvider } from '../contexts/WebSocketContext';
 import { NTPProvider } from '../contexts/NTPDateContext';
 import { MapProvider } from '../contexts/MapContext';
+import { DelayedLaunchProvider } from '../contexts/DelayedLaunchContext';
 
 const lakes = localFont({
   src: [
@@ -69,18 +70,19 @@ export default function RootLayout({
     <html lang="en" className={`${lakes.variable} font-sans`}>
       <body>
         <NTPProvider>
-        
-        <Suspense fallback={<div></div>}>
-          <WebSocketProvider>
-            <ReduxProvider>
-            <MapProvider>
-              <TopBottomLines />
-              <LocalTime />
-              {children}
-              </MapProvider>
-            </ReduxProvider>
-          </WebSocketProvider>
-        </Suspense>
+          <Suspense fallback={<div></div>}>
+            <WebSocketProvider>
+              <ReduxProvider>
+                <DelayedLaunchProvider>
+                  <MapProvider>
+                    <TopBottomLines />
+                    <LocalTime />
+                    {children}
+                  </MapProvider>
+                </DelayedLaunchProvider>
+              </ReduxProvider>
+            </WebSocketProvider>
+          </Suspense>
         </NTPProvider>
       </body>
     </html>

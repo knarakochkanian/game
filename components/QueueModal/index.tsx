@@ -18,19 +18,15 @@ const QueueModal = () => {
     <div className={styles.queueModal}>
       <h5>Очередь задач</h5>
       <div>
-        {[0, 1].map((num) => (
+        {actionsInQueueFromStorage.map((action: any, index: number) => (
           <span
-            key={num}
+            key={index}
             className={
-              actionsInQueueFromStorage[num]?.actionType === ATTACK
-                ? styles.attack
-                : styles.protection
+              action.actionType === ATTACK ? styles.attack : styles.protection
             }
           >
-            {actionsInQueueFromStorage[num]?.actionType === ATTACK
-              ? ATTACK
-              : null}
-            {actionsInQueueFromStorage[num]?.name}
+            {action.actionType === ATTACK ? ATTACK : PROTECTION}
+            {action.name}
           </span>
         ))}
       </div>

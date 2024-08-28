@@ -1,5 +1,8 @@
+'use client';
 import React, { ChangeEvent, useState } from 'react';
 import styles from './Switch.module.scss';
+import { useAppSelector } from '../../redux/hooks';
+import { selectIsAttacking } from '../../redux/features/generalSlice';
 
 interface SwitchProps {
   isOn: boolean;
@@ -7,6 +10,8 @@ interface SwitchProps {
 }
 
 const Switch: React.FC<SwitchProps> = ({ isOn, handleSwitchChange }) => {
+  const isAttacking = useAppSelector(selectIsAttacking);
+
   return (
     <label
       htmlFor="checkbox"
@@ -19,7 +24,9 @@ const Switch: React.FC<SwitchProps> = ({ isOn, handleSwitchChange }) => {
         onChange={handleSwitchChange}
         className={styles.switchInput}
       />
-      <span className={styles.switchSlider}></span>
+      <span
+        className={isAttacking ? styles.switchSlider : styles.switchSliderBlue}
+      ></span>
     </label>
   );
 };

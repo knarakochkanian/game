@@ -1,4 +1,18 @@
 @import '/app/variables.module';
+@mixin button-styles {
+  color: #525252;
+  position: relative;
+
+  > span::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: -8px;
+    width: 23px;
+    height: 4px;
+    background: $attack-green-80;
+  }
+}
 .sidenav {
   width: 0;
   position: fixed;
@@ -172,13 +186,11 @@
       }
     }
       &Colon{
-      position: absolute;
+        position: absolute;
         top: 78px;
         left: 126px;
-        >img>path{
-          fill:   #5ED1C5;
-        }
       }
+
     }
   }
   &DelayedDate {
@@ -195,16 +207,14 @@
     line-height: 120%;
 
     &Button {
-      color: #525252;
-      position: relative;
+      @include button-styles;
+    }
+
+    &ButtonBlue {
+      @include button-styles;
+
       > span::after {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: -8px;
-        width: 23px;
-        height: 4px;
-        background: rgba(94, 209, 197, 0.8);
+        background: $protect-blue-80 !important;
       }
     }
 
@@ -249,7 +259,6 @@
   line-height: 120%;
 }
 .Mui-selected {
-  color: #5ED1C5 !important;
   font-size: 26px !important;
   text-align: center;
   background-color: transparent !important;
@@ -264,9 +273,4 @@
   line-height: 120%;
   letter-spacing: 0.48px;
   text-transform: uppercase;
-}
-.greenFill{
-  path{
-    fill: #5ED1C5;
-  }
 }

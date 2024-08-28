@@ -26,6 +26,7 @@ import {
   P_ROTECTION,
   ACTIONS_IN_QUEUE,
   LAST_ACTION_NAME,
+  monthNames,
 } from '../../constants';
 import { attack } from '../../public/count-down';
 import { protectionIcon } from '../../public/history';
@@ -36,11 +37,13 @@ import {
   getItemFromStorage,
   getNextActionName,
 } from '../../helpers';
+
 import DamageLevelInfo from '../DamageLevelInfo';
 import RegionAccordion from '../../components/RegionAccordion';
 import IndustryAccordion from '../../components/IndustryAccordion';
 import { protectBlueTrash, trash } from '../../public/summary';
 import styles from './SidenavInMain.module.scss';
+
 import {
   ChangeEvent,
   createContext,
@@ -72,6 +75,7 @@ import SystemState from '../SystemState';
 import { ILaunchConsequences } from '../../data/launchConsequences';
 import { formatNumberWithSpaces } from '../../helpers/formatedNumber';
 import dayjs, { Dayjs } from 'dayjs';
+import updateLocale from 'dayjs/plugin/updateLocale';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -80,6 +84,12 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { closeXButton } from '../../public/ui_kit';
 import { useNTP } from '../../contexts/NTPDateContext';
+
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale('ru', {
+  weekStart: 0,
+});
 dayjs.locale('ru');
 interface ISidenavInMainProps {
   isOpen?: boolean;
@@ -134,7 +144,6 @@ function SidenavInMain({
     selectFormattedFinancialLosses
   ); //wholeDamage
   const pickedCountries = useAppSelector(selectPickedCountries);
-  const [hasDelayedTimeChanged, setHasDelayedTimeChanged] = useState(false);
 
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
   const numberOfSelectedSectors =
@@ -171,6 +180,7 @@ function SidenavInMain({
     const isToday = tempSelectedDate.isSame(dayjs(), 'day');
     if (isToday) {
       const currentTime = dayjs();
+      console.log(currentTime, 'currentTime');
       if (view === 'hours' && value.hour() < currentTime.hour()) {
         return true;
       }
@@ -216,7 +226,6 @@ function SidenavInMain({
   const handleTimeChangeInternal = (newValue: Dayjs | null) => {
     if (newValue) {
       setSelectedTime(newValue);
-      setHasDelayedTimeChanged(true);
       setDelayedTime(newValue.format('HH:mm'));
       closeCalendarAndTimePicker();
     }
@@ -250,21 +259,6 @@ function SidenavInMain({
   }, []);
   useEffect(() => {
     if (delayedTime) {
-      const monthNames: { [key: string]: string } = {
-        Jan: '01',
-        Feb: '02',
-        Mar: '03',
-        Apr: '04',
-        May: '05',
-        Jun: '06',
-        Jul: '07',
-        Aug: '08',
-        Sep: '09',
-        Oct: '10',
-        Nov: '11',
-        Dec: '12',
-      };
-
       const parts = delayedTime.split(' ');
 
       if (parts.length >= 4) {
@@ -367,8 +361,9 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0 &&
-    !pingFailed;
+    selectedCountries.length !== 0;
+  //   &&
+  // !pingFailed;
 
   const timeStep: TimeStepOptions = {
     hours: 1,
@@ -453,7 +448,13 @@ function SidenavInMain({
             style={{ display: delayed ? 'block' : 'none' }}
           >
             <div>
-              <button className={styles.sidenavDelayedDateButton}>
+              <button
+                className={
+                  isAttacking
+                    ? styles.sidenavDelayedDateButton
+                    : styles.sidenavDelayedDateButtonBlue
+                }
+              >
                 <span></span>
                 <h3>Дата</h3>
               </button>
@@ -477,8 +478,8 @@ function SidenavInMain({
                           },
                         },
                         '& .MuiPickersDay-today': {
-                          border: '1px solid  #5ED1C5 !important',
-                          color: '#5ED1C5',
+                          border: `1px solid ${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
+                          color: `${isAttacking ? '#5ED1C5' : '#6291ff'}`,
                           borderRadius: '0',
                         },
                         '& .MuiDateCalendar-root': {
@@ -486,13 +487,14 @@ function SidenavInMain({
                         },
                         '& .Mui-selected': {
                           borderRadius: '0',
-                          backgroundColor: '#5ed1c5 !important',
+                          color: 'white',
+                          backgroundColor: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important `,
                         },
                         '& .MuiDayCalendar-weekDayLabel': {
                           color: 'white !important',
                         },
                         '& .MuiSvgIcon-root': {
-                          color: '#5ed1c5 !important',
+                          color: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
                         },
                         '& .MuiPickersCalendarHeader-label': {
                           textTransform: 'uppercase',
@@ -523,7 +525,6 @@ function SidenavInMain({
                         disablePast={true}
                         value={tempSelectedDate}
                         onChange={(newValue) => {
-                          console.log('Date selected:', newValue);
                           handleDateChange(newValue);
                         }}
                       />
@@ -551,7 +552,13 @@ function SidenavInMain({
               />
             </button>
             <div>
-              <div className={styles.sidenavDelayedDateButton}>
+              <div
+                className={
+                  isAttacking
+                    ? styles.sidenavDelayedDateButton
+                    : styles.sidenavDelayedDateButtonBlue
+                }
+              >
                 <span></span>
                 <h3>Время</h3>
               </div>
@@ -599,14 +606,14 @@ function SidenavInMain({
                               scrollbarWidth: 'none',
                             },
                             '& .Mui-selected': {
-                              color: '#5ED1C5 !important',
+                              color: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
                               fontSize: '32px',
                               textAlign: 'center',
                               backgroundColor: 'transparent !important',
                             },
                             '& .Mui-selected:hover, .MuiMultiSectionDigitalClockSection-item:hover, .MuiMenuItem-root:hover':
                               {
-                                color: '#5ED1C5 !important',
+                                color: `${isAttacking ? '#5ED1C5' : '#6291ff'}`,
                                 backgroundColor: 'transparent !important',
                               },
                             '& .MuiButtonBase-root': {
@@ -620,11 +627,7 @@ function SidenavInMain({
                           <span></span>
                         </div>
                         <Image
-                          src={`${
-                            hasDelayedTimeChanged
-                              ? 'home/colonGreen.svg'
-                              : 'home/colon.svg'
-                          }`}
+                          src={`${isAttacking ? 'home/colonGreen.svg' : 'home/colonBlue.svg'}`}
                           alt="colon"
                           width={36}
                           height={23}
@@ -680,7 +683,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                style={{ pointerEvents: 'none' }}
+                // style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"

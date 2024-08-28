@@ -16,6 +16,7 @@ import {
   COMPLETED_ACTIONS,
   LAST_ACTION_NAME,
   P_ROTECTION,
+  PROTECTION,
 } from '../../constants';
 import { protectionIcon } from '../../public/history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -97,7 +98,10 @@ export default function CountDown() {
 
       if (currentAction.isCompleted == false) {
         url = '/';
-      } else if (currentAction.actionType === ATTACK) {
+      } else if (
+        currentAction.actionType === ATTACK ||
+        currentAction.actionType === PROTECTION
+      ) {
         url = '/news?backTo=home&id=' + currentAction.id;
       }
 

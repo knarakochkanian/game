@@ -31,7 +31,7 @@ export function useNTP() {
 
 export function NTPProvider(props: PropsWithChildren) {
   const { children } = props;
-  const [dateOffset, setDateOffset] = useState<number | null>(null);
+  const [dateOffset, setDateOffset] = useState<number | null>(1000);
 
   const getDate = useCallback(() => {
     console.log('NTPContext.getDate: offset = ' + dateOffset);
