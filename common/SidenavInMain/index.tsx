@@ -180,7 +180,6 @@ function SidenavInMain({
     const isToday = tempSelectedDate.isSame(dayjs(), 'day');
     if (isToday) {
       const currentTime = dayjs();
-      console.log(currentTime, 'currentTime');
       if (view === 'hours' && value.hour() < currentTime.hour()) {
         return true;
       }
@@ -361,9 +360,8 @@ function SidenavInMain({
   const connectionСonditions: string | boolean =
     numberOfSelectedSectors !== null &&
     damageLevel &&
-    selectedCountries.length !== 0;
-  //   &&
-  // !pingFailed;
+    selectedCountries.length !== 0 &&
+    !pingFailed;
 
   const timeStep: TimeStepOptions = {
     hours: 1,
@@ -683,7 +681,7 @@ function SidenavInMain({
                 href={'/summary'}
                 onClick={onSetCurrentAction}
                 ref={confirmButtonRef}
-                // style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: 'none' }}
               >
                 <span
                   className="Lead"
