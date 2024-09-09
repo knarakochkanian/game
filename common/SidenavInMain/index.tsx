@@ -173,6 +173,7 @@ function SidenavInMain({
         const defaultTime = getDefaultDelayedTime();
         setDelayedTime(defaultTime);
       }
+      setSelectedTime(null);
     }
   };
   const shouldDisableTime = (
