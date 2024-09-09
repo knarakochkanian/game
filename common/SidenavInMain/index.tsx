@@ -126,10 +126,8 @@ function SidenavInMain({
       return timePart;
     }
     return null;
-  };
-  const [delayedTime, setDelayedTime] = useState<string | null>(
-    getDefaultDelayedTime
-  );
+  }
+  const [delayedTime, setDelayedTime] = useState<string | null>(getDefaultDelayedTime);
   const [indelayedDate, setDelayedDate] = useState<string | null>(null);
   const [readyIsSend, setReadyIsSend] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -494,7 +492,9 @@ function SidenavInMain({
                           },
                         },
                         '& .MuiPickersDay-today': {
-                          border: `1px solid ${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
+                          border: `1px solid ${
+                            isAttacking ? '#5ED1C5' : '#6291ff'
+                          } !important`,
                           color: `${isAttacking ? '#5ED1C5' : '#6291ff'}`,
                           borderRadius: '0',
                         },
@@ -504,13 +504,17 @@ function SidenavInMain({
                         '& .Mui-selected': {
                           borderRadius: '0',
                           color: 'white',
-                          backgroundColor: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important `,
+                          backgroundColor: `${
+                            isAttacking ? '#5ED1C5' : '#6291ff'
+                          } !important `,
                         },
                         '& .MuiDayCalendar-weekDayLabel': {
                           color: 'white !important',
                         },
                         '& .MuiSvgIcon-root': {
-                          color: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
+                          color: `${
+                            isAttacking ? '#5ED1C5' : '#6291ff'
+                          } !important`,
                         },
                         '& .MuiPickersCalendarHeader-label': {
                           textTransform: 'uppercase',
@@ -624,7 +628,9 @@ function SidenavInMain({
                               scrollbarWidth: 'none',
                             },
                             '& .Mui-selected': {
-                              color: `${isAttacking ? '#5ED1C5' : '#6291ff'} !important`,
+                              color: `${
+                                isAttacking ? '#5ED1C5' : '#6291ff'
+                              } !important`,
                               fontSize: '32px',
                               textAlign: 'center',
                               backgroundColor: 'transparent !important',
@@ -645,7 +651,11 @@ function SidenavInMain({
                           <span></span>
                         </div>
                         <Image
-                          src={`${isAttacking ? 'home/colonGreen.svg' : 'home/colonBlue.svg'}`}
+                          src={`${
+                            isAttacking
+                              ? 'home/colonGreen.svg'
+                              : 'home/colonBlue.svg'
+                          }`}
                           alt="colon"
                           width={36}
                           height={23}
