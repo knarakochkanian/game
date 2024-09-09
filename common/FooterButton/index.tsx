@@ -26,8 +26,7 @@ const FooterButton = ({
       <button
         onClick={onClick}
         ref={buttonRef}
-        // style={onClick ? sx : { ...sx, pointerEvents: 'none' }}
-        style={onClick ? sx : { ...sx }}
+        style={onClick ? sx : { ...sx, pointerEvents: 'none' }}
       >
         <h3>
           {title}
