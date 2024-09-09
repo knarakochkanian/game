@@ -118,7 +118,7 @@ function SidenavInMain({
   const [delayed, setDelayed] = useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
   const { getDate } = useNTP();
-  const [delayedTime, setDelayedTime] = useState<string | null>(() => {
+  const getDefaultDelayedTime = () => {
     const date = getDate();
     console.log(date, 'date');
     if (date) {
@@ -127,7 +127,10 @@ function SidenavInMain({
       return timePart;
     }
     return null;
-  });
+  };
+  const [delayedTime, setDelayedTime] = useState<string | null>(
+    getDefaultDelayedTime
+  );
   const [indelayedDate, setDelayedDate] = useState<string | null>(null);
   const [readyIsSend, setReadyIsSend] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -164,9 +167,10 @@ function SidenavInMain({
   );
 
   const handleDateChange = (newDate: Dayjs | null) => {
-    setTempSelectedDate(newDate);
     if (newDate) {
-      setTempSelectedDate(newDate.locale('ru'));
+      const updatedDate = newDate.locale('ru');
+      setTempSelectedDate(updatedDate);
+      setSelectedTime(null);
     }
   };
   const shouldDisableTime = (
@@ -237,10 +241,12 @@ function SidenavInMain({
     }
   };
   const handleTimeButtonClick = () => {
+    setCalendarOpen(false);
     setIsTimePickerOpen(true);
   };
   const handleOpenDateCalendar = () => {
     setCalendarOpen(true);
+    setIsTimePickerOpen(false);
   };
 
   useEffect(() => {
@@ -319,7 +325,9 @@ function SidenavInMain({
       damageLevel,
       date:
         tempSelectedDate || delayedTime || isSwitchOn
-          ? `${dayjs(tempSelectedDate).format('DD.MM.YYYY')} ${delayedTime || ''}`
+          ? `${dayjs(tempSelectedDate).format('DD.MM.YYYY')} ${
+              delayedTime || ''
+            }`
           : '03.02.2024 11:11',
       industrySectors,
       isCompleted,
@@ -370,6 +378,17 @@ function SidenavInMain({
     seconds: 1,
   };
 
+  const handleDelete = () => {
+    dispatch(setResetMapIfChanged());
+    dispatch(resetGeneralState());
+    dispatch(setCloseSelectionIfChanged());
+    closeModal();
+    setDelayed(false);
+    setIsSwitchOn(false);
+    setDelayedTime(getDefaultDelayedTime());
+    setTempSelectedDate(dayjs());
+  };
+
   return (
     <>
       <Box
@@ -382,12 +401,7 @@ function SidenavInMain({
           <TrashModal
             closeModal={closeModal}
             name="trashInSidnav"
-            trashCallBack={() => {
-              dispatch(setResetMapIfChanged());
-              dispatch(resetGeneralState());
-              dispatch(setCloseSelectionIfChanged());
-              closeModal();
-            }}
+            trashCallBack={handleDelete}
             trashModalOpen={trashModalOpen}
           />
         )}
@@ -595,7 +609,9 @@ function SidenavInMain({
                         <MultiSectionDigitalClock
                           ampm={false}
                           timeSteps={timeStep}
-                          onChange={handleTimeChangeInternal}
+                          onChange={(newTime) =>
+                            handleTimeChangeInternal(newTime)
+                          }
                           shouldDisableTime={shouldDisableTime}
                           value={dayjs(delayedTime, 'HH:mm')}
                           sx={{

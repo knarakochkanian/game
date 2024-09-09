@@ -27,7 +27,6 @@ const TrashModal = ({
       send('cancel');
       send('ping');
       event.stopPropagation();
-
       trashCallBack();
     },
     [send, trashCallBack]
@@ -35,9 +34,6 @@ const TrashModal = ({
 
   const handleDeleteInCountDown = useCallback(() => {
     send('yep');
-    // if (onResetState) {
-    //   onResetState(); // Вызываем функцию сброса состояния
-    // }
     trashCallBack();
   }, [send, trashCallBack]);
 
