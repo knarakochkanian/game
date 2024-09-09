@@ -120,7 +120,6 @@ function SidenavInMain({
   const { getDate } = useNTP();
   const getDefaultDelayedTime = () => {
     const date = getDate();
-    console.log(date, 'date');
     if (date) {
       const currentDate = formatDate(date);
       const timePart = currentDate.slice(-5);
@@ -170,7 +169,12 @@ function SidenavInMain({
     if (newDate) {
       const updatedDate = newDate.locale('ru');
       setTempSelectedDate(updatedDate);
-      setSelectedTime(null);
+
+      const isToday = updatedDate.isSame(dayjs(), 'day');
+      if (isToday) {
+        const defaultTime = getDefaultDelayedTime();
+        setDelayedTime(defaultTime);
+      }
     }
   };
   const shouldDisableTime = (
