@@ -562,7 +562,7 @@ function SidenavInMain({
             </div>
             <button
               className={styles.sidenavDelayedDateCurrentDay}
-              onClick={handleDateButtonClick}
+              onClick={handleOpenDateCalendar}
             >
               {dayjs(tempSelectedDate).format('DD.MM.YYYY')}
               <Image
